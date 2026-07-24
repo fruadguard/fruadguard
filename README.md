@@ -1,16 +1,23 @@
-## Hi there 👋
+# FraudGuard
 
-<!--
-**fruadguard/fruadguard** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+AI-Powered Global Fraud Detection & Scam Prevention Platform
 
-Here are some ideas to get you started:
+## Overview
+FraudGuard is an AI-powered platform designed to protect users from phishing, fake websites, scam calls, investment scams, romance scams, and other online threats.
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+## Features
+- AI Scam Detection
+- Website Safety Checker
+- Phone Number Verification
+- Community Scam Reporting
+- Real-time Risk Alerts
+
+## Mission
+To make the internet safer by preventing online fraud through artificial intelligence and community collaboration.
+
+## Status
+🚧 Currently under development.
+
+## Contact
+Founder: Muhammad Sajedur Rahman Biplob
+Email: rbiplob1005@gmail.com
