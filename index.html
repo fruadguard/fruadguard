@@ -328,6 +328,65 @@ transition:.3s;
 background:#16a34a;
 transform:scale(1.05);
 }
+ section{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(12px);
+-webkit-backdrop-filter:blur(12px);
+border:1px solid rgba(255,255,255,0.15);
+border-radius:20px;
+padding:30px;
+margin:30px auto;
+max-width:1000px;
+box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+.card{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(10px);
+-webkit-backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,0.15);
+border-radius:15px;
+padding:25px;
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-10px);
+box-shadow:0 15px 35px rgba(34,197,94,.3);
+}
+.team-container{
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+margin-top:20px;
+}
+
+.team-card{
+background:rgba(255,255,255,0.08);
+border:1px solid rgba(255,255,255,0.15);
+padding:25px;
+width:280px;
+border-radius:15px;
+text-align:center;
+transition:.3s;
+box-shadow:0 10px 25px rgba(0,0,0,.2);
+}
+
+.team-card:hover{
+transform:translateY(-10px);
+box-shadow:0 15px 35px rgba(34,197,94,.3);
+}
+
+.team-card h3{
+color:#22c55e;
+margin-bottom:10px;
+}
+
+.team-card p{
+color:#e5e7eb;
+font-size:18px;
+}
 </style>
 </head>
 <body>
@@ -403,19 +462,34 @@ FraudGuard is an AI-powered fraud detection and scam prevention platform designe
 
 </div>
 </section>
-<section id="contact">
+<section id="team">
+
+<h2>Leadership Team</h2>
+
+<div class="team-container">
+
+<div class="team-card">
+<h3>👨‍💼 Muhammad Sajedur Rahman Biplob</h3>
+<p>Founder & CEO</p>
+</div>
+
+<div class="team-card">
+<h3>👩‍💼 Nila Akter</h3>
+<p>Co-Founder</p>
+</div>
+
+</div>
+
+</section>
+ <section id="contact">
 
 <h2>Contact</h2>
 
-<p><strong>Email:</strong> rbiplob1005@gmail.com</p>
+<p>📧 Email: rbiplob1005@gmail.com</p>
 
-<p><strong>Founder & CEO:</strong> Mohammad Sajedur Rahman Biplob</p>
+<p>🌐 Website: https://fruadguard.github.io/fruadguard/</p>
 
-<p><strong>Co-Founder:</strong> Nila Akter</p>
-
-<p><strong>Website:</strong> https://fruadguard.github.io/fruadguard/</p>
-
-</section>
+ </section>
  <section>
 <h2>Privacy Policy</h2>
 
