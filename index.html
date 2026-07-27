@@ -630,7 +630,15 @@ FraudGuard is currently under active development. New features, updates, and ann
   <p>Email: fraudguard.ai.team@gmail.com</p>
 
   <p>Website: https://fruadguard.github.io/fruadguard/</p>
+ <section id="dashboard" style="display:none;">
 
+<h2>User Dashboard</h2>
+
+<p>Welcome, <span id="userEmail"></span></p>
+
+<button onclick="logout()">Logout</button>
+
+ </section>
 </footer>
 <script type="module">
 
@@ -667,7 +675,12 @@ window.login = function() {
   const password = document.getElementById("password").value;
 
   signInWithEmailAndPassword(auth, email, password)
-    .then(() => alert("Login successful!"))
+   .then((userCredential) => {
+  const user = userCredential.user;
+
+  document.getElementById("dashboard").style.display = "block";
+  document.getElementById("userEmail").innerText = user.email;
+})
     .catch(error => alert(error.message));
 };
 
