@@ -783,15 +783,7 @@ alert(error.message);
 
 };
 
-document.getElementById("scanResult").innerHTML="🔍 Scanning...";
 
-setTimeout(()=>{
-
-document.getElementById("scanResult").innerHTML="⚠️ Analysis feature coming soon.";
-
-},2000);
-
-};
 window.scanURL = function () {
 
 const url = document.getElementById("urlInput").value.trim();
