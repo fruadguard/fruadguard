@@ -755,16 +755,7 @@ window.login = function() {
   .catch(error => alert(error.message));
 
 };
-  
-   .then((userCredential) => {
-  const user = userCredential.user;
-
-  document.getElementById("dashboard").style.display = "block";
-  document.getElementById("userEmail").innerText = user.email;
-})
-    .catch(error => alert(error.message));
-};
-window.scanURL = function () {
+  window.submitReport = async function () {
 
 const report = document.getElementById("report").value;
 
@@ -775,6 +766,23 @@ return;
 
 try{
 
+await addDoc(collection(db,"reports"),{
+report: report,
+createdAt: new Date()
+});
+
+alert("Report submitted successfully!");
+
+document.getElementById("report").value="";
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+};
+try{
 await addDoc(collection(db,"reports"),{
 report: report,
 createdAt: new Date()
