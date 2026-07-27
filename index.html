@@ -750,7 +750,45 @@ document.getElementById("scanResult").innerHTML="⚠️ Analysis feature coming 
 },2000);
 
 };
+window.scanURL = function () {
 
+const url = document.getElementById("urlInput").value.trim();
+const result = document.getElementById("scanResult");
+
+if (url === "") {
+  result.innerHTML = "❌ Please enter a website URL.";
+  result.style.color = "red";
+  return;
+}
+
+try {
+  new URL(url);
+
+  result.innerHTML = "🔍 Scanning...";
+  result.style.color = "orange";
+
+  setTimeout(() => {
+
+    if (
+      url.includes("https://")
+    ) {
+      result.innerHTML = "✅ Valid website format. Advanced security scan coming soon.";
+      result.style.color = "#22c55e";
+    } else {
+      result.innerHTML = "⚠️ Use a secure HTTPS website.";
+      result.style.color = "yellow";
+    }
+
+  }, 1500);
+
+} catch {
+
+  result.innerHTML = "❌ Invalid URL. Example: https://example.com";
+  result.style.color = "red";
+
+}
+
+};
   </script>
 </body>
 </html>
