@@ -687,7 +687,11 @@ import {
   signInWithEmailAndPassword,
   signOut
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
+import {
+  getFirestore,
+  collection,
+  addDoc
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 const firebaseConfig = {
   apiKey: "AIzaSyByZP0D_jKYOitPhOunqn44Z1FMNFF40tc",
   authDomain: "fraudguard-eafd2.firebaseapp.com",
@@ -699,7 +703,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-
+const db = getFirestore(app);
 window.signUp = function() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
@@ -733,7 +737,33 @@ window.login = function() {
     .catch(error => alert(error.message));
 };
 window.scanURL = function () {
+window.submitReport = async function () {
 
+const report = document.getElementById("report").value;
+
+if(report===""){
+alert("Please enter your report.");
+return;
+}
+
+try{
+
+await addDoc(collection(db,"reports"),{
+report: report,
+createdAt: new Date()
+});
+
+alert("Report submitted successfully!");
+
+document.getElementById("report").value="";
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+};
 const url = document.getElementById("urlInput").value;
 
 if(url===""){
@@ -787,8 +817,8 @@ try {
   result.style.color = "red";
 
 }
-
 };
+ /12.1.0/firebase-firestore.js";
   </script>
 </body>
 </html>
