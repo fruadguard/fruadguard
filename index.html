@@ -606,20 +606,30 @@ FraudGuard is currently under active development. New features, updates, and ann
 </p>
 <h2>Report a Scam</h2>
 
-<form>
-  <label>Your Name:</label><br>
-  <input type="text" id="name"><br><br>
+<section id="report-section">
 
-  <label>Email:</label><br>
-  <input type="email" id="emailReport"><br><br>
+<h2>🚨 Report a Scam</h2>
 
-  <label>Scam Details:</label><br>
-  <textarea id="report" rows="5" cols="40"></textarea><br><br>
+<form onsubmit="return false;">
 
-  <button type="button" onclick="submitReport()">
-    Submit Report
-  </button>
-  </form>
+<label>Your Name</label><br>
+<input type="text" id="name" placeholder="Enter your name"><br><br>
+
+<label>Email</label><br>
+<input type="email" id="emailReport" placeholder="Enter your email"><br><br>
+
+<label>Scam Details</label><br>
+<textarea id="report" rows="6" placeholder="Describe the scam"></textarea><br><br>
+
+<button type="button" onclick="submitReport()">
+Submit Report
+</button>
+
+</form>
+
+<p id="reportStatus"></p>
+
+</section>
  <section id="url-scanner">
 
 <h2>🌐 Website URL Scanner</h2>
