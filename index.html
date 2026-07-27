@@ -632,5 +632,45 @@ FraudGuard is currently under active development. New features, updates, and ann
   <p>Website: https://fruadguard.github.io/fruadguard/</p>
 
 </footer>
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyByZP0D_jKYOitPhOunqn44Z1FMNFF40tc",
+  authDomain: "fraudguard-eafd2.firebaseapp.com",
+  projectId: "fraudguard-eafd2",
+  storageBucket: "fraudguard-eafd2.firebasestorage.app",
+  messagingSenderId: "721145048132",
+  appId: "1:721145048132:web:c87c07d58d8e9b5b806011"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.signUp = function() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  createUserWithEmailAndPassword(auth, email, password)
+    .then(() => alert("Account created successfully!"))
+    .catch(error => alert(error.message));
+};
+
+window.login = function() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  signInWithEmailAndPassword(auth, email, password)
+    .then(() => alert("Login successful!"))
+    .catch(error => alert(error.message));
+};
+
+  </script>
 </body>
 </html>
