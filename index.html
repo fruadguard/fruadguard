@@ -101,12 +101,10 @@ nav a:hover{
 color:#22c55e;
 }
 body{
- <nav>
   <a href="#home">Home</a>
   <a href="#about">About</a>
   <a href="#features">Features</a>
   <a href="#contact">Contact</a>
-</nav>
 font-family:Arial,sans-serif;
 background:#0f172a;
 color:white;
@@ -134,7 +132,7 @@ max-width:900px;
 border-radius:15px;
 box-shadow:0 0 20px rgba(0,0,0,0.3);
  }
-
+}
 body{
 font-family:Arial,sans-serif;
 background:linear-gradient(135deg,#0f172a,#1e293b);
@@ -570,17 +568,23 @@ FraudGuard is an AI-powered fraud detection and scam prevention platform designe
 <h2>Privacy Policy</h2>
 
 <p>
-FraudGuard respects your privacy. We collect only the information necessary to improve our services and protect users from fraud. We do not sell personal data to third parties. All collected information is handled securely and used only for fraud detection, security improvements, and user support.
+FraudGuard respects your privacy. We collect only the information necessary to improve our services and protect users from fraud.
 </p>
- <section>
+
+</section>
+
+
+<section>
 <h2>Terms of Service</h2>
 
 <p>
-FraudGuard is provided for informational and security purposes. Users are responsible for their own decisions. While we strive for accurate fraud detection, we cannot guarantee prevention of every scam or cyber threat.
+FraudGuard is provided for informational and security purposes.
 </p>
- <section>
-<h2>Cookie Policy</h2>
 
+</section>
+<section>
+<h2>Cookie Policy</h2>
+</section>
 <p>
 FraudGuard uses cookies to improve user experience, analyze website traffic, and enhance security. By using this website, you agree to our use of cookies. You can disable cookies through your browser settings at any time.
 </p>
@@ -725,8 +729,7 @@ window.signUp = function() {
     .catch(error => alert(error.message));
 };
 
-window.login = function() {
- window.logout = function () {
+window.logout = function () {
   signOut(auth)
     .then(() => {
       document.getElementById("dashboard").style.display = "none";
@@ -735,6 +738,25 @@ window.login = function() {
     .catch((error) => {
       alert(error.message);
     });
+};
+
+
+window.login = function() {
+
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  signInWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+
+    const user = userCredential.user;
+
+    document.getElementById("dashboard").style.display = "block";
+    document.getElementById("userEmail").innerText = user.email;
+
+  })
+  .catch(error => alert(error.message));
+
 };
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
@@ -811,18 +833,19 @@ try {
 
   setTimeout(() => {
 
-    if (
-      url.includes("https://")
-    ) {
-      result.innerHTML = "✅ Valid website format. Advanced security scan coming soon.";
-      result.style.color = "#22c55e";
-    } else {
-      result.innerHTML = "⚠️ Use a secure HTTPS website.";
-      result.style.color = "yellow";
-    }
+    result.innerHTML = "✅ Valid website format. Advanced security scan coming soon.";
+    result.style.color = "#22c55e";
 
-  }, 1500);
+  },1500);
 
+} catch {
+
+  result.innerHTML = "❌ Invalid URL. Example: https://example.com";
+  result.style.color = "red";
+
+}
+
+};
 } catch {
 
   result.innerHTML = "❌ Invalid URL. Example: https://example.com";
