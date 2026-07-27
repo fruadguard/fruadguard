@@ -641,12 +641,13 @@ FraudGuard is currently under active development. New features, updates, and ann
  </section>
 </footer>
 <script type="module">
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
+  signOut
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -671,6 +672,16 @@ window.signUp = function() {
 };
 
 window.login = function() {
+ window.logout = function () {
+  signOut(auth)
+    .then(() => {
+      document.getElementById("dashboard").style.display = "none";
+      alert("Logged out successfully!");
+    })
+    .catch((error) => {
+      alert(error.message);
+    });
+};
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
