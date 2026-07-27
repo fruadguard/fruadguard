@@ -782,29 +782,6 @@ alert(error.message);
 }
 
 };
-try{
-await addDoc(collection(db,"reports"),{
-report: report,
-createdAt: new Date()
-});
-
-alert("Report submitted successfully!");
-
-document.getElementById("report").value="";
-
-}catch(error){
-
-alert(error.message);
-
-}
-
-};
-const url = document.getElementById("urlInput").value;
-
-if(url===""){
-document.getElementById("scanResult").innerHTML="Please enter a website URL.";
-return;
-}
 
 document.getElementById("scanResult").innerHTML="🔍 Scanning...";
 
