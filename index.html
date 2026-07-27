@@ -430,6 +430,30 @@ font-size:16px;
 #login button{
 margin:10px;
 }
+#url-scanner{
+background:#1e293b;
+padding:30px;
+margin:30px auto;
+max-width:700px;
+border-radius:15px;
+text-align:center;
+}
+
+#urlInput{
+width:90%;
+padding:12px;
+font-size:16px;
+border:none;
+border-radius:8px;
+margin-bottom:15px;
+}
+
+#scanResult{
+margin-top:20px;
+font-size:20px;
+font-weight:bold;
+color:#22c55e;
+}
 </style>
 </head>
 <body>
@@ -594,8 +618,22 @@ FraudGuard is currently under active development. New features, updates, and ann
 
   <button type="submit">Submit Report</button>
 </form>
- <h2>Website URL Scanner</h2>
-<p>Coming Soon</p>
+ <section id="url-scanner">
+
+<h2>🌐 Website URL Scanner</h2>
+
+<input
+type="text"
+id="urlInput"
+placeholder="Enter website URL">
+
+<br><br>
+
+<button onclick="scanURL()">Scan Website</button>
+
+<p id="scanResult"></p>
+
+ </section>
 <h2>Phone Number Checker</h2>
 <p>Coming Soon</p>
 <h2>QR Code Scanner</h2>
@@ -693,6 +731,24 @@ window.login = function() {
   document.getElementById("userEmail").innerText = user.email;
 })
     .catch(error => alert(error.message));
+};
+window.scanURL = function () {
+
+const url = document.getElementById("urlInput").value;
+
+if(url===""){
+document.getElementById("scanResult").innerHTML="Please enter a website URL.";
+return;
+}
+
+document.getElementById("scanResult").innerHTML="🔍 Scanning...";
+
+setTimeout(()=>{
+
+document.getElementById("scanResult").innerHTML="⚠️ Analysis feature coming soon.";
+
+},2000);
+
 };
 
   </script>
