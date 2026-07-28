@@ -101,18 +101,19 @@ nav a:hover{
 color:#22c55e;
 }
 body{
+ <nav>
+  <a href="#home">Home</a>
+  <a href="#about">About</a>
+  <a href="#features">Features</a>
+  <a href="#contact">Contact</a>
+</nav>
 font-family:Arial,sans-serif;
 background:#0f172a;
 color:white;
 text-align:center;
-padding:20px;
-margin:0;
+padding:50px;
 }
-h1{
-font-size:42px;
-color:#22c55e;
-margin-bottom:20px;
-}
+h1{font-size:48px;}
 p{font-size:20px;max-width:700px;margin:auto;}
 button{
 background:#22c55e;
@@ -133,12 +134,13 @@ max-width:900px;
 border-radius:15px;
 box-shadow:0 0 20px rgba(0,0,0,0.3);
  }
+
 body{
 font-family:Arial,sans-serif;
 background:linear-gradient(135deg,#0f172a,#1e293b);
 color:white;
 text-align:center;
-padding:20px;
+padding:50px;
 margin:0;
 }
 h1{
@@ -152,7 +154,7 @@ font-size:24px;
 }
 
 p{
-font-size:18px;
+font-size:20px;
 max-width:700px;
 margin:20px auto;
 line-height:1.8;
@@ -180,26 +182,13 @@ nav a{
 display:block;
 margin:10px 0;
 }
-.logo{
-justify-content:center;
-margin-bottom:10px;
-}
 
-.menu{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:15px;
-}
-
-.menu a{
-margin:0;
-}
 img{
 max-width:100%;
 height:auto;
 }
 
+}
 button:hover{
 background:#16a34a;
 transform:scale(1.05);
@@ -243,17 +232,14 @@ margin-top:20px;
 }
 
 .card{
-background:rgba(255,255,255,0.08);
-backdrop-filter:blur(10px);
--webkit-backdrop-filter:blur(10px);
-border:1px solid rgba(255,255,255,0.15);
-border-radius:15px;
+background:#334155;
 padding:25px;
-width:280px;
-flex:1 1 280px;
-max-width:320px;
-transition:0.3s;
-                             }
+width:250px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,.3);
+transition:.3s;
+}
+
 .card:hover{
 transform:translateY(-8px);
 background:#475569;
@@ -308,13 +294,14 @@ box-shadow:0 8px 20px rgba(34,197,94,0.4);
   }
 .hero{
 background:linear-gradient(135deg,#0f172a,#1e3a8a);
-padding:50px 20px;
+padding:80px 30px;
 border-radius:20px;
 text-align:center;
-margin:20px auto;
+margin:40px auto;
 max-width:1000px;
 box-shadow:0 10px 30px rgba(0,0,0,.3);
 }
+
 .hero h1{
 font-size:54px;
 color:#22c55e;
@@ -351,11 +338,11 @@ backdrop-filter:blur(12px);
 -webkit-backdrop-filter:blur(12px);
 border:1px solid rgba(255,255,255,0.15);
 border-radius:20px;
-padding:20px;
-margin:20px auto;
+padding:30px;
+margin:30px auto;
 max-width:1000px;
 box-shadow:0 10px 30px rgba(0,0,0,.25);
- }
+}
 
 .card{
 background:rgba(255,255,255,0.08);
@@ -583,27 +570,20 @@ FraudGuard is an AI-powered fraud detection and scam prevention platform designe
 <h2>Privacy Policy</h2>
 
 <p>
-FraudGuard respects your privacy. We collect only the information necessary to improve our services and protect users from fraud.
+FraudGuard respects your privacy. We collect only the information necessary to improve our services and protect users from fraud. We do not sell personal data to third parties. All collected information is handled securely and used only for fraud detection, security improvements, and user support.
 </p>
-
-</section>
-
-
-<section>
+ <section>
 <h2>Terms of Service</h2>
 
 <p>
-FraudGuard is provided for informational and security purposes.
+FraudGuard is provided for informational and security purposes. Users are responsible for their own decisions. While we strive for accurate fraud detection, we cannot guarantee prevention of every scam or cyber threat.
 </p>
-</section>
-<section>
+ <section>
 <h2>Cookie Policy</h2>
 
 <p>
-FraudGuard uses cookies...
+FraudGuard uses cookies to improve user experience, analyze website traffic, and enhance security. By using this website, you agree to our use of cookies. You can disable cookies through your browser settings at any time.
 </p>
-
-</section>
 <hr>
 <h2>App Screenshots</h2>
 
@@ -745,7 +725,8 @@ window.signUp = function() {
     .catch(error => alert(error.message));
 };
 
-window.logout = function () {
+window.login = function() {
+ window.logout = function () {
   signOut(auth)
     .then(() => {
       document.getElementById("dashboard").style.display = "none";
@@ -755,26 +736,20 @@ window.logout = function () {
       alert(error.message);
     });
 };
-
-
-window.login = function() {
-
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
   signInWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
+   .then((userCredential) => {
+  const user = userCredential.user;
 
-    const user = userCredential.user;
-
-    document.getElementById("dashboard").style.display = "block";
-    document.getElementById("userEmail").innerText = user.email;
-
-  })
-  .catch(error => alert(error.message));
-
+  document.getElementById("dashboard").style.display = "block";
+  document.getElementById("userEmail").innerText = user.email;
+})
+    .catch(error => alert(error.message));
 };
-  window.submitReport = async function () {
+window.scanURL = function () {
+window.submitReport = async function () {
 
 const report = document.getElementById("report").value;
 
@@ -801,8 +776,22 @@ alert(error.message);
 }
 
 };
+const url = document.getElementById("urlInput").value;
 
+if(url===""){
+document.getElementById("scanResult").innerHTML="Please enter a website URL.";
+return;
+}
 
+document.getElementById("scanResult").innerHTML="🔍 Scanning...";
+
+setTimeout(()=>{
+
+document.getElementById("scanResult").innerHTML="⚠️ Analysis feature coming soon.";
+
+},2000);
+
+};
 window.scanURL = function () {
 
 const url = document.getElementById("urlInput").value.trim();
@@ -822,10 +811,17 @@ try {
 
   setTimeout(() => {
 
-    result.innerHTML = "✅ Valid website format. Advanced security scan coming soon.";
-    result.style.color = "#22c55e";
+    if (
+      url.includes("https://")
+    ) {
+      result.innerHTML = "✅ Valid website format. Advanced security scan coming soon.";
+      result.style.color = "#22c55e";
+    } else {
+      result.innerHTML = "⚠️ Use a secure HTTPS website.";
+      result.style.color = "yellow";
+    }
 
-  },1500);
+  }, 1500);
 
 } catch {
 
@@ -836,4 +832,4 @@ try {
 };
   </script>
 </body>
-</html>
+      </html>
