@@ -741,42 +741,47 @@ window.signUp = function() {
     .catch(error => alert(error.message));
 };
 
-window.login = function(){
+window.login = function () {
 
-const email=document.getElementById("email").value;
-const password=document.getElementById("password").value;
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
 
-signInWithEmailAndPassword(auth,email,password)
-.then((userCredential)=>{
+signInWithEmailAndPassword(auth, email, password)
+.then((userCredential) => {
 
-document.getElementById("dashboard").style.display="block";
-document.getElementById("userEmail").innerText=userCredential.user.email;
+document.getElementById("dashboard").style.display = "block";
+document.getElementById("userEmail").innerText = userCredential.user.email;
 
 })
-.catch(error=>alert(error.message));
+.catch(error => alert(error.message));
 
 };
 
-window.logout=function(){
+window.logout = function () {
 
 signOut(auth)
-.then(()=>{
-document.getElementById("dashboard").style.display="none";
+.then(() => {
+
+document.getElementById("dashboard").style.display = "none";
 alert("Logged out successfully!");
+
 })
-.catch(error=>alert(error.message));
+.catch(error => alert(error.message));
+
+};
+
 window.submitReport = async function () {
 
 const name = document.getElementById("name").value;
 const email = document.getElementById("emailReport").value;
 const report = document.getElementById("report").value;
 
-if(name==="" || email==="" || report===""){
+if(name === "" || email === "" || report === ""){
 alert("Please fill all fields.");
 return;
 }
 
-try{
+try {
 
 await addDoc(collection(db,"reports"),{
 
@@ -789,11 +794,11 @@ createdAt: new Date()
 
 alert("Report submitted successfully!");
 
-document.getElementById("name").value="";
-document.getElementById("emailReport").value="";
-document.getElementById("report").value="";
+document.getElementById("name").value = "";
+document.getElementById("emailReport").value = "";
+document.getElementById("report").value = "";
 
-}catch(error){
+} catch(error){
 
 alert(error.message);
 
