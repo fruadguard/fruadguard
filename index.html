@@ -794,10 +794,17 @@ const data = doc.data();
 
 reportsList.innerHTML += `
 <div style="background:#334155;padding:15px;margin:10px 0;border-radius:10px;">
+
 <b>Name:</b> ${data.name}<br>
+
 <b>Email:</b> ${data.email}<br>
-<b>Report:</b> ${data.report}<br>
-<hr>
+
+<b>Report:</b> ${data.report}<br><br>
+
+<button onclick="deleteReport('${doc.id}')">
+🗑 Delete
+</button>
+
 </div>
 `;
 
