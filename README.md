@@ -19,5 +19,5 @@ To make the internet safer by preventing online fraud through artificial intelli
 🚧 Currently under development.
 
 ## Contact
-Founder: Muhammad Sajedur Rahman Biplob
+Founder: Mohammad Sajedur Rahman Biplob
 Email: rbiplob1005@gmail.com
