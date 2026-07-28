@@ -699,6 +699,9 @@ placeholder="Enter website URL">
  <section id="dashboard" style="display:none;">
 
 <h2>User Dashboard</h2>
+   <h3>📄 Submitted Reports</h3>
+
+<div id="reportsList"></div>
 
 <p>Welcome, <span id="userEmail"></span></p>
 
@@ -716,9 +719,12 @@ import {
   signOut
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 import {
-  getFirestore,
-  collection,
-  addDoc
+getFirestore,
+collection,
+addDoc,
+getDocs,
+deleteDoc,
+doc
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 const firebaseConfig = {
   apiKey: "AIzaSyByZP0D_jKYOitPhOunqn44Z1FMNFF40tc",
@@ -751,6 +757,7 @@ signInWithEmailAndPassword(auth, email, password)
 
 document.getElementById("dashboard").style.display = "block";
 document.getElementById("userEmail").innerText = userCredential.user.email;
+ loadReports();
 
 })
 .catch(error => alert(error.message));
@@ -771,6 +778,38 @@ alert("Logged out successfully!");
 };
 
 window.submitReport = async function () {
+ window.loadReports = async function () {
+
+const reportsList = document.getElementById("reportsList");
+
+reportsList.innerHTML = "";
+
+try {
+
+const querySnapshot = await getDocs(collection(db, "reports"));
+
+querySnapshot.forEach((doc) => {
+
+const data = doc.data();
+
+reportsList.innerHTML += `
+<div style="background:#334155;padding:15px;margin:10px 0;border-radius:10px;">
+<b>Name:</b> ${data.name}<br>
+<b>Email:</b> ${data.email}<br>
+<b>Report:</b> ${data.report}<br>
+<hr>
+</div>
+`;
+
+});
+
+} catch (error) {
+
+alert(error.message);
+
+}
+
+};
 
 const name = document.getElementById("name").value;
 const email = document.getElementById("emailReport").value;
