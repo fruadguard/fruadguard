@@ -453,6 +453,29 @@ font-size:20px;
 font-weight:bold;
 color:#22c55e;
 }
+ #phone-checker{
+background:#1e293b;
+padding:30px;
+margin:30px auto;
+max-width:700px;
+border-radius:15px;
+text-align:center;
+}
+
+#phoneInput{
+width:90%;
+padding:12px;
+font-size:16px;
+border:none;
+border-radius:8px;
+margin-bottom:15px;
+}
+
+#phoneResult{
+margin-top:20px;
+font-size:20px;
+font-weight:bold;
+}
 </style>
 </head>
 <body>
@@ -632,6 +655,13 @@ FraudGuard is currently under active development. New features, updates, and ann
 <input type="text" id="name" placeholder="Enter your name"><br><br>
 
 <label>Email</label><br>
+<label>Phone Number</label><br>
+
+<input
+type="text"
+id="phoneReport"
+placeholder="Enter phone number"><br><br>
+ 
 <input type="email" id="emailReport" placeholder="Enter your email"><br><br>
 
 <label>Scam Details</label><br>
@@ -649,6 +679,24 @@ Submit Report
  <section id="url-scanner">
 
 <h2>🌐 Website URL Scanner</h2>
+ <section id="phone-checker">
+
+<h2>☎️ Phone Number Checker</h2>
+
+<input
+type="text"
+id="phoneInput"
+placeholder="Enter phone number">
+
+<br><br>
+
+<button onclick="checkPhone()">
+Check Number
+</button>
+
+<p id="phoneResult"></p>
+
+ </section>
 
 <input
 type="text"
@@ -841,6 +889,7 @@ alert(error.message);
 
 const name = document.getElementById("name").value;
 const email = document.getElementById("emailReport").value;
+const phone = document.getElementById("phoneReport").value;
 const report = document.getElementById("report").value;
 
 if(name === "" || email === "" || report === ""){
@@ -852,10 +901,12 @@ try {
 
 await addDoc(collection(db,"reports"),{
 
-name: name,
-email: email,
-report: report,
-createdAt: new Date()
+name:name,
+email:email,
+phone:phone,
+report:report,
+createdAt:new Date()
+ document.getElementById("phoneReport").value="";
 
 });
 
@@ -874,6 +925,55 @@ alert(error.message);
 };
 
 window.scanURL = function () {
+ window.checkPhone = async function () {
+
+const phone = document.getElementById("phoneInput").value.trim();
+const result = document.getElementById("phoneResult");
+
+if (phone === "") {
+result.innerHTML = "❌ Please enter a phone number.";
+result.style.color = "red";
+return;
+}
+
+try {
+
+const querySnapshot = await getDocs(collection(db, "reports"));
+
+let found = false;
+
+querySnapshot.forEach((doc) => {
+
+const data = doc.data();
+
+if (data.phone && data.phone === phone) {
+
+found = true;
+
+}
+
+});
+
+if (found) {
+
+result.innerHTML = "⚠️ Scam number found in FraudGuard database.";
+result.style.color = "red";
+
+} else {
+
+result.innerHTML = "✅ No scam report found for this number.";
+result.style.color = "#22c55e";
+
+}
+
+} catch (error) {
+
+result.innerHTML = error.message;
+result.style.color = "red";
+
+}
+
+};
 
 const url = document.getElementById("urlInput").value;
 
