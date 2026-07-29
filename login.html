@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -7,72 +8,165 @@
 
 <title>Login | FraudGuard</title>
 
-<link rel="icon" href="logo.png">
 <link rel="stylesheet" href="style.css">
+<link rel="icon" href="logo.png">
 
 </head>
 
 <body>
 
-<nav>
+<nav class="navbar">
 
 <div class="logo">
-<img src="logo.png" alt="FraudGuard Logo">
+
+<a href="index.html">
+
+<img src="logo.png" alt="FraudGuard">
+
 <span>FraudGuard</span>
+
+</a>
+
 </div>
 
-<div class="menu">
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="features.html">Features</a>
-<a href="report.html">Report</a>
-<a href="scanner.html">Scanner</a>
-<a href="phone.html">Phone</a>
-<a href="contact.html">Contact</a>
-<a href="login.html">Login</a>
-</div>
+<ul class="nav-links">
+
+<li><a href="index.html">Home</a></li>
+<li><a href="about.html">About</a></li>
+<li><a href="features.html">Features</a></li>
+<li><a href="contact.html">Contact</a></li>
+
+</ul>
 
 </nav>
 
-<section class="hero">
+<section class="scanner">
 
-<h1>Login to FraudGuard</h1>
+<h2>Login to FraudGuard</h2>
 
-<input type="email" id="email" placeholder="Enter your email">
-
-<br><br>
-
-<input type="password" id="password" placeholder="Enter your password">
-
-<br><br>
-
-<button onclick="signUp()">
-Create Account
-</button>
-
-<button onclick="login()">
-Login
-</button>
+<input
+type="email"
+id="email"
+placeholder="Email">
 
 <br><br>
 
-<button onclick="googleLogin()">
-🔵 Continue with Google
+<input
+type="password"
+id="password"
+placeholder="Password">
+
+<br><br>
+
+<button class="btn-primary" onclick="login()">
+
+🔑 Login
+
 </button>
 
-<p style="margin-top:20px;">
-Don't have an account? Create one above.
-</p>
+<br><br>
+
+<button class="btn-secondary" onclick="signup()">
+
+📝 Create Account
+
+</button>
+
+<br><br>
+
+<button class="btn-secondary" onclick="googleLogin()">
+
+🟢 Continue with Google
+
+</button>
+
+<br><br>
+
+<p id="loginStatus"></p>
 
 </section>
+<script type="module">
 
-<footer>
+import { auth } from "./firebase.js";
 
-<p>© 2026 FraudGuard. All Rights Reserved.</p>
+import {
 
-</footer>
+signInWithEmailAndPassword,
 
-<script type="module" src="script.js"></script>
+createUserWithEmailAndPassword,
+
+GoogleAuthProvider,
+
+signInWithPopup
+
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+const status=document.getElementById("loginStatus");
+
+window.login=async function(){
+
+const email=document.getElementById("email").value;
+const password=document.getElementById("password").value;
+
+try{
+
+await signInWithEmailAndPassword(auth,email,password);
+
+status.innerHTML="✅ Login Successful";
+
+window.location.href="dashboard.html";
+
+}catch(error){
+
+status.innerHTML="❌ "+error.message;
+
+}
+
+}
+
+window.signup=async function(){
+
+const email=document.getElementById("email").value;
+const password=document.getElementById("password").value;
+
+try{
+
+await createUserWithEmailAndPassword(auth,email,password);
+
+status.innerHTML="✅ Account Created Successfully";
+
+}catch(error){
+
+status.innerHTML="❌ "+error.message;
+
+}
+
+}
+
+window.googleLogin=async function(){
+
+const provider=new GoogleAuthProvider();
+
+try{
+
+await signInWithPopup(auth,provider);
+
+status.innerHTML="✅ Google Login Successful";
+
+window.location.href="dashboard.html";
+
+}catch(error){
+
+status.innerHTML="❌ "+error.message;
+
+}
+
+}
+
+</script>
 
 </body>
+
 </html>
+
+
