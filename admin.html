@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FraudGuard Admin</title>
+<title>Admin Panel | FraudGuard</title>
 
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="logo.png">
@@ -14,40 +15,244 @@
 
 <body>
 
-<nav>
+<nav class="navbar">
 
 <div class="logo">
-<img src="logo.png" width="40">
-<span>FraudGuard Admin</span>
+
+<a href="index.html">
+
+<img src="logo.png" alt="FraudGuard">
+
+<span>FraudGuard</span>
+
+</a>
+
 </div>
 
-<div class="menu">
-<a href="index.html">Home</a>
-<a href="dashboard.html">Dashboard</a>
-<a href="#" onclick="logout()">Logout</a>
-</div>
+<ul class="nav-links">
+
+<li><a href="dashboard.html">Dashboard</a></li>
+<li><a href="scanner.html">Scanner</a></li>
+<li><a href="report.html">Reports</a></li>
+
+</ul>
 
 </nav>
 
-<section>
+<section class="scanner">
 
-<h1>📊 Admin Dashboard</h1>
+<h1>🛡️ FraudGuard Admin Panel</h1>
 
-<h3>Total Scam Reports</h3>
+<p>Manage scam reports submitted by users.</p>
 
-<h2 id="totalReports">0</h2>
+<div class="card">
 
-</section>
+<h2>Admin Statistics</h2>
 
-<section>
+<p>📄 Total Reports: <span id="totalReports">0</span></p>
 
-<h2>📄 All Reports</h2>
+<p>👥 Total Users: <span id="totalUsers">0</span></p>
 
-<div id="reportsList"></div>
+</div>
 
-</section>
+<div class="card">
 
-<script type="module" src="script.js"></script>
+<h2>Search Reports</h2>
+
+<input
+type="text"
+id="searchInput"
+placeholder="Search by website, phone or email..."
+onkeyup="searchReports()">
+
+</div>
+
+<div class="card">
+
+<h2>Scam Reports</h2>
+
+<table style="width:100%;border-collapse:collapse;">
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+
+<th>Email</th>
+
+<th>Website</th>
+
+<th>Type</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="reportTable">
+
+<tr>
+
+<td colspan="5" style="text-align:center;">
+
+Loading reports...
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+ <script type="module">
+
+import { auth, db } from "./firebase.js";
+
+import {
+onAuthStateChanged,
+signOut
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+import {
+collection,
+getDocs,
+deleteDoc,
+doc
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+const reportTable=document.getElementById("reportTable");
+
+let reports=[];
+
+onAuthStateChanged(auth,(user)=>{
+
+if(!user){
+
+window.location.href="login.html";
+
+return;
+
+}
+
+loadReports();
+
+});
+
+async function loadReports(){
+
+reportTable.innerHTML="";
+
+const snapshot=await getDocs(collection(db,"reports"));
+
+reports=[];
+
+snapshot.forEach((item)=>{
+
+const data=item.data();
+
+reports.push({
+
+id:item.id,
+
+...data
+
+});
+
+});
+
+document.getElementById("totalReports").innerText=reports.length;
+
+document.getElementById("totalUsers").innerText="-";
+
+showReports(reports);
+
+}
+
+function showReports(list){
+
+reportTable.innerHTML="";
+
+if(list.length===0){
+
+reportTable.innerHTML="<tr><td colspan='5'>No Reports Found</td></tr>";
+
+return;
+
+}
+
+list.forEach(report=>{
+
+reportTable.innerHTML+=`
+
+<tr>
+
+<td>${report.name||"-"}</td>
+
+<td>${report.email||"-"}</td>
+
+<td>${report.website||"-"}</td>
+
+<td>${report.scamType||"-"}</td>
+
+<td>
+
+<button onclick="deleteReport('${report.id}')">
+
+Delete
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+window.searchReports=function(){
+
+const keyword=document.getElementById("searchInput").value.toLowerCase();
+
+const filtered=reports.filter(r=>
+
+(r.website||"").toLowerCase().includes(keyword) ||
+
+(r.email||"").toLowerCase().includes(keyword) ||
+
+(r.phone||"").toLowerCase().includes(keyword)
+
+);
+
+showReports(filtered);
+
+}
+
+window.deleteReport=async function(id){
+
+if(!confirm("Delete this report?")) return;
+
+await deleteDoc(doc(db,"reports",id));
+
+loadReports();
+
+}
+
+window.logout=async function(){
+
+await signOut(auth);
+
+window.location.href="login.html";
+
+}
+
+</script>
 
 </body>
 </html>
