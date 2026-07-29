@@ -6,46 +6,20 @@ createUserWithEmailAndPassword,
 signInWithEmailAndPassword,
 signOut,
 GoogleAuthProvider,
-signInWithPopup
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
-import {
-getFirestore,
-collection,
-addDoc,
-getDocs,
-deleteDoc,
-doc
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-
-const firebaseConfig = {
-
-apiKey:"AIzaSyCNK3tHXMTS_-mu8IAHW9q7hgo4TkBGuSs",
-authDomain:"fraudguard-eafd2.firebaseapp.com",
-projectId:"fraudguard-eafd2",
-storageBucket:"fraudguard-eafd2.firebasestorage.app",
-messagingSenderId:"721145048132",
-appId:"1:721145048132:web:c87c07d58d8e9b5b806011"
-
-};
-
-const app=initializeApp(firebaseConfig);
-
-const auth=getAuth(app);
-
-const db=getFirestore(app);
-
-const provider=new GoogleAuthProvider();
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-
-import {
-getAuth,
-createUserWithEmailAndPassword,
-signInWithEmailAndPassword,
-signOut,
-GoogleAuthProvider,
 signInWithPopup,
-onAuthStateChanged
+onAuthStateChanged(auth,(user)=>{
+
+if(user){
+
+const email=document.getElementById("userEmail");
+
+if(email){
+email.innerText=user.email;
+}
+
+}
+
+});
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 import {
 getFirestore,
@@ -58,7 +32,7 @@ doc
 
 const firebaseConfig = {
 
-apiKey:"AIzaSyCNK3tHXMTS_-mu8IAHW9q7hgo4TkBGuSs",
+apiKey:"YOUR_API_KEY",
 authDomain:"fraudguard-eafd2.firebaseapp.com",
 projectId:"fraudguard-eafd2",
 storageBucket:"fraudguard-eafd2.firebasestorage.app",
@@ -74,6 +48,105 @@ const auth=getAuth(app);
 const db=getFirestore(app);
 
 const provider=new GoogleAuthProvider();
+
+// Email Sign Up
+window.signUp = function () {
+auth.onAuthStateChanged((user)=>{
+
+if(user){
+
+const email=document.getElementById("userEmail");
+
+if(email){
+
+email.innerText=user.email;
+
+}
+
+}
+
+});
+
+
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
+
+createUserWithEmailAndPassword(auth, email, password)
+.then(() => {
+
+alert("Account created successfully!");
+
+})
+.catch((error) => {
+
+alert(error.message);
+
+});
+
+};
+
+
+// Email Login
+window.login = function () {
+
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
+
+signInWithEmailAndPassword(auth, email, password)
+.then((userCredential) => {
+
+alert("Welcome " + userCredential.user.email);
+
+window.location.href = "dashboard.html";
+
+})
+.catch((error) => {
+
+alert(error.message);
+
+});
+
+};
+
+
+// Google Login
+window.googleLogin = function () {
+
+signInWithPopup(auth, provider)
+.then((result) => {
+
+alert("Welcome " + result.user.displayName);
+
+window.location.href = "dashboard.html";
+
+})
+.catch((error) => {
+
+alert(error.message);
+
+});
+
+};
+
+
+// Logout
+window.logout = function () {
+
+signOut(auth)
+.then(() => {
+
+alert("Logged out successfully!");
+
+window.location.href = "login.html";
+
+})
+.catch((error) => {
+
+alert(error.message);
+
+});
+
+};
 // Submit Scam Report
 window.submitReport = async function () {
 
@@ -199,7 +272,7 @@ try{
 
 const response = await fetch(
 
-"https://safebrowsing.googleapis.com/v4/threatMatches:find?key=AIzaSyCNK3tHXMTS_-mu8IAHW9q7hgo4TkBGuSs",
+"https://safebrowsing.googleapis.com/v4/threatMatches:find?key=YOUR_API_KEY",
 
 {
 
@@ -378,3 +451,15 @@ result.style.color="#22c55e";
 }
 
 };
+onAuthStateChanged(auth,(user)=>{
+
+const email=document.getElementById("userEmail");
+
+if(user && email){
+
+email.innerText=user.email;
+
+}
+
+});
+
