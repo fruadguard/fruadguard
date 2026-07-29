@@ -9,7 +9,6 @@
 <title>Website Scanner | FraudGuard</title>
 
 <link rel="stylesheet" href="style.css">
-
 <link rel="icon" href="logo.png">
 
 </head>
@@ -36,8 +35,88 @@
 
 <li><a href="about.html">About</a></li>
 
-<li><a href="features.html">Features</a></
+<li><a href="features.html">Features</a></li>
+
+<li><a href="contact.html">Contact</a></li>
+
+<li><a href="login.html" class="login-btn">Login</a></li>
+
+</ul>
+
+</nav>
+
+<section class="hero">
+
+<h1>🌐 Website Scanner</h1>
+
+<p>
+
+Scan websites with Google Safe Browsing and FraudGuard AI to detect phishing, malware and scam websites.
+
+</p>
+
+</section>
+
+<section class="scanner">
+
+<h2>Scan a Website</h2>
+
+<input
+type="url"
+id="urlInput"
+placeholder="https://example.com">
+
+<br><br>
+
+<button onclick="scanURL()" class="btn-primary">
+
+🔍 Scan Website
+
+</button>
+
+<div id="resultBox" style="display:none;margin-top:30px;">
+
+<div class="card">
+
+<h2>Scan Result</h2>
+
+<h3 id="scanResult">Waiting...</h3>
+
+<p id="riskScore"></p>
+
+<p id="googleStatus"></p>
+
+<p id="aiStatus"></p>
+
+<div style="margin-top:20px;">
+
+<button onclick="copyResult()" class="btn-secondary">
+
+📋 Copy Result
+
+</button>
+
+<button onclick="shareResult()" class="btn-secondary">
+
+📤 Share Result
+
+</button>
+
+<button onclick="reportWebsite()" class="btn-primary">
+
+🚨 Report Website
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
 <script>
+
 async function scanURL(){
 
 const url=document.getElementById("urlInput").value.trim();
@@ -65,7 +144,7 @@ aiStatus.innerHTML="";
 
 try{
 
-const response=await fetch("https://safebrowsing.googleapis.com/v4/threatMatches:find?key=YOUR_API_KEY",{
+const response=await fetch("https://safebrowsing.googleapis.com/v4/threatMatches:find?key=YOUR_NEW_API_KEY",{
 
 method:"POST",
 
@@ -111,35 +190,101 @@ const data=await response.json();
 if(data.matches){
 
 scanResult.innerHTML="🚨 Dangerous Website";
+scanResult.style.color="red";
 
 riskScore.innerHTML="AI Risk Score: 95%";
-
-googleStatus.innerHTML="Google Safe Browsing: Unsafe";
-
-aiStatus.innerHTML="FraudGuard AI: High Risk";
+googleStatus.innerHTML="🛡 Google Safe Browsing: Unsafe";
+aiStatus.innerHTML="🤖 FraudGuard AI: High Risk";
 
 }else{
 
 scanResult.innerHTML="✅ Website Looks Safe";
+scanResult.style.color="#22c55e";
 
 riskScore.innerHTML="AI Risk Score: 5%";
-
-googleStatus.innerHTML="Google Safe Browsing: Safe";
-
-aiStatus.innerHTML="FraudGuard AI: Low Risk";
+googleStatus.innerHTML="🛡 Google Safe Browsing: Safe";
+aiStatus.innerHTML="🤖 FraudGuard AI: Low Risk";
 
 }
 
 }catch(error){
 
 scanResult.innerHTML="❌ Scan Failed";
+scanResult.style.color="red";
 
-riskScore.innerHTML=error.message;
+riskScore.innerHTML="";
+googleStatus.innerHTML="Error: "+error.message;
+aiStatus.innerHTML="";
 
 }
 
 }
+
+  </script>
+<script>
+
+function copyResult(){
+
+const text=
+
+document.getElementById("scanResult").innerText+"\n"+
+
+document.getElementById("riskScore").innerText+"\n"+
+
+document.getElementById("googleStatus").innerText+"\n"+
+
+document.getElementById("aiStatus").innerText;
+
+navigator.clipboard.writeText(text);
+
+alert("Result copied successfully!");
+
+}
+
+function shareResult(){
+
+const text=
+
+document.getElementById("scanResult").innerText+"\n"+
+
+document.getElementById("riskScore").innerText;
+
+if(navigator.share){
+
+navigator.share({
+
+title:"FraudGuard Scan Result",
+
+text:text
+
+});
+
+}else{
+
+alert("Sharing is not supported on this device.");
+
+}
+
+}
+
+function reportWebsite(){
+
+const url=document.getElementById("urlInput").value.trim();
+
+if(url===""){
+
+alert("Please enter a website URL.");
+
+return;
+
+}
+
+window.location.href="report.html?url="+encodeURIComponent(url);
+
+}
+
 </script>
 
 </body>
+
 </html>
