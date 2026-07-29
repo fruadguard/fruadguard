@@ -114,3 +114,51 @@ font-size:18px;
 }
 
 }
+.cards{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:25px;
+margin-top:40px;
+}
+
+.card{
+background:#334155;
+width:280px;
+padding:25px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,.3);
+transition:.3s;
+text-align:center;
+}
+
+.card:hover{
+transform:translateY(-10px);
+background:#475569;
+box-shadow:0 10px 25px rgba(34,197,94,.3);
+}
+
+.card h2{
+color:#22c55e;
+font-size:24px;
+margin-bottom:15px;
+}
+
+.card p{
+font-size:17px;
+line-height:1.7;
+color:#d1d5db;
+}
+
+@media(max-width:768px){
+
+.cards{
+flex-direction:column;
+align-items:center;
+}
+
+.card{
+width:90%;
+}
+
+}
