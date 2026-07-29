@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Report Scam | FraudGuard</title>
+
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="logo.png">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+<div class="logo">
+<a href="index.html">
+<img src="logo.png" alt="FraudGuard">
+<span>FraudGuard</span>
+</a>
+</div>
+
+<ul class="nav-links">
+<li><a href="index.html">Home</a></li>
+<li><a href="about.html">About</a></li>
+<li><a href="features.html">Features</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+
+</nav>
+
+<section class="hero">
+
+<h1>🚨 Report a Scam</h1>
+
+<p>
+Help protect others by reporting scam websites, phone numbers or fake social media accounts.
+</p>
+
+</section>
+
+<section class="scanner">
+
+<h2>Submit Scam Report</h2>
+
+<form id="reportForm">
+
+<input
+type="text"
+id="name"
+placeholder="Your Name"
+required>
+
+<br><br>
+
+<input
+type="email"
+id="email"
+placeholder="Your Email"
+required>
+
+<br><br>
+
+<input
+type="tel"
+id="phone"
+placeholder="Phone Number">
+
+<br><br>
+
+<input
+type="url"
+id="website"
+placeholder="Scam Website URL">
+
+<br><br>
+
+<select id="scamType" required>
+
+<option value="">Select Scam Type</option>
+
+<option>Phishing Website</option>
+
+<option>Fake Shopping</option>
+
+<option>Investment Scam</option>
+
+<option>Job Scam</option>
+
+<option>Romance Scam</option>
+
+<option>Fake Facebook Account</option>
+
+<option>Fake WhatsApp</option>
+
+<option>Fake Telegram</option>
+
+<option>Phone Scam</option>
+
+<option>Other</option>
+
+</select>
+
+<br><br>
+
+<textarea
+id="description"
+rows="6"
+placeholder="Describe the scam..."
+required></textarea>
+
+<br><br>
+
+<label>Upload Screenshot (Optional)</label>
+
+<input
+type="file"
+id="screenshot"
+accept="image/*">
+
+<br><br>
+
+<button
+type="submit"
+class="btn-primary">
+
+🚨 Submit Report
+
+</button>
+
+</form>
+
+<div id="successMessage"></div>
+
+</section>
+<script type="module">
+
+import { db } from "./firebase.js";
+
+import {
+collection,
+addDoc,
+serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+const form=document.getElementById("reportForm");
+
+form.addEventListener("submit",async(e)=>{
+
+e.preventDefault();
+
+const name=document.getElementById("name").value;
+const email=document.getElementById("email").value;
+const phone=document.getElementById("phone").value;
+const website=document.getElementById("website").value;
+const scamType=document.getElementById("scamType").value;
+const description=document.getElementById("description").value;
+
+try{
+
+await addDoc(collection(db,"reports"),{
+
+name:name,
+email:email,
+phone:phone,
+website:website,
+scamType:scamType,
+description:description,
+createdAt:serverTimestamp()
+
+});
+
+document.getElementById("successMessage").innerHTML=
+"✅ Report submitted successfully! Thank you.";
+
+form.reset();
+
+}catch(error){
+
+document.getElementById("successMessage").innerHTML=
+"❌ Failed to submit report.";
+
+console.error(error);
+
+}
+
+});
+
+</script>
+ <script>
+
+const success=document.getElementById("successMessage");
+
+success.style.marginTop="20px";
+success.style.fontSize="18px";
+success.style.fontWeight="bold";
+success.style.textAlign="center";
+
+</script>
+
+</body>
+</html>
+
+
+
