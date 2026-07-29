@@ -44,9 +44,9 @@ createUserWithEmailAndPassword,
 signInWithEmailAndPassword,
 signOut,
 GoogleAuthProvider,
-signInWithPopup
+signInWithPopup,
+onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
 import {
 getFirestore,
 collection,
@@ -58,7 +58,7 @@ doc
 
 const firebaseConfig = {
 
-apiKey:"YOUR_API_KEY",
+apiKey:"AIzaSyCNK3tHXMTS_-mu8IAHW9q7hgo4TkBGuSs",
 authDomain:"fraudguard-eafd2.firebaseapp.com",
 projectId:"fraudguard-eafd2",
 storageBucket:"fraudguard-eafd2.firebasestorage.app",
