@@ -101,10 +101,6 @@ nav a:hover{
 color:#22c55e;
 }
 body{
-  <a href="#home">Home</a>
-  <a href="#about">About</a>
-  <a href="#features">Features</a>
-  <a href="#contact">Contact</a>
 
 font-family:Arial,sans-serif;
 background:#0f172a;
@@ -501,6 +497,7 @@ font-weight:bold;
     <a href="#contact">Contact</a>
   </div>
 </nav>
+</nav>
 <section class="hero" id="home">
 
 <h1>Protect Yourself from Online Scams</h1>
@@ -654,16 +651,12 @@ FraudGuard is currently under active development. New features, updates, and ann
 <label>Your Name</label><br>
 <input type="text" id="name" placeholder="Enter your name"><br><br>
 
-<label>Email</label><br>
-<label>Phone Number</label><br>
 
-<input
-type="text"
-id="phoneReport"
-placeholder="Enter phone number"><br><br>
- 
+<label>Email</label><br>
 <input type="email" id="emailReport" placeholder="Enter your email"><br><br>
 
+<label>Phone Number</label><br>
+<input type="text" id="phoneReport" placeholder="Enter phone number"><br><br>
 <label>Scam Details</label><br>
 <textarea id="report" rows="6" placeholder="Describe the scam"></textarea><br><br>
 
@@ -825,8 +818,17 @@ alert("Logged out successfully!");
 
 };
 
+window.loadReports = async function () {
+
+   ...
+
+};
+
 window.submitReport = async function () {
- window.loadReports = async function () {
+
+   ...
+
+};
   window.deleteReport = async function(id){
 
 const confirmDelete = confirm("Are you sure you want to delete this report?");
@@ -906,9 +908,10 @@ email:email,
 phone:phone,
 report:report,
 createdAt:new Date()
- document.getElementById("phoneReport").value="";
 
 });
+
+document.getElementById("phoneReport").value="";
 
 alert("Report submitted successfully!");
 
@@ -924,8 +927,17 @@ alert(error.message);
 
 };
 
-window.scanURL = function () {
- window.checkPhone = async function () {
+window.checkPhone = async function(){
+
+...
+
+};
+
+window.scanURL = function(){
+
+...
+
+};
 
 const phone = document.getElementById("phoneInput").value.trim();
 const result = document.getElementById("phoneResult");
