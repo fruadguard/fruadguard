@@ -512,4 +512,27 @@ Delete
 if(window.location.pathname.includes("admin.html")){
 loadAdminReports();
 }
+const ADMIN_EMAIL = "rbiplob905@gmail.com";
 
+onAuthStateChanged(auth,(user)=>{
+
+if(window.location.pathname.includes("admin.html")){
+
+if(!user){
+
+window.location.href="login.html";
+return;
+
+}
+
+if(user.email!==ADMIN_EMAIL){
+
+alert("Access Denied!");
+
+window.location.href="dashboard.html";
+
+}
+
+}
+
+});
