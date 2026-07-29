@@ -113,7 +113,30 @@ Loading reports...
 import { auth, db } from "./firebase.js";
 
 import {
-onAuthStateChanged,
+ onAuthStateChanged(auth,(user)=>{
+
+if(!user){
+
+window.location.href="login.html";
+return;
+
+}
+
+const adminEmail="rbiplob905@gmail.com";
+
+if(user.email!==adminEmail){
+
+alert("Access Denied!");
+
+window.location.href="dashboard.html";
+return;
+
+}
+
+loadReports();
+
+});
+
 signOut
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
