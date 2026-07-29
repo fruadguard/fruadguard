@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -10,56 +9,48 @@
 
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="logo.png">
-
 </head>
 
 <body>
 
+<!-- Navbar -->
+
 <nav class="navbar">
 
 <div class="logo">
-
 <a href="index.html">
-
-<img src="logo.png" alt="FraudGuard">
-
+<img src="logo.png" alt="FraudGuard Logo">
 <span>FraudGuard</span>
-
 </a>
-
 </div>
 
 <ul class="nav-links">
-
 <li><a href="index.html">Home</a></li>
-
 <li><a href="about.html">About</a></li>
-
 <li><a href="features.html">Features</a></li>
-
 <li><a href="contact.html">Contact</a></li>
-
 <li><a href="login.html" class="login-btn">Login</a></li>
-
 </ul>
 
 </nav>
 
+<!-- Hero -->
+
 <section class="hero">
 
-<h1>🌐 Website Scanner</h1>
+<h1>🌐 Website URL Scanner</h1>
 
 <p>
-
-Scan websites with Google Safe Browsing and FraudGuard AI to detect phishing, malware and scam websites.
-
+Scan any website using Google Safe Browsing and FraudGuard AI.
 </p>
 
 </section>
 
+<!-- Scanner -->
+
 <section class="scanner">
 
-<h2>Scan a Website</h2>
+<h2>Scan Website</h2>
 
 <input
 type="url"
@@ -68,28 +59,12 @@ placeholder="https://example.com">
 
 <br><br>
 
-<button onclick="scanURL()" class="btn-primary">
-
+<button class="btn-primary" onclick="scanURL()">
 🔍 Scan Website
-
 </button>
 
 <div id="resultBox" style="display:none;margin-top:30px;">
-<hr>
 
-<h3>Security Details</h3>
-
-<p><b>Scan Time:</b> <span id="scanTime">-</span></p>
-
-<p><b>Risk Level:</b> <span id="riskLevel">-</span></p>
-
-<div style="width:100%;height:22px;background:#334155;border-radius:12px;overflow:hidden;">
-
-<div id="riskBar"
-style="height:22px;width:0%;background:#22c55e;transition:0.5s;">
-</div>
-
-</div>
 <div class="card">
 
 <h2>Scan Result</h2>
@@ -102,34 +77,56 @@ style="height:22px;width:0%;background:#22c55e;transition:0.5s;">
 
 <p id="aiStatus"></p>
 
-<div style="margin-top:20px;">
+<hr>
+
+<h3>Security Details</h3>
+
+<p><strong>Scan Time:</strong> <span id="scanTime">-</span></p>
+
+<p><strong>Risk Level:</strong> <span id="riskLevel">-</span></p>
+
+<div style="width:100%;height:20px;background:#ddd;border-radius:10px;overflow:hidden;">
+
+<div id="riskBar"
+style="width:0%;height:20px;background:#22c55e;transition:0.5s;">
+</div>
+
+</div>
+
+<br>
 
 <button onclick="copyResult()" class="btn-secondary">
-
 📋 Copy Result
-
 </button>
 
 <button onclick="shareResult()" class="btn-secondary">
-
 📤 Share Result
-
 </button>
 
 <button onclick="reportWebsite()" class="btn-primary">
-
 🚨 Report Website
-
 </button>
 
 </div>
 
-</div>
+<hr>
+
+<h2>Recent Scans</h2>
+
+<div id="historyList"></div>
+
+<br>
+
+<button onclick="downloadResult()" class="btn-secondary">
+📄 Download Result
+</button>
 
 </div>
 
 </section>
 <script>
+
+let history=[];
 
 async function scanURL(){
 
@@ -142,14 +139,6 @@ const googleStatus=document.getElementById("googleStatus");
 const aiStatus=document.getElementById("aiStatus");
 
 if(url===""){
- document.getElementById("scanTime").innerHTML=
-new Date().toLocaleString();
-
-document.getElementById("riskLevel").innerHTML="HIGH";
-
-document.getElementById("riskBar").style.width="95%";
-
-document.getElementById("riskBar").style.background="red";
 
 alert("Please enter a website URL.");
 
@@ -158,21 +147,10 @@ return;
 }
 
 resultBox.style.display="block";
- <hr>
-
-<h2>Recent Scans</h2>
-
-<div id="historyList"></div>
-
-<br>
-
-<button onclick="downloadResult()" class="btn-secondary">
-
-📄 Download Result
-
-</button>
 
 scanResult.innerHTML="🔍 Scanning...";
+scanResult.style.color="#f59e0b";
+
 riskScore.innerHTML="";
 googleStatus.innerHTML="";
 aiStatus.innerHTML="";
@@ -222,14 +200,24 @@ threatEntries:[
 
 const data=await response.json();
 
+document.getElementById("scanTime").innerHTML=new Date().toLocaleString();
+
 if(data.matches){
 
 scanResult.innerHTML="🚨 Dangerous Website";
 scanResult.style.color="red";
 
 riskScore.innerHTML="AI Risk Score: 95%";
+
 googleStatus.innerHTML="🛡 Google Safe Browsing: Unsafe";
+
 aiStatus.innerHTML="🤖 FraudGuard AI: High Risk";
+
+document.getElementById("riskLevel").innerHTML="HIGH";
+
+document.getElementById("riskBar").style.width="95%";
+
+document.getElementById("riskBar").style.background="red";
 
 }else{
 
@@ -237,37 +225,38 @@ scanResult.innerHTML="✅ Website Looks Safe";
 scanResult.style.color="#22c55e";
 
 riskScore.innerHTML="AI Risk Score: 5%";
+
 googleStatus.innerHTML="🛡 Google Safe Browsing: Safe";
+
 aiStatus.innerHTML="🤖 FraudGuard AI: Low Risk";
 
+document.getElementById("riskLevel").innerHTML="LOW";
+
+document.getElementById("riskBar").style.width="5%";
+
+document.getElementById("riskBar").style.background="#22c55e";
+
 }
+
+saveHistory(url,scanResult.innerText,riskScore.innerText);
 
 }catch(error){
 
 scanResult.innerHTML="❌ Scan Failed";
+
 scanResult.style.color="red";
 
-riskScore.innerHTML="";
-googleStatus.innerHTML="Error: "+error.message;
-aiStatus.innerHTML="";
+googleStatus.innerHTML=error.message;
 
 }
 
 }
-
-  </script>
-<script>
-
 function copyResult(){
 
 const text=
-
 document.getElementById("scanResult").innerText+"\n"+
-
 document.getElementById("riskScore").innerText+"\n"+
-
 document.getElementById("googleStatus").innerText+"\n"+
-
 document.getElementById("aiStatus").innerText;
 
 navigator.clipboard.writeText(text);
@@ -279,28 +268,15 @@ alert("Result copied successfully!");
 function shareResult(){
 
 const text=
-
 document.getElementById("scanResult").innerText+"\n"+
-
 document.getElementById("riskScore").innerText;
 
 if(navigator.share){
 
 navigator.share({
-
 title:"FraudGuard Scan Result",
-
 text:text
-
 });
-document.getElementById("scanTime").innerHTML=
-new Date().toLocaleString();
-
-document.getElementById("riskLevel").innerHTML="LOW";
-
-document.getElementById("riskBar").style.width="5%";
-
-document.getElementById("riskBar").style.background="#22c55e"; 
 
 }else{
 
@@ -326,8 +302,65 @@ window.location.href="report.html?url="+encodeURIComponent(url);
 
 }
 
+function saveHistory(url,result,risk){
+
+history.unshift({
+url:url,
+result:result,
+risk:risk,
+time:new Date().toLocaleString()
+});
+
+if(history.length>10){
+history.pop();
+}
+
+showHistory();
+
+}
+
+function showHistory(){
+
+const list=document.getElementById("historyList");
+
+list.innerHTML="";
+
+history.forEach(item=>{
+
+list.innerHTML+=`
+<div class="card">
+<h3>${item.url}</h3>
+<p>${item.result}</p>
+<p>${item.risk}</p>
+<p>${item.time}</p>
+</div>
+`;
+
+});
+
+}
+
+function downloadResult(){
+
+const text=
+document.getElementById("scanResult").innerText+"\n"+
+document.getElementById("riskScore").innerText+"\n"+
+document.getElementById("googleStatus").innerText+"\n"+
+document.getElementById("aiStatus").innerText;
+
+const blob=new Blob([text],{type:"text/plain"});
+
+const a=document.createElement("a");
+
+a.href=URL.createObjectURL(blob);
+
+a.download="FraudGuard-Scan-Result.txt";
+
+a.click();
+
+}
+
 </script>
 
 </body>
-
 </html>
