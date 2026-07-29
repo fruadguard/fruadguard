@@ -9,15 +9,24 @@ GoogleAuthProvider,
 signInWithPopup,
 onAuthStateChanged(auth,(user)=>{
 
-if(user){
-
 const email=document.getElementById("userEmail");
+
+if(user){
 
 if(email){
 email.innerText=user.email;
 }
 
+}else{
+
+if(window.location.pathname.includes("dashboard.html")){
+window.location.href="login.html";
 }
+
+}
+
+});
+
 
 });
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
@@ -32,7 +41,7 @@ doc
 
 const firebaseConfig = {
 
-apiKey:"YOUR_API_KEY",
+apiKey:"AIzaSyCNK3tHXMTS_-mu8IAHW9q7hgo4TkBGuSs",
 authDomain:"fraudguard-eafd2.firebaseapp.com",
 projectId:"fraudguard-eafd2",
 storageBucket:"fraudguard-eafd2.firebasestorage.app",
@@ -191,7 +200,7 @@ alert(error.message);
 // Load Reports
 window.loadReports = async function(){
 
-const reportsList=document.getElementById("reportsList");
+const repoKList=document.getElementById("reportsList");
 
 if(!reportsList) return;
 
@@ -272,7 +281,7 @@ try{
 
 const response = await fetch(
 
-"https://safebrowsing.googleapis.com/v4/threatMatches:find?key=YOUR_API_KEY",
+"https://safebrowsing.googleapis.com/v4/threatMatches:find?key="AIzaSyCNK3tHXMTS_-mu8IAHW9q7hgo4TkBGuSs",
 
 {
 
@@ -462,4 +471,45 @@ email.innerText=user.email;
 }
 
 });
+window.loadAdminReports = async function(){
+
+const reportsList=document.getElementById("reportsList");
+const totalReports=document.getElementById("totalReports");
+
+if(!reportsList) return;
+
+reportsList.innerHTML="";
+
+const snapshot=await getDocs(collection(db,"reports"));
+
+totalReports.innerText=snapshot.size;
+
+snapshot.forEach((reportDoc)=>{
+
+const data=reportDoc.data();
+
+reportsList.innerHTML+=`
+
+<div class="card">
+
+<b>Name:</b> ${data.name}<br>
+<b>Email:</b> ${data.email}<br>
+<b>Phone:</b> ${data.phone}<br>
+<b>Report:</b> ${data.report}<br><br>
+
+<button onclick="deleteReport('${reportDoc.id}')">
+Delete
+</button>
+
+</div>
+
+`;
+
+});
+
+};
+
+if(window.location.pathname.includes("admin.html")){
+loadAdminReports();
+}
 
