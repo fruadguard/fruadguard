@@ -32,7 +32,8 @@
 <ul class="nav-links">
 
 <li><a href="index.html">Home</a></li>
-<li><a href="scanner.html">Scanner</a></li>
+<li><a href="scanner.html">URL Scanner</a></li>
+<li><a href="phone-checker.html">Phone Checker</a></li>
 <li><a href="report.html">Report</a></li>
 
 </ul>
@@ -50,6 +51,8 @@
 <h2>User Information</h2>
 
 <p><strong>Email:</strong> <span id="userEmail">Loading...</span></p>
+
+<p><strong>Membership:</strong> <span id="membership">Checking...</span></p>
 
 </div>
 
@@ -84,9 +87,10 @@
 </button>
 
 </section>
- <script type="module">
 
-import { auth } from "./firebase.js";
+<script type="module">
+
+import { auth, db } from "./firebase.js";
 
 import {
 
@@ -96,13 +100,55 @@ signOut
 
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
+import {
+
+doc,
+
+getDoc
+
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
 const userEmail=document.getElementById("userEmail");
 
-onAuthStateChanged(auth,(user)=>{
+const membership=document.getElementById("membership");
+
+onAuthStateChanged(auth,async(user)=>{
 
 if(user){
 
 userEmail.innerText=user.email;
+
+try{
+
+const snap=await getDoc(doc(db,"subscriptions",user.uid));
+
+if(snap.exists()){
+
+const data=snap.data();
+
+if(data.premium===true){
+
+membership.innerHTML="👑 Premium Member";
+
+}else{
+
+membership.innerHTML="🆓 Free Member";
+
+}
+
+}else{
+
+membership.innerHTML="🆓 Free Member";
+
+}
+
+}catch(error){
+
+console.log(error);
+
+membership.innerHTML="🆓 Free Member";
+
+}
 
 }else{
 
@@ -133,4 +179,4 @@ alert(error.message);
 </body>
 
 </html>
-  
+
