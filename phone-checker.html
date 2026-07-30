@@ -4,12 +4,18 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Phone Scanner | FraudGuard</title>
+<title>Phone Checker | FraudGuard</title>
 
 <link rel="stylesheet" href="style.css">
+
 <link rel="icon" href="logo.png">
+
+<link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
 
 </head>
 
@@ -32,9 +38,20 @@
 <ul class="nav-links">
 
 <li><a href="index.html">Home</a></li>
-<li><a href="scanner.html">Website Scanner</a></li>
-<li><a href="report.html">Report</a></li>
-<li><a href="dashboard.html">Dashboard</a></li>
+
+<li><a href="about.html">About</a></li>
+
+<li><a href="features.html">Features</a></li>
+
+<li><a href="scanner.html">URL Scanner</a></li>
+
+<li><a href="phone-checker.html">Phone Checker</a></li>
+
+<li><a href="report.html">Report Scam</a></li>
+
+<li><a href="contact.html">Contact</a></li>
+
+<li><a href="login.html" class="login-btn">Login</a></li>
 
 </ul>
 
@@ -42,11 +59,11 @@
 
 <section class="hero">
 
-<h1>📞 Phone Number Scanner</h1>
+<h1>📞 Phone Number Checker</h1>
 
 <p>
 
-Check whether a phone number has been reported as scam or suspicious.
+Check whether a phone number has been reported as scam using FraudGuard AI and Community Reports.
 
 </p>
 
@@ -57,7 +74,7 @@ Check whether a phone number has been reported as scam or suspicious.
 <h2>Scan Phone Number</h2>
 
 <select id="countryCode">
-
+<option value="+880">🇧🇩 Bangladesh (+880)</option>
 <option value="+93">🇦🇫 Afghanistan (+93)</option>
 <option value="+355">🇦🇱 Albania (+355)</option>
 <option value="+213">🇩🇿 Algeria (+213)</option>
@@ -71,7 +88,6 @@ Check whether a phone number has been reported as scam or suspicious.
 <option value="+994">🇦🇿 Azerbaijan (+994)</option>
 <option value="+1-242">🇧🇸 Bahamas (+1-242)</option>
 <option value="+973">🇧🇭 Bahrain (+973)</option>
-<option value="+880">🇧🇩 Bangladesh (+880)</option>
 <option value="+1-246">🇧🇧 Barbados (+1-246)</option>
 <option value="+375">🇧🇾 Belarus (+375)</option>
 <option value="+32">🇧🇪 Belgium (+32)</option>
@@ -139,6 +155,25 @@ Check whether a phone number has been reported as scam or suspicious.
 <option value="+964">🇮🇶 Iraq (+964)</option>
 <option value="+353">🇮🇪 Ireland (+353)</option>
 <option value="+972">🇮🇱 Israel (+972)</option>
+<option value="+39">🇮🇹 Italy (+39)</option>
+<option value="+1-876">🇯🇲 Jamaica (+1-876)</option>
+<option value="+81">🇯🇵 Japan (+81)</option>
+<option value="+962">🇯🇴 Jordan (+962)</option>
+<option value="+7">🇰🇿 Kazakhstan (+7)</option>
+<option value="+254">🇰🇪 Kenya (+254)</option>
+<option value="+686">🇰🇮 Kiribati (+686)</option>
+<option value="+850">🇰🇵 North Korea (+850)</option>
+<option value="+82">🇰🇷 South Korea (+82)</option>
+<option value="+965">🇰🇼 Kuwait (+965)</option>
+<option value="+996">🇰🇬 Kyrgyzstan (+996)</option>
+<option value="+856">🇱🇦 Laos (+856)</option>
+<option value="+371">🇱🇻 Latvia (+371)</option>
+<option value="+961">🇱🇧 Lebanon (+961)</option>
+<option value="+266">🇱🇸 Lesotho (+266)</option>
+<option value="+231">🇱🇷 Liberia (+231)</option>
+<option value="+218">🇱🇾 Libya (+218)</option>
+<option value="+423">🇱🇮 Liechtenstein (+423)</option>
+<option value="+370">🇱🇹 Lithuania (+370)</option>
 <option value="+352">🇱🇺 Luxembourg (+352)</option>
 <option value="+261">🇲🇬 Madagascar (+261)</option>
 <option value="+265">🇲🇼 Malawi (+265)</option>
@@ -183,57 +218,6 @@ Check whether a phone number has been reported as scam or suspicious.
 <option value="+40">🇷🇴 Romania (+40)</option>
 <option value="+7">🇷🇺 Russia (+7)</option>
 <option value="+250">🇷🇼 Rwanda (+250)</option>
-<option value="+1-869">🇰🇳 Saint Kitts and Nevis (+1-869)</option>
-<option value="+1-758">🇱🇨 Saint Lucia (+1-758)</option>
-<option value="+1-784">🇻🇨 Saint Vincent and the Grenadines (+1-784)</option>
-<option value="+685">🇼🇸 Samoa (+685)</option>
-<option value="+378">🇸🇲 San Marino (+378)</option>
-<option value="+239">🇸🇹 São Tomé and Príncipe (+239)</option>
- <option value="+966">🇸🇦 Saudi Arabia (+966)</option>
-<option value="+221">🇸🇳 Senegal (+221)</option>
-<option value="+381">🇷🇸 Serbia (+381)</option>
-<option value="+248">🇸🇨 Seychelles (+248)</option>
-<option value="+232">🇸🇱 Sierra Leone (+232)</option>
-<option value="+65">🇸🇬 Singapore (+65)</option>
-<option value="+421">🇸🇰 Slovakia (+421)</option>
-<option value="+386">🇸🇮 Slovenia (+386)</option>
-<option value="+677">🇸🇧 Solomon Islands (+677)</option>
-<option value="+252">🇸🇴 Somalia (+252)</option>
-<option value="+27">🇿🇦 South Africa (+27)</option>
-<option value="+211">🇸🇸 South Sudan (+211)</option>
-<option value="+34">🇪🇸 Spain (+34)</option>
-<option value="+94">🇱🇰 Sri Lanka (+94)</option>
-<option value="+249">🇸🇩 Sudan (+249)</option>
-<option value="+597">🇸🇷 Suriname (+597)</option>
-<option value="+268">🇸🇿 Eswatini (+268)</option>
-<option value="+46">🇸🇪 Sweden (+46)</option>
-<option value="+41">🇨🇭 Switzerland (+41)</option>
-<option value="+963">🇸🇾 Syria (+963)</option>
-<option value="+886">🇹🇼 Taiwan (+886)</option>
-<option value="+992">🇹🇯 Tajikistan (+992)</option>
-<option value="+255">🇹🇿 Tanzania (+255)</option>
-<option value="+66">🇹🇭 Thailand (+66)</option>
-<option value="+228">🇹🇬 Togo (+228)</option>
-<option value="+676">🇹🇴 Tonga (+676)</option>
-<option value="+1-868">🇹🇹 Trinidad and Tobago (+1-868)</option>
-<option value="+216">🇹🇳 Tunisia (+216)</option>
-<option value="+90">🇹🇷 Turkey (+90)</option>
-<option value="+993">🇹🇲 Turkmenistan (+993)</option>
-<option value="+688">🇹🇻 Tuvalu (+688)</option>
-<option value="+256">🇺🇬 Uganda (+256)</option>
-<option value="+380">🇺🇦 Ukraine (+380)</option>
-<option value="+971">🇦🇪 United Arab Emirates (+971)</option>
-<option value="+44">🇬🇧 United Kingdom (+44)</option>
-<option value="+1">🇺🇸 United States (+1)</option>
-<option value="+598">🇺🇾 Uruguay (+598)</option>
-<option value="+998">🇺🇿 Uzbekistan (+998)</option>
-<option value="+678">🇻🇺 Vanuatu (+678)</option>
-<option value="+379">🇻🇦 Vatican City (+379)</option>
-<option value="+58">🇻🇪 Venezuela (+58)</option>
-<option value="+84">🇻🇳 Vietnam (+84)</option>
-<option value="+967">🇾🇪 Yemen (+967)</option>
-<option value="+260">🇿🇲 Zambia (+260)</option>
-<option value="+263">🇿🇼 Zimbabwe (+263)</option>
 
 </select>
 
@@ -247,10 +231,10 @@ placeholder="Enter phone number">
 <br><br>
 
 <button
-class="btn-primary"
-onclick="scanPhone()">
+onclick="scanPhone()"
+class="btn-primary">
 
-🔍 Scan Number
+🔍 Scan Phone Number
 
 </button>
 
@@ -258,7 +242,7 @@ onclick="scanPhone()">
 
 <div class="card">
 
-<h2>Scan Result</h2>
+<h2>Phone Scan Result</h2>
 
 <h3 id="scanResult">Waiting...</h3>
 
@@ -267,10 +251,6 @@ onclick="scanPhone()">
 <p id="communityStatus"></p>
 
 <p id="aiStatus"></p>
-
-<hr>
-
-<h3>Security Details</h3>
 
 <p><b>Scan Time:</b> <span id="scanTime">-</span></p>
 
@@ -308,8 +288,6 @@ style="width:0%;height:20px;background:#22c55e;transition:.5s;">
 
 </div>
 
-</section>
-
 <script type="module">
 import { db } from "./firebase.js";
 
@@ -321,6 +299,7 @@ getDocs
 window.scanPhone = async function(){
 
 const code=document.getElementById("countryCode").value;
+
 const phone=document.getElementById("phoneInput").value.trim();
 
 if(phone===""){
@@ -336,8 +315,11 @@ const fullNumber=code+phone;
 document.getElementById("resultBox").style.display="block";
 
 document.getElementById("scanResult").innerHTML="🔍 Scanning...";
+
 document.getElementById("riskScore").innerHTML="";
+
 document.getElementById("communityStatus").innerHTML="";
+
 document.getElementById("aiStatus").innerHTML="";
 
 document.getElementById("scanTime").innerHTML=
@@ -347,9 +329,9 @@ let found=false;
 
 const snapshot=await getDocs(collection(db,"reports"));
 
-snapshot.forEach((doc)=>{
+snapshot.forEach((item)=>{
 
-const data=doc.data();
+const data=item.data();
 
 if(data.phone===fullNumber){
 
@@ -361,7 +343,9 @@ found=true;
 
 if(found){
 
-document.getElementById("scanResult").innerHTML="🚨 Scam Number Reported";
+document.getElementById("scanResult").innerHTML="🚨 Scam Number Detected";
+
+document.getElementById("scanResult").style.color="red";
 
 document.getElementById("riskScore").innerHTML="AI Risk Score: 95%";
 
@@ -378,6 +362,8 @@ document.getElementById("riskBar").style.background="red";
 }else{
 
 document.getElementById("scanResult").innerHTML="✅ No Scam Reports Found";
+
+document.getElementById("scanResult").style.color="#22c55e";
 
 document.getElementById("riskScore").innerHTML="AI Risk Score: 5%";
 
@@ -418,7 +404,7 @@ if(navigator.share){
 
 navigator.share({
 
-title:"FraudGuard Phone Scan",
+title:"FraudGuard Phone Checker",
 
 text:text
 
@@ -453,19 +439,32 @@ window.location.href="report.html?phone="+encodeURIComponent(fullNumber);
 };
 
 </script>
- <script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded",function(){
+
 new TomSelect("#countryCode",{
-    create:false,
-    sortField:{
-        field:"text",
-        direction:"asc"
-    },
-    placeholder:"🌍 Search Country..."
+
+create:false,
+
+sortField:{
+field:"text",
+direction:"asc"
+},
+
+placeholder:"🌍 Search Country..."
+
 });
- </script>
+
+});
+
+</script>
 
 </body>
 
 </html>
+
+
 
 
