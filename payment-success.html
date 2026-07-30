@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Payment Successful | FraudGuard</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="icon" href="logo.png">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+<div class="logo">
+
+<a href="index.html">
+
+<img src="logo.png" alt="FraudGuard">
+
+<span>FraudGuard</span>
+
+</a>
+
+</div>
+
+<ul class="nav-links">
+
+<li><a href="index.html">Home</a></li>
+
+<li><a href="dashboard.html">Dashboard</a></li>
+
+<li><a href="pricing.html">Premium</a></li>
+
+</ul>
+
+</nav>
+
+<section class="hero">
+
+<h1>🎉 Payment Successful!</h1>
+
+<p>
+
+Thank you for subscribing to FraudGuard Premium.
+
+</p>
+
+</section>
+
+<section class="pricing">
+
+<div class="card">
+
+<h2>👑 Welcome to Premium</h2>
+
+<p id="planName">Loading...</p>
+
+<h1 style="color:#22c55e;">✅ Activated</h1>
+
+<p>Your Premium subscription is now active.</p>
+
+<hr>
+<p><b>Subscription:</b> <span id="subscriptionPlan">Premium Monthly</span></p>
+
+<p><b>Status:</b> Active</p>
+
+<p><b>Trial:</b> 3-Day Free Trial</p>
+
+<br>
+
+<h2>🎁 Premium Benefits</h2>
+
+<p>✅ Unlimited Website Scans</p>
+
+<p>✅ Unlimited Phone Checks</p>
+
+<p>✅ AI Scam Detection</p>
+
+<p>✅ Facebook Checker</p>
+
+<p>✅ Email Checker</p>
+
+<p>✅ QR Scanner</p>
+
+<p>✅ Priority Support</p>
+
+<p>✅ Early Access Features</p>
+
+<br>
+
+<a href="dashboard.html" class="btn-primary">
+
+📊 Go to Dashboard
+
+</a>
+
+&nbsp;
+
+<a href="index.html" class="btn-secondary">
+
+🏠 Back to Home
+
+</a>
+
+</div>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+
+const plan = params.get("plan") || "monthly";
+
+if(plan==="yearly"){
+
+document.getElementById("planName").innerHTML="👑 Premium Yearly Activated";
+
+document.getElementById("subscriptionPlan").innerHTML="Premium Yearly";
+
+}else{
+
+document.getElementById("planName").innerHTML="⭐ Premium Monthly Activated";
+
+document.getElementById("subscriptionPlan").innerHTML="Premium Monthly";
+
+}
+
+</script>
+
+</section>
+
+<footer>
+
+<p>© 2026 FraudGuard. All Rights Reserved.</p>
+
+</footer>
+
+</body>
+
+</html>
