@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Email Checker | FraudGuard</title>
+
+<meta name="description" content="Check suspicious email addresses with FraudGuard AI.">
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="icon" href="logo.png">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+<div class="logo">
+
+<a href="index.html">
+
+<img src="logo.png" alt="FraudGuard">
+
+<span>FraudGuard</span>
+
+</a>
+
+</div>
+
+<ul class="nav-links">
+
+<li><a href="index.html">Home</a></li>
+
+<li><a href="dashboard.html">Dashboard</a></li>
+
+<li><a href="pricing.html">Premium</a></li>
+
+<li><a href="report.html">Report</a></li>
+
+</ul>
+
+</nav>
+
+<section class="scanner">
+
+<h1>📧 FraudGuard Email Checker</h1>
+
+<p>
+
+Analyze suspicious email addresses using FraudGuard AI.
+
+</p>
+
+<div class="card">
+
+<h2>Email Scanner</h2>
+
+<input
+type="email"
+id="emailInput"
+placeholder="Enter email address">
+
+<br><br>
+
+<button
+class="btn-primary"
+onclick="checkEmail()">
+
+🔍 Check Email
+
+</button>
+
+</div>
+
+<div class="card" id="resultBox" style="display:none;">
+
+<h2>Scan Result</h2>
+
+<div id="resultText"></div>
+
+</div>
+<div class="card">
+
+<h2>Premium Feature</h2>
+
+<p>
+
+This Email Checker is available for FraudGuard Premium members.
+
+</p>
+
+</div>
+
+<script type="module">
+
+import { checkPremium } from "./premium.js";
+
+checkPremium(function(isPremium){
+
+if(!isPremium){
+
+alert("👑 Email Checker is a Premium Feature.");
+
+window.location.href="pricing.html";
+
+return;
+
+}
+
+});
+
+window.checkEmail=function(){
+
+const email=document.getElementById("emailInput").value.trim().toLowerCase();
+
+const resultBox=document.getElementById("resultBox");
+
+const resultText=document.getElementById("resultText");
+
+if(email===""){
+
+alert("Please enter an email address.");
+
+return;
+
+}
+
+resultBox.style.display="block";
+
+if(
+
+email.includes("support") ||
+
+email.includes("info") ||
+
+email.endsWith("@gmail.com") ||
+
+email.endsWith("@outlook.com")
+
+){
+
+resultText.innerHTML="🟢 <b>Safe</b><br>This email appears to be low risk.";
+
+}
+
+else if(
+
+email.includes("crypto") ||
+
+email.includes("gift") ||
+
+email.includes("verify")
+
+){
+
+resultText.innerHTML="🟡 <b>Suspicious</b><br>Be careful before trusting this email.";
+
+}
+
+else{
+
+resultText.innerHTML="🔴 <b>High Risk</b><br>This email looks suspicious. Do not share personal information.";
+
+}
+
+};
+
+</script>
+<div class="card">
+
+<h2>Actions</h2>
+
+<button class="btn-primary" onclick="copyResult()">
+
+📋 Copy Result
+
+</button>
+
+&nbsp;
+
+<button class="btn-secondary" onclick="shareResult()">
+
+📤 Share Result
+
+</button>
+
+&nbsp;
+
+<button class="btn-primary" onclick="reportEmail()">
+
+🚨 Report Email
+
+</button>
+
+</div>
+
+<script>
+
+window.copyResult=function(){
+
+const text=document.getElementById("resultText").innerText;
+
+if(text===""){
+
+alert("No result to copy.");
+
+return;
+
+}
+
+navigator.clipboard.writeText(text);
+
+alert("Result copied successfully.");
+
+};
+
+window.shareResult=async function(){
+
+const text=document.getElementById("resultText").innerText;
+
+if(text===""){
+
+alert("No result to share.");
+
+return;
+
+}
+
+if(navigator.share){
+
+await navigator.share({
+
+title:"FraudGuard Email Check",
+
+text:text
+
+});
+
+}else{
+
+alert("Sharing is not supported on this device.");
+
+}
+
+};
+
+window.reportEmail=function(){
+
+const email=document.getElementById("emailInput").value.trim();
+
+if(email===""){
+
+alert("Please enter an email address.");
+
+return;
+
+}
+
+window.location.href="report.html?email="+encodeURIComponent(email);
+
+};
+
+</script>
+
+</section>
+
+<footer>
+
+<p>© 2026 FraudGuard. All Rights Reserved.</p>
+
+<p>FraudGuard AI Email Checker</p>
+
+</footer>
+
+</body>
+
+</html>
+
+
