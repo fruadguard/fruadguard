@@ -112,27 +112,46 @@ Thank you for subscribing to FraudGuard Premium.
 
 </div>
 
-<script>
+<script type="module">
+ onAuthStateChanged(auth, async (user) => {
 
-const params = new URLSearchParams(window.location.search);
+if(!user){
 
-const plan = params.get("plan") || "monthly";
+window.location.href="login.html";
 
-if(plan==="yearly"){
-
-document.getElementById("planName").innerHTML="👑 Premium Yearly Activated";
-
-document.getElementById("subscriptionPlan").innerHTML="Premium Yearly";
-
-}else{
-
-document.getElementById("planName").innerHTML="⭐ Premium Monthly Activated";
-
-document.getElementById("subscriptionPlan").innerHTML="Premium Monthly";
+return;
 
 }
 
-</script>
+await setDoc(doc(db,"subscriptions",user.uid),{
+
+premium:true,
+
+plan:plan,
+
+status:"active",
+
+email:user.email,
+
+createdAt:serverTimestamp()
+
+});
+
+console.log("Premium Activated Successfully");
+
+});
+
+import { auth, db } from "./firebase.js";
+
+import {
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+import {
+doc,
+setDoc,
+serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 </section>
 
