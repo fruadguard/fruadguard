@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Stripe Payment | FraudGuard</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="icon" href="logo.png">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+<div class="logo">
+
+<a href="index.html">
+
+<img src="logo.png" alt="FraudGuard">
+
+<span>FraudGuard</span>
+
+</a>
+
+</div>
+
+<ul class="nav-links">
+
+<li><a href="index.html">Home</a></li>
+
+<li><a href="pricing.html">Premium</a></li>
+
+<li><a href="dashboard.html">Dashboard</a></li>
+
+</ul>
+
+</nav>
+
+<section class="hero">
+
+<h1>💳 Stripe Payment</h1>
+
+<p>
+
+Secure payment powered by Stripe.
+
+</p>
+
+</section>
+
+<section class="pricing">
+
+<div class="card">
+
+<h2>Premium Subscription</h2>
+
+<p id="planName">Loading Plan...</p>
+
+<h1 id="planPrice">$0</h1>
+
+<p>3-Day Free Trial Available</p>
+
+<hr>
+<div class="card">
+
+<h2>Customer Information</h2>
+
+<input
+type="text"
+id="fullName"
+placeholder="Full Name">
+
+<br><br>
+
+<input
+type="email"
+id="email"
+placeholder="Email Address">
+
+<br><br>
+
+</div>
+
+<div class="card">
+
+<h2>Payment Summary</h2>
+
+<p><b>Subscription:</b> <span id="summaryPlan">Premium Monthly</span></p>
+
+<p><b>Trial:</b> 3 Days Free</p>
+
+<p><b>Payment Gateway:</b> Stripe</p>
+
+<p><b>Total:</b> <span id="summaryPrice">$4.99</span></p>
+
+<br>
+
+<button
+class="btn-primary"
+onclick="payWithStripe()">
+
+💳 Pay Securely with Stripe
+
+</button>
+
+</div>
+
+<script>
+
+const params=new URLSearchParams(window.location.search);
+
+const plan=params.get("plan") || "monthly";
+
+if(plan==="yearly"){
+
+document.getElementById("planName").innerHTML="👑 Premium Yearly";
+
+document.getElementById("planPrice").innerHTML="$49.99";
+
+document.getElementById("summaryPlan").innerHTML="Premium Yearly";
+
+document.getElementById("summaryPrice").innerHTML="$49.99";
+
+}else{
+
+document.getElementById("planName").innerHTML="⭐ Premium Monthly";
+
+document.getElementById("planPrice").innerHTML="$4.99";
+
+}
+function payWithStripe(){
+
+const fullName=document.getElementById("fullName").value.trim();
+const email=document.getElementById("email").value.trim();
+
+if(fullName===""){
+
+alert("Please enter your full name.");
+
+return;
+
+}
+
+if(email===""){
+
+alert("Please enter your email address.");
+
+return;
+
+}
+
+// এখানে পরে Stripe Checkout API যুক্ত হবে
+
+alert(
+"🚀 Redirecting to Stripe Checkout...\n\n" +
+"Plan: " + (plan==="yearly" ? "Premium Yearly" : "Premium Monthly") +
+"\n\n3-Day Free Trial Enabled."
+);
+
+// আপাতত Success Page-এ পাঠানো হচ্ছে
+window.location.href="payment-success.html?plan="+plan;
+
+}
+
+</script>
+
+</section>
+
+<footer>
+
+<p>© 2026 FraudGuard. All Rights Reserved.</p>
+
+<p>Payments are processed securely using Stripe.</p>
+
+</footer>
+
+</body>
+
+</html>
+
+
