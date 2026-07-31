@@ -1,34 +1,388 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+// ===============================
+// FraudGuard Firebase Setup
+// Production Version
+// ===============================
 
-import { getAuth } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
-import { getFirestore } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+import { initializeApp } from 
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+
+import {
+
+getAuth,
+
+createUserWithEmailAndPassword,
+
+signInWithEmailAndPassword,
+
+signOut,
+
+onAuthStateChanged
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+
+
+
+import {
+
+getFirestore,
+
+doc,
+
+setDoc,
+
+getDoc
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+
+
+
+
+
+
+// ===============================
+// Firebase Configuration
+// ===============================
+
+
 
 const firebaseConfig = {
 
-apiKey: "AIzaSyByZP0D_jKYOitPhOunqn44Z1FMNFF40tc",
 
-authDomain: "fraudguard-eafd2.firebaseapp.com",
+apiKey: "YOUR_API_KEY",
 
-projectId: "fraudguard-eafd2",
 
-storageBucket: "fraudguard-eafd2.firebasestorage.app",
+authDomain: "YOUR_PROJECT.firebaseapp.com",
 
-messagingSenderId: "721145048132",
 
-appId: "1:721145048132:web:c87c07d58d8e9b5b806011"
+projectId: "YOUR_PROJECT_ID",
+
+
+storageBucket: "YOUR_PROJECT.appspot.com",
+
+
+messagingSenderId: "YOUR_SENDER_ID",
+
+
+appId: "YOUR_APP_ID"
+
 
 };
 
+
+
+
+
+
+
+
+// Initialize Firebase
+
+
 const app = initializeApp(firebaseConfig);
+
+
+
+
 const auth = getAuth(app);
+
+
 
 const db = getFirestore(app);
 
-export {
+
+
+
+
+
+
+
+
+// ===============================
+// Register User
+// ===============================
+
+
+
+export async function registerUser(
+email,
+password,
+name
+){
+
+
+const userCredential =
+
+await createUserWithEmailAndPassword(
 
 auth,
 
-db
+email,
 
-};
+password
+
+);
+
+
+
+const user =
+userCredential.user;
+
+
+
+
+
+await setDoc(
+
+doc(
+db,
+"users",
+user.uid
+),
+
+{
+
+
+name:name,
+
+
+email:user.email,
+
+
+role:"user",
+
+
+plan:"free",
+
+
+subscriptionStatus:"inactive",
+
+
+createdAt:new Date()
+
+
+
+}
+
+
+);
+
+
+
+
+
+return user;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// Login User
+// ===============================
+
+
+
+export async function loginUser(
+
+email,
+
+password
+
+){
+
+
+
+const result =
+
+await signInWithEmailAndPassword(
+
+auth,
+
+email,
+
+password
+
+);
+
+
+
+return result.user;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// Logout
+// ===============================
+
+
+
+export async function logoutUser(){
+
+
+await signOut(auth);
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// Check User
+// ===============================
+
+
+
+export function checkUser(callback){
+
+
+onAuthStateChanged(
+
+auth,
+
+(user)=>{
+
+
+callback(user);
+
+
+}
+
+);
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// Get User Data
+// ===============================
+
+
+
+export async function getUserData(uid){
+
+
+
+const userDoc =
+
+await getDoc(
+
+doc(
+
+db,
+
+"users",
+
+uid
+
+)
+
+);
+
+
+
+
+
+if(userDoc.exists()){
+
+
+return userDoc.data();
+
+
+}
+
+
+
+return null;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// Get User Role
+// ===============================
+
+
+
+export async function getUserRole(uid){
+
+
+
+const data =
+
+await getUserData(uid);
+
+
+
+if(data){
+
+
+return data.role;
+
+
+}
+
+
+
+return null;
+
+
+
+}
+
