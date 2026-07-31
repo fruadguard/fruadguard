@@ -4,169 +4,251 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Login | FraudGuard</title>
+
+<title>
+FraudGuard Login
+</title>
+
 
 <link rel="stylesheet" href="style.css">
-<link rel="icon" href="logo.png">
+
 
 </head>
 
+
+
 <body>
 
-<nav class="navbar">
 
-<div class="logo">
 
-<a href="index.html">
+<section class="section">
 
-<img src="logo.png" alt="FraudGuard">
 
-<span>FraudGuard</span>
+
+<h2>
+
+Login To FraudGuard
+
+</h2>
+
+
+
+<div class="analyzer-box">
+
+
+
+<input
+
+id="email"
+
+type="email"
+
+placeholder="Email Address"
+
+>
+
+
+
+<input
+
+id="password"
+
+type="password"
+
+placeholder="Password"
+
+>
+
+
+
+
+<button
+
+id="loginBtn"
+
+class="btn">
+
+Login
+
+</button>
+
+
+
+
+
+<p id="message"></p>
+
+
+
+
+<p>
+
+Don't have an account?
+
+<a href="register.html">
+
+Create Account
 
 </a>
 
+</p>
+
+
+
 </div>
 
-<ul class="nav-links">
-
-<li><a href="index.html">Home</a></li>
-<li><a href="about.html">About</a></li>
-<li><a href="features.html">Features</a></li>
-<li><a href="contact.html">Contact</a></li>
-
-</ul>
-
-</nav>
-
-<section class="scanner">
-
-<h2>Login to FraudGuard</h2>
-
-<input
-type="email"
-id="email"
-placeholder="Email">
-
-<br><br>
-
-<input
-type="password"
-id="password"
-placeholder="Password">
-
-<br><br>
-
-<button class="btn-primary" onclick="login()">
-
-🔑 Login
-
-</button>
-
-<br><br>
-
-<button class="btn-secondary" onclick="signup()">
-
-📝 Create Account
-
-</button>
-
-<br><br>
-
-<button class="btn-secondary" onclick="googleLogin()">
-
-🟢 Continue with Google
-
-</button>
-
-<br><br>
-
-<p id="loginStatus"></p>
 
 </section>
+
+
+
+
+
+
+
 <script type="module">
 
-import { auth } from "./firebase.js";
+
 
 import {
 
-signInWithEmailAndPassword,
+loginUser
 
-createUserWithEmailAndPassword,
+}
 
-GoogleAuthProvider,
+from "./firebase.js";
 
-signInWithPopup
 
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
-const status=document.getElementById("loginStatus");
 
-window.login=async function(){
 
-const email=document.getElementById("email").value;
-const password=document.getElementById("password").value;
+
+const loginButton =
+
+document.getElementById(
+"loginBtn"
+);
+
+
+
+
+
+
+loginButton.addEventListener(
+
+"click",
+
+async()=>{
+
+
+
+const email =
+
+document.getElementById(
+"email"
+).value;
+
+
+
+
+
+const password =
+
+document.getElementById(
+"password"
+).value;
+
+
+
+
+
+const message =
+
+document.getElementById(
+"message"
+);
+
+
+
+
+
 
 try{
 
-await signInWithEmailAndPassword(auth,email,password);
 
-status.innerHTML="✅ Login Successful";
+await loginUser(
 
-window.location.href="dashboard.html";
+email,
 
-}catch(error){
+password
 
-status.innerHTML="❌ "+error.message;
+);
 
-}
 
-}
 
-window.signup=async function(){
 
-const email=document.getElementById("email").value;
-const password=document.getElementById("password").value;
 
-try{
+message.innerHTML =
 
-await createUserWithEmailAndPassword(auth,email,password);
+"Login Successful!";
 
-status.innerHTML="✅ Account Created Successfully";
 
-}catch(error){
 
-status.innerHTML="❌ "+error.message;
 
-}
 
-}
+setTimeout(()=>{
 
-window.googleLogin=async function(){
 
-const provider=new GoogleAuthProvider();
+window.location.href =
 
-try{
+"dashboard.html";
 
-await signInWithPopup(auth,provider);
 
-status.innerHTML="✅ Google Login Successful";
 
-window.location.href="dashboard.html";
+},1000);
 
-}catch(error){
 
-status.innerHTML="❌ "+error.message;
+
+
+
 
 }
 
+catch(error){
+
+
+
+message.innerHTML =
+
+"Login Failed: "
++
+error.message;
+
+
+
 }
+
+
+
+
+
+}
+
+
+
+);
+
+
 
 </script>
 
+
+
+
 </body>
 
+
 </html>
-
-
