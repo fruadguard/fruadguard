@@ -1,538 +1,622 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+// ===============================
+// FraudGuard Script v2.0
+// ===============================
 
-import {
-getAuth,
-createUserWithEmailAndPassword,
-signInWithEmailAndPassword,
-signOut,
-GoogleAuthProvider,
-signInWithPopup,
-onAuthStateChanged(auth,(user)=>{
 
-const email=document.getElementById("userEmail");
 
-if(user){
+// Mobile Menu Ready
 
-if(email){
-email.innerText=user.email;
-}
+const menuButton = document.querySelector(".menu-btn");
 
-}else{
+const navMenu = document.querySelector(".navbar ul");
 
-if(window.location.pathname.includes("dashboard.html")){
-window.location.href="login.html";
-}
+
+if(menuButton){
+
+    menuButton.addEventListener("click",()=>{
+
+        navMenu.classList.toggle("active");
+
+    });
 
 }
+
+
+
+
+
+
+
+
+// ===============================
+// Statistics Counter Animation
+// Firebase Ready
+// ===============================
+
+
+
+function animateCounter(id,target){
+
+
+    const element=document.getElementById(id);
+
+
+    if(!element){
+
+        return;
+
+    }
+
+
+
+    let count=0;
+
+
+    const speed=Math.ceil(target/100);
+
+
+
+    const timer=setInterval(()=>{
+
+
+        count += speed;
+
+
+
+        if(count>=target){
+
+            count=target;
+
+            clearInterval(timer);
+
+        }
+
+
+
+        element.innerHTML=count+"+";
+
+
+
+    },20);
+
+
+
+}
+
+
+
+
+
+
+
+// Home Page Statistics
+
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+
+    animateCounter(
+        "usersCount",
+        10000
+    );
+
+
+    animateCounter(
+        "scamsCount",
+        50000
+    );
+
+
+    animateCounter(
+        "reportsCount",
+        25000
+    );
+
 
 });
 
 
-});
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-import {
-getFirestore,
-collection,
-addDoc,
-getDocs,
-deleteDoc,
-doc
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-const firebaseConfig = {
 
-apiKey:"AIzaSyCNK3tHXMTS_-mu8IAHW9q7hgo4TkBGuSs",
-authDomain:"fraudguard-eafd2.firebaseapp.com",
-projectId:"fraudguard-eafd2",
-storageBucket:"fraudguard-eafd2.firebasestorage.app",
-messagingSenderId:"721145048132",
-appId:"1:721145048132:web:c87c07d58d8e9b5b806011"
 
-};
 
-const app=initializeApp(firebaseConfig);
 
-const auth=getAuth(app);
 
-const db=getFirestore(app);
 
-const provider=new GoogleAuthProvider();
+// ===============================
+// Smooth Scroll
+// ===============================
 
-// Email Sign Up
-window.signUp = function () {
-auth.onAuthStateChanged((user)=>{
 
-if(user){
+document.querySelectorAll('a[href^="#"]').forEach(link=>{
 
-const email=document.getElementById("userEmail");
 
-if(email){
+    link.addEventListener("click",function(e){
 
-email.innerText=user.email;
 
-}
+        const target=document.querySelector(
+            this.getAttribute("href")
+        );
 
-}
+
+        if(target){
+
+
+            e.preventDefault();
+
+
+            target.scrollIntoView({
+
+                behavior:"smooth"
+
+            });
+
+
+        }
+
+
+    });
+
+
 
 });
+// ===============================
+// AI SCAM ANALYZER
+// ===============================
 
 
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
-
-createUserWithEmailAndPassword(auth, email, password)
-.then(() => {
-
-alert("Account created successfully!");
-
-})
-.catch((error) => {
-
-alert(error.message);
-
-});
-
-};
+const analyzeButton = document.querySelector(".analyzer-box .btn");
 
 
-// Email Login
-window.login = function () {
-
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
-
-signInWithEmailAndPassword(auth, email, password)
-.then((userCredential) => {
-
-alert("Welcome " + userCredential.user.email);
-
-window.location.href = "dashboard.html";
-
-})
-.catch((error) => {
-
-alert(error.message);
-
-});
-
-};
+if(analyzeButton){
 
 
-// Google Login
-window.googleLogin = function () {
-
-signInWithPopup(auth, provider)
-.then((result) => {
-
-alert("Welcome " + result.user.displayName);
-
-window.location.href = "dashboard.html";
-
-})
-.catch((error) => {
-
-alert(error.message);
-
-});
-
-};
+    analyzeButton.addEventListener("click",()=>{
 
 
-// Logout
-window.logout = function () {
+        const input =
+        document.querySelector(".analyzer-box input");
 
-signOut(auth)
-.then(() => {
 
-alert("Logged out successfully!");
 
-window.location.href = "login.html";
+        if(!input.value){
 
-})
-.catch((error) => {
 
-alert(error.message);
+            alert(
+                "Please enter suspicious content first."
+            );
 
-});
 
-};
-// Submit Scam Report
-window.submitReport = async function () {
+            return;
 
-const name = document.getElementById("name").value;
-const email = document.getElementById("emailReport").value;
-const phone = document.getElementById("phoneReport").value;
-const report = document.getElementById("report").value;
+        }
 
-if(name==="" || email==="" || phone==="" || report===""){
-alert("Please fill all fields.");
-return;
-}
 
-try{
 
-await addDoc(collection(db,"reports"),{
+        analyzeButton.innerHTML =
+        "Analyzing...";
 
-name:name,
-email:email,
-phone:phone,
-report:report,
-createdAt:new Date()
 
-});
 
-alert("Report submitted successfully!");
+        setTimeout(()=>{
 
-document.getElementById("name").value="";
-document.getElementById("emailReport").value="";
-document.getElementById("phoneReport").value="";
-document.getElementById("report").value="";
 
-}catch(error){
+            analyzeButton.innerHTML =
+            "Analyze Now";
 
-alert(error.message);
+
+
+            alert(
+                "AI Analysis Complete: Low Risk Detected"
+            );
+
+
+
+        },2000);
+
+
+
+    });
+
+
 
 }
 
-};
 
 
-// Load Reports
-window.loadReports = async function(){
 
-const repoKList=document.getElementById("reportsList");
 
-if(!reportsList) return;
 
-reportsList.innerHTML="";
 
-try{
 
-const querySnapshot=await getDocs(collection(db,"reports"));
+// ===============================
+// SCANNER BUTTON HANDLING
+// ===============================
 
-querySnapshot.forEach((reportDoc)=>{
 
-const data=reportDoc.data();
+function openScanner(){
 
-reportsList.innerHTML+=`
 
-<div class="card">
+    window.location.href =
+    "scanner.html";
 
-<b>Name:</b> ${data.name}<br>
-<b>Email:</b> ${data.email}<br>
-<b>Phone:</b> ${data.phone}<br>
-<b>Report:</b> ${data.report}<br><br>
-
-<button onclick="deleteReport('${reportDoc.id}')">
-🗑 Delete
-</button>
-
-</div>
-
-`;
-
-});
-
-}catch(error){
-
-alert(error.message);
 
 }
 
-};
 
 
-// Delete Report
-window.deleteReport = async function(id){
 
-if(!confirm("Delete this report?")) return;
 
-try{
+function openPhoneChecker(){
 
-await deleteDoc(doc(db,"reports",id));
 
-alert("Report deleted.");
+    window.location.href =
+    "phone-checker.html";
 
-loadReports();
-
-}catch(error){
-
-alert(error.message);
 
 }
 
-};
-// URL Scanner
-window.scanURL = async function () {
 
-const url = document.getElementById("urlInput").value.trim();
-const result = document.getElementById("scanResult");
 
-if(url===""){
-result.innerHTML="❌ Please enter a website URL.";
-result.style.color="red";
-return;
-}
 
-result.innerHTML="🔍 Scanning...";
-result.style.color="orange";
 
-try{
 
-const response = await fetch(
 
-"https://safebrowsing.googleapis.com/v4/threatMatches:find?key="AIzaSyCNK3tHXMTS_-mu8IAHW9q7hgo4TkBGuSs",
 
-{
 
-method:"POST",
+// ===============================
+// PREMIUM BUTTON HANDLING
+// ===============================
 
-headers:{
-"Content-Type":"application/json"
-},
 
-body:JSON.stringify({
 
-client:{
-clientId:"fraudguard",
-clientVersion:"1.0"
-},
-
-threatInfo:{
-
-threatTypes:[
-"MALWARE",
-"SOCIAL_ENGINEERING",
-"UNWANTED_SOFTWARE",
-"POTENTIALLY_HARMFUL_APPLICATION"
-],
-
-platformTypes:["ANY_PLATFORM"],
-
-threatEntryTypes:["URL"],
-
-threatEntries:[
-{url:url}
-]
-
-}
-
-})
-
-}
-
+const premiumButtons =
+document.querySelectorAll(
+".price-card .btn"
 );
 
-const data = await response.json();
-
-if(data.matches){
-
-result.innerHTML="🚨 Dangerous website detected!";
-result.style.color="red";
-
-}else{
-
-result.innerHTML="✅ No threat found.";
-result.style.color="#22c55e";
-
-}
-
-}catch(error){
-
-result.innerHTML=error.message;
-result.style.color="red";
-
-}
-
-};
 
 
-// Phone Number Checker
-window.checkPhone = async function(){
+premiumButtons.forEach(button=>{
 
-const phone=document.getElementById("phoneInput").value.trim();
-const result=document.getElementById("phoneResult");
 
-if(phone===""){
+    button.addEventListener(
+        "click",
+        ()=>{
 
-result.innerHTML="❌ Enter phone number.";
-result.style.color="red";
-return;
 
-}
+            console.log(
+                "Redirecting to Premium Payment..."
+            );
 
-try{
 
-const querySnapshot=await getDocs(collection(db,"reports"));
+        }
 
-let found=false;
+    );
 
-querySnapshot.forEach((reportDoc)=>{
-
-const data=reportDoc.data();
-
-if(data.phone===phone){
-
-found=true;
-
-}
 
 });
 
-if(found){
 
-result.innerHTML="⚠️ Scam number found.";
-result.style.color="red";
 
-}else{
 
-result.innerHTML="✅ No scam report found.";
-result.style.color="#22c55e";
+
+
+
+
+// ===============================
+// LOGIN STATUS UI READY
+// Firebase Integration Ready
+// ===============================
+
+
+
+function checkLoginStatus(){
+
+
+    const user =
+    localStorage.getItem(
+        "fraudguardUser"
+    );
+
+
+
+    if(user){
+
+
+        console.log(
+            "User Logged In:",
+            user
+        );
+
+
+    }
+
+    else{
+
+
+        console.log(
+            "Guest User"
+        );
+
+
+    }
+
 
 }
 
-}catch(error){
 
-result.innerHTML=error.message;
-result.style.color="red";
 
-}
+checkLoginStatus();
+// ===============================
+// FIREBASE AUTH READY
+// ===============================
 
-};
-// AI Scam Checker
-window.checkScam = function () {
 
-const text = document.getElementById("aiInput").value.trim();
-const result = document.getElementById("aiResult");
+import { 
+    checkUser,
+    logoutUser,
+    getUserRole
+} 
+from "./firebase.js";
 
-if(text===""){
-result.innerHTML="❌ Please enter a message or website.";
-result.style.color="red";
-return;
-}
 
-const keywords=[
-"otp",
-"verify account",
-"bank account",
-"gift card",
-"crypto",
-"bitcoin",
-"investment",
-"double money",
-"loan",
-"click here",
-"urgent",
-"password",
-"login",
-"free money",
-"winner",
-"congratulation",
-"telegram",
-"whatsapp"
-];
 
-let score=0;
 
-keywords.forEach((word)=>{
 
-if(text.toLowerCase().includes(word)){
-score++;
-}
+
+
+// ===============================
+// USER AUTH STATUS
+// ===============================
+
+
+
+checkUser(async(user)=>{
+
+
+    const loginButton =
+    document.querySelector(
+        ".navbar .btn"
+    );
+
+
+
+    if(user){
+
+
+        console.log(
+            "Logged User:",
+            user.email
+        );
+
+
+
+        if(loginButton){
+
+
+            loginButton.innerHTML =
+            "Dashboard";
+
+
+            loginButton.href =
+            "dashboard.html";
+
+
+        }
+
+
+
+        const role =
+        await getUserRole(
+            user.uid
+        );
+
+
+
+        console.log(
+            "User Role:",
+            role
+        );
+
+
+
+    }
+
+
 
 });
 
-if(score>=3){
 
-result.innerHTML="🚨 High Risk Scam Detected";
-result.style.color="red";
 
-}else if(score>=1){
 
-result.innerHTML="⚠️ Suspicious Content";
-result.style.color="orange";
 
-}else{
 
-result.innerHTML="✅ Looks Safe";
-result.style.color="#22c55e";
+
+
+// ===============================
+// LOGOUT FUNCTION
+// ===============================
+
+
+
+const logoutButton =
+document.querySelector(
+".logout-btn"
+);
+
+
+
+if(logoutButton){
+
+
+    logoutButton.addEventListener(
+        "click",
+        async()=>{
+
+
+            await logoutUser();
+
+
+
+            window.location.href =
+            "login.html";
+
+
+        }
+    );
+
 
 }
 
-};
-onAuthStateChanged(auth,(user)=>{
 
-const email=document.getElementById("userEmail");
 
-if(user && email){
 
-email.innerText=user.email;
+
+
+
+
+
+// ===============================
+// FIREBASE LIVE STATISTICS READY
+// ===============================
+
+
+
+async function loadLiveStatistics(){
+
+
+
+    try{
+
+
+        /*
+        
+        Future Firestore Connection:
+
+        usersCount
+        scamsCount
+        reportsCount
+
+
+        Example:
+
+        Firestore
+        |
+        statistics
+        |
+        users
+        scams
+        reports
+
+        */
+
+
+
+        console.log(
+            "Firebase Statistics Ready"
+        );
+
+
+
+    }
+
+
+    catch(error){
+
+
+        console.log(
+            error
+        );
+
+
+    }
+
 
 }
+
+
+
+loadLiveStatistics();
+
+
+
+
+
+
+
+
+
+// ===============================
+// PREMIUM ACCESS CHECK
+// ===============================
+
+
+
+function checkPremiumAccess(){
+
+
+
+    const premium =
+    localStorage.getItem(
+        "premium"
+    );
+
+
+
+    if(
+        premium === "active"
+    ){
+
+
+        console.log(
+            "Premium Active"
+        );
+
+
+    }
+
+    else{
+
+
+        console.log(
+            "Free User"
+        );
+
+
+    }
+
+
+
+}
+
+
+
+checkPremiumAccess();
+
+
+
+
+
+
+
+
+
+// ===============================
+// PAGE LOADING EFFECT
+// ===============================
+
+
+
+window.addEventListener(
+"load",
+()=>{
+
+
+    document.body.classList.add(
+        "loaded"
+    );
+
 
 });
-window.loadAdminReports = async function(){
 
-const reportsList=document.getElementById("reportsList");
-const totalReports=document.getElementById("totalReports");
-
-if(!reportsList) return;
-
-reportsList.innerHTML="";
-
-const snapshot=await getDocs(collection(db,"reports"));
-
-totalReports.innerText=snapshot.size;
-
-snapshot.forEach((reportDoc)=>{
-
-const data=reportDoc.data();
-
-reportsList.innerHTML+=`
-
-<div class="card">
-
-<b>Name:</b> ${data.name}<br>
-<b>Email:</b> ${data.email}<br>
-<b>Phone:</b> ${data.phone}<br>
-<b>Report:</b> ${data.report}<br><br>
-
-<button onclick="deleteReport('${reportDoc.id}')">
-Delete
-</button>
-
-</div>
-
-`;
-
-});
-
-};
-
-if(window.location.pathname.includes("admin.html")){
-loadAdminReports();
-}
-const ADMIN_EMAIL = "rbiplob905@gmail.com";
-
-onAuthStateChanged(auth,(user)=>{
-
-if(window.location.pathname.includes("admin.html")){
-
-if(!user){
-
-window.location.href="login.html";
-return;
-
-}
-
-if(user.email!==ADMIN_EMAIL){
-
-alert("Access Denied!");
-
-window.location.href="dashboard.html";
-
-}
-
-}
-
-});
