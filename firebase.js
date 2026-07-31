@@ -385,4 +385,58 @@ return null;
 
 
 }
+// ===============================
+// Get All Users (Admin Ready)
+// ===============================
+
+
+import {
+
+collection,
+getDocs
+
+}
+
+from 
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+
+
+export async function getAllUsers(){
+
+
+const users = [];
+
+
+
+const snapshot =
+
+await getDocs(
+collection(db,"users")
+);
+
+
+
+snapshot.forEach((doc)=>{
+
+
+users.push({
+
+id:doc.id,
+
+...doc.data()
+
+});
+
+
+});
+
+
+
+return users;
+
+
+
+}
 
