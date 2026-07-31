@@ -1,146 +1,221 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FraudGuard | AI Scam Detection</title>
+/* ===========================
+   Scanner Page
+=========================== */
 
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+.scanner{
+    max-width:900px;
+    margin:50px auto;
+    padding:20px;
+    text-align:center;
+}
 
-    <!-- Navbar -->
-    <header>
-        <nav class="navbar">
-            <div class="logo">
-                <img src="images/logo.png" alt="FraudGuard Logo">
-                <h2>FraudGuard</h2>
-            </div>
+.scanner h2{
+    font-size:32px;
+    margin-bottom:20px;
+    color:#ffffff;
+}
 
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="features.html">Features</a></li>
-                <li><a href="scanner.html">URL Scanner</a></li>
-                <li><a href="phone-checker.html">Phone Checker</a></li>
-                <li><a href="report.html">Report Scam</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a class="login-btn" href="login.html">Login</a></li>
-            </ul>
-        </nav>
-    </header>
+#urlInput{
+    width:100%;
+    max-width:700px;
+    padding:16px;
+    border:2px solid #2563eb;
+    border-radius:12px;
+    font-size:18px;
+    outline:none;
+    background:#1e293b;
+    color:#ffffff;
+}
 
-    <!-- Hero -->
-    <section class="hero">
+#urlInput::placeholder{
+    color:#94a3b8;
+}
 
-        <img src="images/logo.png" class="hero-logo" alt="Logo">
+.btn-primary,
+.btn-secondary{
+    padding:14px 24px;
+    margin:10px;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
 
-        <h1>Protect Yourself From Online Scams</h1>
+.btn-primary{
+    background:#2563eb;
+    color:#fff;
+}
 
-        <p>
-            FraudGuard is an AI-powered fraud detection platform that
-            helps identify phishing websites, fake links, scam phone
-            numbers and other online threats.
-        </p>
+.btn-primary:hover{
+    background:#1d4ed8;
+}
 
-        <div class="hero-buttons">
-            <a href="scanner.html" class="btn">🌐 Scan Website</a>
-            <a href="report.html" class="btn2">🚨 Report Scam</a>
-        </div>
+.btn-secondary{
+    background:#475569;
+    color:#fff;
+}
 
-    </section>
+.btn-secondary:hover{
+    background:#334155;
+}
 
-    <!-- Statistics -->
-    <section class="stats">
+.card{
+    background:#0f172a;
+    border:1px solid #334155;
+    border-radius:15px;
+    padding:25px;
+    margin-top:25px;
+    box-shadow:0 8px 20px rgba(0,0,0,.35);
+    color:#fff;
+}
+/* ===========================
+   Result Box
+=========================== */
 
-        <div class="card">
-            <h2>24/7</h2>
-            <p>AI Protection</p>
-        </div>
+#resultBox{
+    margin-top:30px;
+    animation:fadeIn .4s ease;
+}
 
-        <div class="card">
-            <h2>AI</h2>
-            <p>Fraud Detection</p>
-        </div>
+#scanResult{
+    font-size:28px;
+    font-weight:bold;
+    margin-bottom:15px;
+}
 
-        <div class="card">
-            <h2>Global</h2>
-            <p>Scam Reports</p>
-        </div>
+#riskScore{
+    font-size:22px;
+    color:#facc15;
+    font-weight:bold;
+}
 
-        <div class="card">
-            <h2>Secure</h2>
-            <p>User Privacy</p>
-        </div>
+#googleStatus,
+#aiStatus,
+#scanTime,
+#riskLevel{
+    font-size:18px;
+    margin:10px 0;
+}
 
-    </section>
+#riskBar{
+    border-radius:10px;
+    transition:width .5s ease, background .5s ease;
+}
 
-    <!-- About -->
-    <section class="about">
+#historyList .card{
+    text-align:left;
+    margin-top:15px;
+}
 
-        <h2>About FraudGuard</h2>
+#historyList h3{
+    color:#60a5fa;
+    margin-bottom:10px;
+    word-break:break-word;
+}
 
-        <p>
-            FraudGuard helps users detect phishing websites,
-            fake investment schemes, scam phone numbers,
-            QR scams and other cyber threats.
-        </p>
+#historyList p{
+    color:#cbd5e1;
+    margin:5px 0;
+}
 
-        <a href="about.html" class="btn">Learn More</a>
+@keyframes fadeIn{
 
-    </section>
+from{
+opacity:0;
+transform:translateY(20px);
+}
 
-    <!-- Features -->
-    <section class="features">
+to{
+opacity:1;
+transform:translateY(0);
+}
 
-        <h2>Our Features</h2>
+}
+/* ===========================
+   Responsive Design
+=========================== */
 
-        <div class="feature-grid">
+img{
+    max-width:100%;
+    height:auto;
+}
 
-            <div class="feature-card">
-                <h3>🤖 AI Scam Checker</h3>
-                <p>Analyze suspicious messages and websites using AI.</p>
-                <a href="#">Open</a>
-            </div>
+button{
+    transition:.3s ease;
+}
 
-            <div class="feature-card">
-                <h3>🌐 URL Scanner</h3>
-                <p>Check whether a website is safe or dangerous.</p>
-                <a href="scanner.html">Open</a>
-            </div>
+button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 20px rgba(37,99,235,.35);
+}
 
-            <div class="feature-card">
-                <h3>☎️ Phone Checker</h3>
-                <p>Search reported scam phone numbers.</p>
-                <a href="phone-checker.html">Open</a>
-            </div>
+.card:hover{
+    transform:translateY(-5px);
+    transition:.3s ease;
+    border-color:#2563eb;
+}
 
-            <div class="feature-card">
-                <h3>🚨 Report Scam</h3>
-                <p>Help others by reporting scam attempts.</p>
-                <a href="report.html">Open</a>
-            </div>
+@media(max-width:768px){
 
-        </div>
+.navbar{
+flex-direction:column;
+padding:15px;
+}
 
-    </section>
+.nav-links{
+flex-direction:column;
+gap:15px;
+text-align:center;
+}
 
-    <!-- Footer -->
-    <footer>
+.hero h1{
+font-size:30px;
+}
 
-        <h3>FraudGuard</h3>
+.hero p{
+font-size:16px;
+padding:0 15px;
+}
 
-        <p>
-            AI Powered Scam Detection Platform
-        </p>
+.scanner{
+padding:15px;
+}
 
-        <p>
-            © 2026 FraudGuard. All Rights Reserved.
-        </p>
+#urlInput{
+font-size:16px;
+padding:14px;
+}
 
-    </footer>
+.btn-primary,
+.btn-secondary{
+width:100%;
+margin:8px 0;
+}
 
-    <script src="script.js"></script>
+.card{
+padding:18px;
+}
 
-</body>
-</html>
+#scanResult{
+font-size:22px;
+}
+
+}
+
+@media(min-width:769px){
+
+.scanner{
+max-width:900px;
+}
+
+#urlInput{
+max-width:700px;
+}
+
+}
+
+body{
+scroll-behavior:smooth;
+}
+
