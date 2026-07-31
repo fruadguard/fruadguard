@@ -4,179 +4,352 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dashboard | FraudGuard</title>
+
+<title>
+FraudGuard Dashboard
+</title>
+
 
 <link rel="stylesheet" href="style.css">
-<link rel="icon" href="logo.png">
+
 
 </head>
 
+
 <body>
 
-<nav class="navbar">
 
-<div class="logo">
 
-<a href="index.html">
 
-<img src="logo.png" alt="FraudGuard">
+<section class="section">
 
-<span>FraudGuard</span>
 
-</a>
 
-</div>
+<h1>
 
-<ul class="nav-links">
+🛡️ FraudGuard Dashboard
 
-<li><a href="index.html">Home</a></li>
-<li><a href="scanner.html">URL Scanner</a></li>
-<li><a href="phone-checker.html">Phone Checker</a></li>
-<li><a href="report.html">Report</a></li>
+</h1>
 
-</ul>
 
-</nav>
 
-<section class="scanner">
+<div class="dashboard-box">
 
-<h1>📊 FraudGuard Dashboard</h1>
 
-<p>Welcome back!</p>
 
-<div class="card">
 
-<h2>User Information</h2>
 
-<p><strong>Email:</strong> <span id="userEmail">Loading...</span></p>
+<div class="dashboard-item">
 
-<p><strong>Membership:</strong> <span id="membership">Checking...</span></p>
 
-</div>
+<h3>
 
-<div class="card">
+User Profile
 
-<h2>Statistics</h2>
+</h3>
 
-<p>🌐 Total Website Scans: <span id="totalScans">0</span></p>
 
-<p>🚨 Total Scam Reports: <span id="totalReports">0</span></p>
 
-</div>
+<p id="userName">
 
-<div class="card">
+Loading...
 
-<h2>Recent Activity</h2>
+</p>
 
-<div id="activityList">
 
-<p>No activity yet.</p>
+
+<p id="userEmail">
+
+Loading...
+
+</p>
+
+
 
 </div>
 
+
+
+
+
+
+
+<div class="dashboard-item">
+
+
+<h3>
+
+Subscription
+
+</h3>
+
+
+
+<p id="userPlan">
+
+Checking...
+
+</p>
+
+
+
+<p id="subscriptionStatus">
+
+</p>
+
+
+
 </div>
 
-<br>
 
-<button onclick="logout()" class="btn-primary">
 
-🚪 Logout
+
+
+
+
+<div class="dashboard-item">
+
+
+<h3>
+
+Security Status
+
+</h3>
+
+
+
+<p>
+
+🟢 Protected
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+<button
+
+id="logoutBtn"
+
+class="btn">
+
+Logout
 
 </button>
 
+
+
+
 </section>
+
+
+
+
+
+
+
 
 <script type="module">
 
-import { auth, db } from "./firebase.js";
 
 import {
 
-onAuthStateChanged,
+checkUser,
 
-signOut
+getUserData,
 
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-
-import {
-
-doc,
-
-getDoc
-
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
-
-const userEmail=document.getElementById("userEmail");
-
-const membership=document.getElementById("membership");
-
-onAuthStateChanged(auth,async(user)=>{
-
-if(user){
-
-userEmail.innerText=user.email;
-
-try{
-
-const snap=await getDoc(doc(db,"subscriptions",user.uid));
-
-if(snap.exists()){
-
-const data=snap.data();
-
-if(data.premium===true){
-
-membership.innerHTML="👑 Premium Member";
-
-}else{
-
-membership.innerHTML="🆓 Free Member";
+logoutUser
 
 }
 
-}else{
+from "./firebase.js";
 
-membership.innerHTML="🆓 Free Member";
+
+
+
+
+
+
+
+const nameBox =
+
+document.getElementById(
+"userName"
+);
+
+
+
+const emailBox =
+
+document.getElementById(
+"userEmail"
+);
+
+
+
+const planBox =
+
+document.getElementById(
+"userPlan"
+);
+
+
+
+const statusBox =
+
+document.getElementById(
+"subscriptionStatus"
+);
+
+
+
+
+
+
+
+checkUser(async(user)=>{
+
+
+
+if(!user){
+
+
+window.location.href =
+"login.html";
+
+
+return;
+
 
 }
 
-}catch(error){
 
-console.log(error);
 
-membership.innerHTML="🆓 Free Member";
+
+
+
+const data =
+
+await getUserData(
+user.uid
+);
+
+
+
+
+
+
+if(data){
+
+
+
+nameBox.innerHTML =
+
+"Name: "
++
+data.name;
+
+
+
+
+
+emailBox.innerHTML =
+
+"Email: "
++
+data.email;
+
+
+
+
+
+
+planBox.innerHTML =
+
+"Plan: "
++
+data.plan;
+
+
+
+
+
+
+statusBox.innerHTML =
+
+"Status: "
++
+data.subscriptionStatus;
+
+
 
 }
 
-}else{
 
-window.location.href="login.html";
 
-}
+
 
 });
 
-window.logout=async function(){
 
-try{
 
-await signOut(auth);
 
-window.location.href="login.html";
 
-}catch(error){
 
-alert(error.message);
+
+
+document
+
+.getElementById(
+"logoutBtn"
+)
+
+.addEventListener(
+
+"click",
+
+async()=>{
+
+
+
+await logoutUser();
+
+
+
+window.location.href =
+
+"login.html";
+
+
 
 }
 
-};
+
+
+);
+
+
 
 </script>
 
+
+
+
 </body>
 
-</html>
 
+</html>
