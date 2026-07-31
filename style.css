@@ -728,3 +728,115 @@ body.dark-mode .btn {
     color:white;
 
 }
+/* ==============================
+   Login / Register Dark Style
+================================ */
+
+.auth-box,
+.login-box,
+.register-box {
+
+    border-radius:18px;
+    padding:30px;
+    transition:0.3s;
+
+}
+
+
+body.dark-mode .auth-box,
+body.dark-mode .login-box,
+body.dark-mode .register-box {
+
+    background:rgba(30,41,59,0.75);
+    border:1px solid rgba(255,255,255,0.08);
+    backdrop-filter:blur(12px);
+
+}
+
+
+/* Input */
+
+input,
+textarea,
+select {
+
+    border-radius:12px;
+    padding:12px;
+    border:1px solid var(--border-color);
+
+}
+
+
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+
+    background:#0f172a;
+    color:#f8fafc;
+    border-color:#334155;
+
+}
+
+
+/* ==============================
+   Profile Card
+================================ */
+
+.profile-card {
+
+    border-radius:20px;
+    padding:25px;
+
+}
+
+
+body.dark-mode .profile-card {
+
+    background:#1e293b;
+    border:1px solid #334155;
+
+}
+
+
+/* ==============================
+   Footer
+================================ */
+
+footer {
+
+    padding:30px;
+    transition:0.3s;
+
+}
+
+
+body.dark-mode footer {
+
+    background:#020617;
+    color:#cbd5e1;
+
+}
+
+
+body.dark-mode footer a {
+
+    color:#93c5fd;
+
+}
+
+
+/* Mobile Fix */
+
+@media(max-width:768px){
+
+    .hero h1{
+        font-size:32px;
+    }
+
+    .auth-box,
+    .login-box,
+    .register-box{
+        padding:20px;
+    }
+
+}
