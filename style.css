@@ -392,3 +392,94 @@ transform:translateY(0);
 section{
 animation:fadeUp .8s ease;
    }
+/* =========================
+   Responsive Design
+========================= */
+
+/* Tablet */
+@media (max-width: 992px){
+
+    .container{
+        width: 90%;
+        margin:auto;
+    }
+
+    .hero{
+        text-align:center;
+    }
+
+    .cards{
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .navbar{
+        flex-wrap:wrap;
+    }
+
+}
+
+
+/* Mobile */
+@media (max-width:600px){
+
+    body{
+        overflow-x:hidden;
+    }
+
+
+    .navbar{
+        flex-direction:column;
+        text-align:center;
+    }
+
+
+    .logo{
+        font-size:24px;
+    }
+
+
+    .nav-links{
+        display:flex;
+        flex-direction:column;
+        width:100%;
+    }
+
+
+    .hero h1{
+        font-size:32px;
+    }
+
+
+    .hero p{
+        font-size:16px;
+    }
+
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+
+    .card{
+        width:100%;
+    }
+
+
+    input,
+    button,
+    textarea{
+        width:100%;
+    }
+
+
+    .footer-content{
+        text-align:center;
+    }
+
+
+    img{
+        max-width:100%;
+        height:auto;
+    }
+
+}
