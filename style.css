@@ -633,3 +633,98 @@ button:hover,
     }
 
 }
+
+/* ==============================
+   Dark Glass Project Cards
+================================ */
+
+.project-card,
+.card {
+    backdrop-filter: blur(12px);
+    border-radius: 18px;
+    padding: 20px;
+}
+
+
+/* Dark Mode Card Upgrade */
+
+body.dark-mode .project-card,
+body.dark-mode .card {
+
+    background: rgba(30, 41, 59, 0.75);
+    border: 1px solid rgba(255,255,255,0.08);
+
+}
+
+
+/* Card Hover */
+
+.project-card:hover,
+.card:hover {
+
+    transform: translateY(-8px);
+
+}
+
+
+
+
+.hero {
+
+    padding: 80px 20px;
+    text-align: center;
+    transition:0.3s;
+
+}
+
+
+body.dark-mode .hero {
+
+    background: linear-gradient(
+        135deg,
+        #0f172a,
+        #1e293b
+    );
+
+}
+
+
+.hero h1 {
+
+    font-size: 45px;
+    font-weight: 700;
+
+}
+
+
+body.dark-mode .hero h1 {
+
+    color:#f8fafc;
+
+}
+
+
+body.dark-mode .hero p {
+
+    color:#cbd5e1;
+
+}
+
+
+/* Project Image */
+
+.project-card img {
+
+    border-radius:15px;
+    width:100%;
+}
+
+
+/* Dark Mode Button Text Fix */
+
+body.dark-mode button,
+body.dark-mode .btn {
+
+    color:white;
+
+}
