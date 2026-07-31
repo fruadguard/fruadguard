@@ -840,3 +840,101 @@ body.dark-mode footer a {
     }
 
 }
+/* ==============================
+   Dark Mode Premium Animation
+================================ */
+
+
+/* Navbar Shadow */
+
+body.dark-mode .navbar {
+
+    box-shadow:0 8px 25px rgba(0,0,0,0.35);
+
+}
+
+
+/* Toggle Animation */
+
+.dark-toggle {
+
+    transition:0.4s ease;
+}
+
+
+.dark-toggle:hover {
+
+    transform:rotate(20deg) scale(1.08);
+
+}
+
+
+/* Links */
+
+.navbar a {
+
+    transition:0.3s;
+
+}
+
+
+body.dark-mode .navbar a:hover {
+
+    color:#60a5fa;
+
+}
+
+
+/* Section Spacing */
+
+section {
+
+    transition:0.3s ease;
+
+}
+
+
+/* Premium Glass Effect */
+
+body.dark-mode .card,
+body.dark-mode .project-card,
+body.dark-mode .auth-box,
+body.dark-mode .profile-card {
+
+    box-shadow:
+    0 15px 35px rgba(0,0,0,0.35);
+
+}
+
+
+/* Scrollbar Dark */
+
+body.dark-mode::-webkit-scrollbar {
+
+    width:10px;
+
+}
+
+
+body.dark-mode::-webkit-scrollbar-track {
+
+    background:#0f172a;
+
+}
+
+
+body.dark-mode::-webkit-scrollbar-thumb {
+
+    background:#334155;
+    border-radius:10px;
+
+}
+
+
+/* Smooth Page Change */
+
+html {
+
+    scroll-behavior:smooth;
+
+}
