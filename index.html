@@ -81,6 +81,10 @@ gtag('config','G-HGBBG95YYY');
 
 <li><a href="login.html" class="login-btn">Login</a></li>
 
+<button id="darkModeBtn" class="dark-toggle">
+    🌙
+</button>
+
 </ul>
 
 </nav>
@@ -721,7 +725,42 @@ Coming Soon
 
 </footer>
 
+<script>
 
+const darkBtn = document.getElementById("darkModeBtn");
+
+darkBtn.onclick = () => {
+
+    document.body.classList.toggle("dark-mode");
+
+    if(document.body.classList.contains("dark-mode")){
+
+        darkBtn.innerHTML = "☀️";
+
+        localStorage.setItem("theme","dark");
+
+    }else{
+
+        darkBtn.innerHTML = "🌙";
+
+        localStorage.setItem("theme","light");
+
+    }
+
+};
+
+
+// Save Theme
+
+if(localStorage.getItem("theme") === "dark"){
+
+    document.body.classList.add("dark-mode");
+
+    darkBtn.innerHTML = "☀️";
+
+}
+
+</script>
 </body>
 </html>
 
