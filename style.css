@@ -1,3 +1,7 @@
+/* ==========================================
+   FIRST TO LAST FULL CSS CODE - FRAUDGUARD
+   ========================================== */
+
 *{
 margin:0;
 padding:0;
@@ -9,6 +13,7 @@ font-family:Arial,sans-serif;
 background:#0f172a;
 color:white;
 line-height:1.6;
+overflow-x:hidden;
 }
 
 a{
@@ -19,6 +24,7 @@ color:inherit;
 img{
 max-width:100%;
 display:block;
+height:auto;
 }
 
 .navbar{
@@ -31,6 +37,7 @@ position:sticky;
 top:0;
 z-index:1000;
 box-shadow:0 2px 10px rgba(0,0,0,.3);
+width:100%;
 }
 
 .logo a{
@@ -53,6 +60,7 @@ display:flex;
 list-style:none;
 gap:25px;
 align-items:center;
+flex-wrap:wrap;
 }
 
 .nav-links a{
@@ -80,6 +88,32 @@ color:white;
 text-align:center;
 padding:90px 20px;
 background:linear-gradient(135deg,#0f172a,#1e3a8a);
+position:relative;
+overflow:hidden;
+}
+
+.hero::before{
+content:"";
+position:absolute;
+top:-150px;
+left:-150px;
+width:400px;
+height:400px;
+background:rgba(34,197,94,.12);
+border-radius:50%;
+filter:blur(80px);
+}
+
+.hero::after{
+content:"";
+position:absolute;
+right:-150px;
+bottom:-150px;
+width:400px;
+height:400px;
+background:rgba(59,130,246,.12);
+border-radius:50%;
+filter:blur(80px);
 }
 
 .hero-logo{
@@ -90,6 +124,7 @@ margin:0 auto 25px;
 .hero h1{
 font-size:52px;
 margin-bottom:20px;
+font-weight:700;
 }
 
 .hero p{
@@ -113,6 +148,7 @@ padding:14px 28px;
 border-radius:10px;
 color:white;
 font-weight:bold;
+transition:.3s;
 }
 
 .btn-secondary{
@@ -121,17 +157,34 @@ padding:14px 28px;
 border-radius:10px;
 color:white;
 font-weight:bold;
+transition:.3s;
 }
 
 .btn-primary:hover,
 .btn-secondary:hover{
 transform:scale(1.05);
-transition:.3s;
 }
+
+.btn-primary:hover{
+box-shadow:0 0 25px rgba(34,197,94,.45);
+}
+
+.btn-secondary:hover{
+box-shadow:0 0 25px rgba(59,130,246,.35);
+}
+
 section{
 padding:70px 20px;
 max-width:1200px;
 margin:auto;
+transition:.3s ease;
+}
+
+section h2{
+font-size:38px;
+margin-bottom:20px;
+color:#22c55e;
+text-align:center;
 }
 
 .about-preview,
@@ -161,17 +214,23 @@ gap:25px;
 margin-top:35px;
 }
 
-.card{
+.card,
+.project-card{
 background:#1e293b;
 padding:25px;
-border-radius:15px;
+border-radius:18px;
 box-shadow:0 8px 20px rgba(0,0,0,.25);
 transition:.3s;
+backdrop-filter:blur(10px);
+-webkit-backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,.08);
 }
 
-.card:hover{
-transform:translateY(-10px);
+.card:hover,
+.project-card:hover{
+transform:translateY(-8px);
 box-shadow:0 15px 30px rgba(34,197,94,.25);
+border-color:#22c55e;
 }
 
 .card h3{
@@ -183,6 +242,11 @@ margin-bottom:15px;
 color:#d1d5db;
 font-size:16px;
 line-height:1.7;
+}
+
+.project-card img{
+border-radius:15px;
+width:100%;
 }
 
 .stats{
@@ -252,6 +316,7 @@ background:#111827;
 padding:40px 20px;
 text-align:center;
 margin-top:60px;
+transition:.3s;
 }
 
 footer p{
@@ -263,96 +328,8 @@ footer a{
 color:#22c55e;
 }
 
-@media(max-width:768px){
-
-.navbar{
-flex-direction:column;
-padding:20px;
-}
-
-.nav-links{
-flex-direction:column;
-gap:15px;
-margin-top:20px;
-}
-
-.hero h1{
-font-size:36px;
-}
-
-.hero p{
-font-size:18px;
-}
-
-.hero-buttons{
-flex-direction:column;
-align-items:center;
-}
-
-   }
-
-
 html{
 scroll-behavior:smooth;
-}
-
-.hero{
-position:relative;
-overflow:hidden;
-}
-
-.hero::before{
-content:"";
-position:absolute;
-top:-150px;
-left:-150px;
-width:400px;
-height:400px;
-background:rgba(34,197,94,.12);
-border-radius:50%;
-filter:blur(80px);
-}
-
-.hero::after{
-content:"";
-position:absolute;
-right:-150px;
-bottom:-150px;
-width:400px;
-height:400px;
-background:rgba(59,130,246,.12);
-border-radius:50%;
-filter:blur(80px);
-}
-
-.card{
-backdrop-filter:blur(10px);
--webkit-backdrop-filter:blur(10px);
-border:1px solid rgba(255,255,255,.08);
-}
-
-.card:hover{
-border-color:#22c55e;
-}
-
-.btn-primary,
-.btn-secondary{
-transition:.3s;
-}
-
-.btn-primary:hover{
-box-shadow:0 0 25px rgba(34,197,94,.45);
-}
-
-.btn-secondary:hover{
-box-shadow:0 0 25px rgba(59,130,246,.35);
-}
-
-section h2{
-font-size:38px;
-margin-bottom:20px;
-color:#22c55e;
-text-align:center;
 }
 
 ::-webkit-scrollbar{
@@ -373,17 +350,14 @@ background:#16a34a;
 }
 
 @keyframes fadeUp{
-
 from{
 opacity:0;
 transform:translateY(40px);
 }
-
 to{
 opacity:1;
 transform:translateY(0);
 }
-
 }
 
 .hero,
@@ -391,132 +365,6 @@ transform:translateY(0);
 .stat-card,
 section{
 animation:fadeUp .8s ease;
-   }
-/* =====================
-   MOBILE RESPONSIVE
-===================== */
-
-*{
-    box-sizing:border-box;
-}
-
-body{
-    overflow-x:hidden;
-}
-
-
-.navbar{
-    width:100%;
-}
-
-
-.nav-links{
-    display:flex;
-    flex-wrap:wrap;
-}
-
-
-/* Tablet */
-@media(max-width:992px){
-
-.hero-content,
-.features-preview,
-.premium-section,
-.platform-stats,
-.why-us,
-.testimonials,
-.faq,
-.download,
-.future,
-.social-section,
-.contact-section{
-    width:90%;
-    margin:auto;
-}
-
-
-.cards{
-    grid-template-columns:repeat(2,1fr);
-}
-
-
-}
-
-
-/* Mobile */
-@media(max-width:600px){
-
-
-.navbar{
-    flex-direction:column;
-    align-items:center;
-}
-
-
-.nav-links{
-    flex-direction:column;
-    width:100%;
-    text-align:center;
-}
-
-
-.nav-links li{
-    width:100%;
-}
-
-
-.hero h1{
-    font-size:28px;
-}
-
-
-.hero p{
-    font-size:15px;
-}
-
-
-.cards{
-    grid-template-columns:1fr;
-}
-
-
-.card{
-    width:100%;
-}
-
-
-.hero-buttons{
-    display:flex;
-    flex-direction:column;
-    gap:15px;
-}
-
-
-.btn-primary,
-.btn-secondary{
-    width:100%;
-    text-align:center;
-}
-
-
-.social-links{
-    display:flex;
-    flex-direction:column;
-}
-
-
-.footer-links{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-}
-
-
-img{
-    max-width:100%;
-    height:auto;
-}
-
 }
 
 :root {
@@ -529,8 +377,6 @@ img{
     --shadow-color: rgba(0,0,0,0.08);
 }
 
-/* Dark Theme */
-
 body.dark-mode {
     --bg-color: #0f172a;
     --text-color: #f8fafc;
@@ -541,26 +387,17 @@ body.dark-mode {
     --shadow-color: rgba(0,0,0,0.4);
 }
 
-
-/* Body */
-
 body {
     background: var(--bg-color);
     color: var(--text-color);
     transition: 0.3s ease;
 }
 
-
-/* Navbar */
-
 .navbar {
     background: var(--navbar-color);
     border-bottom: 1px solid var(--border-color);
     transition: 0.3s ease;
 }
-
-
-/* Cards */
 
 .card,
 .project-card {
@@ -570,42 +407,27 @@ body {
     transition: 0.3s ease;
 }
 
-
-/* Text */
-
-h1,
-h2,
-h3,
-p,
-span {
+h1, h2, h3, p, span {
     color: var(--text-color);
 }
-
-
-/* Buttons */
 
 button,
 .btn {
     background: var(--primary-color);
     color: white;
     transition: 0.3s ease;
+    border: none;
+    cursor: pointer;
 }
-
 
 button:hover,
 .btn:hover {
     opacity: 0.85;
 }
 
-
-/* Smooth Animation */
-
 * {
-    transition: background 0.3s ease,
-                color 0.3s ease,
-                border 0.3s ease;
+    transition: background 0.3s ease, color 0.3s ease, border 0.3s ease;
 }
-/* Dark Mode Button */
 
 .dark-toggle {
     width: 42px;
@@ -619,322 +441,230 @@ button:hover,
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: 0.4s ease;
 }
 
-
-/* Mobile */
-
-@media(max-width:768px){
-
-    .dark-toggle{
-        width:38px;
-        height:38px;
-        font-size:18px;
-    }
-
+.dark-toggle:hover {
+    transform: rotate(20deg) scale(1.08);
 }
-
-/* ==============================
-   Dark Glass Project Cards
-================================ */
-
-.project-card,
-.card {
-    backdrop-filter: blur(12px);
-    border-radius: 18px;
-    padding: 20px;
-}
-
-
-/* Dark Mode Card Upgrade */
 
 body.dark-mode .project-card,
 body.dark-mode .card {
-
     background: rgba(30, 41, 59, 0.75);
     border: 1px solid rgba(255,255,255,0.08);
-
 }
-
-
-/* Card Hover */
-
-.project-card:hover,
-.card:hover {
-
-    transform: translateY(-8px);
-
-}
-
-
-
 
 .hero {
-
     padding: 80px 20px;
     text-align: center;
-    transition:0.3s;
-
+    transition: 0.3s;
 }
-
 
 body.dark-mode .hero {
-
-    background: linear-gradient(
-        135deg,
-        #0f172a,
-        #1e293b
-    );
-
+    background: linear-gradient(135deg, #0f172a, #1e293b);
 }
-
 
 .hero h1 {
-
     font-size: 45px;
     font-weight: 700;
-
 }
-
 
 body.dark-mode .hero h1 {
-
-    color:#f8fafc;
-
+    color: #f8fafc;
 }
-
 
 body.dark-mode .hero p {
-
-    color:#cbd5e1;
-
+    color: #cbd5e1;
 }
-
-
-/* Project Image */
-
-.project-card img {
-
-    border-radius:15px;
-    width:100%;
-}
-
-
-/* Dark Mode Button Text Fix */
 
 body.dark-mode button,
 body.dark-mode .btn {
-
-    color:white;
-
+    color: white;
 }
-/* ==============================
-   Login / Register Dark Style
-================================ */
 
 .auth-box,
 .login-box,
 .register-box {
-
-    border-radius:18px;
-    padding:30px;
-    transition:0.3s;
-
+    border-radius: 18px;
+    padding: 30px;
+    transition: 0.3s;
 }
-
 
 body.dark-mode .auth-box,
 body.dark-mode .login-box,
 body.dark-mode .register-box {
-
-    background:rgba(30,41,59,0.75);
-    border:1px solid rgba(255,255,255,0.08);
-    backdrop-filter:blur(12px);
-
+    background: rgba(30,41,59,0.75);
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(12px);
 }
-
-
-/* Input */
 
 input,
 textarea,
 select {
-
-    border-radius:12px;
-    padding:12px;
-    border:1px solid var(--border-color);
-
+    border-radius: 12px;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    width: 100%;
 }
-
 
 body.dark-mode input,
 body.dark-mode textarea,
 body.dark-mode select {
-
-    background:#0f172a;
-    color:#f8fafc;
-    border-color:#334155;
-
+    background: #0f172a;
+    color: #f8fafc;
+    border-color: #334155;
 }
-
-
-/* ==============================
-   Profile Card
-================================ */
 
 .profile-card {
-
-    border-radius:20px;
-    padding:25px;
-
+    border-radius: 20px;
+    padding: 25px;
 }
-
 
 body.dark-mode .profile-card {
-
-    background:#1e293b;
-    border:1px solid #334155;
-
+    background: #1e293b;
+    border: 1px solid #334155;
 }
-
-
-/* ==============================
-   Footer
-================================ */
-
-footer {
-
-    padding:30px;
-    transition:0.3s;
-
-}
-
 
 body.dark-mode footer {
-
-    background:#020617;
-    color:#cbd5e1;
-
+    background: #020617;
+    color: #cbd5e1;
 }
-
 
 body.dark-mode footer a {
-
-    color:#93c5fd;
-
+    color: #93c5fd;
 }
-
-
-/* Mobile Fix */
-
-@media(max-width:768px){
-
-    .hero h1{
-        font-size:32px;
-    }
-
-    .auth-box,
-    .login-box,
-    .register-box{
-        padding:20px;
-    }
-
-}
-/* ==============================
-   Dark Mode Premium Animation
-================================ */
-
-
-/* Navbar Shadow */
 
 body.dark-mode .navbar {
-
-    box-shadow:0 8px 25px rgba(0,0,0,0.35);
-
+    box-shadow: 0 8px 25px rgba(0,0,0,0.35);
 }
-
-
-/* Toggle Animation */
-
-.dark-toggle {
-
-    transition:0.4s ease;
-}
-
-
-.dark-toggle:hover {
-
-    transform:rotate(20deg) scale(1.08);
-
-}
-
-
-/* Links */
 
 .navbar a {
-
-    transition:0.3s;
-
+    transition: 0.3s;
 }
-
 
 body.dark-mode .navbar a:hover {
-
-    color:#60a5fa;
-
+    color: #60a5fa;
 }
-
-
-/* Section Spacing */
-
-section {
-
-    transition:0.3s ease;
-
-}
-
-
-/* Premium Glass Effect */
 
 body.dark-mode .card,
 body.dark-mode .project-card,
 body.dark-mode .auth-box,
 body.dark-mode .profile-card {
-
-    box-shadow:
-    0 15px 35px rgba(0,0,0,0.35);
-
+    box-shadow: 0 15px 35px rgba(0,0,0,0.35);
 }
-
-
-/* Scrollbar Dark */
-
-body.dark-mode::-webkit-scrollbar {
-
-    width:10px;
-
-}
-
 
 body.dark-mode::-webkit-scrollbar-track {
-
-    background:#0f172a;
-
+    background: #0f172a;
 }
-
 
 body.dark-mode::-webkit-scrollbar-thumb {
-
-    background:#334155;
-    border-radius:10px;
-
+    background: #334155;
+    border-radius: 10px;
 }
 
+/* ==========================================
+   MOBILE RESPONSIVE (HORIZONTAL DESKTOP STYLE)
+   ========================================== */
 
-/* Smooth Page Change */
+@media(max-width: 768px) {
+    .navbar {
+        flex-direction: row !important;
+        padding: 15px;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .nav-links {
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        gap: 15px !important;
+        margin-top: 0 !important;
+        align-items: center;
+    }
+    
+    .nav-links li {
+        width: auto !important;
+    }
 
-html {
+    .hero h1 {
+        font-size: 32px;
+    }
+    
+    .hero p {
+        font-size: 16px;
+    }
+    
+    .hero-buttons {
+        flex-direction: row !important;
+        justify-content: center;
+        gap: 10px !important;
+    }
+    
+    .btn-primary, .btn-secondary {
+        width: auto !important;
+        padding: 10px 18px;
+        font-size: 14px;
+    }
 
-    scroll-behavior:smooth;
+    .cards {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 15px;
+    }
+    
+    .stats {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 15px;
+    }
 
+    .dark-toggle {
+        width: 38px;
+        height: 38px;
+        font-size: 18px;
+    }
+
+    .auth-box,
+    .login-box,
+    .register-box {
+        padding: 20px;
+    }
 }
+
+@media(max-width: 600px) {
+    .navbar {
+        flex-direction: row !important;
+        align-items: center;
+    }
+    
+    .nav-links {
+        flex-direction: row !important;
+        width: auto !important;
+        text-align: left !important;
+    }
+    
+    .cards, .stats {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    .hero-buttons {
+        flex-direction: row !important;
+    }
+    
+    .card {
+        width: 100% !important;
+        padding: 15px; 
+    }
+    
+    .card h3 {
+        font-size: 16px;
+    }
+    
+    .card p {
+        font-size: 14px;
+    }
+    
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+   }
