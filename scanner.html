@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,467 +7,600 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>FraudGuard | Website Scanner</title>
 
-<title>URL Scanner - FraudGuard</title>
+<meta name="description" content="Scan websites for phishing and suspicious links using FraudGuard.">
 
-
-<meta name="description" content="Scan suspicious websites and detect possible scam links with FraudGuard AI security system.">
-
-
-<meta name="keywords" content="FraudGuard, URL Scanner, Scam Checker, Website Security">
-
-
-<link rel="icon" href="assets/logo.png">
-
+<link rel="icon" href="logo.png">
 
 <link rel="stylesheet" href="style.css">
 
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-
 </head>
-
-
 
 <body>
 
-
-<header>
-
-<div class="container navbar">
-
-
+<nav class="navbar">
 
 <div class="logo">
 
+<a href="index.html">
 
-<img src="assets/logo.png" alt="FraudGuard Logo">
-
+<img src="logo.png" alt="FraudGuard">
 
 <span>FraudGuard</span>
 
+</a>
 
 </div>
 
+<ul class="nav-links">
 
+<li><a href="index.html">Home</a></li>
 
+<li><a href="dashboard.html">Dashboard</a></li>
 
+<li><a href="pricing.html">Premium</a></li>
 
-<ul class="nav-links" id="navLinks">
-
-
-<li>
-<a href="index.html">Home</a>
-</li>
-
-
-<li>
-<a href="about.html">About</a>
-</li>
-
-
-<li>
-<a href="features.html">Features</a>
-</li>
-
-
-<li>
-<a href="scanner.html">Scanner</a>
-</li>
-
-
-<li>
-<a href="phone-checker.html">Phone Check</a>
-</li>
-
-
-<li>
-<a href="report.html">Report</a>
-</li>
-
-
-<li>
-<a href="contact.html">Contact</a>
-</li>
-
-
+<li><a href="report.html">Report</a></li>
 
 </ul>
 
+</nav>
 
+<section class="scanner">
 
-
-
-<div class="menu-btn" id="menuBtn">
-
-
-<i class="fa-solid fa-bars"></i>
-
-
-</div>
-
-
-
-</div>
-
-</header>
-
-
-<section class="scanner-section">
-
-
-<div class="container">
-
-
-
-<div class="section-title">
-
-
-<h2>
-
-AI Website Scam Scanner
-
-</h2>
-
+<h1>🌐 Website Security Scanner</h1>
 
 <p>
 
-Check any website URL before visiting and stay protected from phishing and online scams.
+Scan any website and review basic security information before visiting it.
 
 </p>
 
+<div class="card">
 
-</div>
-
-
-
-
-
-
-
-<div class="scanner-box">
-
-
-
-
-
-<i class="fa-solid fa-shield-halved" style="font-size:50px;color:#38bdf8;"></i>
-
-
-
-
-
-<h2>
-
-Scan Website
-
-</h2>
-
-
-
-
-<p>
-
-Enter a website link to analyze possible security risks.
-
-</p>
-
-
-
-
-
+<h2>Enter Website URL</h2>
 
 <input
-
-type="text"
-
+type="url"
 id="urlInput"
-
-class="input-box"
-
 placeholder="https://example.com"
+autocomplete="off">
 
->
+<br><br>
 
+<button
+class="btn-primary"
+id="scanButton">
 
-
-
-
-
-
-<button 
-
-onclick="scanURL()" 
-
-class="scan-btn">
-
-
-<i class="fa-solid fa-magnifying-glass"></i>
-
-Scan Website
-
+🔍 Scan Website
 
 </button>
 
+</div>
 
+<div class="card" id="loadingCard" style="display:none;">
 
+<h2>Scanning...</h2>
 
+<p>Please wait while FraudGuard checks the website.</p>
 
-
-
-
-<div 
-
-id="resultBox"
-
-class="result-box">
-
+<progress style="width:100%"></progress>
 
 </div>
 
+<div class="card" id="resultCard">
 
+<h2>Scan Result</h2>
 
+<p><strong>Status:</strong> <span id="scanStatus">Waiting for scan...</span></p>
 
+<p><strong>Risk Score:</strong> <span id="riskScore">--</span></p>
 
+<p><strong>HTTPS:</strong> <span id="httpsStatus">--</span></p>
 
-</div>
+<p><strong>Domain:</strong> <span id="domainName">--</span></p>
 
+<p><strong>Recommendation:</strong></p>
 
+<p id="recommendation">
 
-
-</div>
-
-
-</section>
-
-
-<section class="features">
-
-
-<div class="container">
-
-
-
-<div class="section-title">
-
-
-<h2>
-
-How FraudGuard Scanner Works
-
-</h2>
-
-
-<p>
-
-Advanced checks to identify suspicious websites.
+Enter a website URL and press Scan.
 
 </p>
 
+</div>
+<div class="card">
+
+<h2>Website Information</h2>
+
+<p><strong>Website:</strong> <span id="websiteURL">--</span></p>
+
+<p><strong>Protocol:</strong> <span id="protocolType">--</span></p>
+
+<p><strong>Hostname:</strong> <span id="hostName">--</span></p>
+
+<p><strong>Security:</strong> <span id="securityLevel">Waiting...</span></p>
+
+<p><strong>Last Scan:</strong> <span id="scanTime">--</span></p>
 
 </div>
-
-
-
-
-
-
-<div class="feature-grid">
-
-
-
-
 
 <div class="card">
 
+<h2>Scan Actions</h2>
 
-<i class="fa-solid fa-link"></i>
+<button class="btn-primary" id="copyBtn">
 
+📋 Copy Result
 
-<h3>
+</button>
 
-URL Analysis
+<button class="btn-secondary" id="shareBtn">
 
-</h3>
+📤 Share Result
 
+</button>
 
-<p>
+<button class="btn-primary" id="reportBtn">
 
-Checks website structure, security signals and suspicious patterns.
+🚨 Report Website
 
-</p>
+</button>
 
+<button class="btn-secondary" id="clearBtn">
 
-</div>
+🗑 Clear
 
-
-
-
-
-
-
-<div class="card">
-
-
-<i class="fa-solid fa-lock"></i>
-
-
-<h3>
-
-Security Check
-
-</h3>
-
-
-<p>
-
-Analyzes HTTPS status and possible phishing risks.
-
-</p>
-
+</button>
 
 </div>
 
+<script type="module">
 
+import { auth, db } from "./firebase.js";
 
+import {
 
+collection,
 
+addDoc,
 
+serverTimestamp
 
-<div class="card">
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
+const urlInput=document.getElementById("urlInput");
 
-<i class="fa-solid fa-robot"></i>
+const scanButton=document.getElementById("scanButton");
 
+const loadingCard=document.getElementById("loadingCard");
 
-<h3>
+const websiteURL=document.getElementById("websiteURL");
 
-AI Risk Detection
+const protocolType=document.getElementById("protocolType");
 
-</h3>
+const hostName=document.getElementById("hostName");
 
+const scanStatus=document.getElementById("scanStatus");
 
-<p>
+const riskScore=document.getElementById("riskScore");
 
-Uses intelligent analysis to calculate possible fraud risk.
+const httpsStatus=document.getElementById("httpsStatus");
 
-</p>
+const securityLevel=document.getElementById("securityLevel");
 
+const recommendation=document.getElementById("recommendation");
 
-</div>
+const scanTime=document.getElementById("scanTime");
 
+scanButton.addEventListener("click",scanWebsite);
 
+async function scanWebsite(){
 
+const url=urlInput.value.trim();
 
+if(url===""){
 
+alert("Please enter a website URL.");
 
-</div>
+return;
 
+}
 
-</div>
+loadingCard.style.display="block";
 
+// Reset old result
 
-</section>
+scanStatus.innerText = "Scanning...";
+riskScore.innerText = "--";
+httpsStatus.innerText = "--";
 
 
 
+// URL Check
 
-<section class="stats">
+let finalURL = url;
 
+if(!url.startsWith("http://") && !url.startsWith("https://")){
 
-<div class="container">
+    finalURL = "https://" + url;
 
+}
 
 
-<div class="feature-grid">
 
+try{
 
 
-<div class="card">
+const parsedURL = new URL(finalURL);
 
 
-<i class="fa-solid fa-shield"></i>
 
+websiteURL.innerText = finalURL;
 
-<h3>
+protocolType.innerText = parsedURL.protocol;
 
-Safe Browsing
+hostName.innerText = parsedURL.hostname;
 
-</h3>
 
 
-<p>
+// HTTPS Check
 
-Help users avoid dangerous websites and online threats.
+if(parsedURL.protocol === "https:"){
 
-</p>
+    httpsStatus.innerText = "Secure HTTPS";
 
+}
+else{
 
-</div>
+    httpsStatus.innerText = "Not Secure";
 
+}
 
 
 
 
-<div class="card">
 
+// Basic Risk Score System
 
-<i class="fa-solid fa-bolt"></i>
 
+let score = 0;
 
-<h3>
 
-Fast Detection
 
-</h3>
+// HTTPS Check
 
+if(parsedURL.protocol !== "https:"){
 
-<p>
+    score += 30;
 
-Quick website risk analysis within seconds.
+}
 
-</p>
 
 
-</div>
+// Suspicious Words
 
+const keywords = [
 
+"login",
+"verify",
+"free",
+"gift",
+"winner",
+"crypto",
+"password",
+"bank"
 
+];
 
 
-<div class="card">
 
+keywords.forEach(word=>{
 
-<i class="fa-solid fa-globe"></i>
 
+if(parsedURL.hostname.toLowerCase().includes(word)){
 
-<h3>
+    score +=10;
 
-Global Protection
+}
 
-</h3>
 
+});
 
-<p>
 
-Building a safer internet for users worldwide.
 
-</p>
 
 
-</div>
+// Final Status
 
 
+if(score >= 50){
 
 
-</div>
+scanStatus.innerText="Danger";
 
+securityLevel.innerText="High Risk";
 
-</div>
+recommendation.innerText=
+"Do not visit this website. It may be suspicious.";
 
 
-</section>
+}
+
+
+else if(score >=25){
+
+
+scanStatus.innerText="Warning";
+
+securityLevel.innerText="Medium Risk";
+
+recommendation.innerText=
+"Be careful before sharing any information.";
+
+
+}
+
+
+else{
+
+
+scanStatus.innerText="Safe";
+
+securityLevel.innerText="Low Risk";
+
+recommendation.innerText=
+"No major threat detected.";
+
+
+}
+
+
+
+riskScore.innerText = score + "/100";
+
+
+
+scanTime.innerText = new Date().toLocaleString();
+
+
+
+loadingCard.style.display="none";
+
+
+
+
+
+// Save Scan History Firebase
+
+try{
+
+
+await addDoc(collection(db,"scanHistory"),{
+
+
+url: finalURL,
+
+risk: score,
+
+status: scanStatus.innerText,
+
+time: serverTimestamp()
+
+
+});
+
+
+}
+
+catch(error){
+
+console.log("Firebase Save Error:",error);
+
+}
+
+
+
+}
+
+catch(error){
+
+
+loadingCard.style.display="none";
+
+alert("Invalid website URL");
+
+
+}
+
+
+
+}
+/* =========================
+   COPY RESULT
+========================= */
+
+
+const copyBtn = document.getElementById("copyBtn");
+
+
+copyBtn.addEventListener("click",()=>{
+
+
+const result = `
+
+FraudGuard Scan Result
+
+Website: ${websiteURL.innerText}
+
+Status: ${scanStatus.innerText}
+
+Risk Score: ${riskScore.innerText}
+
+HTTPS: ${httpsStatus.innerText}
+
+Security: ${securityLevel.innerText}
+
+Recommendation:
+${recommendation.innerText}
+
+`;
+
+
+navigator.clipboard.writeText(result);
+
+
+alert("Scan result copied!");
+
+
+
+});
+
+
+
+
+
+
+
+/* =========================
+   SHARE RESULT
+========================= */
+
+
+const shareBtn = document.getElementById("shareBtn");
+
+
+shareBtn.addEventListener("click",()=>{
+
+
+const text = 
+
+`FraudGuard Scan Result
+
+Website: ${websiteURL.innerText}
+
+Status: ${scanStatus.innerText}
+
+Risk: ${riskScore.innerText}
+
+`;
+
+
+
+if(navigator.share){
+
+
+navigator.share({
+
+title:"FraudGuard Scan Result",
+
+text:text
+
+
+});
+
+
+}
+
+else{
+
+
+alert("Sharing not supported on this device");
+
+
+}
+
+
+
+});
+
+
+
+
+
+
+
+/* =========================
+   CLEAR SCAN
+========================= */
+
+
+const clearBtn = document.getElementById("clearBtn");
+
+
+clearBtn.addEventListener("click",()=>{
+
+
+urlInput.value="";
+
+
+websiteURL.innerText="--";
+
+protocolType.innerText="--";
+
+hostName.innerText="--";
+
+scanStatus.innerText="Waiting for scan...";
+
+riskScore.innerText="--";
+
+httpsStatus.innerText="--";
+
+securityLevel.innerText="Waiting...";
+
+recommendation.innerText=
+"Enter a website URL and press Scan.";
+
+scanTime.innerText="--";
+
+
+
+});
+
+
+
+
+
+
+
+
+/* =========================
+   REPORT WEBSITE
+========================= */
+
+
+const reportBtn = document.getElementById("reportBtn");
+
+
+reportBtn.addEventListener("click",()=>{
+
+
+const url = websiteURL.innerText;
+
+
+if(url==="--"){
+
+
+alert("First scan a website");
+
+
+return;
+
+
+}
+
+
+
+window.location.href =
+"report.html?website="+encodeURIComponent(url);
+
+
+
+});
+/* =========================
+        FOOTER
+========================= */
 
 
 <footer>
@@ -480,53 +612,33 @@ Building a safer internet for users worldwide.
 <div class="footer-grid">
 
 
-
 <div class="footer-box">
 
-
 <h3>
-
 FraudGuard
-
 </h3>
-
 
 <p>
-
 AI-powered anti-fraud platform protecting users from digital scams.
-
 </p>
 
-
 </div>
-
-
 
 
 
 
 <div class="footer-box">
 
-
 <h3>
-
 Quick Links
-
 </h3>
-
 
 <a href="index.html">Home</a><br>
-
 <a href="scanner.html">Scanner</a><br>
-
-<a href="report.html">Report Fraud</a><br>
-
+<a href="report.html">Report</a><br>
 <a href="contact.html">Contact</a>
 
-
 </div>
-
-
 
 
 
@@ -534,81 +646,52 @@ Quick Links
 
 <div class="footer-box">
 
-
 <h3>
-
-Follow Us
-
+Security
 </h3>
 
-
-<div class="social-links">
-
-
-<a href="#">
-
-<i class="fa-brands fa-facebook"></i>
-
-</a>
-
-
-<a href="#">
-
-<i class="fa-brands fa-twitter"></i>
-
-</a>
-
-
-<a href="#">
-
-<i class="fa-brands fa-linkedin"></i>
-
-</a>
-
-
-</div>
-
+<p>
+Safe browsing with AI risk analysis.
+</p>
 
 </div>
 
 
 
 </div>
-
-
-
 
 
 
 <div class="footer-bottom">
 
-
 <p>
-
 © 2026 FraudGuard. All Rights Reserved.
-
 </p>
 
-
 </div>
 
 
 
 </div>
-
 
 </footer>
 
 
 
 
-<script src="firebase.js"></script>
+
+
+<!-- Firebase + Script -->
+
 
 <script src="script.js"></script>
 
 
-
 </body>
 
+</html>
 
-  </html>
+
+
+
+
