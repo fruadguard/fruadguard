@@ -972,3 +972,88 @@ window.addEventListener("load",()=>
 console.log(
 "FraudGuard System Loaded Successfully 🚀"
 );
+// LIVE CHAT
+
+const chatBtn = document.getElementById("chatBtn");
+const chatBox = document.getElementById("chatBox");
+const closeChat = document.getElementById("closeChat");
+const sendChat = document.getElementById("sendChat");
+const chatMessage = document.getElementById("chatMessage");
+const chatBody = document.getElementById("chatBody");
+
+
+if(chatBtn){
+
+chatBtn.onclick = ()=>{
+
+chatBox.style.display="block";
+
+}
+
+}
+
+
+if(closeChat){
+
+closeChat.onclick = ()=>{
+
+chatBox.style.display="none";
+
+}
+
+}
+
+
+
+if(sendChat){
+
+sendChat.onclick = ()=>{
+
+
+let msg = chatMessage.value.trim();
+
+
+if(msg==="") return;
+
+
+
+chatBody.innerHTML += `
+
+<p class="user-msg">
+
+${msg}
+
+</p>
+
+`;
+
+
+
+chatMessage.value="";
+
+
+
+setTimeout(()=>{
+
+
+chatBody.innerHTML += `
+
+<p class="bot-msg">
+
+Thanks for contacting FraudGuard Support. Our team will reply soon.
+
+</p>
+
+`;
+
+chatBody.scrollTop = chatBody.scrollHeight;
+
+
+},1000);
+
+
+
+}
+
+
+}
