@@ -4,178 +4,821 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dashboard | FraudGuard</title>
+
+<title>Dashboard - FraudGuard</title>
+
+
+<meta name="description"
+content="FraudGuard user dashboard for security reports and protection.">
+
+
+<link rel="icon" href="logo.png">
+
 
 <link rel="stylesheet" href="style.css">
-<link rel="icon" href="logo.png">
+
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
 
 </head>
 
+
 <body>
 
-<nav class="navbar">
 
-<div class="logo">
 
-<a href="index.html">
-
-<img src="logo.png" alt="FraudGuard">
-
-<span>FraudGuard</span>
-
-</a>
-
-</div>
-
-<ul class="nav-links">
-
-<li><a href="index.html">Home</a></li>
-<li><a href="scanner.html">URL Scanner</a></li>
-<li><a href="phone-checker.html">Phone Checker</a></li>
-<li><a href="report.html">Report</a></li>
-
-</ul>
-
-</nav>
-
-<section class="scanner">
-
-<h1>📊 FraudGuard Dashboard</h1>
-
-<p>Welcome back!</p>
-
-<div class="card">
-
-<h2>User Information</h2>
-
-<p><strong>Email:</strong> <span id="userEmail">Loading...</span></p>
-
-<p><strong>Membership:</strong> <span id="membership">Checking...</span></p>
-
-</div>
-
-<div class="card">
-
-<h2>Statistics</h2>
-
-<p>🌐 Total Website Scans: <span id="totalScans">0</span></p>
-
-<p>🚨 Total Scam Reports: <span id="totalReports">0</span></p>
-
-</div>
-
-<div class="card">
-
-<h2>Recent Activity</h2>
-
-<div id="activityList">
-
-<p>No activity yet.</p>
-
-</div>
-
-</div>
-
-<br>
-
-<button onclick="logout()" class="btn-primary">
-
-🚪 Logout
-
-</button>
-
-</section>
+<!-- LOGIN PROTECTION -->
 
 <script type="module">
 
-import { auth, db } from "./firebase.js";
+
+import { auth } from "./firebase.js";
+
 
 import {
 
-onAuthStateChanged,
-
-signOut
-
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-
-import {
-
-doc,
-
-getDoc
-
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
-
-const userEmail=document.getElementById("userEmail");
-
-const membership=document.getElementById("membership");
-
-onAuthStateChanged(auth,async(user)=>{
-
-if(user){
-
-userEmail.innerText=user.email;
-
-try{
-
-const snap=await getDoc(doc(db,"subscriptions",user.uid));
-
-if(snap.exists()){
-
-const data=snap.data();
-
-if(data.premium===true){
-
-membership.innerHTML="👑 Premium Member";
-
-}else{
-
-membership.innerHTML="🆓 Free Member";
+onAuthStateChanged
 
 }
 
-}else{
+from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
-membership.innerHTML="🆓 Free Member";
 
-}
 
-}catch(error){
 
-console.log(error);
 
-membership.innerHTML="🆓 Free Member";
+onAuthStateChanged(auth,(user)=>{
 
-}
 
-}else{
+if(!user){
+
 
 window.location.href="login.html";
 
+
 }
+
+
 
 });
 
-window.logout=async function(){
 
-try{
 
-await signOut(auth);
+</script>
 
-window.location.href="login.html";
 
-}catch(error){
 
-alert(error.message);
+
+
+
+
+<!-- NAVBAR -->
+
+
+<nav class="navbar">
+
+
+<div class="logo">
+
+
+<a href="index.html">
+
+
+<img src="logo.png" alt="FraudGuard">
+
+
+<span>FraudGuard</span>
+
+
+</a>
+
+
+</div>
+
+
+
+
+
+<ul class="nav-links">
+
+
+<li>
+<a href="index.html">
+Home
+</a>
+</li>
+
+
+<li>
+<a href="dashboard.html">
+Dashboard
+</a>
+</li>
+
+
+<li>
+<a href="scanner.html">
+Scanner
+</a>
+</li>
+
+
+<li>
+<a href="report.html">
+Report
+</a>
+</li>
+
+
+<li>
+<a href="contact.html">
+Contact
+</a>
+</li>
+
+
+
+</ul>
+
+
+
+</nav>
+<!-- =========================
+      DASHBOARD SECTION
+========================= -->
+
+
+<section class="dashboard-section">
+
+
+<div class="container">
+
+
+
+
+
+<div class="section-title">
+
+
+<h1>
+
+Welcome to FraudGuard Dashboard 🚀
+
+</h1>
+
+
+<p>
+
+Manage your online security and monitor fraud activities.
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- USER PROFILE CARD -->
+
+
+<div class="card user-profile">
+
+
+<i class="fa-solid fa-user-shield"></i>
+
+
+<h2>
+
+Your Account
+
+</h2>
+
+
+<p>
+
+Email:
+
+<span id="userEmail">
+
+Loading...
+
+</span>
+
+</p>
+
+
+
+
+
+<button
+
+onclick="logoutUser()"
+
+class="btn">
+
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+Logout
+
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- SECURITY OVERVIEW -->
+
+
+<div class="feature-grid">
+
+
+
+
+
+<div class="card">
+
+
+<i class="fa-solid fa-globe"></i>
+
+
+<h3>
+
+Website Scans
+
+</h3>
+
+
+<p>
+
+Check suspicious websites with AI scanner.
+
+</p>
+
+
+<a href="scanner.html" class="btn">
+
+Scan Now
+
+</a>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+
+<i class="fa-solid fa-triangle-exclamation"></i>
+
+
+<h3>
+
+Report Fraud
+
+</h3>
+
+
+<p>
+
+Submit scam reports and help the community.
+
+</p>
+
+
+<a href="report.html" class="btn">
+
+Report Now
+
+</a>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+
+<i class="fa-solid fa-phone"></i>
+
+
+<h3>
+
+Phone Checker
+
+</h3>
+
+
+<p>
+
+Check suspicious phone numbers.
+
+</p>
+
+
+<a href="phone-checker.html" class="btn">
+
+Check Number
+
+</a>
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+</div>
+
+
+</section>
+<!-- =========================
+      USER ACTIVITY SECTION
+========================= -->
+
+
+<section class="activity-section">
+
+
+<div class="container">
+
+
+
+
+
+<div class="section-title">
+
+
+<h2>
+
+Your Fraud Reports
+
+</h2>
+
+
+<p>
+
+View the reports you submitted to FraudGuard.
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+<div id="userReports">
+
+
+<div class="card">
+
+
+<p>
+
+Loading your reports...
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- FIREBASE USER REPORT LOAD -->
+
+
+<script type="module">
+
+
+import { auth, db } from "./firebase.js";
+
+
+import {
+
+
+onAuthStateChanged
+
+
+} 
+
+from 
+
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+
+
+import {
+
+
+collection,
+
+query,
+
+where,
+
+getDocs,
+
+orderBy
+
 
 }
 
-};
+from
+
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+
+
+
+
+
+
+const userReports = 
+document.getElementById("userReports");
+
+
+
+
+
+
+
+onAuthStateChanged(auth, async(user)=>{
+
+
+if(user){
+
+
+
+const q = query(
+
+collection(db,"fraudReports"),
+
+where("user","==",user.email),
+
+orderBy("date","desc")
+
+);
+
+
+
+
+
+const snapshot = await getDocs(q);
+
+
+
+
+userReports.innerHTML="";
+
+
+
+
+
+if(snapshot.empty){
+
+
+
+userReports.innerHTML=`
+
+<div class="card">
+
+<p>
+
+No fraud reports found.
+
+</p>
+
+</div>
+
+`;
+
+return;
+
+
+}
+
+
+
+
+
+snapshot.forEach((doc)=>{
+
+
+const data = doc.data();
+
+
+
+userReports.innerHTML += `
+
+
+<div class="card">
+
+
+<h3>
+
+${data.title}
+
+</h3>
+
+
+<p>
+
+${data.description}
+
+</p>
+
+
+<small>
+
+Type: ${data.type}
+
+</small>
+
+
+
+</div>
+
+
+`;
+
+
+
+});
+
+
+
+}
+
+
+
+});
+
+
 
 </script>
+<!-- =========================
+        LIVE CHAT
+========================= -->
+
+
+<div class="chat-widget">
+
+
+<button id="chatBtn" class="chat-btn">
+
+💬
+
+</button>
+
+
+
+
+<div id="chatBox" class="chat-box">
+
+
+
+<div class="chat-header">
+
+FraudGuard Support
+
+<span id="closeChat">
+
+×
+
+</span>
+
+
+</div>
+
+
+
+
+
+<div class="chat-body" id="chatBody">
+
+
+<p class="bot-msg">
+
+Hello 👋  
+How can we help you?
+
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="chat-input">
+
+
+<input
+
+id="chatMessage"
+
+placeholder="Type message...">
+
+
+
+<button id="sendChat">
+
+Send
+
+</button>
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- =========================
+        FOOTER
+========================= -->
+
+
+<footer>
+
+
+<div class="container">
+
+
+<div class="footer-grid">
+
+
+
+<div class="footer-box">
+
+
+<h3>
+
+FraudGuard
+
+</h3>
+
+
+<p>
+
+AI-powered platform protecting users from digital fraud.
+
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="footer-box">
+
+
+<h3>
+
+Quick Links
+
+</h3>
+
+
+<a href="index.html">Home</a><br>
+
+<a href="scanner.html">Scanner</a><br>
+
+<a href="report.html">Report</a><br>
+
+<a href="contact.html">Contact</a>
+
+
+</div>
+
+
+
+
+
+<div class="footer-box">
+
+
+<h3>
+
+Security
+
+</h3>
+
+
+<p>
+
+Building a safer digital world.
+
+</p>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+<div class="footer-bottom">
+
+
+<p>
+
+© 2026 FraudGuard. All Rights Reserved.
+
+</p>
+
+
+</div>
+
+
+
+</div>
+
+
+</footer>
+
+
+
+<!-- SCRIPTS -->
+
+
+<script src="script.js"></script>
+
 
 </body>
 
 </html>
+
+
+
