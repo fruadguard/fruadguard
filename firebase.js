@@ -42,22 +42,16 @@ from
 const firebaseConfig = {
 
 
-apiKey: "YOUR_API_KEY",
+apiKey: "AIzaSyCNK3tHXMTS_-mu8IAHW9q7hgo4TkBGuSs",
+authDomain: "fraudguard-eafd2.firebaseapp.com",
 
 
-authDomain: "YOUR_PROJECT.firebaseapp.com",
+projectId:"fraudguard-eafd2",
+storageBucket:"fraudguard-eafd2.firebasestorage.app",
+messagingSenderId:"721145048132",
 
 
-projectId: "YOUR_PROJECT_ID",
-
-
-storageBucket: "YOUR_PROJECT.appspot.com",
-
-
-messagingSenderId: "YOUR_SENDER_ID",
-
-
-appId: "YOUR_APP_ID"
+appId:"1:721145048132:web:c87c07d58d8e9b5b806011"
 
 
 };
