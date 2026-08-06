@@ -1,23 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
 
-
 <meta charset="UTF-8">
-
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-<title>Admin Dashboard - FraudGuard</title>
-
+<title>Admin Chat - FraudGuard</title>
 
 
 <meta name="description"
-content="FraudGuard admin dashboard for managing fraud reports.">
-
+content="FraudGuard admin support chat system.">
 
 
 <link rel="icon" href="logo.png">
@@ -26,14 +21,11 @@ content="FraudGuard admin dashboard for managing fraud reports.">
 <link rel="stylesheet" href="style.css">
 
 
-
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 
-
 </head>
-
 
 
 
@@ -43,62 +35,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
 
 
-<!-- ADMIN PROTECTION -->
-
-
-<script type="module">
-
-
-import { auth } from "./firebase.js";
-
-
-import {
-
-onAuthStateChanged
-
-}
-
-from
-
-"https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-
-
-
-
-
-const adminEmail = "rbiplob1005@gmail.com";
-
-
-
-
-
-onAuthStateChanged(auth,(user)=>{
-
-
-if(!user || user.email !== adminEmail){
-
-
-window.location.href="login.html";
-
-
-}
-
-
-
-});
-
-
-
-</script>
-
-
-
-
-
-
-
-
-<!-- NAVBAR -->
+<!-- =========================
+        NAVBAR
+========================= -->
 
 
 <nav class="navbar">
@@ -115,7 +54,7 @@ window.location.href="login.html";
 
 <span>
 
-FraudGuard Admin
+FraudGuard
 
 </span>
 
@@ -138,7 +77,7 @@ FraudGuard Admin
 
 <a href="admin.html">
 
-Dashboard
+Admin Panel
 
 </a>
 
@@ -148,9 +87,21 @@ Dashboard
 
 <li>
 
-<a href="index.html">
+<a href="admin-chat.html">
 
-Website
+Admin Chat
+
+</a>
+
+</li>
+
+
+
+<li>
+
+<a href="dashboard.html">
+
+Dashboard
 
 </a>
 
@@ -162,124 +113,87 @@ Website
 
 <a href="report.html">
 
-Report
+Reports
 
 </a>
 
 </li>
 
 
+
+<li>
+
+<a href="contact.html">
+
+Contact
+
+</a>
+
+</li>
+
+
+
 </ul>
 
 
 
-
 </nav>
+
+
+
+
+
+
+
+
+
 <!-- =========================
-      ADMIN DASHBOARD
+      HERO SECTION
 ========================= -->
 
 
-<section class="dashboard-section">
-
-
-<div class="container">
+<section class="hero">
 
 
 
+<div class="hero-content reveal">
 
-
-<div class="section-title">
 
 
 <h1>
 
-FraudGuard Admin Panel 🛡️
+Admin
+
+<span>
+
+Chat
+
+</span>
+
 
 </h1>
 
 
-<p>
 
-Manage fraud reports and monitor platform activity.
-
-</p>
-
-
-</div>
-
-
-
-
-
-
-
-
-<!-- ADMIN PROFILE -->
-
-
-<div class="card admin-profile">
-
-
-<i class="fa-solid fa-user-shield"></i>
-
-
-<h2>
-
-Administrator
-
-</h2>
 
 
 <p>
 
-Email:
-
-<strong>
-
-rbiplob1005@gmail.com
-
-</strong>
+Manage user conversations and provide FraudGuard support.
 
 </p>
 
 
-</div>
 
 
 
+<a href="#chat-section" class="btn">
+
+Open Chat
+
+</a>
 
 
-
-
-
-<!-- STATISTICS -->
-
-
-<div class="feature-grid">
-
-
-
-
-
-<div class="card">
-
-
-<i class="fa-solid fa-file-circle-exclamation"></i>
-
-
-<h3>
-
-Total Reports
-
-</h3>
-
-
-<h2 id="totalReports">
-
-0
-
-</h2>
 
 
 </div>
@@ -290,177 +204,225 @@ Total Reports
 
 
 
-<div class="card">
+<div class="hero-image reveal">
 
 
-<i class="fa-solid fa-users"></i>
-
-
-<h3>
-
-Total Users
-
-</h3>
-
-
-<h2 id="totalUsers">
-
-0
-
-</h2>
+<img src="logo.png" alt="Admin Chat">
 
 
 </div>
 
 
 
-
-
-
-
-<div class="card">
-
-
-<i class="fa-solid fa-shield-halved"></i>
-
-
-<h3>
-
-Security Status
-
-</h3>
-
-
-<h2>
-
-Active
-
-</h2>
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-</div>
 
 
 </section>
-<!-- =========================
-      REPORT MANAGEMENT
+  <!-- =========================
+      ADMIN CHAT SECTION
 ========================= -->
 
 
-<section class="reports-section">
+<section id="chat-section">
 
 
 <div class="container">
 
 
-<div class="section-title">
+
+
+
+<div class="section-title reveal">
 
 
 <h2>
 
-Fraud Reports Management
+FraudGuard Support Chat
 
 </h2>
 
 
+
 <p>
 
-Review all submitted fraud reports.
+Communicate with users and solve fraud related issues.
 
 </p>
 
 
+
+</div>
+
+
+
+
+
+
+
+<div class="chat-dashboard reveal">
+
+
+
+
+
+<!-- USER LIST -->
+
+
+<div class="chat-users">
+
+
+
+<h3>
+
+Users
+
+</h3>
+
+
+
+
+<div id="userList">
+
+
+<div class="user-item">
+
+Loading users...
+
 </div>
 
 
-<div class="table-container">
 
+</div>
 
-<table class="admin-table">
-
-
-<thead>
-
-
-<tr>
-
-
-<th>
-
-Title
-
-</th>
-
-
-<th>
-
-Type
-
-</th>
-
-
-<th>
-
-User
-
-</th>
-
-
-<th>
-
-Date
-
-</th>
-
-
-<th>
-
-Action
-
-</th>
-
-
-</tr>
-
-
-</thead>
-
-
-
-<tbody id="adminReportList">
-
-
-
-<tr>
-
-<td colspan="5">
-
-Loading reports...
-
-</td>
-
-
-</tr>
-
-
-
-</tbody>
-
-
-
-</table>
 
 
 </div>
+
+
+
+
+
+
+
+<!-- CHAT AREA -->
+
+
+<div class="admin-chat-box">
+
+
+
+
+
+<div class="chat-header">
+
+
+<i class="fa-solid fa-headset"></i>
+
+
+FraudGuard Support
+
+
+
+</div>
+
+
+
+
+
+
+
+<div id="adminChatMessages" class="chat-messages">
+
+
+
+<div class="bot-msg">
+
+Select a user to start chatting.
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="chat-input">
+
+
+
+
+
+<input
+
+
+type="text"
+
+
+id="adminMessage"
+
+
+placeholder="Type message..."
+
+
+
+
+>
+
+
+
+
+
+
+
+
+<button
+
+
+id="sendAdminMessage"
+
+
+class="btn">
+
+
+<i class="fa-solid fa-paper-plane"></i>
+
+
+Send
+
+
+
+</button>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
 
 
 
@@ -470,17 +432,174 @@ Loading reports...
 </section>
 
 
-<!-- FIREBASE ADMIN REPORT LOAD -->
+
+
+
+
+
+
+
+<!-- =========================
+      CHAT INFO
+========================= -->
+
+
+<section>
+
+
+<div class="container">
+
+
+
+
+
+<div class="card-container">
+
+
+
+
+
+<div class="card reveal">
+
+
+<div class="feature-icon">
+
+💬
+
+</div>
+
+
+
+<h3>
+
+User Support
+
+</h3>
+
+
+
+<p>
+
+Help users with fraud reports and security questions.
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card reveal">
+
+
+<div class="feature-icon">
+
+⚡
+
+</div>
+
+
+
+<h3>
+
+Fast Response
+
+</h3>
+
+
+
+<p>
+
+Provide quick assistance through live chat.
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card reveal">
+
+
+<div class="feature-icon">
+
+🔒
+
+</div>
+
+
+
+<h3>
+
+Secure Communication
+
+</h3>
+
+
+
+<p>
+
+Keep conversations protected using Firebase.
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+</section>
+ <!-- =========================
+      FIREBASE ADMIN CHAT
+========================= -->
 
 
 <script type="module">
- import { db } from "./firebase.js";
+
+
+import { db } from "./firebase.js";
 
 
 import {
 
 
 collection,
+
+query,
+
+orderBy,
+
+onSnapshot,
+
+addDoc,
+
+serverTimestamp,
+
+where,
 
 getDocs
 
@@ -494,68 +613,222 @@ from
 
 
 
-const adminChatList =
-document.getElementById("adminChatList");
+
+
+const userList =
+document.getElementById("userList");
+
+
+
+const chatMessages =
+document.getElementById("adminChatMessages");
+
+
+
+const adminMessage =
+document.getElementById("adminMessage");
+
+
+
+const sendBtn =
+document.getElementById("sendAdminMessage");
+
+
+
+let selectedUser = null;
 
 
 
 
 
-async function loadUserChats(){
 
 
 
-const chats = await getDocs(
 
-collection(db,"chats")
+// LOAD USERS
+
+
+const usersQuery =
+query(
+
+collection(db,"users")
 
 );
 
 
 
 
-adminChatList.innerHTML="";
+
+onSnapshot(usersQuery,(snapshot)=>{
+
+
+userList.innerHTML="";
+
+
+
+snapshot.forEach((doc)=>{
+
+
+
+const data =
+doc.data();
 
 
 
 
 
-chats.forEach((chat)=>{
-
-
-const data = chat.data();
+userList.innerHTML += `
 
 
 
-adminChatList.innerHTML += `
+<div class="user-item"
+onclick="selectUser('${data.email}')">
 
 
-<div class="card">
+<i class="fa-solid fa-user"></i>
 
 
-<h3>
+${data.email}
 
-${data.userEmail || "User"}
 
-</h3>
+</div>
+
+
+
+`;
+
+
+
+});
+
+
+
+});
+
+
+
+
+
+
+
+
+
+// SELECT USER
+
+
+window.selectUser = function(email){
+
+
+selectedUser = email;
+
+
+
+chatMessages.innerHTML = `
+
+
+
+<div class="bot-msg">
+
+Chat with ${email}
+
+</div>
+
+
+
+`;
+
+
+
+
+
+loadMessages(email);
+
+
+
+};
+
+
+
+
+
+
+
+
+
+// LOAD MESSAGES
+
+
+function loadMessages(email){
+
+
+
+const q = query(
+
+
+collection(db,"messages"),
+
+
+
+where(
+"user",
+"==",
+email
+),
+
+
+
+orderBy(
+"time",
+"asc"
+)
+
+
+
+);
+
+
+
+
+
+
+onSnapshot(q,(snapshot)=>{
+
+
+chatMessages.innerHTML="";
+
+
+
+snapshot.forEach((doc)=>{
+
+
+
+const data =
+doc.data();
+
+
+
+
+
+chatMessages.innerHTML += `
+
+
+<div class="chat-message">
+
+
+<b>
+
+${data.sender}
+
+</b>
+
 
 
 <p>
 
-Chat ID: ${chat.id}
+${data.text}
 
 </p>
 
-
-<button 
-
-class="btn"
-
-onclick="openChat('${chat.id}')">
-
-Open Chat
-
-</button>
 
 
 </div>
@@ -569,6 +842,10 @@ Open Chat
 
 
 
+});
+
+
+
 }
 
 
@@ -577,172 +854,78 @@ Open Chat
 
 
 
-window.openChat=function(chatID){
 
 
-localStorage.setItem(
+// SEND MESSAGE
 
-"activeChat",
 
-chatID
+sendBtn.addEventListener(
+"click",
+async()=>{
+
+
+
+
+
+if(!selectedUser){
+
+alert("Select a user first");
+
+return;
+
+}
+
+
+
+
+
+const text =
+adminMessage.value.trim();
+
+
+
+
+
+if(!text){
+
+return;
+
+}
+
+
+
+
+
+await addDoc(
+
+collection(db,"messages"),
+
+{
+
+
+user:selectedUser,
+
+
+sender:"Admin",
+
+
+text:text,
+
+
+time:serverTimestamp()
+
+
+
+}
+
 
 );
 
 
-window.location.href="admin-chat.html";
 
 
 
-}
-
-
-
-
-
-
-loadUserChats();
-
-
-import { db } from "./firebase.js";
-
-
-
-import {
-
-
-collection,
-
-getDocs,
-
-deleteDoc,
-
-doc
-
-
-}
-
-from
-
-"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
-
-
-
-const adminReportList = 
-document.getElementById("adminReportList");
-
-
-
-const totalReports =
-document.getElementById("totalReports");
-
-
-
-
-
-
-async function loadAdminReports(){
-
-
-
-const snapshot = await getDocs(
-
-collection(db,"fraudReports")
-
-);
-
-
-
-
-
-adminReportList.innerHTML="";
-
-
-
-
-
-let count = 0;
-
-
-
-
-
-snapshot.forEach((item)=>{
-
-
-
-count++;
-
-
-
-const data = item.data();
-
-
-
-
-adminReportList.innerHTML += `
-
-
-
-<tr>
-
-
-<td>
-
-${data.title}
-
-</td>
-
-
-
-<td>
-
-${data.type}
-
-</td>
-
-
-
-<td>
-
-${data.user}
-
-</td>
-
-
-
-<td>
-
-${data.date ? data.date.toDate().toLocaleDateString() : "--"}
-
-</td>
-
-
-
-
-<td>
-
-
-<button
-
-class="btn-danger"
-
-onclick="deleteReport('${item.id}')">
-
-Delete
-
-</button>
-
-
-
-</td>
-
-
-</tr>
-
-
-
-`;
-
+adminMessage.value="";
 
 
 
@@ -752,7 +935,44 @@ Delete
 
 
 
-totalReports.innerText=count;
+
+           </script>
+<!-- =========================
+      ADMIN SECURITY CHECK
+========================= -->
+
+
+<script type="module">
+
+
+import { auth } from "./firebase.js";
+
+
+import {
+
+onAuthStateChanged
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+
+
+
+
+
+
+onAuthStateChanged(auth,(user)=>{
+
+
+
+if(!user){
+
+
+
+window.location.href="login.html";
 
 
 
@@ -762,36 +982,7 @@ totalReports.innerText=count;
 
 
 
-window.deleteReport = async function(id){
-
-
-
-if(confirm("Delete this report?")){
-
-
-await deleteDoc(
-
-doc(db,"fraudReports",id)
-
-);
-
-
-
-loadAdminReports();
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-loadAdminReports();
+});
 
 
 
@@ -799,33 +990,44 @@ loadAdminReports();
 
 </script>
 
+
+
+
+
+
+
+
 <!-- =========================
-      ADMIN LIVE CHAT
+      CHAT SECURITY INFO
 ========================= -->
 
 
-<section class="chat-admin-section">
+<section>
 
 
 <div class="container">
 
 
 
-<div class="section-title">
+
+
+<div class="section-title reveal">
 
 
 <h2>
 
-User Support Chat
+Admin Chat Security 🔒
 
 </h2>
 
 
+
 <p>
 
-Manage user messages and support requests.
+FraudGuard keeps support conversations organized and protected.
 
 </p>
+
 
 
 </div>
@@ -834,31 +1036,120 @@ Manage user messages and support requests.
 
 
 
-<div class="card">
+
+
+<div class="card-container">
+
+
+
+
+
+<div class="card reveal">
+
+
+<div class="feature-icon">
+
+👮
+
+</div>
+
 
 
 <h3>
 
-Live Chat System
+Admin Control
 
 </h3>
 
 
+
 <p>
 
-Firebase live chat connection ready.
+Only authorized administrators should access user conversations.
 
 </p>
 
 
-<button class="btn">
 
-Open Chat Management
+</div>
 
-</button>
+
+
+
+
+
+
+<div class="card reveal">
+
+
+<div class="feature-icon">
+
+🔐
+
+</div>
+
+
+
+<h3>
+
+Secure Messages
+
+</h3>
+
+
+
+<p>
+
+Chat data is stored securely using Firebase services.
+
+</p>
+
 
 
 </div>
+
+
+
+
+
+
+
+<div class="card reveal">
+
+
+<div class="feature-icon">
+
+🛡️
+
+</div>
+
+
+
+<h3>
+
+User Privacy
+
+</h3>
+
+
+
+<p>
+
+Avoid sharing passwords, OTPs or sensitive information in chat.
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
 
 
 
@@ -873,26 +1164,194 @@ Open Chat Management
 
 
 
+
 <!-- =========================
-        LOGOUT
+      SUPPORT GUIDELINES
 ========================= -->
 
 
-<div class="container" style="text-align:center;margin:30px;">
+<section>
 
 
-<button onclick="logoutUser()" class="btn">
+<div class="container">
 
 
-<i class="fa-solid fa-right-from-bracket"></i>
 
-Logout Admin
+<div class="ai-box reveal">
 
 
-</button>
+
+<h2>
+
+Admin Support Guidelines
+
+</h2>
+
+
+
+<ul style="text-align:left; max-width:700px; margin:auto;">
+
+
+<li>Respond professionally to users.</li>
+
+<li>Never request passwords or OTP codes.</li>
+
+<li>Verify fraud reports carefully.</li>
+
+<li>Keep user information confidential.</li>
+
+
+</ul>
+
 
 
 </div>
+
+
+
+</div>
+
+
+</section>
+<!-- =========================
+      CHAT STATISTICS
+========================= -->
+
+
+<section>
+
+
+<div class="container">
+
+
+
+
+
+<div class="section-title reveal">
+
+
+<h2>
+
+Chat Overview
+
+</h2>
+
+
+
+<p>
+
+Monitor support activity and user communication.
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card-container">
+
+
+
+
+
+<div class="card reveal">
+
+
+<h2 id="totalUsers">
+
+0
+
+</h2>
+
+
+
+<p>
+
+Active Users
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card reveal">
+
+
+<h2 id="totalMessages">
+
+0
+
+</h2>
+
+
+
+<p>
+
+Total Messages
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card reveal">
+
+
+<h2>
+
+24/7
+
+</h2>
+
+
+
+<p>
+
+Support Availability
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+</section>
 
 
 
@@ -912,7 +1371,10 @@ Logout Admin
 <div class="container">
 
 
+
 <div class="footer-grid">
+
+
 
 
 
@@ -921,16 +1383,18 @@ Logout Admin
 
 <h3>
 
-FraudGuard Admin
+FraudGuard
 
 </h3>
 
 
+
 <p>
 
-Manage and protect the FraudGuard community.
+AI-powered anti-fraud platform with secure user support.
 
 </p>
+
 
 
 </div>
@@ -939,28 +1403,39 @@ Manage and protect the FraudGuard community.
 
 
 
+
+
 <div class="footer-box">
 
 
 <h3>
 
-Quick Links
+Admin Tools
 
 </h3>
 
 
-<a href="index.html">
 
-Website
+<a href="admin.html">
 
-</a><br>
+Admin Panel
+
+</a>
 
 
-<a href="dashboard.html">
+<br>
 
-Dashboard
 
-</a><br>
+
+<a href="admin-chat.html">
+
+Admin Chat
+
+</a>
+
+
+<br>
+
 
 
 <a href="report.html">
@@ -970,7 +1445,10 @@ Reports
 </a>
 
 
+
 </div>
+
+
 
 
 
@@ -986,18 +1464,51 @@ Security
 </h3>
 
 
+
 <p>
 
-Admin control panel protected.
+Protecting users from digital fraud worldwide.
 
 </p>
 
 
+
+</div>
+
+
+
+
+
+
+
+<div class="footer-box">
+
+
+<h3>
+
+Community
+
+</h3>
+
+
+
+<a href="contact.html" class="btn">
+
+Contact
+
+</a>
+
+
+
 </div>
 
 
 
+
+
+
 </div>
+
 
 
 
@@ -1018,17 +1529,152 @@ Admin control panel protected.
 
 
 
+
+
+
+
 </div>
 
 
 </footer>
+<!-- =========================
+      LOAD CHAT STATISTICS
+========================= -->
 
 
-<!-- SCRIPT -->
+<script type="module">
+
+
+import { db } from "./firebase.js";
+
+
+import {
+
+
+collection,
+
+getDocs
+
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+
+
+
+
+
+
+const totalUsers =
+document.getElementById("totalUsers");
+
+
+
+const totalMessages =
+document.getElementById("totalMessages");
+
+
+
+
+
+
+
+async function loadChatStats(){
+
+
+
+try{
+
+
+
+const usersSnapshot =
+await getDocs(
+collection(db,"users")
+);
+
+
+
+const messageSnapshot =
+await getDocs(
+collection(db,"messages")
+);
+
+
+
+
+
+totalUsers.innerHTML =
+usersSnapshot.size;
+
+
+
+
+
+totalMessages.innerHTML =
+messageSnapshot.size;
+
+
+
+
+
+}
+
+catch(error){
+
+
+
+console.log(error);
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+loadChatStats();
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+<!-- =========================
+        FINAL SCRIPTS
+========================= -->
+
+
+<script type="module" src="firebase.js"></script>
+
+
 <script type="module" src="script.js"></script>
+
+
+
+
 
 
 </body>
 
+
 </html>
+
+
 
