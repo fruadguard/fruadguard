@@ -362,9 +362,6 @@ Active
 <div class="container">
 
 
-
-
-
 <div class="section-title">
 
 
@@ -383,12 +380,6 @@ Review all submitted fraud reports.
 
 
 </div>
-
-
-
-
-
-
 
 
 <div class="table-container">
@@ -479,16 +470,137 @@ Loading reports...
 </section>
 
 
-
-
-
-
-
-
 <!-- FIREBASE ADMIN REPORT LOAD -->
 
 
 <script type="module">
+ import { db } from "./firebase.js";
+
+
+import {
+
+
+collection,
+
+getDocs
+
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+
+
+
+const adminChatList =
+document.getElementById("adminChatList");
+
+
+
+
+
+async function loadUserChats(){
+
+
+
+const chats = await getDocs(
+
+collection(db,"chats")
+
+);
+
+
+
+
+adminChatList.innerHTML="";
+
+
+
+
+
+chats.forEach((chat)=>{
+
+
+const data = chat.data();
+
+
+
+adminChatList.innerHTML += `
+
+
+<div class="card">
+
+
+<h3>
+
+${data.userEmail || "User"}
+
+</h3>
+
+
+<p>
+
+Chat ID: ${chat.id}
+
+</p>
+
+
+<button 
+
+class="btn"
+
+onclick="openChat('${chat.id}')">
+
+Open Chat
+
+</button>
+
+
+</div>
+
+
+`;
+
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+
+window.openChat=function(chatID){
+
+
+localStorage.setItem(
+
+"activeChat",
+
+chatID
+
+);
+
+
+window.location.href="admin-chat.html";
+
+
+
+}
+
+
+
+
+
+
+loadUserChats();
 
 
 import { db } from "./firebase.js";
@@ -512,9 +624,6 @@ doc
 from
 
 "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
-
-
-
 
 
 
