@@ -7,80 +7,363 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Phone Checker | FraudGuard</title>
 
-<link rel="stylesheet" href="style.css">
+<title>Phone Checker - FraudGuard</title>
+
+
+<meta name="description"
+content="Check suspicious phone numbers and identify possible scam reports with FraudGuard.">
+
 
 <link rel="icon" href="logo.png">
 
-<link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
 
-<script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+<link rel="stylesheet" href="style.css">
+
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
 
 </head>
 
+
+
 <body>
+
+
+
+
+
+<!-- =========================
+        NAVBAR
+========================= -->
+
 
 <nav class="navbar">
 
+
+
 <div class="logo">
+
 
 <a href="index.html">
 
+
 <img src="logo.png" alt="FraudGuard">
 
-<span>FraudGuard</span>
+
+<span>
+FraudGuard
+</span>
+
 
 </a>
+
 
 </div>
 
+
+
+
+
+
+
 <ul class="nav-links">
-
-<li><a href="index.html">Home</a></li>
-
-<li><a href="about.html">About</a></li>
-
-<li><a href="features.html">Features</a></li>
-
-<li><a href="scanner.html">URL Scanner</a></li>
-
-<li><a href="phone-checker.html">Phone Checker</a></li>
-
-<li><a href="report.html">Report Scam</a></li>
-
-<li><a href="contact.html">Contact</a></li>
-
-<li><a href="login.html" class="login-btn">Login</a></li>
- <li>
-<a href="login.html">
-Login
-</a>
-</li>
 
 
 <li>
-<a href="register.html">
-Create Account
+
+<a href="index.html">
+
+Home
+
 </a>
+
 </li>
+
+
+
+<li>
+
+<a href="dashboard.html">
+
+Dashboard
+
+</a>
+
+</li>
+
+
+
+<li>
+
+<a href="scanner.html">
+
+Scanner
+
+</a>
+
+</li>
+
+
+
+<li>
+
+<a href="phone-checker.html">
+
+Phone Checker
+
+</a>
+
+</li>
+
+
+
+<li>
+
+<a href="report.html">
+
+Report
+
+</a>
+
+</li>
+
+
+
+<li>
+
+<a href="contact.html">
+
+Contact
+
+</a>
+
+</li>
+
+
 
 </ul>
 
+
+
 </nav>
+
+
+
+
+
+
+
+
+<!-- =========================
+      PHONE CHECKER HERO
+========================= -->
+
 
 <section class="hero">
 
-<h1>📞 Phone Number Checker</h1>
+
+
+<div class="hero-content reveal">
+
+
+
+<h1>
+
+
+Phone Number
+
+<span>
+
+Checker
+
+</span>
+
+
+</h1>
+
+
+
+
+
 
 <p>
 
-Check whether a phone number has been reported as scam using FraudGuard AI and Community Reports.
+Check suspicious phone numbers and find reported scam activities before trusting unknown callers.
 
 </p>
 
-</section>
 
+
+
+
+<a href="#phone-check" class="btn">
+
+
+Check Number
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="hero-image reveal">
+
+
+<img src="logo.png" alt="Phone Checker">
+
+
+</div>
+
+
+
+
+
+</section>
+<!-- =========================
+      PHONE CHECK SECTION
+========================= -->
+
+
+<section id="phone-check">
+
+
+<div class="container">
+
+
+
+
+
+<div class="section-title reveal">
+
+
+<h2>
+
+Check Phone Number
+
+</h2>
+
+
+
+<p>
+
+Enter a phone number to check previous fraud reports.
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="scanner-box reveal">
+
+
+
+
+
+
+<div class="scan-input">
+
+
+
+
+
+<input
+
+
+type="tel"
+
+
+id="phoneInput"
+
+
+placeholder="Enter phone number"
+
+
+
+
+>
+
+
+
+
+
+
+
+
+<button
+
+
+id="phoneCheckBtn"
+
+
+class="scan-btn">
+
+
+<i class="fa-solid fa-phone"></i>
+
+
+Check
+
+
+
+</button>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+<div id="phoneResult" class="result-card">
+
+
+<p>
+
+Waiting for phone check...
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+</div>
 <section class="scanner">
 
 <h2>Scan Phone Number</h2>
@@ -231,253 +514,969 @@ Check whether a phone number has been reported as scam using FraudGuard AI and C
 <option value="+7">🇷🇺 Russia (+7)</option>
 <option value="+250">🇷🇼 Rwanda (+250)</option>
 
-</select>
+ </select>
 
-<br><br>
 
-<input
-type="tel"
-id="phoneInput"
-placeholder="Enter phone number">
 
-<br><br>
+</section>
 
-<button
-onclick="scanPhone()"
-class="btn-primary">
 
-🔍 Scan Phone Number
 
-</button>
 
-<div id="resultBox" style="display:none;margin-top:30px;">
 
-<div class="card">
 
-<h2>Phone Scan Result</h2>
 
-<h3 id="scanResult">Waiting...</h3>
 
-<p id="riskScore"></p>
 
-<p id="communityStatus"></p>
+<!-- =========================
+      PHONE CHECK INFO
+========================= -->
 
-<p id="aiStatus"></p>
 
-<p><b>Scan Time:</b> <span id="scanTime">-</span></p>
+<section>
 
-<p><b>Risk Level:</b> <span id="riskLevel">-</span></p>
 
-<div style="width:100%;height:20px;background:#ddd;border-radius:10px;overflow:hidden;">
+<div class="container">
 
-<div id="riskBar"
-style="width:0%;height:20px;background:#22c55e;transition:.5s;">
+
+
+
+
+
+<div class="card-container">
+
+
+
+
+
+<div class="card reveal">
+
+
+<div class="feature-icon">
+
+📞
+
 </div>
 
+
+
+<h3>
+
+Scam Number Detection
+
+</h3>
+
+
+
+<p>
+
+Find if a phone number has been reported for suspicious activities.
+
+</p>
+
+
+
 </div>
+
+
+
+
+
+
+
+
+<div class="card reveal">
+
+
+<div class="feature-icon">
+
+🚨
+
+</div>
+
+
+
+<h3>
+
+Community Reports
+
+</h3>
+
+
+
+<p>
+
+Reports from users help identify dangerous phone numbers.
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card reveal">
+
+
+<div class="feature-icon">
+
+🛡️
+
+</div>
+
+
+
+<h3>
+
+Stay Protected
+
+</h3>
+
+
+
+<p>
+
+Avoid scams by checking unknown callers before responding.
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+</section>
+<!-- =========================
+      FIREBASE PHONE CHECK
+========================= -->
+
+
+<script type="module">
+
+
+import { db } from "./firebase.js";
+
+
+
+import {
+
+
+collection,
+
+query,
+
+where,
+
+getDocs
+
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+
+
+
+
+
+
+const phoneBtn =
+document.getElementById("phoneCheckBtn");
+
+
+
+const phoneInput =
+document.getElementById("phoneInput");
+
+
+
+const phoneResult =
+document.getElementById("phoneResult");
+
+
+
+
+
+
+
+
+phoneBtn.addEventListener("click", async()=>{
+
+
+
+const number =
+phoneInput.value.trim();
+
+
+
+
+
+
+if(!number){
+
+
+
+phoneResult.innerHTML = `
+
+
+<div class="error-message">
+
+Please enter a phone number.
+
+</div>
+
+
+`;
+
+return;
+
+
+}
+
+
+
+
+
+
+
+phoneResult.innerHTML = `
+
+
+<p>
+
+Checking database...
+
+</p>
+
+
+`;
+
+
+
+
+
+
+
+try{
+
+
+
+const q = query(
+
+
+collection(db,"fraudReports"),
+
+
+
+where(
+"phone",
+"==",
+number
+)
+
+
+);
+
+
+
+
+
+
+
+const snapshot = await getDocs(q);
+
+
+
+
+
+
+if(snapshot.empty){
+
+
+
+phoneResult.innerHTML = `
+
+
+<div class="safe-result">
+
+
+<h3>
+
+✅ No Reports Found
+
+</h3>
+
+
+
+<p>
+
+This number has no reported fraud activity in our database.
+
+</p>
+
+
+
+</div>
+
+
+`;
+
+
+
+}
+
+else{
+
+
+
+
+
+let reports = "";
+
+
+
+
+
+snapshot.forEach((doc)=>{
+
+
+const data =
+doc.data();
+
+
+
+reports += `
+
+
+<div class="danger-result">
+
+
+<h3>
+
+⚠️ Reported Scam Number
+
+</h3>
+
+
+
+<p>
+
+Type:
+${data.type || "Unknown"}
+
+</p>
+
+
+
+<p>
+
+${data.description || "Fraud report available"}
+
+</p>
+
+
+
+</div>
+
+
+`;
+
+
+
+});
+
+
+
+
+
+
+phoneResult.innerHTML = reports;
+
+
+
+}
+
+
+
+
+
+}
+
+catch(error){
+
+
+
+phoneResult.innerHTML = `
+
+
+<div class="error-message">
+
+
+Unable to check number. Try again.
+
+
+</div>
+
+
+`;
+
+
+
+}
+
+
+
+
+
+});
+
+
+
+</script>
+<!-- =========================
+      REPORT CTA
+========================= -->
+
+
+<section>
+
+
+<div class="container">
+
+
+
+
+
+<div class="ai-box reveal">
+
+
+
+<h2>
+
+Found A Scam Number?
+
+</h2>
+
+
+
+
+<p>
+
+Help protect others by reporting suspicious phone numbers and fraud activities.
+
+</p>
+
+
+
+
 
 <br>
 
-<button onclick="copyResult()" class="btn-secondary">
 
-📋 Copy Result
 
-</button>
 
-<button onclick="shareResult()" class="btn-secondary">
+<a href="report.html" class="btn">
 
-📤 Share Result
 
-</button>
+Report Number
 
-<button onclick="reportNumber()" class="btn-primary">
 
-🚨 Report Number
+</a>
 
-</button>
+
+
+
 
 </div>
 
+
+
+
 </div>
 
-<script type="module">
-import { db } from "./firebase.js";
 
-import {
-collection,
-getDocs
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+</section>
 
-window.scanPhone = async function(){
 
-const code=document.getElementById("countryCode").value;
 
-const phone=document.getElementById("phoneInput").value.trim();
 
-if(phone===""){
 
-alert("Please enter a phone number.");
 
-return;
 
-}
 
-const fullNumber=code+phone;
+<!-- =========================
+      SAFETY TIPS
+========================= -->
 
-document.getElementById("resultBox").style.display="block";
 
-document.getElementById("scanResult").innerHTML="🔍 Scanning...";
+<section>
 
-document.getElementById("riskScore").innerHTML="";
 
-document.getElementById("communityStatus").innerHTML="";
 
-document.getElementById("aiStatus").innerHTML="";
+<div class="container">
 
-document.getElementById("scanTime").innerHTML=
-new Date().toLocaleString();
 
-let found=false;
 
-const snapshot=await getDocs(collection(db,"reports"));
 
-snapshot.forEach((item)=>{
 
-const data=item.data();
+<div class="section-title reveal">
 
-if(data.phone===fullNumber){
 
-found=true;
+<h2>
 
-}
+Phone Safety Tips
 
-});
+</h2>
 
-if(found){
 
-document.getElementById("scanResult").innerHTML="🚨 Scam Number Detected";
 
-document.getElementById("scanResult").style.color="red";
+<p>
 
-document.getElementById("riskScore").innerHTML="AI Risk Score: 95%";
+Follow these steps to stay safe from phone scams.
 
-document.getElementById("communityStatus").innerHTML="👥 Community: Reported";
+</p>
 
-document.getElementById("aiStatus").innerHTML="🤖 FraudGuard AI: High Risk";
 
-document.getElementById("riskLevel").innerHTML="HIGH";
 
-document.getElementById("riskBar").style.width="95%";
+</div>
 
-document.getElementById("riskBar").style.background="red";
 
-}else{
 
-document.getElementById("scanResult").innerHTML="✅ No Scam Reports Found";
 
-document.getElementById("scanResult").style.color="#22c55e";
 
-document.getElementById("riskScore").innerHTML="AI Risk Score: 5%";
 
-document.getElementById("communityStatus").innerHTML="👥 Community: Clean";
 
-document.getElementById("aiStatus").innerHTML="🤖 FraudGuard AI: Low Risk";
+<div class="card-container">
 
-document.getElementById("riskLevel").innerHTML="LOW";
 
-document.getElementById("riskBar").style.width="5%";
 
-document.getElementById("riskBar").style.background="#22c55e";
 
-}
 
-};
-window.copyResult=function(){
+<div class="card reveal">
 
-const text=
-document.getElementById("scanResult").innerText+"\n"+
-document.getElementById("riskScore").innerText+"\n"+
-document.getElementById("communityStatus").innerText+"\n"+
-document.getElementById("aiStatus").innerText;
 
-navigator.clipboard.writeText(text);
+<div class="feature-icon">
 
-alert("Result copied successfully!");
+📵
 
-};
+</div>
 
-window.shareResult=function(){
 
-const text=
-document.getElementById("scanResult").innerText+"\n"+
-document.getElementById("riskScore").innerText;
 
-if(navigator.share){
+<h3>
 
-navigator.share({
+Avoid Unknown Calls
 
-title:"FraudGuard Phone Checker",
+</h3>
 
-text:text
 
-});
 
-}else{
+<p>
 
-alert("Sharing is not supported on this device.");
+Do not trust unexpected calls asking for money or personal information.
 
-}
+</p>
 
-};
 
-window.reportNumber=function(){
 
-const code=document.getElementById("countryCode").value;
+</div>
 
-const phone=document.getElementById("phoneInput").value.trim();
 
-if(phone===""){
 
-alert("Please enter a phone number.");
 
-return;
 
-}
 
-const fullNumber=code+phone;
 
-window.location.href="report.html?phone="+encodeURIComponent(fullNumber);
 
-};
+<div class="card reveal">
 
-</script>
 
-<script>
+<div class="feature-icon">
 
-document.addEventListener("DOMContentLoaded",function(){
+🔑
 
-new TomSelect("#countryCode",{
+</div>
 
-create:false,
 
-sortField:{
-field:"text",
-direction:"asc"
-},
 
-placeholder:"🌍 Search Country..."
+<h3>
 
-});
+Never Share OTP
 
-});
+</h3>
 
-</script>
- <script type="module" src="script.js"></script>
+
+
+<p>
+
+Banks and trusted services never ask for your OTP or password.
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card reveal">
+
+
+<div class="feature-icon">
+
+🔍
+
+</div>
+
+
+
+<h3>
+
+Verify First
+
+</h3>
+
+
+
+<p>
+
+Check unknown numbers before responding or making payments.
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- =========================
+      AWARENESS SECTION
+========================= -->
+
+
+<section>
+
+
+
+<div class="container">
+
+
+
+
+
+<div class="premium-banner reveal">
+
+
+<h2>
+
+Think Before You Trust
+
+</h2>
+
+
+
+<p>
+
+FraudGuard helps you identify suspicious phone numbers and stay protected.
+
+</p>
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+</section>
+<!-- =========================
+        FOOTER
+========================= -->
+
+
+<footer>
+
+
+<div class="container">
+
+
+
+<div class="footer-grid">
+
+
+
+
+
+<div class="footer-box">
+
+
+<h3>
+
+FraudGuard
+
+</h3>
+
+
+
+<p>
+
+AI-powered platform protecting users from phone scams and digital fraud.
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="footer-box">
+
+
+<h3>
+
+Security Tools
+
+</h3>
+
+
+
+<a href="scanner.html">
+
+URL Scanner
+
+</a>
+
+
+<br>
+
+
+
+<a href="phone-checker.html">
+
+Phone Checker
+
+</a>
+
+
+<br>
+
+
+
+<a href="qr-scanner.html">
+
+QR Scanner
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="footer-box">
+
+
+<h3>
+
+Quick Links
+
+</h3>
+
+
+
+<a href="index.html">
+
+Home
+
+</a>
+
+
+<br>
+
+
+
+<a href="features.html">
+
+Features
+
+</a>
+
+
+<br>
+
+
+
+<a href="contact.html">
+
+Contact
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="footer-box">
+
+
+<h3>
+
+Report
+
+</h3>
+
+
+
+<p>
+
+Help the community by reporting fraud.
+
+</p>
+
+
+
+<a href="report.html" class="btn">
+
+Report Now
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="footer-bottom">
+
+
+<p>
+
+© 2026 FraudGuard. All Rights Reserved.
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+</footer>
+
+
+
+
+
+
+
+
+<!-- =========================
+        SCRIPTS
+========================= -->
+
+
+<script type="module" src="firebase.js"></script>
+
+
+<script type="module" src="script.js"></script>
+
+
+
+
 
 </body>
 
-</html>
 
+ </html>
 
 
 
