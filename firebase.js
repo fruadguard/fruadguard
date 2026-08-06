@@ -1,34 +1,140 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+// =============================
+// FRAUDGUARD FIREBASE CONFIG
+// =============================
 
-import { getAuth } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
-import { getFirestore } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+import { initializeApp } 
+from 
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+
+
+import { 
+
+getAuth 
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+
+
+import {
+
+getFirestore
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+
+
+
+
+// Your Firebase Config
+
 
 const firebaseConfig = {
 
-apiKey: "AIzaSyByZP0D_jKYOitPhOunqn44Z1FMNFF40tc",
 
-authDomain: "fraudguard-eafd2.firebaseapp.com",
+apiKey: "YOUR_API_KEY",
 
-projectId: "fraudguard-eafd2",
 
-storageBucket: "fraudguard-eafd2.firebasestorage.app",
+authDomain: "YOUR_PROJECT.firebaseapp.com",
 
-messagingSenderId: "721145048132",
 
-appId: "1:721145048132:web:c87c07d58d8e9b5b806011"
+projectId: "YOUR_PROJECT_ID",
+
+
+storageBucket: "YOUR_PROJECT.appspot.com",
+
+
+messagingSenderId: "YOUR_SENDER_ID",
+
+
+appId: "YOUR_APP_ID"
+
 
 };
 
+
+
+
+
+
+
+// Initialize Firebase
+
+
 const app = initializeApp(firebaseConfig);
+
+
+
+
+
+// Authentication
+
+
 const auth = getAuth(app);
+
+
+
+
+
+// Firestore Database
+
 
 const db = getFirestore(app);
 
+
+
+
+
+
+
+export { auth, db };
+// =============================
+// FIREBASE STORAGE
+// =============================
+
+
+import {
+
+getStorage
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-storage.js";
+
+
+
+
+// Storage Setup
+
+const storage = getStorage(app);
+
+
+
+
+
+// Export All
+
+
 export {
+
 
 auth,
 
-db
+db,
+
+storage
 
 };
+
