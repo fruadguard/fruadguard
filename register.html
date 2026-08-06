@@ -4,225 +4,276 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 
 <title>Create Account - FraudGuard</title>
 
-<meta name="description"
-content="Create your FraudGuard account.">
+
+<meta name="description" content="Create your FraudGuard account and access digital fraud protection tools.">
+
 
 <link rel="icon" href="logo.png">
 
 <link rel="stylesheet" href="style.css">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 </head>
 
+
+
 <body>
 
-<div class="auth-section">
 
-<div class="auth-box">
 
-<div style="text-align:center;margin-bottom:25px;">
+<!-- ==========================
+     NAVBAR
+========================== -->
 
-<img src="logo.png"
-alt="FraudGuard"
-style="width:90px;">
 
-<h1>Create Account</h1>
+<header class="navbar">
 
-<p>Join FraudGuard and stay protected.</p>
+
+<div class="logo">
+
+<img src="logo.png" alt="FraudGuard">
+
+<span>
+FraudGuard
+</span>
 
 </div>
+
+
+
+<nav class="nav-links">
+
+
+<a href="index.html">
+Home
+</a>
+
+
+<a href="features.html">
+Features
+</a>
+
+
+<a href="login.html">
+Login
+</a>
+
+
+</nav>
+
+
+</header>
+
+
+
+
+
+
+<!-- ==========================
+     REGISTER SECTION
+========================== -->
+
+
+<section>
+
+
+
+<div class="form-box reveal">
+
+
+<h2>
+Create Account
+</h2>
+
+
+<p>
+Join FraudGuard and protect yourself from online scams.
+</p>
+
+
+<br>
+
+
 
 <form id="registerForm">
 
-<div class="input-group">
 
-<label>Full Name</label>
-
-<input
-type="text"
-id="fullName"
-placeholder="Enter your full name"
-required>
-
-</div>
-
-<div class="input-group">
-
-<label>Username</label>
-
-<input
-type="text"
-id="userName"
-placeholder="Choose a username"
-required>
-
-</div>
-
-<div class="input-group">
-
-<label>Email Address</label>
-
-<input
-type="email"
-id="registerEmail"
-placeholder="Enter your email"
-required>
-
-</div>
-
-<div class="input-group">
-
-<label>Phone Number</label>
-
-<input
-type="tel"
-id="phoneNumber"
-placeholder="+8801XXXXXXXXX"
-required>
-
-</div>
-
-<div class="input-group">
-
-<label>Password</label>
-
-<input
-type="password"
-id="registerPassword"
-placeholder="Create a password"
-required>
-
-</div>
-
-<div class="input-group">
-
-<label>Confirm Password</label>
-
-<input
-type="password"
-id="confirmPassword"
-placeholder="Confirm your password"
-required>
-
-</div>
-<!-- TERMS CHECKBOX -->
-
-<div class="terms-box">
-
-<label>
 
 <input 
-type="checkbox"
-id="termsCheck"
-required>
-
-I agree to FraudGuard 
-<a href="#">
-Terms & Conditions
-</a>
-
-</label>
-
-</div>
+type="email"
+id="registerEmail"
+placeholder="Email Address"
+required
+>
 
 
 
 
+<input
 
-<!-- CREATE ACCOUNT BUTTON -->
+type="password"
 
-<button
+id="registerPassword"
 
-type="button"
+placeholder="Password"
 
-class="btn"
+required
 
-onclick="registerUser()">
-
-<i class="fa-solid fa-user-plus"></i>
-
-Create Account
-
-</button>
+>
 
 
 
 
+<input
 
-<!-- DIVIDER -->
+type="password"
 
-<div class="divider">
+id="confirmPassword"
 
-<span>OR</span>
+placeholder="Confirm Password"
 
-</div>
+required
+
+>
 
 
 
 
+<button 
+type="submit"
+class="btn">
 
-<!-- GOOGLE SIGN UP -->
-
-<button
-
-type="button"
-
-class="btn google-btn"
-
-id="googleRegisterBtn">
-
-<i class="fa-brands fa-google"></i>
-
-Continue with Google
+Register
 
 </button>
 
 
 
 
+<p id="registerMessage"></p>
 
-<!-- LOGIN LINK -->
-
-<p class="register-link">
-
-Already have an account?
-
-<a href="login.html">
-
-Login
-
-</a>
-
-</p>
 
 
 </form>
 
 
-</div>
 
-</div>
-<!-- =========================
-        FOOTER
-========================= -->
 
-<footer>
+<br>
 
-<div class="container">
 
 <p>
 
-© 2026 FraudGuard. All Rights Reserved.
+Already have an account?
+
+<a href="login.html">
+Login
+</a>
 
 </p>
 
+
+
 </div>
+
+
+</section>
+<!-- ==========================
+     FOOTER
+========================== -->
+
+
+<footer>
+
+
+<div class="footer-grid">
+
+
+<div>
+
+<h3>
+FraudGuard
+</h3>
+
+
+<p>
+AI-powered anti-fraud protection platform.
+</p>
+
+
+</div>
+
+
+
+
+<div>
+
+<h3>
+Quick Links
+</h3>
+
+
+<a href="index.html">
+Home
+</a>
+<br>
+
+
+<a href="features.html">
+Features
+</a>
+<br>
+
+
+<a href="contact.html">
+Contact
+</a>
+
+
+</div>
+
+
+
+
+<div>
+
+<h3>
+Account
+</h3>
+
+
+<a href="login.html">
+Login
+</a>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+<div class="footer-bottom">
+
+
+<p>
+
+© <span id="year"></span> FraudGuard. All Rights Reserved.
+
+</p>
+
+
+</div>
+
 
 </footer>
 
@@ -230,20 +281,142 @@ Login
 
 
 
-<!-- FIREBASE -->
 
-<script type="module" src="firebase.js"></script>
+<!-- Firebase SDK -->
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
 
 
+<script src="firebase.js"></script>
 
-
-<!-- MAIN SCRIPT -->
 
 <script src="script.js"></script>
+
+
+
+
+
+<script>
+
+
+const registerForm =
+document.querySelector("#registerForm");
+
+
+
+registerForm.addEventListener(
+"submit",
+async(e)=>{
+
+
+e.preventDefault();
+
+
+
+const email =
+document.querySelector("#registerEmail").value;
+
+
+
+const password =
+document.querySelector("#registerPassword").value;
+
+
+
+const confirmPassword =
+document.querySelector("#confirmPassword").value;
+
+
+
+const message =
+document.querySelector("#registerMessage");
+
+
+
+
+if(password !== confirmPassword){
+
+
+message.className="error-message";
+
+message.innerHTML=
+"Passwords do not match";
+
+
+return;
+
+
+}
+
+
+
+try{
+
+
+const userCredential =
+await registerUser(
+email,
+password
+);
+
+
+
+await saveUserProfile(
+userCredential.user
+);
+
+
+
+message.className="success-message";
+
+
+message.innerHTML=
+"Account created successfully";
+
+
+
+setTimeout(()=>{
+
+
+window.location.href="dashboard.html";
+
+
+},1500);
+
+
+
+}
+
+catch(error){
+
+
+
+message.className="error-message";
+
+
+message.innerHTML=
+error.message;
+
+
+
+}
+
+
+
+});
+
+
+
+</script>
+
+
 
 
 </body>
 
 </html>
-
