@@ -32,7 +32,10 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
 
 
-<!-- LOGIN PROTECTION -->
+<!-- =========================
+      LOGIN PROTECTION
+========================= -->
+
 
 <script type="module">
 
@@ -46,8 +49,9 @@ onAuthStateChanged
 
 }
 
-from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+from 
 
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
 
 
@@ -77,10 +81,13 @@ window.location.href="login.html";
 
 
 
-<!-- NAVBAR -->
+<!-- =========================
+        NAVBAR
+========================= -->
 
 
 <nav class="navbar">
+
 
 
 <div class="logo">
@@ -92,7 +99,9 @@ window.location.href="login.html";
 <img src="logo.png" alt="FraudGuard">
 
 
-<span>FraudGuard</span>
+<span>
+FraudGuard
+</span>
 
 
 </a>
@@ -104,41 +113,78 @@ window.location.href="login.html";
 
 
 
+
 <ul class="nav-links">
 
 
 <li>
+
 <a href="index.html">
+
 Home
+
 </a>
+
 </li>
 
 
+
 <li>
+
 <a href="dashboard.html">
+
 Dashboard
+
 </a>
+
 </li>
 
 
+
 <li>
+
 <a href="scanner.html">
+
 Scanner
+
 </a>
+
 </li>
 
 
+
 <li>
+
 <a href="report.html">
+
 Report
+
 </a>
+
 </li>
 
 
+
 <li>
+
 <a href="contact.html">
+
 Contact
+
 </a>
+
+</li>
+
+
+
+<li>
+
+<a href="#" onclick="logoutUser()">
+
+Logout
+
+</a>
+
 </li>
 
 
@@ -162,7 +208,7 @@ Contact
 
 
 
-<div class="section-title">
+<div class="section-title reveal">
 
 
 <h1>
@@ -188,13 +234,16 @@ Manage your online security and monitor fraud activities.
 
 
 
-<!-- USER PROFILE CARD -->
+<!-- =========================
+      USER PROFILE CARD
+========================= -->
 
 
-<div class="card user-profile">
+<div class="card user-profile reveal">
 
 
 <i class="fa-solid fa-user-shield"></i>
+
 
 
 <h2>
@@ -202,6 +251,7 @@ Manage your online security and monitor fraud activities.
 Your Account
 
 </h2>
+
 
 
 <p>
@@ -214,8 +264,8 @@ Loading...
 
 </span>
 
-</p>
 
+</p>
 
 
 
@@ -228,6 +278,7 @@ class="btn">
 
 
 <i class="fa-solid fa-right-from-bracket"></i>
+
 
 Logout
 
@@ -244,8 +295,9 @@ Logout
 
 
 
-
-<!-- SECURITY OVERVIEW -->
+<!-- =========================
+      SECURITY OVERVIEW
+========================= -->
 
 
 <div class="feature-grid">
@@ -254,24 +306,27 @@ Logout
 
 
 
-<div class="card">
+<div class="card reveal">
 
 
 <i class="fa-solid fa-globe"></i>
 
 
+
 <h3>
 
-Website Scans
+Website Scanner
 
 </h3>
 
 
+
 <p>
 
-Check suspicious websites with AI scanner.
+Check suspicious websites with FraudGuard scanner.
 
 </p>
+
 
 
 <a href="scanner.html" class="btn">
@@ -281,6 +336,7 @@ Scan Now
 </a>
 
 
+
 </div>
 
 
@@ -289,10 +345,12 @@ Scan Now
 
 
 
-<div class="card">
+
+<div class="card reveal">
 
 
 <i class="fa-solid fa-triangle-exclamation"></i>
+
 
 
 <h3>
@@ -302,11 +360,13 @@ Report Fraud
 </h3>
 
 
+
 <p>
 
-Submit scam reports and help the community.
+Submit scam reports and help protect the community.
 
 </p>
+
 
 
 <a href="report.html" class="btn">
@@ -314,6 +374,7 @@ Submit scam reports and help the community.
 Report Now
 
 </a>
+
 
 
 </div>
@@ -324,10 +385,12 @@ Report Now
 
 
 
-<div class="card">
+
+<div class="card reveal">
 
 
 <i class="fa-solid fa-phone"></i>
+
 
 
 <h3>
@@ -337,11 +400,13 @@ Phone Checker
 </h3>
 
 
+
 <p>
 
-Check suspicious phone numbers.
+Check suspicious phone numbers before trusting.
 
 </p>
+
 
 
 <a href="phone-checker.html" class="btn">
@@ -349,6 +414,7 @@ Check suspicious phone numbers.
 Check Number
 
 </a>
+
 
 
 </div>
@@ -378,7 +444,7 @@ Check Number
 
 
 
-<div class="section-title">
+<div class="section-title reveal">
 
 
 <h2>
@@ -388,6 +454,7 @@ Your Fraud Reports
 </h2>
 
 
+
 <p>
 
 View the reports you submitted to FraudGuard.
@@ -395,7 +462,9 @@ View the reports you submitted to FraudGuard.
 </p>
 
 
+
 </div>
+
 
 
 
@@ -439,7 +508,10 @@ Loading your reports...
 
 
 
-<!-- FIREBASE USER REPORT LOAD -->
+
+<!-- =========================
+      FIREBASE REPORT LOAD
+========================= -->
 
 
 <script type="module">
@@ -448,15 +520,15 @@ Loading your reports...
 import { auth, db } from "./firebase.js";
 
 
+
 import {
 
 
 onAuthStateChanged
 
+}
 
-} 
-
-from 
+from
 
 "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
@@ -475,13 +547,11 @@ getDocs,
 
 orderBy
 
-
 }
 
 from
 
 "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
-
 
 
 
@@ -504,15 +574,37 @@ if(user){
 
 
 
+document.getElementById("userEmail").innerHTML =
+user.email;
+
+
+
+
+
+
 const q = query(
+
 
 collection(db,"fraudReports"),
 
-where("user","==",user.email),
 
-orderBy("date","desc")
+
+where(
+"user",
+"==",
+user.email
+),
+
+
+
+orderBy(
+"date",
+"desc"
+)
+
 
 );
+
 
 
 
@@ -523,7 +615,11 @@ const snapshot = await getDocs(q);
 
 
 
-userReports.innerHTML="";
+
+
+userReports.innerHTML = "";
+
+
 
 
 
@@ -533,9 +629,11 @@ if(snapshot.empty){
 
 
 
-userReports.innerHTML=`
+userReports.innerHTML = `
+
 
 <div class="card">
+
 
 <p>
 
@@ -543,9 +641,13 @@ No fraud reports found.
 
 </p>
 
+
 </div>
 
+
 `;
+
+
 
 return;
 
@@ -556,42 +658,67 @@ return;
 
 
 
+
+
+
 snapshot.forEach((doc)=>{
+
 
 
 const data = doc.data();
 
 
 
+
+
 userReports.innerHTML += `
 
 
-<div class="card">
+
+<div class="card reveal">
 
 
 <h3>
 
-${data.title}
+${data.title || "Fraud Report"}
 
 </h3>
 
 
+
 <p>
 
-${data.description}
+${data.description || "No details"}
 
 </p>
 
 
+
+
 <small>
 
-Type: ${data.type}
+Type:
+${data.type || "Unknown"}
+
+</small>
+
+
+
+
+<br>
+
+
+<small>
+
+Status:
+${data.status || "Pending"}
 
 </small>
 
 
 
 </div>
+
 
 
 `;
@@ -619,7 +746,10 @@ Type: ${data.type}
 <div class="chat-widget">
 
 
-<button id="chatBtn" class="chat-btn">
+
+<button 
+id="chatBtn" 
+class="chat-btn">
 
 💬
 
@@ -628,13 +758,23 @@ Type: ${data.type}
 
 
 
-<div id="chatBox" class="chat-box">
+
+
+
+<div 
+id="chatBox" 
+class="chat-box">
+
+
 
 
 
 <div class="chat-header">
 
+
 FraudGuard Support
+
+
 
 <span id="closeChat">
 
@@ -643,30 +783,45 @@ FraudGuard Support
 </span>
 
 
+
 </div>
 
 
 
 
 
-<div class="chat-body" id="chatBody">
+
+
+
+<div 
+class="chat-body" 
+id="chatBody">
+
 
 
 <p class="bot-msg">
 
-Hello 👋  
+
+Hello 👋
+
 How can we help you?
+
 
 </p>
 
 
+
 </div>
+
+
+
 
 
 
 
 
 <div class="chat-input">
+
 
 
 <input
@@ -677,18 +832,28 @@ placeholder="Type message...">
 
 
 
-<button id="sendChat">
+
+
+<button 
+id="sendChat">
+
 
 Send
+
 
 </button>
 
 
-</div>
-
-
 
 </div>
+
+
+
+
+
+
+</div>
+
 
 
 </div>
@@ -700,6 +865,12 @@ Send
 
 
 <!-- =========================
+      CHAT SCRIPT
+========================= -->
+
+
+<script src="chat.js"></script>
+<!-- =========================
         FOOTER
 ========================= -->
 
@@ -710,7 +881,11 @@ Send
 <div class="container">
 
 
+
 <div class="footer-grid">
+
+
+
 
 
 
@@ -724,6 +899,7 @@ FraudGuard
 </h3>
 
 
+
 <p>
 
 AI-powered platform protecting users from digital fraud.
@@ -731,7 +907,12 @@ AI-powered platform protecting users from digital fraud.
 </p>
 
 
+
 </div>
+
+
+
+
 
 
 
@@ -747,16 +928,50 @@ Quick Links
 </h3>
 
 
-<a href="index.html">Home</a><br>
 
-<a href="scanner.html">Scanner</a><br>
+<a href="index.html">
 
-<a href="report.html">Report</a><br>
+Home
 
-<a href="contact.html">Contact</a>
+</a>
+
+<br>
+
+
+
+<a href="scanner.html">
+
+Scanner
+
+</a>
+
+<br>
+
+
+
+<a href="report.html">
+
+Report
+
+</a>
+
+<br>
+
+
+
+<a href="contact.html">
+
+Contact
+
+</a>
+
 
 
 </div>
+
+
+
+
 
 
 
@@ -772,18 +987,28 @@ Security
 </h3>
 
 
+
 <p>
 
-Building a safer digital world.
+Building a safer digital world with technology and awareness.
 
 </p>
 
 
+
+</div>
+
+
+
+
+
+
+
 </div>
 
 
 
-</div>
+
 
 
 
@@ -799,7 +1024,12 @@ Building a safer digital world.
 </p>
 
 
+
 </div>
+
+
+
+
 
 
 
@@ -810,14 +1040,21 @@ Building a safer digital world.
 
 
 
-<!-- SCRIPTS -->
+
+
+
+
+
+<!-- =========================
+        MAIN SCRIPT
+========================= -->
+
 
 <script type="module" src="script.js"></script>
 
 
+
 </body>
 
+
 </html>
-
-
-
