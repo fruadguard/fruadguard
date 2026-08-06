@@ -1,298 +1,927 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
 
+
 <meta charset="UTF-8">
+
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Admin Panel | FraudGuard</title>
+
+<title>Admin Dashboard - FraudGuard</title>
+
+
+
+<meta name="description"
+content="FraudGuard admin dashboard for managing fraud reports.">
+
+
+
+<link rel="icon" href="logo.png">
+
 
 <link rel="stylesheet" href="style.css">
-<link rel="icon" href="logo.png">
+
+
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+
 
 </head>
 
+
+
+
 <body>
 
-<nav class="navbar">
 
-<div class="logo">
-<a href="index.html">
-<img src="logo.png" alt="FraudGuard">
-<span>FraudGuard</span>
-</a>
-</div>
 
-<ul class="nav-links">
-<li><a href="dashboard.html">Dashboard</a></li>
-<li><a href="scanner.html">Scanner</a></li>
-<li><a href="report.html">Reports</a></li>
-<li><a href="index.html">Home</a></li>
-</ul>
 
-</nav>
 
-<section class="scanner">
+<!-- ADMIN PROTECTION -->
 
-<h1>🛡️ FraudGuard Admin Panel</h1>
-
-<p>Manage all scam reports securely.</p>
-
-<div class="card">
-
-<h2>Statistics</h2>
-
-<p>📄 Total Reports:
-<b id="totalReports">0</b>
-</p>
-
-<p>👥 Total Users:
-<b id="totalUsers">-</b>
-</p>
-
-</div>
-
-<div class="card">
-
-<h2>Search Reports</h2>
-
-<input
-type="text"
-id="searchInput"
-placeholder="Search website, phone or email..."
-onkeyup="searchReports()">
-
-</div>
-
-<div class="card">
-
-<h2>Scam Reports</h2>
-
-<table style="width:100%;border-collapse:collapse;">
-
-<thead>
-
-<tr>
-
-<th>Name</th>
-<th>Email</th>
-<th>Website</th>
-<th>Type</th>
-<th>Action</th>
-
-</tr>
-
-</thead>
-
-<tbody id="reportTable">
-
-<tr>
-
-<td colspan="5" style="text-align:center">
-
-Loading...
-
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-</div>
-
-<br>
-
-<button
-class="btn-primary"
-onclick="logout()">
-
-🚪 Logout
-
-</button>
-
-</section>
 
 <script type="module">
-  import { auth, db } from "./firebase.js";
+
+
+import { auth } from "./firebase.js";
+
 
 import {
-onAuthStateChanged,
-signOut
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
-import {
-collection,
-getDocs,
-deleteDoc,
-doc
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+onAuthStateChanged
 
-const reportTable=document.getElementById("reportTable");
+}
 
-let reports=[];
+from
 
-const adminEmail="rbiplob905@gmail.com";
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+
+
+
+
+const adminEmail = "rbiplob1005@gmail.com";
+
+
+
+
 
 onAuthStateChanged(auth,(user)=>{
 
-if(!user){
+
+if(!user || user.email !== adminEmail){
+
 
 window.location.href="login.html";
 
-return;
 
 }
 
-if(user.email!==adminEmail){
 
-alert("Access Denied!");
-
-window.location.href="dashboard.html";
-
-return;
-
-}
-
-loadReports();
 
 });
 
-async function loadReports(){
 
-reportTable.innerHTML="";
 
-const snapshot=await getDocs(collection(db,"reports"));
+</script>
 
-reports=[];
 
-snapshot.forEach((item)=>{
 
-reports.push({
 
-id:item.id,
 
-...item.data()
 
-});
 
-});
 
-document.getElementById("totalReports").innerText=reports.length;
+<!-- NAVBAR -->
 
-document.getElementById("totalUsers").innerText="-";
 
-showReports(reports);
+<nav class="navbar">
 
-}
 
-function showReports(list){
+<div class="logo">
 
-reportTable.innerHTML="";
 
-if(list.length===0){
+<a href="index.html">
 
-reportTable.innerHTML="<tr><td colspan='5'>No Reports Found</td></tr>";
 
-return;
+<img src="logo.png" alt="FraudGuard">
 
-}
 
-list.forEach(report=>{
+<span>
 
-reportTable.innerHTML+=`
+FraudGuard Admin
+
+</span>
+
+
+</a>
+
+
+</div>
+
+
+
+
+
+
+
+<ul class="nav-links">
+
+
+<li>
+
+<a href="admin.html">
+
+Dashboard
+
+</a>
+
+</li>
+
+
+
+<li>
+
+<a href="index.html">
+
+Website
+
+</a>
+
+</li>
+
+
+
+<li>
+
+<a href="report.html">
+
+Report
+
+</a>
+
+</li>
+
+
+</ul>
+
+
+
+
+</nav>
+<!-- =========================
+      ADMIN DASHBOARD
+========================= -->
+
+
+<section class="dashboard-section">
+
+
+<div class="container">
+
+
+
+
+
+<div class="section-title">
+
+
+<h1>
+
+FraudGuard Admin Panel 🛡️
+
+</h1>
+
+
+<p>
+
+Manage fraud reports and monitor platform activity.
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- ADMIN PROFILE -->
+
+
+<div class="card admin-profile">
+
+
+<i class="fa-solid fa-user-shield"></i>
+
+
+<h2>
+
+Administrator
+
+</h2>
+
+
+<p>
+
+Email:
+
+<strong>
+
+rbiplob1005@gmail.com
+
+</strong>
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- STATISTICS -->
+
+
+<div class="feature-grid">
+
+
+
+
+
+<div class="card">
+
+
+<i class="fa-solid fa-file-circle-exclamation"></i>
+
+
+<h3>
+
+Total Reports
+
+</h3>
+
+
+<h2 id="totalReports">
+
+0
+
+</h2>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+
+<i class="fa-solid fa-users"></i>
+
+
+<h3>
+
+Total Users
+
+</h3>
+
+
+<h2 id="totalUsers">
+
+0
+
+</h2>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+
+<i class="fa-solid fa-shield-halved"></i>
+
+
+<h3>
+
+Security Status
+
+</h3>
+
+
+<h2>
+
+Active
+
+</h2>
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+</div>
+
+
+</section>
+<!-- =========================
+      REPORT MANAGEMENT
+========================= -->
+
+
+<section class="reports-section">
+
+
+<div class="container">
+
+
+
+
+
+<div class="section-title">
+
+
+<h2>
+
+Fraud Reports Management
+
+</h2>
+
+
+<p>
+
+Review all submitted fraud reports.
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="table-container">
+
+
+<table class="admin-table">
+
+
+<thead>
+
 
 <tr>
 
-<td>${report.name||"-"}</td>
 
-<td>${report.email||"-"}</td>
+<th>
 
-<td>${report.website||"-"}</td>
+Title
 
-<td>${report.scamType||"-"}</td>
+</th>
+
+
+<th>
+
+Type
+
+</th>
+
+
+<th>
+
+User
+
+</th>
+
+
+<th>
+
+Date
+
+</th>
+
+
+<th>
+
+Action
+
+</th>
+
+
+</tr>
+
+
+</thead>
+
+
+
+<tbody id="adminReportList">
+
+
+
+<tr>
+
+<td colspan="5">
+
+Loading reports...
+
+</td>
+
+
+</tr>
+
+
+
+</tbody>
+
+
+
+</table>
+
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- FIREBASE ADMIN REPORT LOAD -->
+
+
+<script type="module">
+
+
+import { db } from "./firebase.js";
+
+
+
+import {
+
+
+collection,
+
+getDocs,
+
+deleteDoc,
+
+doc
+
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+
+
+
+
+
+const adminReportList = 
+document.getElementById("adminReportList");
+
+
+
+const totalReports =
+document.getElementById("totalReports");
+
+
+
+
+
+
+async function loadAdminReports(){
+
+
+
+const snapshot = await getDocs(
+
+collection(db,"fraudReports")
+
+);
+
+
+
+
+
+adminReportList.innerHTML="";
+
+
+
+
+
+let count = 0;
+
+
+
+
+
+snapshot.forEach((item)=>{
+
+
+
+count++;
+
+
+
+const data = item.data();
+
+
+
+
+adminReportList.innerHTML += `
+
+
+
+<tr>
+
 
 <td>
 
-<button onclick="deleteReport('${report.id}')" class="btn-primary">
+${data.title}
+
+</td>
+
+
+
+<td>
+
+${data.type}
+
+</td>
+
+
+
+<td>
+
+${data.user}
+
+</td>
+
+
+
+<td>
+
+${data.date ? data.date.toDate().toLocaleDateString() : "--"}
+
+</td>
+
+
+
+
+<td>
+
+
+<button
+
+class="btn-danger"
+
+onclick="deleteReport('${item.id}')">
 
 Delete
 
 </button>
 
+
+
 </td>
+
 
 </tr>
 
+
+
 `;
+
+
+
 
 });
 
+
+
+
+
+totalReports.innerText=count;
+
+
+
 }
- window.searchReports=function(){
 
-const keyword=document.getElementById("searchInput").value.toLowerCase();
 
-const filtered=reports.filter(report=>
 
-(report.name||"").toLowerCase().includes(keyword) ||
 
-(report.email||"").toLowerCase().includes(keyword) ||
 
-(report.website||"").toLowerCase().includes(keyword) ||
+window.deleteReport = async function(id){
 
-(report.phone||"").toLowerCase().includes(keyword) ||
 
-(report.scamType||"").toLowerCase().includes(keyword)
+
+if(confirm("Delete this report?")){
+
+
+await deleteDoc(
+
+doc(db,"fraudReports",id)
 
 );
 
-showReports(filtered);
 
-};
 
-window.deleteReport=async function(id){
+loadAdminReports();
 
-const ok=confirm("Are you sure you want to delete this report?");
 
-if(!ok) return;
-
-try{
-
-await deleteDoc(doc(db,"reports",id));
-
-loadReports();
-
-alert("Report deleted successfully.");
-
-}catch(error){
-
-alert(error.message);
 
 }
 
-};
 
-window.logout=async function(){
-
-try{
-
-await signOut(auth);
-
-window.location.href="login.html";
-
-}catch(error){
-
-alert(error.message);
 
 }
 
-};
+
+
+
+
+loadAdminReports();
+
+
+
+
 
 </script>
+
+<!-- =========================
+      ADMIN LIVE CHAT
+========================= -->
+
+
+<section class="chat-admin-section">
+
+
+<div class="container">
+
+
+
+<div class="section-title">
+
+
+<h2>
+
+User Support Chat
+
+</h2>
+
+
+<p>
+
+Manage user messages and support requests.
+
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+
+<h3>
+
+Live Chat System
+
+</h3>
+
+
+<p>
+
+Firebase live chat connection ready.
+
+</p>
+
+
+<button class="btn">
+
+Open Chat Management
+
+</button>
+
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+<!-- =========================
+        LOGOUT
+========================= -->
+
+
+<div class="container" style="text-align:center;margin:30px;">
+
+
+<button onclick="logoutUser()" class="btn">
+
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+Logout Admin
+
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- =========================
+        FOOTER
+========================= -->
+
+
+<footer>
+
+
+<div class="container">
+
+
+<div class="footer-grid">
+
+
+
+<div class="footer-box">
+
+
+<h3>
+
+FraudGuard Admin
+
+</h3>
+
+
+<p>
+
+Manage and protect the FraudGuard community.
+
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="footer-box">
+
+
+<h3>
+
+Quick Links
+
+</h3>
+
+
+<a href="index.html">
+
+Website
+
+</a><br>
+
+
+<a href="dashboard.html">
+
+Dashboard
+
+</a><br>
+
+
+<a href="report.html">
+
+Reports
+
+</a>
+
+
+</div>
+
+
+
+
+
+<div class="footer-box">
+
+
+<h3>
+
+Security
+
+</h3>
+
+
+<p>
+
+Admin control panel protected.
+
+</p>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+<div class="footer-bottom">
+
+
+<p>
+
+© 2026 FraudGuard. All Rights Reserved.
+
+</p>
+
+
+</div>
+
+
+
+</div>
+
+
+</footer>
+
+
+<!-- SCRIPT -->
+
+
+<script src="script.js"></script>
+
 
 </body>
 
 </html>
+
