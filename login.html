@@ -6,165 +6,197 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Login | FraudGuard</title>
+<title>Login - FraudGuard</title>
+
+<meta name="description" content="Login to your FraudGuard account.">
+
+<link rel="icon" href="logo.png">
 
 <link rel="stylesheet" href="style.css">
-<link rel="icon" href="logo.png">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 </head>
 
 <body>
 
-<nav class="navbar">
+<div class="auth-section">
 
-<div class="logo">
+<div class="auth-box">
 
-<a href="index.html">
+<div style="text-align:center; margin-bottom:20px;">
 
-<img src="logo.png" alt="FraudGuard">
+<img src="logo.png"
+alt="FraudGuard Logo"
+style="width:90px;">
 
-<span>FraudGuard</span>
+<h1>FraudGuard</h1>
+
+<p>Protect Yourself From Online Fraud</p>
+
+</div>
+
+<form id="loginForm">
+
+<div class="input-group">
+
+<label>Email</label>
+
+<input
+type="email"
+id="loginEmail"
+placeholder="Enter your email"
+required>
+
+</div>
+
+<div class="input-group">
+
+<label>Password</label>
+
+<input
+type="password"
+id="loginPassword"
+placeholder="Enter your password"
+required>
+
+</div>
+<!-- Remember Me + Forgot Password -->
+
+<div class="login-options">
+
+<label>
+
+<input type="checkbox" id="rememberMe">
+
+Remember Me
+
+</label>
+
+
+<a href="forgot-password.html">
+
+Forgot Password?
 
 </a>
 
 </div>
 
-<ul class="nav-links">
 
-<li><a href="index.html">Home</a></li>
-<li><a href="about.html">About</a></li>
-<li><a href="features.html">Features</a></li>
-<li><a href="contact.html">Contact</a></li>
 
-</ul>
 
-</nav>
 
-<section class="scanner">
+<!-- LOGIN BUTTON -->
 
-<h2>Login to FraudGuard</h2>
+<button
 
-<input
-type="email"
-id="email"
-placeholder="Email">
+type="button"
 
-<br><br>
+class="btn"
 
-<input
-type="password"
-id="password"
-placeholder="Password">
+onclick="loginUser()">
 
-<br><br>
+<i class="fa-solid fa-right-to-bracket"></i>
 
-<button class="btn-primary" onclick="login()">
-
-🔑 Login
+Login
 
 </button>
 
-<br><br>
 
-<button class="btn-secondary" onclick="signup()">
 
-📝 Create Account
+
+
+<!-- Divider -->
+
+<div class="divider">
+
+<span>OR</span>
+
+</div>
+
+
+
+
+
+<!-- GOOGLE LOGIN -->
+
+<button
+
+type="button"
+
+class="btn google-btn"
+
+id="googleLoginBtn">
+
+<i class="fa-brands fa-google"></i>
+
+Continue with Google
 
 </button>
 
-<br><br>
 
-<button class="btn-secondary" onclick="googleLogin()">
 
-🟢 Continue with Google
 
-</button>
 
-<br><br>
+<!-- CREATE ACCOUNT -->
 
-<p id="loginStatus"></p>
+<p class="register-link">
 
-</section>
-<script type="module">
+Don't have an account?
 
-import { auth } from "./firebase.js";
+<a href="register.html">
 
-import {
+Create New Account
 
-signInWithEmailAndPassword,
+</a>
 
-createUserWithEmailAndPassword,
+</p>
 
-GoogleAuthProvider,
+</form>
 
-signInWithPopup
+</div>
 
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+</div>
+<!-- =========================
+        FOOTER
+========================= -->
 
-const status=document.getElementById("loginStatus");
+<footer>
 
-window.login=async function(){
+<div class="container">
 
-const email=document.getElementById("email").value;
-const password=document.getElementById("password").value;
+<p>
 
-try{
+© 2026 FraudGuard. All Rights Reserved.
 
-await signInWithEmailAndPassword(auth,email,password);
+</p>
 
-status.innerHTML="✅ Login Successful";
+</div>
 
-window.location.href="dashboard.html";
+</footer>
 
-}catch(error){
 
-status.innerHTML="❌ "+error.message;
 
-}
 
-}
 
-window.signup=async function(){
 
-const email=document.getElementById("email").value;
-const password=document.getElementById("password").value;
 
-try{
+<!-- FIREBASE -->
 
-await createUserWithEmailAndPassword(auth,email,password);
+<script type="module" src="firebase.js"></script>
 
-status.innerHTML="✅ Account Created Successfully";
 
-}catch(error){
 
-status.innerHTML="❌ "+error.message;
 
-}
 
-}
+<!-- SCRIPT -->
 
-window.googleLogin=async function(){
-
-const provider=new GoogleAuthProvider();
-
-try{
-
-await signInWithPopup(auth,provider);
-
-status.innerHTML="✅ Google Login Successful";
-
-window.location.href="dashboard.html";
-
-}catch(error){
-
-status.innerHTML="❌ "+error.message;
-
-}
-
-}
-
-</script>
+<script src="script.js"></script>
 
 </body>
 
 </html>
+
+
+
