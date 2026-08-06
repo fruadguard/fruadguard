@@ -4,75 +4,143 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 
 <title>Login - FraudGuard</title>
 
+
 <meta name="description" content="Login to your FraudGuard account.">
+
 
 <link rel="icon" href="logo.png">
 
+
 <link rel="stylesheet" href="style.css">
+
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
+
 </head>
+
 
 <body>
 
+
 <div class="auth-section">
+
 
 <div class="auth-box">
 
-<div style="text-align:center; margin-bottom:20px;">
+
+
+<div style="text-align:center; margin-bottom:25px;">
+
 
 <img src="logo.png"
 alt="FraudGuard Logo"
 style="width:90px;">
 
-<h1>FraudGuard</h1>
 
-<p>Protect Yourself From Online Fraud</p>
+
+<h1>
+FraudGuard
+</h1>
+
+
+<p>
+Protect Yourself From Online Fraud
+</p>
+
+
 
 </div>
+
+
+
+
 
 <form id="loginForm">
 
+
+
+
+
 <div class="input-group">
 
-<label>Email</label>
+
+<label>
+Email
+</label>
+
 
 <input
+
 type="email"
+
 id="loginEmail"
+
 placeholder="Enter your email"
+
 required>
 
+
 </div>
+
+
+
+
+
 
 <div class="input-group">
 
-<label>Password</label>
+
+<label>
+Password
+</label>
+
 
 <input
+
 type="password"
+
 id="loginPassword"
+
 placeholder="Enter your password"
+
 required>
 
+
 </div>
-<!-- Remember Me + Forgot Password -->
+
+
+
+
+
+
 
 <div class="login-options">
 
+
 <label>
 
-<input type="checkbox" id="rememberMe">
+
+<input 
+
+type="checkbox"
+
+id="rememberMe">
+
 
 Remember Me
 
+
 </label>
+
+
 
 
 <a href="forgot-password.html">
@@ -81,25 +149,27 @@ Forgot Password?
 
 </a>
 
+
+
 </div>
 
 
 
 
 
-<!-- LOGIN BUTTON -->
+
 
 <button
 
-type="button"
+type="submit"
 
-class="btn"
+class="btn">
 
-onclick="loginUser()">
 
 <i class="fa-solid fa-right-to-bracket"></i>
 
 Login
+
 
 </button>
 
@@ -107,11 +177,14 @@ Login
 
 
 
-<!-- Divider -->
+
 
 <div class="divider">
 
-<span>OR</span>
+<span>
+OR
+</span>
+
 
 </div>
 
@@ -119,7 +192,7 @@ Login
 
 
 
-<!-- GOOGLE LOGIN -->
+
 
 <button
 
@@ -129,9 +202,12 @@ class="btn google-btn"
 
 id="googleLoginBtn">
 
+
 <i class="fa-brands fa-google"></i>
 
+
 Continue with Google
+
 
 </button>
 
@@ -139,11 +215,14 @@ Continue with Google
 
 
 
-<!-- CREATE ACCOUNT -->
+
+
 
 <p class="register-link">
 
+
 Don't have an account?
+
 
 <a href="register.html">
 
@@ -151,20 +230,36 @@ Create New Account
 
 </a>
 
+
 </p>
+
+
+
+
+<p id="loginMessage"></p>
+
+
 
 </form>
 
-</div>
 
 </div>
-<!-- =========================
-        FOOTER
-========================= -->
+
+
+</div>
+
+
+
+
+
+
+
 
 <footer>
 
+
 <div class="container">
+
 
 <p>
 
@@ -172,7 +267,9 @@ Create New Account
 
 </p>
 
+
 </div>
+
 
 </footer>
 
@@ -182,21 +279,24 @@ Create New Account
 
 
 
-<!-- FIREBASE -->
+<!-- Firebase -->
 
-<script type="module" src="firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
 
 
 
+<script src="firebase.js"></script>
 
-<!-- SCRIPT -->
 
-<script type="module" src="script.js"></script>
+<script src="script.js"></script>
+
+
 
 </body>
 
 </html>
-
-
-
