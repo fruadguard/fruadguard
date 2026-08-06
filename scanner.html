@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FraudGuard AI Scanner</title>
+
+<meta name="description" content="Scan suspicious links and detect possible online fraud with FraudGuard AI Scanner.">
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+<div class="container">
+
+
+<a href="index.html" class="logo">
+Fraud<span>Guard</span>
+</a>
+
+
+<ul class="nav-menu">
+
+<li><a href="index.html">Home</a></li>
+
+<li><a href="features.html">Features</a></li>
+
+<li><a href="scanner.html">Scanner</a></li>
+
+<li><a href="report.html">Report</a></li>
+
+<li><a href="contact.html">Contact</a></li>
+
+</ul>
+
+
+<a href="login.html" class="nav-btn">
+Login
+</a>
+
+
+<div class="menu-toggle">
+☰
+</div>
+
+
+</div>
+
+</header>
+
+
+
+<section class="hero">
+
+<div class="container">
+
+
+<div class="hero-content">
+
+
+<h1>
+AI Fraud
+<span>Scanner</span>
+</h1>
+
+
+<p>
+Check suspicious websites and links before you trust them.
+</p>
+
+
+</div>
+
+
+</div>
+
+</section>
+<section>
+
+<div class="container">
+
+
+<div class="scanner-box">
+
+
+<h2>
+Website Security Scanner
+</h2>
+
+
+<p>
+Enter a link to check possible fraud risk.
+</p>
+
+
+<input 
+type="url" 
+class="scanner-input" 
+id="urlInput"
+placeholder="https://example.com">
+
+
+
+<button class="btn" id="scanBtn">
+Scan Website
+</button>
+
+
+
+<div class="result-box" id="scanResult">
+
+
+<h3>
+Scan Result
+</h3>
+
+
+<p>
+Waiting for scan...
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<section>
+
+<div class="container">
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<div class="icon">
+🔒
+</div>
+
+<h3>
+HTTPS Check
+</h3>
+
+<p>
+Verify secure connection status.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="icon">
+⚠️
+</div>
+
+<h3>
+Risk Detection
+</h3>
+
+<p>
+Identify suspicious website patterns.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="icon">
+🤖
+</div>
+
+<h3>
+AI Analysis
+</h3>
+
+<p>
+Smart security recommendation system.
+</p>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</section>
+<section>
+
+<div class="container">
+
+
+<div class="scanner-box">
+
+
+<h2>
+Recent Scan History
+</h2>
+
+
+<div class="report-card">
+
+
+<h3>
+No Recent Scan
+</h3>
+
+
+<p>
+Your scanned websites will appear here.
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<section>
+
+<div class="container">
+
+
+<h2>
+Stay Safe Online
+</h2>
+
+
+<div class="features">
+
+
+<div class="feature-box">
+
+<div class="icon">
+❌
+</div>
+
+<h3>
+Avoid Unknown Links
+</h3>
+
+<p>
+Do not open suspicious links from unknown sources.
+</p>
+
+</div>
+
+
+
+<div class="feature-box">
+
+<div class="icon">
+🔐
+</div>
+
+<h3>
+Protect Information
+</h3>
+
+<p>
+Never share passwords or sensitive information.
+</p>
+
+</div>
+
+
+
+<div class="feature-box">
+
+<div class="icon">
+✅
+</div>
+
+<h3>
+Verify Before Trust
+</h3>
+
+<p>
+Check websites and numbers before taking action.
+</p>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</section>
+<footer class="footer">
+
+<div class="container">
+
+
+<div class="footer-box">
+
+
+<div>
+
+<h3>
+FraudGuard
+</h3>
+
+<p>
+AI-powered digital fraud protection platform.
+</p>
+
+</div>
+
+
+
+<div>
+
+<h3>
+Quick Links
+</h3>
+
+<ul class="footer-links">
+
+<li>
+<a href="index.html">Home</a>
+</li>
+
+<li>
+<a href="features.html">Features</a>
+</li>
+
+<li>
+<a href="report.html">Report</a>
+</li>
+
+</ul>
+
+</div>
+
+
+
+<div>
+
+<h3>
+Security
+</h3>
+
+<p>
+Stay protected from online scams.
+</p>
+
+<p>
+AI Fraud Detection System
+</p>
+
+</div>
+
+
+</div>
+
+
+
+<p class="copyright">
+© 2026 FraudGuard. All Rights Reserved.
+</p>
+
+
+</div>
+
+</footer>
+
+
+
+<script src="script.js"></script>
+
+
+<script>
+
+const scanBtn = document.getElementById("scanBtn");
+const urlInput = document.getElementById("urlInput");
+const scanResult = document.getElementById("scanResult");
+
+
+if(scanBtn){
+
+scanBtn.addEventListener("click",()=>{
+
+let url = urlInput.value;
+
+
+if(url===""){
+
+scanResult.innerHTML =
+"<h3>Warning</h3><p>Please enter a website link.</p>";
+
+}
+
+else{
+
+scanResult.innerHTML =
+"<h3>Analysis Complete</h3><p>Website risk analysis started. Stay alert before trusting this link.</p>";
+
+}
+
+});
+
+}
+
+</script>
+
+
+</body>
+
+</html>
+
+
+
