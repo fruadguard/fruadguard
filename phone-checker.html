@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FraudGuard Phone Checker</title>
+
+<meta name="description" content="Check suspicious phone numbers with FraudGuard fraud database.">
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+<div class="container">
+
+
+<a href="index.html" class="logo">
+Fraud<span>Guard</span>
+</a>
+
+
+<ul class="nav-menu">
+
+<li>
+<a href="index.html">Home</a>
+</li>
+
+<li>
+<a href="features.html">Features</a>
+</li>
+
+<li>
+<a href="scanner.html">Scanner</a>
+</li>
+
+<li>
+<a href="phone-checker.html">Phone Checker</a>
+</li>
+
+<li>
+<a href="report.html">Report</a>
+</li>
+
+</ul>
+
+
+<a href="login.html" class="nav-btn">
+Login
+</a>
+
+
+<div class="menu-toggle">
+☰
+</div>
+
+
+</div>
+
+</header>
+
+
+
+<section class="hero">
+
+<div class="container">
+
+
+<div class="hero-content">
+
+
+<h1>
+Phone Number
+<span>Checker</span>
+</h1>
+
+
+<p>
+Check suspicious phone numbers and identify possible fraud activity.
+</p>
+
+
+</div>
+
+
+</div>
+
+</section>
+<section>
+
+<div class="container">
+
+
+<div class="scanner-box">
+
+
+<h2>
+Check Phone Number
+</h2>
+
+
+<p>
+Enter a phone number to search fraud reports.
+</p>
+
+
+
+<input
+
+type="tel"
+
+id="phoneInput"
+
+class="scanner-input"
+
+placeholder="+8801XXXXXXXXX">
+
+
+
+<button
+
+class="btn"
+
+id="checkPhoneBtn">
+
+Check Number
+
+</button>
+
+
+
+<div class="result-box" id="phoneResult">
+
+
+<h3>
+Result
+</h3>
+
+
+<p>
+Waiting for search...
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<section>
+
+<div class="container">
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<div class="icon">
+📞
+</div>
+
+<h3>
+Fraud Call Detection
+</h3>
+
+<p>
+Identify reported scam phone numbers.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="icon">
+🗄️
+</div>
+
+<h3>
+Fraud Database
+</h3>
+
+<p>
+Community reports help improve detection.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="icon">
+🛡️
+</div>
+
+<h3>
+Stay Protected
+</h3>
+
+<p>
+Verify numbers before sharing information.
+</p>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</section>
+<script type="module">
+
+import { db } from "./firebase.js";
+
+import {
+
+collection,
+
+getDocs
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+const checkBtn=document.getElementById("checkPhoneBtn");
+
+const phoneInput=document.getElementById("phoneInput");
+
+const phoneResult=document.getElementById("phoneResult");
+
+
+
+checkBtn.addEventListener("click",async()=>{
+
+
+const phone=phoneInput.value.trim();
+
+
+if(phone===""){
+
+
+phoneResult.innerHTML=`
+
+<h3>
+⚠️ Warning
+</h3>
+
+<p>
+Please enter a phone number.
+</p>
+
+`;
+
+
+return;
+
+}
+
+
+
+const snapshot=await getDocs(
+
+collection(db,"fraud_numbers")
+
+);
+
+
+
+let found=false;
+
+
+
+snapshot.forEach(doc=>{
+
+
+const data=doc.data();
+
+
+if(data.number===phone){
+
+
+found=true;
+
+
+}
+
+});
+
+
+
+if(found){
+
+
+phoneResult.innerHTML=`
+
+<h3>
+⚠️ Fraud Warning
+</h3>
+
+<p>
+This number has been reported as suspicious.
+</p>
+
+`;
+
+
+
+}else{
+
+
+phoneResult.innerHTML=`
+
+<h3>
+✅ No Report Found
+</h3>
+
+<p>
+No fraud report found for this number.
+</p>
+
+`;
+
+}
+
+
+
+});
+
+
+</script>
+<footer class="footer">
+
+<div class="container">
+
+
+<div class="footer-box">
+
+
+<div>
+
+<h3>
+FraudGuard
+</h3>
+
+<p>
+AI-powered digital fraud protection platform.
+</p>
+
+</div>
+
+
+
+<div>
+
+<h3>
+Quick Links
+</h3>
+
+<ul class="footer-links">
+
+<li>
+<a href="index.html">Home</a>
+</li>
+
+<li>
+<a href="scanner.html">Scanner</a>
+</li>
+
+<li>
+<a href="report.html">Report</a>
+</li>
+
+</ul>
+
+</div>
+
+
+
+<div>
+
+<h3>
+Phone Security
+</h3>
+
+<p>
+Check unknown numbers before trusting.
+</p>
+
+<p>
+Community Fraud Database
+</p>
+
+</div>
+
+
+</div>
+
+
+
+<p class="copyright">
+
+© 2026 FraudGuard. All Rights Reserved.
+
+</p>
+
+
+</div>
+
+</footer>
+
+
+
+<script src="script.js"></script>
+
+
+</body>
+
+  </html>
+
+
+
