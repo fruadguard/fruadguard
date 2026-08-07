@@ -8,89 +8,39 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FraudGuard Login</title>
-
-<meta name="description" content="Login to your FraudGuard account.">
+<title>Login - FraudGuard</title>
 
 <link rel="stylesheet" href="style.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 </head>
+
 
 <body>
 
-<header class="navbar">
 
-<div class="container">
+<div class="auth-container">
 
-<a href="index.html" class="logo">
-Fraud<span>Guard</span>
-</a>
 
-<ul class="nav-menu">
+<div class="auth-box">
 
-<li><a href="index.html">Home</a></li>
-
-<li><a href="features.html">Features</a></li>
-
-<li><a href="scanner.html">Scanner</a></li>
-
-<li><a href="report.html">Report</a></li>
-
-<li><a href="contact.html">Contact</a></li>
-
-</ul>
-
-<a href="login.html" class="nav-btn">
-Login
-</a>
-
-<div class="menu-toggle">
-☰
-</div>
-
-</div>
-
-</header>
-
-<section class="hero">
-
-<div class="container">
-
-<div class="hero-content">
 
 <h1>
-Welcome to
-<span>FraudGuard</span>
+Fraud<span>Guard</span>
 </h1>
-
-<p>
-Sign in to access your dashboard, reports and scan history.
-</p>
-
-</div>
-
-</div>
-
-</section>
-<section>
-
-<div class="container">
-
-
-<div class="form-box">
 
 
 <h2>
-Login
+Welcome Back
 </h2>
 
 
-<form id="loginForm">
+<p>
+Login to protect your digital world
+</p>
 
 
-<input
+
+<input 
 type="email"
 id="email"
 placeholder="Email Address"
@@ -98,7 +48,7 @@ required>
 
 
 
-<input
+<input 
 type="password"
 id="password"
 placeholder="Password"
@@ -106,29 +56,9 @@ required>
 
 
 
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
-
-<label>
-
-<input type="checkbox">
-
-Remember Me
-
-</label>
-
-
-<a href="#">
-Forgot Password?
-</a>
-
-
-</div>
-
-
-
-<button
-type="submit"
-class="btn">
+<button 
+class="btn"
+onclick="loginUser()">
 
 Login
 
@@ -136,81 +66,57 @@ Login
 
 
 
-<p style="margin-top:15px;text-align:center;">
+
+<div class="divider">
+
+<span>
+OR
+</span>
+
+</div>
+
+
+
+
+<button 
+class="social-btn google"
+onclick="googleLogin()">
+
+🔵 Continue with Google
+
+</button>
+
+
+
+
+<button 
+class="social-btn facebook"
+onclick="facebookLogin()">
+
+🔵 Continue with Facebook
+
+</button>
+
+
+
+
+
+<p class="auth-link">
 
 Don't have an account?
 
 <a href="register.html">
-
-Register
-
+Create Account
 </a>
 
+
 </p>
 
 
-</form>
 
-
-</div>
-
-
-</div>
-
-</section>
-<section>
-
-<div class="container">
-
-
-<div class="cards">
-
-
-<div class="card">
-
-
-<h3>
-Secure Login
-</h3>
-
-
-<p>
-Your account is protected using Firebase Authentication.
-</p>
-
-
-</div>
-
-
-
-<div class="card">
-
-
-<h3>
-Your Dashboard
-</h3>
-
-
-<p>
-Access your scan history, fraud reports and account information.
-</p>
-
-
-</div>
-
-
-
-<div class="card">
-
-
-<h3>
-AI Protection
-</h3>
-
-
-<p>
-Use FraudGuard AI tools to detect suspicious websites and online scams.
-</p>
+<a href="index.html">
+← Back to Home
+</a>
 
 
 </div>
@@ -219,109 +125,11 @@ Use FraudGuard AI tools to detect suspicious websites and online scams.
 </div>
 
 
-</div>
 
-</section>
-
-
-
-<script type="module">
-
-import { loginUser } from "./firebase.js";
-
-const loginForm=document.getElementById("loginForm");
-
-loginForm.addEventListener("submit",async(e)=>{
-
-e.preventDefault();
-
-const email=document.getElementById("email").value;
-
-const password=document.getElementById("password").value;
-
-const user=await loginUser(email,password);
-
-if(user){
-
-alert("Login Successful");
-
-window.location.href="dashboard.html";
-
-}else{
-
-alert("Invalid email or password");
-
-}
-
-});
-
-</script>
-<footer class="footer">
-
-<div class="container">
-
-<div class="footer-box">
-
-<div>
-
-<h3>
-FraudGuard
-</h3>
-
-<p>
-AI-powered digital fraud protection platform.
-</p>
-
-</div>
-
-<div>
-
-<h3>
-Quick Links
-</h3>
-
-<ul class="footer-links">
-
-<li><a href="index.html">Home</a></li>
-
-<li><a href="features.html">Features</a></li>
-
-<li><a href="scanner.html">Scanner</a></li>
-
-</ul>
-
-</div>
-
-<div>
-
-<h3>
-Support
-</h3>
-
-<p>
-Secure Authentication System</p>
-
-<p>
-Protecting your digital identity.</p>
-
-</div>
-
-</div>
-
-<p class="copyright">
-© 2026 FraudGuard. All Rights Reserved.
-</p>
-
-</div>
-
-</footer>
 
 <script type="module" src="auth.js"></script>
+
+
 </body>
 
 </html>
-
-
-
-
-
