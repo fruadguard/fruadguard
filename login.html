@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -8,57 +7,183 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Login - FraudGuard</title>
+<title>FraudGuard | Login</title>
 
 <link rel="stylesheet" href="style.css">
 
-</head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
 
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
 
 <body>
 
+<div class="login-page">
 
-<div class="auth-container">
+<div class="login-left">
 
-
-<div class="auth-box">
-
+<div class="brand">
 
 <h1>
+
+<i class="fa-solid fa-shield-halved"></i>
+
 Fraud<span>Guard</span>
+
 </h1>
 
-
-<h2>
-Welcome Back
-</h2>
-
-
 <p>
-Login to protect your digital world
+
+AI-Powered Global Anti-Fraud Platform
+
 </p>
 
+</div>
 
+<div class="hero-content">
 
-<input 
+<h2>
+
+Protect Yourself From Digital Scams
+
+</h2>
+
+<p>
+
+Detect fake websites, phishing links, scam phone numbers, fake social accounts and online fraud using FraudGuard AI.
+
+</p>
+
+<ul>
+
+<li><i class="fa-solid fa-circle-check"></i> AI Scam Detection</li>
+
+<li><i class="fa-solid fa-circle-check"></i> Website Scanner</li>
+
+<li><i class="fa-solid fa-circle-check"></i> Phone Number Checker</li>
+
+<li><i class="fa-solid fa-circle-check"></i> Community Scam Reports</li>
+
+<li><i class="fa-solid fa-circle-check"></i> Real-Time Protection</li>
+
+</ul>
+
+</div>
+
+</div>
+
+<div class="login-right">
+
+<div class="login-card">
+
+<h2>
+
+Welcome Back
+
+</h2>
+
+<p>
+
+Login to your FraudGuard account
+
+</p>
+
+<form id="loginForm">
+  <div class="input-group">
+
+<label>
+
+Email Address
+
+</label>
+
+<div class="input-box">
+
+<i class="fa-solid fa-envelope"></i>
+
+<input
 type="email"
 id="email"
-placeholder="Email Address"
+placeholder="Enter your email"
 required>
 
+</div>
+
+</div>
 
 
-<input 
+
+
+<div class="input-group">
+
+<label>
+
+Password
+
+</label>
+
+<div class="input-box">
+
+<i class="fa-solid fa-lock"></i>
+
+<input
 type="password"
 id="password"
-placeholder="Password"
+placeholder="Enter your password"
 required>
 
+<button
+type="button"
+class="password-toggle"
+onclick="togglePassword()">
+
+<i id="eyeIcon" class="fa-solid fa-eye"></i>
+
+</button>
+
+</div>
+
+</div>
 
 
-<button 
-class="btn"
+
+
+<div class="login-options">
+
+<label class="remember-me">
+
+<input
+type="checkbox"
+id="rememberMe">
+
+Remember Me
+
+</label>
+
+
+
+<a href="forgot-password.html">
+
+Forgot Password?
+
+</a>
+
+</div>
+
+
+
+
+<button
+type="button"
+class="btn login-btn"
 onclick="loginUser()">
+
+<i class="fa-solid fa-right-to-bracket"></i>
 
 Login
 
@@ -70,7 +195,9 @@ Login
 <div class="divider">
 
 <span>
-OR
+
+OR CONTINUE WITH
+
 </span>
 
 </div>
@@ -78,58 +205,156 @@ OR
 
 
 
-<button 
+<button
+type="button"
 class="social-btn google"
 onclick="googleLogin()">
 
-🔵 Continue with Google
+<i class="fa-brands fa-google"></i>
+
+Continue with Google
 
 </button>
 
 
 
 
-<button 
+<button
+type="button"
 class="social-btn facebook"
 onclick="facebookLogin()">
 
-🔵 Continue with Facebook
+<i class="fa-brands fa-facebook-f"></i>
+
+Continue with Facebook
 
 </button>
+<div class="create-account">
 
+<p>
 
-
-
-
-<p class="auth-link">
-
-Don't have an account?
-
-<a href="register.html">
-Create Account
-</a>
-
+Don't have a FraudGuard account?
 
 </p>
 
 
+<a href="register.html">
 
-<a href="index.html">
-← Back to Home
+Create New Account
+
 </a>
 
 
 </div>
 
 
+
+
+<div class="security-note">
+
+
+<i class="fa-solid fa-shield-check"></i>
+
+
+<p>
+
+Your account is protected with Firebase secure authentication.
+
+</p>
+
+
 </div>
 
 
 
 
+<a href="index.html" class="back-home">
+
+
+<i class="fa-solid fa-arrow-left"></i>
+
+Back to Home
+
+
+</a>
+
+
+
+</form>
+
+
+</div>
+
+
+</div>
+
+
+</div>
 <script type="module" src="auth.js"></script>
 
 
+<script>
+
+
+function togglePassword(){
+
+
+const password = document.getElementById("password");
+
+const eyeIcon = document.getElementById("eyeIcon");
+
+
+
+if(password.type === "password"){
+
+
+password.type = "text";
+
+
+eyeIcon.classList.remove("fa-eye");
+
+
+eyeIcon.classList.add("fa-eye-slash");
+
+
+}
+
+else{
+
+
+password.type = "password";
+
+
+eyeIcon.classList.remove("fa-eye-slash");
+
+
+eyeIcon.classList.add("fa-eye");
+
+
+}
+
+
+}
+
+
+
+const loginForm = document.getElementById("loginForm");
+
+
+loginForm.addEventListener("submit", function(e){
+
+
+e.preventDefault();
+
+
+});
+
+
+
+</script>
+
+
 </body>
+
 
 </html>
