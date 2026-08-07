@@ -61,3 +61,62 @@ contactForm.reset();
 
 
 }
+import { auth } from "./firebase.js";
+
+import {
+onAuthStateChanged,
+signOut
+} from 
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+const loginBtn = document.querySelector('a[href="login.html"]');
+const registerBtn = document.querySelector('a[href="register.html"]');
+
+
+
+onAuthStateChanged(auth,(user)=>{
+
+
+if(user){
+
+
+if(loginBtn){
+
+loginBtn.style.display="none";
+
+}
+
+
+if(registerBtn){
+
+registerBtn.innerHTML="Dashboard";
+
+registerBtn.href="dashboard.html";
+
+}
+
+
+}else{
+
+
+if(loginBtn){
+
+loginBtn.style.display="block";
+
+}
+
+
+if(registerBtn){
+
+registerBtn.innerHTML="Create Account";
+
+registerBtn.href="register.html";
+
+}
+
+
+}
+
+
+});
