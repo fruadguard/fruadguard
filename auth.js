@@ -106,3 +106,141 @@ alert(error.message);
 
 
 };
+// Google Login
+
+window.googleLogin = async function(){
+
+
+const provider = new GoogleAuthProvider();
+
+
+try{
+
+
+const result = await signInWithPopup(
+
+auth,
+
+provider
+
+);
+
+
+const user = result.user;
+
+
+
+await setDoc(
+
+doc(db,"users",user.uid),
+
+{
+
+name: user.displayName,
+
+email: user.email,
+
+provider:"Google",
+
+createdAt:new Date()
+
+},
+
+{merge:true}
+
+);
+
+
+
+alert("Google Login Successful!");
+
+
+window.location.href="dashboard.html";
+
+
+}
+
+
+catch(error){
+
+
+alert(error.message);
+
+
+}
+
+
+};
+
+
+
+
+
+
+// Facebook Login
+
+window.facebookLogin = async function(){
+
+
+const provider = new FacebookAuthProvider();
+
+
+try{
+
+
+const result = await signInWithPopup(
+
+auth,
+
+provider
+
+);
+
+
+
+const user = result.user;
+
+
+
+await setDoc(
+
+doc(db,"users",user.uid),
+
+{
+
+name:user.displayName,
+
+email:user.email,
+
+provider:"Facebook",
+
+createdAt:new Date()
+
+},
+
+{merge:true}
+
+);
+
+
+
+alert("Facebook Login Successful!");
+
+
+window.location.href="dashboard.html";
+
+
+}
+
+
+
+catch(error){
+
+
+alert(error.message);
+
+
+}
+
+
+};
