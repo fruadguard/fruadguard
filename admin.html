@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FraudGuard Admin Panel</title>
+
+<meta name="description" content="FraudGuard Admin Dashboard">
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+<div class="container">
+
+
+<a href="index.html" class="logo">
+Fraud<span>Guard</span>
+</a>
+
+
+<ul class="nav-menu">
+
+<li>
+<a href="index.html">Home</a>
+</li>
+
+<li>
+<a href="dashboard.html">Dashboard</a>
+</li>
+
+<li>
+<a href="report.html">Reports</a>
+</li>
+
+<li>
+<a href="contact.html">Contact</a>
+</li>
+
+</ul>
+
+
+<a href="login.html" class="nav-btn">
+Logout
+</a>
+
+
+<div class="menu-toggle">
+☰
+</div>
+
+
+</div>
+
+</header>
+
+
+
+<section class="hero">
+
+<div class="container">
+
+
+<div class="hero-content">
+
+
+<h1>
+Admin
+<span>Panel</span>
+</h1>
+
+
+<p>
+Manage fraud reports, users and security activities from one place.
+</p>
+
+
+</div>
+
+
+</div>
+
+</section>
+<section>
+
+<div class="container">
+
+
+<div class="stats">
+
+
+<div class="stat-box">
+
+<h2>
+0
+</h2>
+
+<p>
+Total Users
+</p>
+
+</div>
+
+
+
+<div class="stat-box">
+
+<h2>
+0
+</h2>
+
+<p>
+Fraud Reports
+</p>
+
+</div>
+
+
+
+<div class="stat-box">
+
+<h2>
+0
+</h2>
+
+<p>
+Pending Reviews
+</p>
+
+</div>
+
+
+
+<div class="stat-box">
+
+<h2>
+Active
+</h2>
+
+<p>
+System Status
+</p>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<section>
+
+<div class="container">
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<div class="icon">
+📋
+</div>
+
+<h3>
+Manage Reports
+</h3>
+
+<p>
+Review submitted fraud reports and update status.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="icon">
+👥
+</div>
+
+<h3>
+Manage Users
+</h3>
+
+<p>
+Monitor registered users and account activity.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="icon">
+🛡️
+</div>
+
+<h3>
+Security Control
+</h3>
+
+<p>
+Manage fraud database and protection system.
+</p>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</section>
+<section>
+
+<div class="container">
+
+
+<div class="scanner-box">
+
+
+<h2>
+Fraud Reports
+</h2>
+
+
+<div style="overflow-x:auto;">
+
+
+<table style="width:100%;color:white;border-collapse:collapse;">
+
+
+<thead>
+
+<tr>
+
+<th style="padding:12px;">
+User
+</th>
+
+<th style="padding:12px;">
+Type
+</th>
+
+<th style="padding:12px;">
+Target
+</th>
+
+<th style="padding:12px;">
+Status
+</th>
+
+<th style="padding:12px;">
+Action
+</th>
+
+</tr>
+
+</thead>
+
+
+
+<tbody id="reportTable">
+
+
+<tr>
+
+<td style="padding:12px;">
+No Data
+</td>
+
+<td style="padding:12px;">
+-
+</td>
+
+<td style="padding:12px;">
+-
+</td>
+
+<td style="padding:12px;">
+Pending
+</td>
+
+<td style="padding:12px;">
+Review
+</td>
+
+</tr>
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<section>
+
+<div class="container">
+
+
+<div class="hero-card">
+
+
+<h2>
+Admin Security Tools
+</h2>
+
+
+<p>
+Control fraud reports, monitor activities and improve the FraudGuard security network.
+</p>
+
+
+<button class="btn">
+Refresh Data
+</button>
+
+
+</div>
+
+
+</div>
+
+</section>
+<script type="module">
+
+import { getReports } from "./firebase.js";
+
+
+const reportTable=document.getElementById("reportTable");
+
+
+async function loadReports(){
+
+const reports=await getReports();
+
+
+if(reports.length>0){
+
+
+reportTable.innerHTML="";
+
+
+reports.forEach(report=>{
+
+
+reportTable.innerHTML += `
+
+<tr>
+
+<td style="padding:12px;">
+${report.name || "User"}
+</td>
+
+
+<td style="padding:12px;">
+${report.type || "Unknown"}
+</td>
+
+
+<td style="padding:12px;">
+${report.target || "-"}
+</td>
+
+
+<td style="padding:12px;">
+${report.status || "Pending"}
+</td>
+
+
+<td style="padding:12px;">
+<button class="btn">
+View
+</button>
+</td>
+
+
+</tr>
+
+`;
+
+});
+
+
+}
+
+}
+
+
+loadReports();
+
+
+</script>
+<footer class="footer">
+
+<div class="container">
+
+
+<div class="footer-box">
+
+
+<div>
+
+<h3>
+FraudGuard
+</h3>
+
+<p>
+AI-powered digital fraud protection platform.
+</p>
+
+</div>
+
+
+
+<div>
+
+<h3>
+Admin Links
+</h3>
+
+<ul class="footer-links">
+
+<li>
+<a href="admin.html">Admin Panel</a>
+</li>
+
+<li>
+<a href="dashboard.html">Dashboard</a>
+</li>
+
+<li>
+<a href="report.html">Reports</a>
+</li>
+
+</ul>
+
+</div>
+
+
+
+<div>
+
+<h3>
+Security
+</h3>
+
+<p>
+Fraud monitoring and management system.
+</p>
+
+<p>
+Admin Control Center
+</p>
+
+</div>
+
+
+</div>
+
+
+
+<p class="copyright">
+
+© 2026 FraudGuard. All Rights Reserved.BY MASTER MIND 
+
+</p>
+
+
+</div>
+
+</footer>
+
+
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
+
+
