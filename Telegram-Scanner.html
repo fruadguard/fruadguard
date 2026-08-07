@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FraudGuard Telegram Scanner</title>
+
+<meta name="description" content="Check suspicious Telegram messages, groups and links with FraudGuard.">
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+<div class="container">
+
+
+<a href="index.html" class="logo">
+Fraud<span>Guard</span>
+</a>
+
+
+<ul class="nav-menu">
+
+<li>
+<a href="index.html">Home</a>
+</li>
+
+<li>
+<a href="scanner.html">Scanner</a>
+</li>
+
+<li>
+<a href="whatsapp-scanner.html">WhatsApp</a>
+</li>
+
+<li>
+<a href="telegram-scanner.html">Telegram</a>
+</li>
+
+<li>
+<a href="report.html">Report</a>
+</li>
+
+</ul>
+
+
+<div class="nav-actions">
+
+<a href="login.html" class="nav-btn">
+Login
+</a>
+
+<a href="register.html" class="nav-btn">
+Register
+</a>
+
+</div>
+
+
+<div class="menu-toggle">
+☰
+</div>
+
+
+</div>
+
+</header>
+
+
+
+<section class="hero">
+
+<div class="container">
+
+
+<div class="hero-content">
+
+
+<h1>
+Telegram
+<span>Scanner</span>
+</h1>
+
+
+<p>
+Analyze suspicious Telegram groups, messages and links to detect possible scams.
+</p>
+
+
+</div>
+
+
+</div>
+
+  </section>
+<section>
+
+<div class="container">
+
+
+<div class="scanner-box">
+
+
+<h2>
+Check Telegram Content
+</h2>
+
+
+<p>
+Paste suspicious Telegram messages, usernames or links to analyze.
+</p>
+
+
+
+<textarea
+
+id="telegramInput"
+
+class="scanner-input"
+
+rows="6"
+
+placeholder="Paste Telegram message or link here..."></textarea>
+
+
+
+<button
+
+class="btn"
+
+id="telegramScanBtn">
+
+Scan Telegram
+
+</button>
+
+
+
+<div class="result-box" id="telegramResult">
+
+
+<h3>
+Scan Result
+</h3>
+
+
+<p>
+Waiting for analysis...
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<section>
+
+<div class="container">
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<div class="icon">
+📨
+</div>
+
+<h3>
+Message Detection
+</h3>
+
+<p>
+Find suspicious Telegram scam patterns.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="icon">
+🔗
+</div>
+
+<h3>
+Link Checking
+</h3>
+
+<p>
+Analyze dangerous links shared in Telegram.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="icon">
+🛡️
+</div>
+
+<h3>
+Scam Protection
+</h3>
+
+<p>
+Stay safe from fake groups and fraud attempts.
+</p>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</section>
+<script>
+
+const telegramBtn=document.getElementById("telegramScanBtn");
+
+const telegramInput=document.getElementById("telegramInput");
+
+const telegramResult=document.getElementById("telegramResult");
+
+
+
+telegramBtn.addEventListener("click",()=>{
+
+
+const message=telegramInput.value.trim().toLowerCase();
+
+
+
+if(message===""){
+
+
+telegramResult.innerHTML=`
+
+<h3>
+⚠️ No Content Found
+</h3>
+
+<p>
+Please enter Telegram message or link.
+</p>
+
+`;
+
+return;
+
+}
+
+
+
+let risk=10;
+
+let status="Safe";
+
+
+
+const scamWords=[
+
+"investment",
+
+"crypto",
+
+"profit",
+
+"double money",
+
+"free",
+
+"gift",
+
+"winner",
+
+"bonus",
+
+"verify",
+
+"urgent",
+
+"claim",
+
+"airdrop"
+
+];
+
+
+
+scamWords.forEach(word=>{
+
+
+if(message.includes(word)){
+
+
+risk+=10;
+
+
+}
+
+});
+
+
+
+if(message.includes("http") || message.includes("t.me")){
+
+
+risk+=15;
+
+
+}
+
+
+
+if(risk>=70){
+
+
+status="Dangerous";
+
+
+}else if(risk>=40){
+
+
+status="Warning";
+
+
+}
+
+
+
+telegramResult.innerHTML=`
+
+<h3>
+${status}
+</h3>
+
+<p>
+Risk Score: ${risk}%
+</p>
+
+<p>
+Avoid unknown investment offers, fake giveaways and suspicious links.
+</p>
+
+`;
+
+
+
+});
+
+
+  </script>
+<footer class="footer">
+
+<div class="container">
+
+
+<div class="footer-box">
+
+
+<div>
+
+<h3>
+FraudGuard
+</h3>
+
+<p>
+AI-powered digital fraud protection platform.
+</p>
+
+</div>
+
+
+
+<div>
+
+<h3>
+Quick Links
+</h3>
+
+<ul class="footer-links">
+
+<li>
+<a href="index.html">Home</a>
+</li>
+
+<li>
+<a href="scanner.html">Scanner</a>
+</li>
+
+<li>
+<a href="whatsapp-scanner.html">WhatsApp</a>
+</li>
+
+<li>
+<a href="report.html">Report</a>
+</li>
+
+</ul>
+
+</div>
+
+
+
+<div>
+
+<h3>
+Telegram Security
+</h3>
+
+<p>
+Detect fake groups, scam messages and suspicious links.
+</p>
+
+<p>
+Protect your digital identity.
+</p>
+
+</div>
+
+
+</div>
+
+
+
+<p class="copyright">
+
+© 2026 FraudGuard. All Rights Reserved.
+
+</p>
+
+
+</div>
+
+</footer>
+
+
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
+
+
+
