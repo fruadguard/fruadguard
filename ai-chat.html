@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FraudGuard AI Assistant</title>
+
+<meta name="description" content="Ask FraudGuard AI Assistant about suspicious messages, links and scams.">
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+<div class="container">
+
+
+<a href="index.html" class="logo">
+Fraud<span>Guard</span>
+</a>
+
+
+<ul class="nav-menu">
+
+<li>
+<a href="index.html">Home</a>
+</li>
+
+<li>
+<a href="scanner.html">Scanner</a>
+</li>
+
+<li>
+<a href="ai-chat.html">AI Assistant</a>
+</li>
+
+<li>
+<a href="report.html">Report</a>
+</li>
+
+<li>
+<a href="contact.html">Contact</a>
+</li>
+
+</ul>
+
+
+<div class="nav-actions">
+
+<a href="login.html" class="nav-btn">
+Login
+</a>
+
+<a href="register.html" class="nav-btn">
+Register
+</a>
+
+</div>
+
+
+<div class="menu-toggle">
+☰
+</div>
+
+
+</div>
+
+</header>
+
+
+
+<section class="hero">
+
+<div class="container">
+
+
+<div class="hero-content">
+
+
+<h1>
+FraudGuard
+<span>AI Assistant</span>
+</h1>
+
+
+<p>
+Ask questions about suspicious links, messages and possible online scams.
+</p>
+
+
+</div>
+
+
+</div>
+
+</section>
+<section>
+
+<div class="container">
+
+
+<div class="chat-box">
+
+
+<h2>
+FraudGuard AI Assistant
+</h2>
+
+
+<div class="chat-area" id="chatArea">
+
+
+<div class="bot-message">
+
+<p>
+Hello! I can help you identify possible fraud risks.
+</p>
+
+</div>
+
+
+</div>
+
+
+
+<div class="chat-input-box">
+
+
+<input
+
+type="text"
+
+id="userMessage"
+
+class="scanner-input"
+
+placeholder="Ask about a suspicious message...">
+
+
+
+<button
+
+class="btn"
+
+id="sendMessage">
+
+Send
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<section>
+
+<div class="container">
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<div class="icon">
+🤖
+</div>
+
+<h3>
+AI Analysis
+</h3>
+
+<p>
+Get smart suggestions about possible scams.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="icon">
+🔍
+</div>
+
+<h3>
+Risk Checking
+</h3>
+
+<p>
+Analyze suspicious messages and links.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="icon">
+🛡️
+</div>
+
+<h3>
+Safety Advice
+</h3>
+
+<p>
+Learn how to stay protected online.
+</p>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</section>
+<script>
+
+const sendBtn=document.getElementById("sendMessage");
+
+const userMessage=document.getElementById("userMessage");
+
+const chatArea=document.getElementById("chatArea");
+
+
+
+sendBtn.addEventListener("click",()=>{
+
+
+const message=userMessage.value.trim().toLowerCase();
+
+
+
+if(message===""){
+
+return;
+
+}
+
+
+
+chatArea.innerHTML += `
+
+<div class="user-message">
+
+<p>${message}</p>
+
+</div>
+
+`;
+
+
+
+let reply="";
+
+
+
+const scamWords=[
+
+"otp",
+
+"password",
+
+"verify",
+
+"free",
+
+"winner",
+
+"investment",
+
+"crypto",
+
+"urgent",
+
+"click",
+
+"payment"
+
+];
+
+
+
+let risk=0;
+
+
+
+scamWords.forEach(word=>{
+
+
+if(message.includes(word)){
+
+
+risk+=10;
+
+
+}
+
+});
+
+
+
+if(risk>=50){
+
+
+reply="⚠️ High Risk: This message contains suspicious scam patterns. Do not share personal information.";
+
+
+}else if(risk>=20){
+
+
+reply="⚠️ Warning: Be careful. Verify the source before taking any action.";
+
+
+}else{
+
+
+reply="✅ Low Risk: No major scam pattern detected. Still stay cautious online.";
+
+
+}
+
+
+
+setTimeout(()=>{
+
+
+chatArea.innerHTML += `
+
+<div class="bot-message">
+
+<p>${reply}</p>
+
+</div>
+
+`;
+
+
+
+chatArea.scrollTop=chatArea.scrollHeight;
+
+
+
+},500);
+
+
+
+userMessage.value="";
+
+
+});
+
+
+  </script>
+<footer class="footer">
+
+<div class="container">
+
+
+<div class="footer-box">
+
+
+<div>
+
+<h3>
+FraudGuard
+</h3>
+
+<p>
+AI-powered digital fraud protection platform.
+</p>
+
+</div>
+
+
+
+<div>
+
+<h3>
+Quick Links
+</h3>
+
+<ul class="footer-links">
+
+<li>
+<a href="index.html">Home</a>
+</li>
+
+<li>
+<a href="scanner.html">Scanner</a>
+</li>
+
+<li>
+<a href="ai-chat.html">AI Assistant</a>
+</li>
+
+<li>
+<a href="report.html">Report</a>
+</li>
+
+</ul>
+
+</div>
+
+
+
+<div>
+
+<h3>
+AI Security
+</h3>
+
+<p>
+Smart scam analysis and safety guidance.
+</p>
+
+<p>
+Protect yourself from digital threats.
+</p>
+
+</div>
+
+
+</div>
+
+
+
+<p class="copyright">
+
+© 2026 FraudGuard. All Rights Reserved.
+
+</p>
+
+
+</div>
+
+</footer>
+
+
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
+
+
+
