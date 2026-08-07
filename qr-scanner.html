@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FraudGuard QR Scanner</title>
+
+<meta name="description" content="Scan QR codes and detect suspicious links with FraudGuard.">
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+<div class="container">
+
+
+<a href="index.html" class="logo">
+Fraud<span>Guard</span>
+</a>
+
+
+<ul class="nav-menu">
+
+<li>
+<a href="index.html">Home</a>
+</li>
+
+<li>
+<a href="scanner.html">Scanner</a>
+</li>
+
+<li>
+<a href="qr-scanner.html">QR Scanner</a>
+</li>
+
+<li>
+<a href="phone-checker.html">Phone Checker</a>
+</li>
+
+<li>
+<a href="report.html">Report</a>
+</li>
+
+</ul>
+
+
+<div class="nav-actions">
+
+<a href="login.html" class="nav-btn">
+Login
+</a>
+
+<a href="register.html" class="nav-btn">
+Register
+</a>
+
+</div>
+
+
+<div class="menu-toggle">
+☰
+</div>
+
+
+</div>
+
+</header>
+
+
+
+<section class="hero">
+
+<div class="container">
+
+
+<div class="hero-content">
+
+
+<h1>
+QR Code
+<span>Scanner</span>
+</h1>
+
+
+<p>
+Scan QR codes and check if the connected links are safe or suspicious.
+</p>
+
+
+</div>
+
+
+</div>
+
+</section>
+<section>
+
+<div class="container">
+
+
+<div class="scanner-box">
+
+
+<h2>
+Scan QR Code
+</h2>
+
+
+<p>
+Upload a QR image to check the connected link.
+</p>
+
+
+
+<input
+
+type="file"
+
+id="qrInput"
+
+accept="image/*"
+
+class="scanner-input">
+
+
+
+<button
+
+class="btn"
+
+id="qrScanBtn">
+
+Scan QR
+
+</button>
+
+
+
+<div class="result-box" id="qrResult">
+
+
+<h3>
+Scan Result
+</h3>
+
+
+<p>
+Waiting for QR analysis...
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<section>
+
+<div class="container">
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<div class="icon">
+📷
+</div>
+
+<h3>
+QR Detection
+</h3>
+
+<p>
+Analyze QR codes before opening unknown links.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="icon">
+🔗
+</div>
+
+<h3>
+Link Safety
+</h3>
+
+<p>
+Check suspicious destinations and websites.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="icon">
+🛡️
+</div>
+
+<h3>
+Fraud Protection
+</h3>
+
+<p>
+Reduce QR based scam risks.
+</p>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</section>
+<script src="https://unpkg.com/jsqr/dist/jsQR.js"></script>
+
+
+<script>
+
+const qrInput=document.getElementById("qrInput");
+
+const qrBtn=document.getElementById("qrScanBtn");
+
+const qrResult=document.getElementById("qrResult");
+
+
+
+qrBtn.addEventListener("click",()=>{
+
+
+const file=qrInput.files[0];
+
+
+
+if(!file){
+
+
+qrResult.innerHTML=`
+
+<h3>
+⚠️ No Image Found
+</h3>
+
+<p>
+Please upload a QR image.
+</p>
+
+`;
+
+return;
+
+}
+
+
+
+const reader=new FileReader();
+
+
+
+reader.onload=function(){
+
+
+const img=new Image();
+
+
+
+img.onload=function(){
+
+
+const canvas=document.createElement("canvas");
+
+const context=canvas.getContext("2d");
+
+
+canvas.width=img.width;
+
+canvas.height=img.height;
+
+
+context.drawImage(img,0,0);
+
+
+
+const imageData=context.getImageData(
+
+0,
+
+0,
+
+canvas.width,
+
+canvas.height
+
+);
+
+
+
+const code=jsQR(
+
+imageData.data,
+
+imageData.width,
+
+imageData.height
+
+);
+
+
+
+if(code){
+
+
+let risk=20;
+
+let status="Safe";
+
+
+const link=code.data.toLowerCase();
+
+
+
+if(!link.startsWith("https://")){
+
+risk+=25;
+
+}
+
+
+if(
+
+link.includes("login") ||
+
+link.includes("verify") ||
+
+link.includes("free")
+
+){
+
+risk+=20;
+
+}
+
+
+
+if(risk>=70){
+
+status="Dangerous";
+
+}else if(risk>=40){
+
+status="Warning";
+
+}
+
+
+
+qrResult.innerHTML=`
+
+<h3>
+${status}
+</h3>
+
+<p>
+Risk Score: ${risk}%
+</p>
+
+<p>
+QR Link: ${code.data}
+</p>
+
+`;
+
+
+
+}else{
+
+
+qrResult.innerHTML=`
+
+<h3>
+❌ QR Not Detected
+</h3>
+
+<p>
+Try another image.
+</p>
+
+`;
+
+}
+
+
+};
+
+
+
+img.src=reader.result;
+
+
+};
+
+
+
+reader.readAsDataURL(file);
+
+
+});
+
+
+</script>
+<footer class="footer">
+
+<div class="container">
+
+
+<div class="footer-box">
+
+
+<div>
+
+<h3>
+FraudGuard
+</h3>
+
+<p>
+AI-powered digital fraud protection platform.
+</p>
+
+</div>
+
+
+
+<div>
+
+<h3>
+Quick Links
+</h3>
+
+<ul class="footer-links">
+
+<li>
+<a href="index.html">Home</a>
+</li>
+
+<li>
+<a href="scanner.html">Scanner</a>
+</li>
+
+<li>
+<a href="email-checker.html">Email Checker</a>
+</li>
+
+<li>
+<a href="report.html">Report</a>
+</li>
+
+</ul>
+
+</div>
+
+
+
+<div>
+
+<h3>
+QR Security
+</h3>
+
+<p>
+Check QR codes before opening unknown links.
+</p>
+
+<p>
+Stay protected from QR scams.
+</p>
+
+</div>
+
+
+</div>
+
+
+
+<p class="copyright">
+
+© 2026 FraudGuard. All Rights Reserved.
+
+</p>
+
+
+</div>
+
+</footer>
+
+
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
+
+
+
