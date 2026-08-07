@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FraudGuard Facebook Scanner</title>
+
+<meta name="description" content="Check suspicious Facebook links and detect possible scams with FraudGuard.">
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+<div class="container">
+
+
+<a href="index.html" class="logo">
+Fraud<span>Guard</span>
+</a>
+
+
+<ul class="nav-menu">
+
+<li>
+<a href="index.html">Home</a>
+</li>
+
+<li>
+<a href="scanner.html">Scanner</a>
+</li>
+
+<li>
+<a href="facebook-scanner.html">Facebook Scanner</a>
+</li>
+
+<li>
+<a href="phone-checker.html">Phone Checker</a>
+</li>
+
+<li>
+<a href="report.html">Report</a>
+</li>
+
+</ul>
+
+
+<div class="nav-actions">
+
+<a href="login.html" class="nav-btn">
+Login
+</a>
+
+<a href="register.html" class="nav-btn">
+Register
+</a>
+
+</div>
+
+
+<div class="menu-toggle">
+☰
+</div>
+
+
+</div>
+
+</header>
+
+
+
+<section class="hero">
+
+<div class="container">
+
+
+<div class="hero-content">
+
+
+<h1>
+Facebook
+<span>Scanner</span>
+</h1>
+
+
+<p>
+Check suspicious Facebook profiles, pages and links before trusting them.
+</p>
+
+
+</div>
+
+
+</div>
+
+</section>
+<section>
+
+<div class="container">
+
+
+<div class="scanner-box">
+
+
+<h2>
+Check Facebook Link
+</h2>
+
+
+<p>
+Enter a Facebook profile or page link to analyze.
+</p>
+
+
+<input
+
+type="url"
+
+id="facebookUrl"
+
+class="scanner-input"
+
+placeholder="https://facebook.com/profile">
+
+
+
+<button
+
+class="btn"
+
+id="facebookScanBtn">
+
+Scan Facebook
+
+</button>
+
+
+
+<div class="result-box" id="facebookResult">
+
+
+<h3>
+Scan Result
+</h3>
+
+
+<p>
+Waiting for analysis...
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<section>
+
+<div class="container">
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<div class="icon">
+🔎
+</div>
+
+<h3>
+Profile Analysis
+</h3>
+
+<p>
+Detect suspicious Facebook profile patterns.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="icon">
+🚨
+</div>
+
+<h3>
+Scam Detection
+</h3>
+
+<p>
+Identify possible fake pages and scam links.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="icon">
+🛡️
+</div>
+
+<h3>
+Safe Browsing
+</h3>
+
+<p>
+Check before sharing personal information.
+</p>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</section>
+<script>
+
+const facebookBtn=document.getElementById("facebookScanBtn");
+
+const facebookUrl=document.getElementById("facebookUrl");
+
+const facebookResult=document.getElementById("facebookResult");
+
+
+
+facebookBtn.addEventListener("click",()=>{
+
+
+const url=facebookUrl.value.trim();
+
+
+
+if(url===""){
+
+
+facebookResult.innerHTML=`
+
+<h3>
+⚠️ No Link Found
+</h3>
+
+<p>
+Please enter a Facebook profile or page link.
+</p>
+
+`;
+
+
+return;
+
+}
+
+
+
+let risk=20;
+
+let status="Safe";
+
+
+
+const suspiciousWords=[
+
+"free",
+
+"gift",
+
+"winner",
+
+"claim",
+
+"verify",
+
+"investment",
+
+"crypto",
+
+"loan",
+
+"bonus"
+
+];
+
+
+
+const check=url.toLowerCase();
+
+
+
+suspiciousWords.forEach(word=>{
+
+
+if(check.includes(word)){
+
+
+risk+=10;
+
+
+}
+
+
+});
+
+
+
+if(!check.includes("facebook.com")){
+
+
+risk+=30;
+
+
+}
+
+
+
+if(risk>=70){
+
+
+status="Dangerous";
+
+
+}else if(risk>=40){
+
+
+status="Warning";
+
+
+}
+
+
+
+facebookResult.innerHTML=`
+
+<h3>
+${status}
+</h3>
+
+<p>
+Risk Score: ${risk}%
+</p>
+
+<p>
+Avoid sharing passwords, OTP or personal information with unknown accounts.
+</p>
+
+`;
+
+
+
+});
+
+  </script>
+<footer class="footer">
+
+<div class="container">
+
+
+<div class="footer-box">
+
+
+<div>
+
+<h3>
+FraudGuard
+</h3>
+
+<p>
+AI-powered digital fraud protection platform.
+</p>
+
+</div>
+
+
+
+<div>
+
+<h3>
+Quick Links
+</h3>
+
+<ul class="footer-links">
+
+<li>
+<a href="index.html">Home</a>
+</li>
+
+<li>
+<a href="scanner.html">Scanner</a>
+</li>
+
+<li>
+<a href="phone-checker.html">Phone Checker</a>
+</li>
+
+<li>
+<a href="report.html">Report</a>
+</li>
+
+</ul>
+
+</div>
+
+
+
+<div>
+
+<h3>
+Facebook Security
+</h3>
+
+<p>
+Check suspicious Facebook accounts before trusting.
+</p>
+
+<p>
+Stay protected from social scams.
+</p>
+
+</div>
+
+
+</div>
+
+
+
+<p class="copyright">
+
+© 2026 FraudGuard. All Rights Reserved.
+
+</p>
+
+
+</div>
+
+</footer>
+
+
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
+
+
+
