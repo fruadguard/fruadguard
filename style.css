@@ -1028,7 +1028,32 @@ font-size:28px;
 }
 
 }
+.login-page{
+min-height:100vh;
+display:flex;
+background:#f5f8ff;
+}
 
+.login-left{
+width:50%;
+background:#071a3d;
+color:white;
+padding:50px;
+}
+
+.login-right{
+width:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.login-card{
+background:white;
+padding:40px;
+border-radius:20px;
+box-shadow:0 10px 30px #0002;
+}
 
 
 
