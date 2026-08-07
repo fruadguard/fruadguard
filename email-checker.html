@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FraudGuard Email Checker</title>
+
+<meta name="description" content="Check suspicious emails and detect possible scams with FraudGuard.">
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+<div class="container">
+
+
+<a href="index.html" class="logo">
+Fraud<span>Guard</span>
+</a>
+
+
+<ul class="nav-menu">
+
+<li>
+<a href="index.html">Home</a>
+</li>
+
+<li>
+<a href="scanner.html">Scanner</a>
+</li>
+
+<li>
+<a href="facebook-scanner.html">Facebook Scanner</a>
+</li>
+
+<li>
+<a href="email-checker.html">Email Checker</a>
+</li>
+
+<li>
+<a href="report.html">Report</a>
+</li>
+
+</ul>
+
+
+<div class="nav-actions">
+
+<a href="login.html" class="nav-btn">
+Login
+</a>
+
+<a href="register.html" class="nav-btn">
+Register
+</a>
+
+</div>
+
+
+<div class="menu-toggle">
+☰
+</div>
+
+
+</div>
+
+</header>
+
+
+
+<section class="hero">
+
+<div class="container">
+
+
+<div class="hero-content">
+
+
+<h1>
+Email
+<span>Checker</span>
+</h1>
+
+
+<p>
+Analyze suspicious emails and detect possible fraud attempts before responding.
+</p>
+
+
+</div>
+
+
+</div>
+
+  </section>
+<section>
+
+<div class="container">
+
+
+<div class="scanner-box">
+
+
+<h2>
+Check Email
+</h2>
+
+
+<p>
+Enter a suspicious email address to analyze risk.
+</p>
+
+
+
+<input
+
+type="email"
+
+id="emailInput"
+
+class="scanner-input"
+
+placeholder="example@email.com">
+
+
+
+<button
+
+class="btn"
+
+id="emailCheckBtn">
+
+Check Email
+
+</button>
+
+
+
+<div class="result-box" id="emailResult">
+
+
+<h3>
+Check Result
+</h3>
+
+
+<p>
+Waiting for analysis...
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<section>
+
+<div class="container">
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<div class="icon">
+📧
+</div>
+
+<h3>
+Email Scam Detection
+</h3>
+
+<p>
+Identify suspicious email patterns and possible fraud.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="icon">
+🔐
+</div>
+
+<h3>
+Account Protection
+</h3>
+
+<p>
+Avoid phishing attempts and fake messages.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="icon">
+⚠️
+</div>
+
+<h3>
+Risk Warning
+</h3>
+
+<p>
+Get alerts before interacting with suspicious emails.
+</p>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</section>
+  <script>
+
+const emailBtn=document.getElementById("emailCheckBtn");
+
+const emailInput=document.getElementById("emailInput");
+
+const emailResult=document.getElementById("emailResult");
+
+
+
+emailBtn.addEventListener("click",()=>{
+
+
+const email=emailInput.value.trim().toLowerCase();
+
+
+
+if(email===""){
+
+
+emailResult.innerHTML=`
+
+<h3>
+⚠️ No Email Found
+</h3>
+
+<p>
+Please enter an email address.
+</p>
+
+`;
+
+return;
+
+}
+
+
+
+let risk=15;
+
+let status="Safe";
+
+
+
+const suspiciousWords=[
+
+"verify",
+
+"security",
+
+"account",
+
+"login",
+
+"update",
+
+"payment",
+
+"reward",
+
+"winner",
+
+"free",
+
+"claim"
+
+];
+
+
+
+suspiciousWords.forEach(word=>{
+
+
+if(email.includes(word)){
+
+
+risk+=10;
+
+
+}
+
+});
+
+
+
+const suspiciousDomains=[
+
+"mail.ru",
+
+"tempmail",
+
+"example"
+
+];
+
+
+
+suspiciousDomains.forEach(domain=>{
+
+
+if(email.includes(domain)){
+
+
+risk+=25;
+
+
+}
+
+});
+
+
+
+if(risk>=70){
+
+
+status="Dangerous";
+
+
+}else if(risk>=40){
+
+
+status="Warning";
+
+
+}
+
+
+
+emailResult.innerHTML=`
+
+<h3>
+${status}
+</h3>
+
+<p>
+Risk Score: ${risk}%
+</p>
+
+<p>
+Never share passwords, OTP or personal information through suspicious emails.
+</p>
+
+`;
+
+
+
+});
+
+
+  </script>
+  <footer class="footer">
+
+<div class="container">
+
+
+<div class="footer-box">
+
+
+<div>
+
+<h3>
+FraudGuard
+</h3>
+
+<p>
+AI-powered digital fraud protection platform.
+</p>
+
+</div>
+
+
+
+<div>
+
+<h3>
+Quick Links
+</h3>
+
+<ul class="footer-links">
+
+<li>
+<a href="index.html">Home</a>
+</li>
+
+<li>
+<a href="scanner.html">Scanner</a>
+</li>
+
+<li>
+<a href="facebook-scanner.html">Facebook Scanner</a>
+</li>
+
+<li>
+<a href="report.html">Report</a>
+</li>
+
+</ul>
+
+</div>
+
+
+
+<div>
+
+<h3>
+Email Security
+</h3>
+
+<p>
+Detect phishing and suspicious email activities.
+</p>
+
+<p>
+Stay safe from digital scams.
+</p>
+
+</div>
+
+
+</div>
+
+
+
+<p class="copyright">
+
+© 2026 FraudGuard. All Rights Reserved.
+
+</p>
+
+
+</div>
+
+</footer>
+
+
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
+
