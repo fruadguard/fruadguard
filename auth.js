@@ -1,36 +1,69 @@
 import { auth, db } from "./firebase.js";
 
-
 import {
-
-createUserWithEmailAndPassword,
-
 signInWithEmailAndPassword,
-
+createUserWithEmailAndPassword,
 GoogleAuthProvider,
-
-FacebookAuthProvider,
-
-signInWithPopup
-
-} from 
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
+signInWithPopup,
+signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
-
 doc,
-
 setDoc
-
-} from 
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
+// LOGIN
+
+window.loginUser = async function(){
+
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
 
 
-// Create Account
+if(!email || !password){
+
+alert("Enter email and password");
+
+return;
+
+}
+
+
+try{
+
+
+const userCredential = await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+
+alert("Login Successful");
+
+
+window.location.href = "dashboard.html";
+
+
+}
+
+catch(error){
+
+alert(error.message);
+
+}
+
+
+};
+
+
+
+
+
+// REGISTER
 
 window.registerUser = async function(){
 
@@ -41,41 +74,25 @@ const email = document.getElementById("email").value;
 
 const password = document.getElementById("password").value;
 
-const confirmPassword = document.getElementById("confirmPassword").value;
-
-
-
-if(password !== confirmPassword){
-
-alert("Password does not match");
-
-return;
-
-}
-
 
 
 try{
 
 
 const userCredential = await createUserWithEmailAndPassword(
-
 auth,
-
 email,
-
 password
-
 );
-
 
 
 const user = userCredential.user;
 
 
 
-await setDoc(doc(db,"users",user.uid),{
-
+await setDoc(
+doc(db,"users",user.uid),
+{
 
 name:name,
 
@@ -83,20 +100,19 @@ email:email,
 
 createdAt:new Date()
 
+}
 
-});
+);
 
 
 
-alert("Account Created Successfully!");
+alert("Account Created");
 
 
 window.location.href="dashboard.html";
 
 
 }
-
-
 
 catch(error){
 
@@ -106,7 +122,12 @@ alert(error.message);
 
 
 };
-// Google Login
+
+
+
+
+
+// GOOGLE LOGIN
 
 window.googleLogin = async function(){
 
@@ -117,42 +138,10 @@ const provider = new GoogleAuthProvider();
 try{
 
 
-const result = await signInWithPopup(
-
-auth,
-
-provider
-
-);
+await signInWithPopup(auth, provider);
 
 
-const user = result.user;
-
-
-
-await setDoc(
-
-doc(db,"users",user.uid),
-
-{
-
-name: user.displayName,
-
-email: user.email,
-
-provider:"Google",
-
-createdAt:new Date()
-
-},
-
-{merge:true}
-
-);
-
-
-
-alert("Google Login Successful!");
+alert("Google Login Successful");
 
 
 window.location.href="dashboard.html";
@@ -160,12 +149,9 @@ window.location.href="dashboard.html";
 
 }
 
-
 catch(error){
 
-
 alert(error.message);
-
 
 }
 
@@ -176,71 +162,15 @@ alert(error.message);
 
 
 
+// LOGOUT
 
-// Facebook Login
-
-window.facebookLogin = async function(){
-
-
-const provider = new FacebookAuthProvider();
+window.logoutUser = async function(){
 
 
-try{
+await signOut(auth);
 
 
-const result = await signInWithPopup(
-
-auth,
-
-provider
-
-);
-
-
-
-const user = result.user;
-
-
-
-await setDoc(
-
-doc(db,"users",user.uid),
-
-{
-
-name:user.displayName,
-
-email:user.email,
-
-provider:"Facebook",
-
-createdAt:new Date()
-
-},
-
-{merge:true}
-
-);
-
-
-
-alert("Facebook Login Successful!");
-
-
-window.location.href="dashboard.html";
-
-
-}
-
-
-
-catch(error){
-
-
-alert(error.message);
-
-
-}
+window.location.href="login.html";
 
 
 };
