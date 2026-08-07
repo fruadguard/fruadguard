@@ -4,11 +4,12 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>FraudGuard - AI Fraud Detection Platform</title>
 
-<meta name="description" content="FraudGuard is an AI-powered platform to detect, report and prevent online fraud and scams.">
+<meta name="description" content="FraudGuard is an AI-powered platform to detect, report and prevent online fraud.">
 
 <link rel="stylesheet" href="style.css">
 
@@ -24,6 +25,7 @@
 
 <div class="container">
 
+
 <a href="index.html" class="logo">
 Fraud<span>Guard</span>
 </a>
@@ -37,6 +39,8 @@ Fraud<span>Guard</span>
 
 <li><a href="scanner.html">Scanner</a></li>
 
+<li><a href="phone-checker.html">Phone Checker</a></li>
+
 <li><a href="report.html">Report</a></li>
 
 <li><a href="contact.html">Contact</a></li>
@@ -44,9 +48,17 @@ Fraud<span>Guard</span>
 </ul>
 
 
+<div class="nav-actions">
+
 <a href="login.html" class="nav-btn">
 Login
 </a>
+
+<a href="register.html" class="nav-btn">
+Register
+</a>
+
+</div>
 
 
 <div class="menu-toggle">
@@ -75,7 +87,7 @@ Stop Digital Scams With
 
 
 <p>
-AI-powered fraud detection platform that helps users identify suspicious links, phone numbers and online threats.
+AI-powered security platform that helps detect suspicious links, phone numbers and online fraud before it becomes a threat.
 </p>
 
 
@@ -86,9 +98,10 @@ Scan Now
 </a>
 
 
-<a href="report.html" class="btn">
-Report Fraud
+<a href="register.html" class="btn">
+Get Started
 </a>
+
 
 </div>
 
@@ -99,49 +112,71 @@ Report Fraud
 </div>
 
 </section>
-<section class="stats">
+<section>
 
 <div class="container">
+
 
 <div class="stats">
 
-<div class="stat-box">
-
-<h2>100+</h2>
-
-<p>Fraud Reports</p>
-
-</div>
-
 
 <div class="stat-box">
 
-<h2>AI</h2>
+<h2>
+100+
+</h2>
 
-<p>Smart Detection</p>
+<p>
+Fraud Reports
+</p>
 
 </div>
+
 
 
 <div class="stat-box">
 
-<h2>24/7</h2>
+<h2>
+AI
+</h2>
 
-<p>Protection</p>
+<p>
+Smart Detection
+</p>
 
 </div>
+
 
 
 <div class="stat-box">
 
-<h2>Global</h2>
+<h2>
+24/7
+</h2>
 
-<p>Security Network</p>
+<p>
+Protection
+</p>
+
+</div>
+
+
+
+<div class="stat-box">
+
+<h2>
+Global
+</h2>
+
+<p>
+Security Network
+</p>
 
 </div>
 
 
 </div>
+
 
 </div>
 
@@ -149,9 +184,17 @@ Report Fraud
 
 
 
-<section class="features">
+<section>
 
 <div class="container">
+
+
+<h2>
+Powerful Security Features
+</h2>
+
+
+<div class="features">
 
 
 <div class="feature-box">
@@ -165,7 +208,7 @@ AI Scam Scanner
 </h3>
 
 <p>
-Detect suspicious links and websites with intelligent risk analysis.
+Analyze suspicious websites and detect possible fraud risks.
 </p>
 
 </div>
@@ -175,7 +218,7 @@ Detect suspicious links and websites with intelligent risk analysis.
 <div class="feature-box">
 
 <div class="icon">
-📱
+📞
 </div>
 
 <h3>
@@ -183,7 +226,7 @@ Phone Checker
 </h3>
 
 <p>
-Check reported scam numbers and protect yourself from fraud calls.
+Check suspicious phone numbers from fraud reports.
 </p>
 
 </div>
@@ -201,19 +244,79 @@ Fraud Reporting
 </h3>
 
 <p>
-Report suspicious activities and help build a safer community.
+Report scams and help protect the community.
 </p>
 
 </div>
 
 
 
+<div class="feature-box">
+
+<div class="icon">
+🤖
 </div>
 
-</section>
-<section class="scanner-box">
+<h3>
+AI Risk Analysis
+</h3>
+
+<p>
+Smart technology to identify suspicious patterns.
+</p>
+
+</div>
+
+
+
+<div class="feature-box">
+
+<div class="icon">
+📊
+</div>
+
+<h3>
+User Dashboard
+</h3>
+
+<p>
+Manage reports, scans and security activity.
+</p>
+
+</div>
+
+
+
+<div class="feature-box">
+
+<div class="icon">
+🌍
+</div>
+
+<h3>
+Global Protection
+</h3>
+
+<p>
+Building a worldwide anti-fraud security network.
+</p>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+  </section>
+  <section>
 
 <div class="container">
+
+
+<div class="scanner-box">
+
 
 <h2>
 AI Fraud Scanner
@@ -221,24 +324,30 @@ AI Fraud Scanner
 
 
 <p>
-Check suspicious links and get instant security analysis.
+Check suspicious links before you trust them.
 </p>
 
 
-<input 
-type="text" 
-class="scanner-input" 
-placeholder="Enter suspicious URL">
+<input
+type="url"
+class="scanner-input"
+placeholder="Enter website URL">
 
 
-<button class="btn">
-Analyze Now
-</button>
+
+<a href="scanner.html" class="btn">
+Start Full Scan
+</a>
 
 
 <div class="result-box">
 
-Safe / Warning / Dangerous result will appear here.
+<p>
+AI analysis result will appear here.
+</p>
+
+</div>
+
 
 </div>
 
@@ -268,13 +377,16 @@ How FraudGuard Works
 1
 </div>
 
+
 <h3>
-Scan
+Submit
 </h3>
 
+
 <p>
-Analyze links, numbers and digital threats.
+Enter suspicious links, phone numbers or fraud details.
 </p>
+
 
 </div>
 
@@ -286,13 +398,16 @@ Analyze links, numbers and digital threats.
 2
 </div>
 
+
 <h3>
-Detect
+Analyze
 </h3>
 
+
 <p>
-AI checks suspicious patterns and fraud signals.
+AI system checks fraud signals and suspicious activities.
 </p>
+
 
 </div>
 
@@ -304,15 +419,60 @@ AI checks suspicious patterns and fraud signals.
 3
 </div>
 
+
 <h3>
 Protect
 </h3>
 
+
 <p>
-Get alerts and stay protected from scams.
+Receive alerts and stay safe from digital threats.
 </p>
 
+
 </div>
+
+
+</div>
+
+
+</div>
+
+</section>
+<section>
+
+<div class="container">
+
+
+<div class="card">
+
+
+<h2>
+Founder & Team
+</h2>
+
+
+<h3>
+Muhammad Sajedur Rahman Biplob
+</h3>
+
+
+<p>
+Founder & CEO of FraudGuard. Leading the vision of building an AI-powered global anti-fraud platform to protect users from digital threats.
+</p>
+
+
+<br>
+
+
+<h3>
+Nila Akter
+</h3>
+
+
+<p>
+Co-Founder of FraudGuard. Supporting innovation, product development and the mission of creating a safer digital world.
+</p>
 
 
 </div>
@@ -329,21 +489,21 @@ Get alerts and stay protected from scams.
 <div class="container">
 
 
-<div class="card">
+<div class="hero-card">
 
 
 <h2>
-Founder
+Our Mission
 </h2>
 
 
-<h3>
-Muhammad Sajedur Rahman Biplob
-</h3>
+<p>
+FraudGuard aims to reduce digital fraud by combining AI technology, community reporting and security intelligence.
+</p>
 
 
 <p>
-Founder & CEO of FraudGuard. Building an AI-powered global platform to fight digital fraud and protect online users.
+Our goal is to help individuals, businesses and organizations stay protected online.
 </p>
 
 
@@ -367,7 +527,7 @@ Report Fraud
 
 
 <p>
-Found a scam? Report it and help protect other users.
+Found a suspicious website, phone number or online scam? Report it and help protect others.
 </p>
 
 
@@ -390,16 +550,70 @@ Submit Report
 <div class="container">
 
 
-<div class="card">
-
-
 <h2>
 Why Choose FraudGuard?
 </h2>
 
 
+<div class="cards">
+
+
+<div class="card">
+
+<div class="icon">
+🔐
+</div>
+
+
+<h3>
+Secure Protection
+</h3>
+
+
 <p>
-FraudGuard combines AI technology, community reports and security tools to help users stay safe from modern digital threats.
+Advanced security tools designed to detect online threats.
+</p>
+
+
+</div>
+
+
+
+<div class="card">
+
+<div class="icon">
+⚡
+</div>
+
+
+<h3>
+Fast Detection
+</h3>
+
+
+<p>
+Quick analysis of suspicious links and activities.
+</p>
+
+
+</div>
+
+
+
+<div class="card">
+
+<div class="icon">
+🤝
+</div>
+
+
+<h3>
+Community Powered
+</h3>
+
+
+<p>
+Users help each other by sharing fraud information.
 </p>
 
 
@@ -408,44 +622,11 @@ FraudGuard combines AI technology, community reports and security tools to help 
 
 </div>
 
-</section>
-
-
-
-<section>
-
-<div class="container">
-
-
-<div class="hero-card">
-
-
-<h2>
-Stay Safe Online
-</h2>
-
-
-<p>
-Before clicking unknown links or sharing personal information, verify it with FraudGuard.
-</p>
-
-
-<a href="scanner.html" class="btn">
-Check Now
-</a>
-
-
-</div>
-
 
 </div>
 
 </section>
-
-
-
 <footer class="footer">
-
 
 <div class="container">
 
@@ -487,27 +668,53 @@ Quick Links
 <a href="scanner.html">Scanner</a>
 </li>
 
+<li>
+<a href="report.html">Report</a>
+</li>
+
 </ul>
 
 </div>
+
+
+
 <div>
 
 <h3>
-Contact
+Company
 </h3>
 
 <p>
-Email: support@fraudguard.com
+Founder: Muhammad Sajedur Rahman Biplob
 </p>
 
 <p>
-Global Digital Security Platform
+Co-Founder: Nila Akter
+</p>
+
+</div>
+
+
+
+<div>
+
+<h3>
+Security
+</h3>
+
+<p>
+Building a safer digital future.
+</p>
+
+<p>
+AI Fraud Detection System
 </p>
 
 </div>
 
 
 </div>
+
 
 
 <p class="copyright">
@@ -519,7 +726,6 @@ Global Digital Security Platform
 
 </div>
 
-
 </footer>
 
 
@@ -530,7 +736,3 @@ Global Digital Security Platform
 </body>
 
 </html>
-
-
-
-
