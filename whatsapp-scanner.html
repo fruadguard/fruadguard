@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FraudGuard WhatsApp Scanner</title>
+
+<meta name="description" content="Check suspicious WhatsApp messages and scam activity with FraudGuard.">
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+<div class="container">
+
+
+<a href="index.html" class="logo">
+Fraud<span>Guard</span>
+</a>
+
+
+<ul class="nav-menu">
+
+<li>
+<a href="index.html">Home</a>
+</li>
+
+<li>
+<a href="scanner.html">Scanner</a>
+</li>
+
+<li>
+<a href="email-checker.html">Email Checker</a>
+</li>
+
+<li>
+<a href="facebook-scanner.html">Facebook Scanner</a>
+</li>
+
+<li>
+<a href="whatsapp-scanner.html">WhatsApp Scanner</a>
+</li>
+
+<li>
+<a href="report.html">Report</a>
+</li>
+
+</ul>
+
+
+<div class="nav-actions">
+
+<a href="login.html" class="nav-btn">
+Login
+</a>
+
+<a href="register.html" class="nav-btn">
+Register
+</a>
+
+</div>
+
+
+<div class="menu-toggle">
+☰
+</div>
+
+
+</div>
+
+</header>
+
+
+
+<section class="hero">
+
+<div class="container">
+
+
+<div class="hero-content">
+
+
+<h1>
+WhatsApp
+<span>Scanner</span>
+</h1>
+
+
+<p>
+Analyze suspicious WhatsApp messages, links and scam attempts before trusting.
+</p>
+
+
+</div>
+
+
+</div>
+
+</section>
+<section>
+
+<div class="container">
+
+
+<div class="scanner-box">
+
+
+<h2>
+Check WhatsApp Message
+</h2>
+
+
+<p>
+Paste suspicious WhatsApp messages or links to analyze.
+</p>
+
+
+
+<textarea
+
+id="whatsappInput"
+
+class="scanner-input"
+
+rows="6"
+
+placeholder="Paste WhatsApp message here..."></textarea>
+
+
+
+<button
+
+class="btn"
+
+id="whatsappScanBtn">
+
+Scan Message
+
+</button>
+
+
+
+<div class="result-box" id="whatsappResult">
+
+
+<h3>
+Scan Result
+</h3>
+
+
+<p>
+Waiting for analysis...
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<section>
+
+<div class="container">
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<div class="icon">
+💬
+</div>
+
+<h3>
+Message Analysis
+</h3>
+
+<p>
+Detect suspicious words and scam patterns.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="icon">
+🔗
+</div>
+
+<h3>
+Link Protection
+</h3>
+
+<p>
+Identify dangerous links shared through WhatsApp.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="icon">
+🛡️
+</div>
+
+<h3>
+Privacy Safety
+</h3>
+
+<p>
+Avoid sharing personal information with scammers.
+</p>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</section>
+<script>
+
+const whatsappBtn=document.getElementById("whatsappScanBtn");
+
+const whatsappInput=document.getElementById("whatsappInput");
+
+const whatsappResult=document.getElementById("whatsappResult");
+
+
+
+whatsappBtn.addEventListener("click",()=>{
+
+
+const message=whatsappInput.value.trim().toLowerCase();
+
+
+
+if(message===""){
+
+
+whatsappResult.innerHTML=`
+
+<h3>
+⚠️ No Message Found
+</h3>
+
+<p>
+Please paste a WhatsApp message.
+</p>
+
+`;
+
+return;
+
+}
+
+
+
+let risk=10;
+
+let status="Safe";
+
+
+
+const scamWords=[
+
+"urgent",
+
+"otp",
+
+"verify",
+
+"winner",
+
+"free",
+
+"gift",
+
+"prize",
+
+"investment",
+
+"crypto",
+
+"loan",
+
+"click here",
+
+"claim"
+
+];
+
+
+
+scamWords.forEach(word=>{
+
+
+if(message.includes(word)){
+
+
+risk+=10;
+
+
+}
+
+});
+
+
+
+if(message.includes("http")){
+
+
+risk+=15;
+
+
+}
+
+
+
+if(risk>=70){
+
+
+status="Dangerous";
+
+
+}else if(risk>=40){
+
+
+status="Warning";
+
+
+}
+
+
+
+whatsappResult.innerHTML=`
+
+<h3>
+${status}
+</h3>
+
+<p>
+Risk Score: ${risk}%
+</p>
+
+<p>
+Do not share OTP, passwords or personal details with unknown contacts.
+</p>
+
+`;
+
+
+
+});
+
+
+</script>
+<footer class="footer">
+
+<div class="container">
+
+
+<div class="footer-box">
+
+
+<div>
+
+<h3>
+FraudGuard
+</h3>
+
+<p>
+AI-powered digital fraud protection platform.
+</p>
+
+</div>
+
+
+
+<div>
+
+<h3>
+Quick Links
+</h3>
+
+<ul class="footer-links">
+
+<li>
+<a href="index.html">Home</a>
+</li>
+
+<li>
+<a href="scanner.html">Scanner</a>
+</li>
+
+<li>
+<a href="phone-checker.html">Phone Checker</a>
+</li>
+
+<li>
+<a href="report.html">Report</a>
+</li>
+
+</ul>
+
+</div>
+
+
+
+<div>
+
+<h3>
+WhatsApp Security
+</h3>
+
+<p>
+Detect scam messages and suspicious links.
+</p>
+
+<p>
+Stay protected from online fraud.
+</p>
+
+</div>
+
+
+</div>
+
+
+
+<p class="copyright">
+
+© 2026 FraudGuard. All Rights Reserved.
+
+</p>
+
+
+</div>
+
+</footer>
+
+
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
+
+
+
