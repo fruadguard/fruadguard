@@ -2,231 +2,103 @@
 
 <html lang="en">
 
+
 <head>
+
 
 <meta charset="UTF-8">
 
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FraudGuard Dashboard</title>
 
-<meta name="description" content="FraudGuard User Dashboard">
+<title>
+FraudGuard Dashboard
+</title>
+
 
 <link rel="stylesheet" href="style.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 </head>
 
+
+
 <body>
+
+
 
 <header class="navbar">
 
+
 <div class="container">
 
-<a href="index.html" class="logo">
+
+<a href="dashboard.html" class="logo">
+
 Fraud<span>Guard</span>
+
 </a>
 
-<ul class="nav-menu">
 
-<li><a href="index.html">Home</a></li>
 
-<li><a href="features.html">Features</a></li>
 
-<li><a href="scanner.html">Scanner</a></li>
+<div class="nav-actions">
 
-<li><a href="report.html">Report</a></li>
 
-<li><a href="contact.html">Contact</a></li>
+<button 
+class="nav-btn"
+onclick="logoutUser()">
 
-</ul>
-
-<a href="login.html" class="nav-btn">
 Logout
-</a>
 
-<div class="menu-toggle">
-☰
+</button>
+
+
+
 </div>
 
+
+
 </div>
+
 
 </header>
 
-<section class="hero">
+
+
+
+
+<section class="dashboard">
+
 
 <div class="container">
 
-<div class="hero-content">
+
+
+<div class="dashboard-header">
+
 
 <h1>
-User
-<span>Dashboard</span>
+
+Welcome Back 👋
+
 </h1>
 
-<p>
-Manage your account, scan history and fraud reports in one place.
-</p>
-
-</div>
-
-</div>
-
-</section>
-<section>
-
-<div class="container">
-
-
-<div class="stats">
-
-
-<div class="stat-box">
-
-<h2 id="totalScans">
-0
-</h2>
 
 <p>
-Total Scans
+
+Your digital safety dashboard
+
 </p>
 
-</div>
-
-
-
-<div class="stat-box">
-
-<h2 id="totalReports">
-0
-</h2>
-
-<p>
-Fraud Reports
-</p>
 
 </div>
 
 
 
-<div class="stat-box">
 
-<h2>
-24/7
-</h2>
-
-<p>
-Protection
-</p>
-
-</div>
-
-
-
-<div class="stat-box">
-
-<h2>
-Safe
-</h2>
-
-<p>
-Security Status
-</p>
-
-</div>
-
-
-</div>
-
-
-</div>
-
-</section>
-
-
-
-<section>
-
-<div class="container">
-
-
-<div class="cards">
-
-
-<div class="card">
-
-<div class="icon">
-🔍
-</div>
-
-<h3>
-Scan Website
-</h3>
-
-<p>
-Check suspicious links using FraudGuard AI Scanner.
-</p>
-
-<a href="scanner.html" class="btn">
-Start Scan
-</a>
-
-</div>
-
-
-
-<div class="card">
-
-<div class="icon">
-🚨
-</div>
-
-<h3>
-Report Fraud
-</h3>
-
-<p>
-Submit suspicious activities and help others.
-</p>
-
-<a href="report.html" class="btn">
-Report Now
-</a>
-
-</div>
-
-
-
-<div class="card">
-
-<div class="icon">
-📊
-</div>
-
-<h3>
-View History
-</h3>
-
-<p>
-Check your previous scans and reports.
-</p>
-
-</div>
-
-
-</div>
-
-
-</div>
-
-</section>
-<section>
-
-<div class="container">
-
-
-<div class="card">
+<div class="dashboard-card">
 
 
 <h2>
@@ -234,191 +106,257 @@ User Profile
 </h2>
 
 
-<p>
-Name: FraudGuard User
+<p id="userName">
+
+Loading...
+
 </p>
 
 
-<p>
-Account Status: Active
-</p>
+<p id="userEmail">
 
+Loading...
 
-<p>
-Security Level: Protected
 </p>
 
 
 </div>
-
-
-</div>
-
-</section>
+<div class="dashboard-grid">
 
 
 
-<section>
+<div class="dashboard-card">
 
-<div class="container">
-
-
-<div class="scanner-box">
-
-
-<h2>
-Recent Scan History
-</h2>
-
-
-<div id="historyList">
-
-
-<div class="report-card">
 
 <h3>
-No Scan History
+🌐 Website Scanner
 </h3>
 
-<p>
-Your website scan results will appear here.
-</p>
-
-</div>
-
-
-</div>
-
-
-</div>
-
-
-</div>
-
-</section>
-
-
-
-<section>
-
-<div class="container">
-
-
-<div class="hero-card">
-
-
-<h2>
-Stay Protected
-</h2>
-
 
 <p>
-Always scan unknown links and report suspicious activities to improve online safety.
+Check suspicious links and phishing websites.
 </p>
 
 
 <a href="scanner.html" class="btn">
-Scan Now
+
+Open Scanner
+
 </a>
 
 
 </div>
 
 
+
+
+
+<div class="dashboard-card">
+
+
+<h3>
+📞 Phone Checker
+</h3>
+
+
+<p>
+Check reported scam phone numbers.
+</p>
+
+
+<a href="phone-checker.html" class="btn">
+
+Check Number
+
+</a>
+
+
 </div>
 
-</section>
+
+
+
+
+<div class="dashboard-card">
+
+
+<h3>
+📧 Email Checker
+</h3>
+
+
+<p>
+Analyze suspicious emails.
+</p>
+
+
+<a href="email-checker.html" class="btn">
+
+Check Email
+
+</a>
+
+
+</div>
+
+
+
+
+
+<div class="dashboard-card">
+
+
+<h3>
+📘 Facebook Scanner
+</h3>
+
+
+<p>
+Analyze suspicious Facebook profiles.
+</p>
+
+
+<a href="facebook-scanner.html" class="btn">
+
+Scan Profile
+
+</a>
+
+
+</div>
+
+
+
+
+
+<div class="dashboard-card">
+
+
+<h3>
+🤖 AI Fraud Assistant
+</h3>
+
+
+<p>
+Ask AI about possible scams.
+</p>
+
+
+<a href="ai.html" class="btn">
+
+Open AI
+
+</a>
+
+
+</div>
+
+
+
+
+
+<div class="dashboard-card">
+
+
+<h3>
+🚨 Report Fraud
+</h3>
+
+
+<p>
+Help protect the community by reporting scams.
+</p>
+
+
+<a href="report.html" class="btn">
+
+Report Now
+
+</a>
+
+
+</div>
+
+
+
+</div>
 <script type="module">
 
-import { 
-auth,
-getScanHistory,
-logoutUser
-} from "./firebase.js";
+import { auth, db } from "./firebase.js";
+
 
 import {
+
 onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+} from 
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
-const historyList=document.getElementById("historyList");
+import {
+
+doc,
+
+getDoc
+
+} from 
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-onAuthStateChanged(auth,(user)=>{
+
+
+onAuthStateChanged(auth, async (user)=>{
+
 
 if(!user){
 
-window.location.href="login.html";
-
-}
-
-});
-
-
-
-async function loadHistory(){
-
-const data=await getScanHistory();
-
-
-if(data.length>0){
-
-historyList.innerHTML="";
-
-
-data.forEach(item=>{
-
-
-historyList.innerHTML += `
-
-<div class="report-card">
-
-<h3>${item.result}</h3>
-
-<p>
-Website: ${item.url}
-</p>
-
-<p>
-Risk Score: ${item.risk}%
-</p>
-
-</div>
-
-`;
-
-});
-
-
-}
-
-}
-
-
-loadHistory();
-
-
-
-const logoutBtn=document.querySelector(".nav-btn");
-
-
-if(logoutBtn){
-
-logoutBtn.addEventListener("click",async(e)=>{
-
-e.preventDefault();
-
-await logoutUser();
 
 window.location.href="login.html";
 
-});
+
+return;
+
 
 }
+
+
+
+const userDoc = await getDoc(
+
+doc(db,"users",user.uid)
+
+);
+
+
+
+if(userDoc.exists()){
+
+
+const data = userDoc.data();
+
+
+
+document.getElementById("userName").innerHTML =
+
+"Name: " + data.name;
+
+
+
+document.getElementById("userEmail").innerHTML =
+
+"Email: " + data.email;
+
+
+}
+
+
+
+});
 
 
 </script>
 <footer class="footer">
+
 
 <div class="container">
 
@@ -432,58 +370,110 @@ window.location.href="login.html";
 FraudGuard
 </h3>
 
+
 <p>
 AI-powered digital fraud protection platform.
 </p>
 
+
 </div>
+
 
 
 
 <div>
 
 <h3>
-Dashboard
+Quick Links
 </h3>
+
 
 <ul class="footer-links">
 
-<li>
-<a href="scanner.html">Scanner</a>
-</li>
 
 <li>
-<a href="report.html">Report Fraud</a>
+<a href="dashboard.html">
+Dashboard
+</a>
 </li>
 
+
 <li>
-<a href="contact.html">Contact</a>
+<a href="scanner.html">
+Scanner
+</a>
 </li>
+
+
+<li>
+<a href="report.html">
+Report
+</a>
+</li>
+
+
+<li>
+<a href="contact.html">
+Contact
+</a>
+</li>
+
 
 </ul>
 
+
 </div>
+
 
 
 
 <div>
 
 <h3>
-Security
+Legal
 </h3>
 
-<p>
-Your digital safety is our priority.
-</p>
 
-<p>
-AI Fraud Detection System
-</p>
+<ul class="footer-links">
+
+
+<li>
+<a href="privacy-policy.html">
+Privacy Policy
+</a>
+</li>
+
+
+<li>
+<a href="terms.html">
+Terms & Conditions
+</a>
+</li>
+
+
+<li>
+<a href="cookie-policy.html">
+Cookie Policy
+</a>
+</li>
+
+
+<li>
+<a href="disclaimer.html">
+Disclaimer
+</a>
+</li>
+
+
+</ul>
+
 
 </div>
 
 
+
 </div>
+
 
 
 
@@ -494,19 +484,20 @@ AI Fraud Detection System
 </p>
 
 
+
 </div>
+
 
 </footer>
 
 
 
-<script src="script.js"></script>
+
+<script type="module" src="auth.js"></script>
 
 
 </body>
 
-</html>
-
-
+  </html>
 
 
