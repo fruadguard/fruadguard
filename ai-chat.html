@@ -1,475 +1,1650 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<title>FraudGuard AI Assistant</title>
+<title>AI Chat | FraudGuard</title>
 
-<meta name="description" content="Ask FraudGuard AI Assistant about suspicious messages, links and scams.">
+<style>
 
-<link rel="stylesheet" href="style.css">
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+body{
+    min-height:100vh;
+    background:#0b1328;
+    color:#fff;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+.navbar{
+    width:100%;
+    background:#10182d;
+    border-bottom:1px solid #26324b;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.nav-container{
+    max-width:1250px;
+    min-height:64px;
+    margin:auto;
+    padding:0 18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:9px;
+
+    color:#22c55e;
+    font-size:20px;
+    font-weight:700;
+}
+
+.brand img{
+    width:36px;
+    height:36px;
+    object-fit:contain;
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:13px;
+
+    font-size:11px;
+    font-weight:600;
+}
+
+.nav-links a:hover{
+    color:#22c55e;
+}
+
+.logout-btn{
+    border:0;
+    border-radius:6px;
+
+    padding:8px 13px;
+
+    background:#22c55e;
+    color:#fff;
+
+    cursor:pointer;
+    font-weight:700;
+}
+
+.logout-btn:hover{
+    background:#16a34a;
+}
+
+.mobile-menu{
+    display:none;
+
+    border:0;
+    background:transparent;
+    color:#fff;
+
+    font-size:24px;
+    cursor:pointer;
+}
+
+.page{
+    max-width:1050px;
+    margin:auto;
+    padding:30px 15px 45px;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.header-icon{
+    font-size:45px;
+    margin-bottom:8px;
+}
+
+.header h1{
+    font-size:30px;
+    margin-bottom:7px;
+}
+
+.header h1 span{
+    color:#22c55e;
+}
+
+.header p{
+    color:#9da8bb;
+    font-size:12px;
+}
+
+.chat-card{
+    height:650px;
+
+    background:#1c263b;
+
+    border:1px solid #2d3953;
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+    display:flex;
+    flex-direction:column;
+}
+
+.chat-header{
+    min-height:65px;
+
+    padding:13px 18px;
+
+    background:#151f34;
+
+    border-bottom:1px solid #2d3953;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.ai-info{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.ai-avatar{
+    width:38px;
+    height:38px;
+
+    border-radius:50%;
+
+    background:#22c55e;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:19px;
+}
+
+.ai-info h3{
+    font-size:14px;
+    margin-bottom:3px;
+}
+
+.ai-status{
+    color:#55e889;
+    font-size:10px;
+}
+
+.clear-btn{
+    border:1px solid #3b4760;
+
+    background:#111a2f;
+    color:#b9c2d0;
+
+    border-radius:6px;
+
+    padding:7px 10px;
+
+    cursor:pointer;
+
+    font-size:10px;
+}
+
+.clear-btn:hover{
+    color:#fff;
+    border-color:#22c55e;
+}
+
+.chat-messages{
+    flex:1;
+
+    overflow-y:auto;
+
+    padding:20px;
+
+    display:flex;
+    flex-direction:column;
+
+    gap:14px;
+}
+
+.message{
+    max-width:78%;
+
+    display:flex;
+
+    gap:9px;
+}
+
+.message.user{
+    margin-left:auto;
+
+    flex-direction:row-reverse;
+}
+
+.message-avatar{
+    width:31px;
+    height:31px;
+
+    min-width:31px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#344158;
+
+    font-size:13px;
+}
+
+.message.user .message-avatar{
+    background:#22c55e;
+}
+
+.message-content{
+    padding:11px 13px;
+
+    border-radius:9px;
+
+    background:#111a2f;
+
+    border:1px solid #2d3953;
+
+    color:#d7dce5;
+
+    font-size:12px;
+
+    line-height:1.6;
+
+    white-space:pre-wrap;
+
+    word-break:break-word;
+}
+
+.message.user .message-content{
+    background:#123521;
+
+    border-color:#236b3b;
+
+    color:#e9fff0;
+}
+
+.message-time{
+    color:#69758a;
+
+    font-size:8px;
+
+    margin-top:4px;
+}
+
+.typing{
+    display:none;
+
+    padding:0 20px 12px;
+
+    color:#7f8b9f;
+
+    font-size:10px;
+}
+
+.chat-input-area{
+    padding:14px;
+
+    background:#151f34;
+
+    border-top:1px solid #2d3953;
+}
+
+.input-wrapper{
+    display:flex;
+    gap:9px;
+}
+
+#messageInput{
+    flex:1;
+
+    min-height:45px;
+
+    max-height:120px;
+
+    resize:none;
+
+    padding:12px;
+
+    border-radius:7px;
+
+    border:1px solid #3b4760;
+
+    outline:none;
+
+    background:#111a2f;
+
+    color:#fff;
+
+    font-family:Arial,Helvetica,sans-serif;
+
+    font-size:12px;
+}
+
+#messageInput:focus{
+    border-color:#22c55e;
+
+    box-shadow:
+    0 0 0 2px
+    rgba(34,197,94,.10);
+}
+
+#messageInput::placeholder{
+    color:#69758a;
+}
+
+.send-btn{
+    width:48px;
+
+    border:0;
+
+    border-radius:7px;
+
+    background:#22c55e;
+
+    color:#fff;
+
+    cursor:pointer;
+
+    font-size:17px;
+
+    align-self:stretch;
+}
+
+.send-btn:hover{
+    background:#16a34a;
+}
+
+.send-btn:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+}
+
+.disclaimer{
+    margin-top:8px;
+
+    color:#69758a;
+
+    font-size:8px;
+
+    text-align:center;
+}
+
+.quick-prompts{
+    display:flex;
+
+    gap:7px;
+
+    overflow-x:auto;
+
+    padding-bottom:8px;
+}
+
+.quick-prompt{
+    flex:none;
+
+    padding:6px 9px;
+
+    border:1px solid #344158;
+
+    border-radius:15px;
+
+    background:#111a2f;
+
+    color:#aeb7c7;
+
+    cursor:pointer;
+
+    font-size:9px;
+}
+
+.quick-prompt:hover{
+    color:#fff;
+
+    border-color:#22c55e;
+}
+
+.empty-chat{
+    margin:auto;
+
+    max-width:450px;
+
+    text-align:center;
+
+    color:#778399;
+}
+
+.empty-chat-icon{
+    font-size:38px;
+    margin-bottom:10px;
+}
+
+.empty-chat h2{
+    color:#cbd2de;
+
+    font-size:17px;
+
+    margin-bottom:7px;
+}
+
+.empty-chat p{
+    font-size:11px;
+
+    line-height:1.6;
+}
+
+footer{
+    text-align:center;
+
+    padding:22px 15px;
+
+    color:#69758a;
+
+    font-size:10px;
+
+    border-top:1px solid #202b42;
+}
+
+@media(max-width:1050px){
+
+    .nav-links{
+        gap:8px;
+        font-size:9px;
+    }
+
+}
+
+@media(max-width:700px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .mobile-menu{
+        display:block;
+    }
+
+    .nav-container{
+        min-height:58px;
+    }
+
+    .brand{
+        font-size:16px;
+    }
+
+    .brand img{
+        width:30px;
+        height:30px;
+    }
+
+    .page{
+        padding:
+        22px 10px 35px;
+    }
+
+    .header h1{
+        font-size:26px;
+    }
+
+    .chat-card{
+        height:620px;
+
+        border-radius:9px;
+    }
+
+    .chat-messages{
+        padding:14px;
+    }
+
+    .message{
+        max-width:90%;
+    }
+
+    .chat-input-area{
+        padding:10px;
+    }
+
+}
+
+</style>
 
 </head>
 
-
 <body>
-
 
 <header class="navbar">
 
-<div class="container">
+<div class="nav-container">
 
+<a
+href="index.html"
+class="brand">
 
-<a href="index.html" class="logo">
-Fraud<span>Guard</span>
+<img
+src="logo.png"
+alt="FraudGuard">
+
+<span>
+FraudGuard
+</span>
+
 </a>
 
+<nav class="nav-links">
 
-<ul class="nav-menu">
-
-<li>
-<a href="index.html">Home</a>
-</li>
-
-<li>
-<a href="scanner.html">Scanner</a>
-</li>
-
-<li>
-<a href="ai-chat.html">AI Assistant</a>
-</li>
-
-<li>
-<a href="report.html">Report</a>
-</li>
-
-<li>
-<a href="contact.html">Contact</a>
-</li>
-
-</ul>
-
-
-<div class="nav-actions">
-
-<a href="login.html" class="nav-btn">
-Login
+<a href="index.html">
+Home
 </a>
 
-<a href="register.html" class="nav-btn">
-Register
+<a href="dashboard.html">
+Dashboard
 </a>
 
-</div>
+<a href="scanner.html">
+URL Scanner
+</a>
 
+<a href="phone-checker.html">
+Phone
+</a>
 
-<div class="menu-toggle">
+<a href="email-checker.html">
+Email
+</a>
+
+<a href="ai-chat.html">
+AI Chat
+</a>
+
+<a href="qr-scanner.html">
+QR Scanner
+</a>
+
+<a href="facebook-scanner.html">
+Facebook
+</a>
+
+<a href="telegram-scanner.html">
+Telegram
+</a>
+
+<a href="whatsapp-scanner.html">
+WhatsApp
+</a>
+
+<a href="report.html">
+Report
+</a>
+
+<a href="features.html">
+Features
+</a>
+
+<a href="about.html">
+About
+</a>
+
+<a href="contact.html">
+Contact
+</a>
+
+<button
+id="logoutBtn"
+class="logout-btn">
+
+Logout
+
+</button>
+
+</nav>
+
+<button
+id="mobileMenuBtn"
+class="mobile-menu">
+
 ☰
-</div>
 
+</button>
 
 </div>
 
 </header>
 
 
+<main class="page">
 
-<section class="hero">
+<section class="header">
 
-<div class="container">
-
-
-<div class="hero-content">
-
+<div class="header-icon">
+🤖
+</div>
 
 <h1>
 FraudGuard
 <span>AI Assistant</span>
 </h1>
 
-
 <p>
-Ask questions about suspicious links, messages and possible online scams.
+Ask about suspicious messages, links,
+emails, phone numbers or possible scams.
 </p>
-
-
-</div>
-
-
-</div>
-
-</section>
-<section>
-
-<div class="container">
-
-
-<div class="chat-box">
-
-
-<h2>
-FraudGuard AI Assistant
-</h2>
-
-
-<div class="chat-area" id="chatArea">
-
-
-<div class="bot-message">
-
-<p>
-Hello! I can help you identify possible fraud risks.
-</p>
-
-</div>
-
-
-</div>
-
-
-
-<div class="chat-input-box">
-
-
-<input
-
-type="text"
-
-id="userMessage"
-
-class="scanner-input"
-
-placeholder="Ask about a suspicious message...">
-
-
-
-<button
-
-class="btn"
-
-id="sendMessage">
-
-Send
-
-</button>
-
-
-</div>
-
-
-</div>
-
-
-</div>
 
 </section>
 
 
+<section class="chat-card">
 
-<section>
+<div class="chat-header">
 
-<div class="container">
+<div class="ai-info">
 
-
-<div class="cards">
-
-
-<div class="card">
-
-<div class="icon">
+<div class="ai-avatar">
 🤖
 </div>
 
-<h3>
-AI Analysis
-</h3>
-
-<p>
-Get smart suggestions about possible scams.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<div class="icon">
-🔍
-</div>
+<div>
 
 <h3>
-Risk Checking
+FraudGuard AI
 </h3>
 
-<p>
-Analyze suspicious messages and links.
-</p>
+<div class="ai-status">
+● Security Assistant
+</div>
+
+</div>
+
+</div>
+
+<button
+id="clearBtn"
+class="clear-btn">
+
+Clear Chat
+
+</button>
 
 </div>
 
 
+<div
+id="chatMessages"
+class="chat-messages">
 
-<div class="card">
+<div
+id="emptyChat"
+class="empty-chat">
 
-<div class="icon">
+<div class="empty-chat-icon">
 🛡️
 </div>
 
-<h3>
-Safety Advice
-</h3>
+<h2>
+How can I help you stay safe?
+</h2>
 
 <p>
-Learn how to stay protected online.
+Describe a suspicious message, website,
+payment request, account or online offer.
+I can help you understand possible warning
+signs.
 </p>
 
 </div>
 
+</div>
+
+
+<div
+id="typing"
+class="typing">
+
+FraudGuard AI is analyzing...
 
 </div>
 
+
+<div class="chat-input-area">
+
+<div class="quick-prompts">
+
+<button
+class="quick-prompt"
+data-prompt="Is this message a scam?">
+
+Is this a scam?
+
+</button>
+
+<button
+class="quick-prompt"
+data-prompt="What are common phishing signs?">
+
+Phishing signs
+
+</button>
+
+<button
+class="quick-prompt"
+data-prompt="Someone is asking me for an OTP. What should I do?">
+
+OTP request
+
+</button>
+
+<button
+class="quick-prompt"
+data-prompt="Someone sent me a suspicious payment link. What should I check?">
+
+Payment link
+
+</button>
+
+</div>
+
+
+<div class="input-wrapper">
+
+<textarea
+id="messageInput"
+placeholder="Describe the suspicious activity..."
+rows="1"
+maxlength="4000"></textarea>
+
+<button
+id="sendBtn"
+class="send-btn"
+title="Send">
+
+➤
+
+</button>
+
+</div>
+
+
+<div class="disclaimer">
+
+FraudGuard AI provides security guidance and
+should not be treated as a guarantee or
+professional investigation.
+
+</div>
 
 </div>
 
 </section>
-<script>
 
-const sendBtn=document.getElementById("sendMessage");
-
-const userMessage=document.getElementById("userMessage");
-
-const chatArea=document.getElementById("chatArea");
+</main>
 
 
+<footer>
 
-sendBtn.addEventListener("click",()=>{
+© 2026 FraudGuard —
+AI-Powered Global Fraud Detection Platform
+
+  </footer>
+  <script type="module">
+
+import {
+    auth,
+    db
+} from "./firebase.js";
+
+import {
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+    collection,
+    addDoc,
+    query,
+    where,
+    orderBy,
+    getDocs,
+    deleteDoc,
+    doc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-const message=userMessage.value.trim().toLowerCase();
+const messageInput =
+    document.getElementById("messageInput");
+
+const sendBtn =
+    document.getElementById("sendBtn");
+
+const clearBtn =
+    document.getElementById("clearBtn");
+
+const chatMessages =
+    document.getElementById("chatMessages");
+
+const emptyChat =
+    document.getElementById("emptyChat");
+
+const typing =
+    document.getElementById("typing");
+
+const logoutBtn =
+    document.getElementById("logoutBtn");
+
+const mobileMenuBtn =
+    document.getElementById("mobileMenuBtn");
+
+const navLinks =
+    document.querySelector(".nav-links");
 
 
+let currentUser = null;
 
-if(message===""){
 
-return;
+onAuthStateChanged(
+    auth,
+    async (user) => {
+
+        if (!user) {
+
+            window.location.replace(
+                "login.html"
+            );
+
+            return;
+
+        }
+
+        currentUser = user;
+
+        await loadChatHistory();
+
+    }
+);
+
+
+function formatTime(timestamp) {
+
+    if (!timestamp) {
+        return "";
+    }
+
+
+    const date =
+        timestamp.toDate
+            ? timestamp.toDate()
+            : new Date(timestamp);
+
+
+    return date.toLocaleTimeString(
+        [],
+        {
+            hour: "2-digit",
+            minute: "2-digit"
+        }
+    );
 
 }
 
 
+function addMessage(
+    text,
+    type,
+    timestamp = null
+) {
 
-chatArea.innerHTML += `
+    if (emptyChat) {
 
-<div class="user-message">
+        emptyChat.style.display =
+            "none";
 
-<p>${message}</p>
-
-</div>
-
-`;
-
-
-
-let reply="";
+    }
 
 
-
-const scamWords=[
-
-"otp",
-
-"password",
-
-"verify",
-
-"free",
-
-"winner",
-
-"investment",
-
-"crypto",
-
-"urgent",
-
-"click",
-
-"payment"
-
-];
+    const wrapper =
+        document.createElement("div");
 
 
-
-let risk=0;
-
-
-
-scamWords.forEach(word=>{
+    wrapper.className =
+        "message " + type;
 
 
-if(message.includes(word)){
+    const avatar =
+        document.createElement("div");
 
 
-risk+=10;
+    avatar.className =
+        "message-avatar";
 
+
+    avatar.textContent =
+        type === "user"
+            ? "U"
+            : "🤖";
+
+
+    const contentWrapper =
+        document.createElement("div");
+
+
+    const content =
+        document.createElement("div");
+
+
+    content.className =
+        "message-content";
+
+
+    content.textContent =
+        text;
+
+
+    const time =
+        document.createElement("div");
+
+
+    time.className =
+        "message-time";
+
+
+    time.textContent =
+        formatTime(timestamp) ||
+        new Date()
+            .toLocaleTimeString(
+                [],
+                {
+                    hour: "2-digit",
+                    minute: "2-digit"
+                }
+            );
+
+
+    contentWrapper.appendChild(
+        content
+    );
+
+    contentWrapper.appendChild(
+        time
+    );
+
+
+    wrapper.appendChild(
+        avatar
+    );
+
+    wrapper.appendChild(
+        contentWrapper
+    );
+
+
+    chatMessages.appendChild(
+        wrapper
+    );
+
+
+    chatMessages.scrollTop =
+        chatMessages.scrollHeight;
 
 }
 
-});
+
+async function loadChatHistory() {
+
+    if (!currentUser) {
+        return;
+    }
 
 
+    try {
 
-if(risk>=50){
-
-
-reply="⚠️ High Risk: This message contains suspicious scam patterns. Do not share personal information.";
-
-
-}else if(risk>=20){
-
-
-reply="⚠️ Warning: Be careful. Verify the source before taking any action.";
+        const chatCollection =
+            collection(
+                db,
+                "ai_chats"
+            );
 
 
-}else{
+        const chatQuery =
+            query(
+                chatCollection,
+
+                where(
+                    "uid",
+                    "==",
+                    currentUser.uid
+                ),
+
+                orderBy(
+                    "createdAt",
+                    "asc"
+                )
+            );
 
 
-reply="✅ Low Risk: No major scam pattern detected. Still stay cautious online.";
+        const snapshot =
+            await getDocs(
+                chatQuery
+            );
 
+
+        if (
+            snapshot.empty
+        ) {
+
+            return;
+
+        }
+
+
+        emptyChat.style.display =
+            "none";
+
+
+        snapshot.forEach(
+            item => {
+
+                const data =
+                    item.data();
+
+
+                addMessage(
+                    data.text || "",
+                    data.role === "user"
+                        ? "user"
+                        : "ai",
+                    data.createdAt
+                );
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.warn(
+            "Chat history could not be loaded:",
+            error
+        );
+
+    }
 
 }
 
 
+async function saveMessage(
+    text,
+    role
+) {
 
-setTimeout(()=>{
-
-
-chatArea.innerHTML += `
-
-<div class="bot-message">
-
-<p>${reply}</p>
-
-</div>
-
-`;
+    if (!currentUser) {
+        return;
+    }
 
 
+    try {
 
-chatArea.scrollTop=chatArea.scrollHeight;
+        await addDoc(
+            collection(
+                db,
+                "ai_chats"
+            ),
+            {
 
+                uid:
+                    currentUser.uid,
 
+                role:
+                    role,
 
-},500);
+                text:
+                    text,
 
+                createdAt:
+                    serverTimestamp()
 
+            }
+        );
 
-userMessage.value="";
+    } catch (error) {
 
+        console.warn(
+            "Chat message could not be saved:",
+            error
+        );
 
-});
+    }
 
-
-  </script>
-<footer class="footer">
-
-<div class="container">
-
-
-<div class="footer-box">
-
-
-<div>
-
-<h3>
-FraudGuard
-</h3>
-
-<p>
-AI-powered digital fraud protection platform.
-</p>
-
-</div>
-
+}
 
 
-<div>
+function localAIResponse(
+    message
+) {
 
-<h3>
-Quick Links
-</h3>
-
-<ul class="footer-links">
-
-<li>
-<a href="index.html">Home</a>
-</li>
-
-<li>
-<a href="scanner.html">Scanner</a>
-</li>
-
-<li>
-<a href="ai-chat.html">AI Assistant</a>
-</li>
-
-<li>
-<a href="report.html">Report</a>
-</li>
-
-</ul>
-
-</div>
+    const text =
+        message.toLowerCase();
 
 
+    if (
+        text.includes("otp") ||
+        text.includes("verification code")
+    ) {
 
-<div>
+        return "Never share an OTP or verification code with another person. A legitimate service normally will not ask you to send your one-time code to them. If someone is pressuring you for it, stop the conversation and verify the request through the official service.";
 
-<h3>
-AI Security
-</h3>
-
-<p>
-Smart scam analysis and safety guidance.
-</p>
-
-<p>
-Protect yourself from digital threats.
-</p>
-
-</div>
+    }
 
 
-</div>
+    if (
+        text.includes("password") ||
+        text.includes("login")
+    ) {
+
+        return "Be careful with unexpected login or password-reset links. Open the official website or app yourself instead of using a link sent in a suspicious message. Never share your password or recovery code.";
+
+    }
 
 
+    if (
+        text.includes("payment") ||
+        text.includes("money") ||
+        text.includes("send")
+    ) {
 
-<p class="copyright">
+        return "Unexpected payment requests are a common scam signal. Verify the person or business independently, check the payment destination carefully, and avoid sending money under pressure or urgency.";
 
-© 2026 FraudGuard. All Rights Reserved.
-
-</p>
-
-
-</div>
-
-</footer>
+    }
 
 
+    if (
+        text.includes("link") ||
+        text.includes("url") ||
+        text.includes("website")
+    ) {
 
-<script src="script.js"></script>
+        return "Before opening a suspicious link, check the domain carefully. Look for misspellings, unusual domains, fake login pages, unexpected redirects and urgent requests for credentials or payment. You can also use the FraudGuard URL Scanner.";
+
+    }
+
+
+    if (
+        text.includes("email")
+    ) {
+
+        return "For a suspicious email, check the sender address, domain, wording, links, attachments and the reason for the request. Do not rely only on the displayed sender name.";
+
+    }
+
+
+    if (
+        text.includes("phone") ||
+        text.includes("call")
+    ) {
+
+        return "For suspicious calls, do not share OTPs, passwords, banking information or remote-access codes. If the caller claims to represent a company, end the call and contact that organization through its official contact information.";
+
+    }
+
+
+    if (
+        text.includes("scam") ||
+        text.includes("fraud")
+    ) {
+
+        return "Possible scam warning signs include urgency, threats, requests for secrets or money, suspicious links, impersonation and promises that seem too good to be true. If you are unsure, stop before paying or sharing information and verify independently.";
+
+    }
+
+
+    return "I can help you look for common scam warning signs. Tell me what happened, what the person requested, and whether they sent you a link, phone number, email, payment request or message. Do not share passwords, OTPs or other sensitive credentials here.";
+
+}
+
+
+async function sendMessage() {
+
+    const text =
+        messageInput.value.trim();
+
+
+    if (!text) {
+        return;
+    }
+
+
+    if (
+        text.length > 4000
+    ) {
+
+        alert(
+            "Message is too long."
+        );
+
+        return;
+
+    }
+
+
+    addMessage(
+        text,
+        "user"
+    );
+
+
+    messageInput.value =
+        "";
+
+    messageInput.style.height =
+        "45px";
+
+
+    sendBtn.disabled =
+        true;
+
+
+    typing.style.display =
+        "block";
+
+
+    await saveMessage(
+        text,
+        "user"
+    );
+
+
+    await new Promise(
+        resolve =>
+            setTimeout(
+                resolve,
+                500
+            )
+    );
+
+
+    const response =
+        localAIResponse(
+            text
+        );
+
+
+    typing.style.display =
+        "none";
+
+
+    addMessage(
+        response,
+        "ai"
+    );
+
+
+    await saveMessage(
+        response,
+        "ai"
+    );
+
+
+    sendBtn.disabled =
+        false;
+
+
+    messageInput.focus();
+
+}
+
+
+sendBtn.addEventListener(
+    "click",
+    sendMessage
+);
+
+
+messageInput.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Enter" &&
+            !event.shiftKey
+        ) {
+
+            event.preventDefault();
+
+            sendMessage();
+
+        }
+
+    }
+);
+
+
+messageInput.addEventListener(
+    "input",
+    () => {
+
+        messageInput.style.height =
+            "45px";
+
+
+        messageInput.style.height =
+            Math.min(
+                messageInput.scrollHeight,
+                120
+            ) + "px";
+
+    }
+);
+
+
+document
+    .querySelectorAll(".quick-prompt")
+    .forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    messageInput.value =
+                        button.dataset.prompt;
+
+                    messageInput.focus();
+
+                }
+            );
+
+        }
+    );
+
+
+clearBtn.addEventListener(
+    "click",
+    async () => {
+
+        if (!currentUser) {
+            return;
+        }
+
+
+        const confirmed =
+            confirm(
+                "Clear your FraudGuard AI chat history?"
+            );
+
+
+        if (!confirmed) {
+            return;
+        }
+
+
+        clearBtn.disabled =
+            true;
+
+
+        try {
+
+            const chatCollection =
+                collection(
+                    db,
+                    "ai_chats"
+                );
+
+
+            const chatQuery =
+                query(
+                    chatCollection,
+
+                    where(
+                        "uid",
+                        "==",
+                        currentUser.uid
+                    )
+                );
+
+
+            const snapshot =
+                await getDocs(
+                    chatQuery
+                );
+
+
+            await Promise.all(
+                snapshot.docs.map(
+                    item =>
+                        deleteDoc(
+                            doc(
+                                db,
+                                "ai_chats",
+                                item.id
+                            )
+                        )
+                )
+            );
+
+
+            chatMessages.innerHTML =
+                "";
+
+
+            chatMessages.appendChild(
+                emptyChat
+            );
+
+
+            emptyChat.style.display =
+                "block";
+
+
+        } catch (error) {
+
+            console.error(
+                "Clear chat error:",
+                error
+            );
+
+
+            alert(
+                "Unable to clear chat history."
+            );
+
+        }
+
+
+        clearBtn.disabled =
+            false;
+
+    }
+);
+
+
+logoutBtn.addEventListener(
+    "click",
+    async () => {
+
+        logoutBtn.disabled =
+            true;
+
+        logoutBtn.textContent =
+            "Logging out...";
+
+
+        try {
+
+            await signOut(
+                auth
+            );
+
+            window.location.replace(
+                "login.html"
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Logout error:",
+                error
+            );
+
+            logoutBtn.disabled =
+                false;
+
+            logoutBtn.textContent =
+                "Logout";
+
+        }
+
+    }
+);
+
+
+mobileMenuBtn.addEventListener(
+    "click",
+    () => {
+
+        if (
+            navLinks.classList.contains(
+                "mobile-open"
+            )
+        ) {
+
+            navLinks.classList.remove(
+                "mobile-open"
+            );
+
+            navLinks.style.display =
+                "";
+
+            return;
+
+        }
+
+
+        navLinks.classList.add(
+            "mobile-open"
+        );
+
+
+        navLinks.style.display =
+            "flex";
+
+        navLinks.style.flexDirection =
+            "column";
+
+        navLinks.style.position =
+            "absolute";
+
+        navLinks.style.top =
+            "58px";
+
+        navLinks.style.right =
+            "12px";
+
+        navLinks.style.width =
+            "230px";
+
+        navLinks.style.padding =
+            "16px";
+
+        navLinks.style.background =
+            "#10182d";
+
+        navLinks.style.border =
+            "1px solid #26324b";
+
+        navLinks.style.borderRadius =
+            "10px";
+
+        navLinks.style.boxShadow =
+            "0 12px 30px rgba(0,0,0,.35)";
+
+    }
+);
+
+
+navLinks
+    .querySelectorAll("a")
+    .forEach(
+        link => {
+
+            link.addEventListener(
+                "click",
+                () => {
+
+                    navLinks.classList.remove(
+                        "mobile-open"
+                    );
+
+                    if (
+                        window.innerWidth <= 700
+                    ) {
+
+                        navLinks.style.display =
+                            "none";
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+window.addEventListener(
+    "resize",
+    () => {
+
+        if (
+            window.innerWidth > 700
+        ) {
+
+            navLinks.style = "";
+
+            navLinks.classList.remove(
+                "mobile-open"
+            );
+
+        }
+
+    }
+);
+
+</script>
+
+
+<script
+type="module"
+src="script.js">
+</script>
 
 
 </body>
 
 </html>
-
-
-
