@@ -2,1261 +2,2045 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>FraudGuard | AI Fraud Protection</title>
-
-    <meta name="description"
-          content="FraudGuard is an AI-powered global fraud detection and scam prevention platform.">
-
-    <style>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
 
-        html {
-            scroll-behavior: smooth;
-        }
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-        body {
-            background: #0b1328;
-            color: #ffffff;
-            font-family: Georgia, "Times New Roman", serif;
-            line-height: 1.5;
-        }
+<title>FraudGuard | Global Fraud Protection</title>
 
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        /* ================= NAVBAR ================= */
+<meta
+name="description"
+content="FraudGuard is an AI-powered digital fraud protection platform for detecting suspicious links, phone numbers, emails and social media scams.">
 
-        .navbar {
-            width: 100%;
-            background: #10182d;
-            border-bottom: 1px solid #26314b;
+<style>
 
-            position: sticky;
-            top: 0;
-            z-index: 999;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        .nav-container {
-            max-width: 1200px;
-            margin: auto;
+html{
+    scroll-behavior:smooth;
+}
 
-            min-height: 62px;
-            padding: 0 20px;
+body{
+    min-height:100vh;
+    background:#0b1328;
+    color:#fff;
+    font-family:Arial,Helvetica,sans-serif;
+}
 
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+a{
+    color:inherit;
+    text-decoration:none;
+}
 
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 8px;
+button,
+input{
+    font-family:inherit;
+}
 
-            color: #22c55e;
-            font-size: 20px;
-            font-weight: bold;
-        }
+.container{
+    width:min(1180px,calc(100% - 30px));
+    margin:auto;
+}
 
-        .brand img {
-            width: 34px;
-            height: 34px;
-            object-fit: contain;
-        }
+/* NAVBAR */
 
-        .nav-menu {
-            display: flex;
-            align-items: center;
-            gap: 22px;
+.navbar{
+    position:sticky;
+    top:0;
+    z-index:1000;
 
-            font-size: 14px;
-            font-weight: bold;
-        }
+    background:#10182d;
 
-        .nav-menu a {
-            transition: 0.2s;
-        }
+    border-bottom:
+    1px solid #26324b;
+}
 
-        .nav-menu a:hover {
-            color: #22c55e;
-        }
+.nav-container{
+    min-height:64px;
 
-        .logout-btn {
-            border: none;
-            cursor: pointer;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 
-            background: #22c55e;
-            color: white;
+    gap:20px;
+}
 
-            padding: 8px 15px;
-            border-radius: 6px;
+.logo{
+    display:flex;
+    align-items:center;
+    gap:8px;
 
-            font-family: inherit;
-            font-weight: bold;
-        }
+    color:#22c55e;
 
-        .logout-btn:hover {
-            background: #16a34a;
-        }
+    font-size:20px;
+    font-weight:700;
 
-        /* ================= HERO ================= */
+    white-space:nowrap;
+}
 
-        .hero {
-            max-width: 1100px;
-            min-height: 430px;
+.logo img{
+    width:35px;
+    height:35px;
 
-            margin: 24px auto 0;
+    object-fit:contain;
+}
 
-            padding: 50px 25px;
+.nav-menu{
+    display:flex;
+    align-items:center;
 
-            border-radius: 9px;
+    gap:14px;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #14244a,
-                    #1d3b82,
-                    #244da4
-                );
+    list-style:none;
 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+    font-size:10px;
+    font-weight:600;
+}
 
-            text-align: center;
-        }
+.nav-menu a{
+    color:#b8c1d0;
+}
 
-        .hero-logo {
-            width: 90px;
-            height: 90px;
+.nav-menu a:hover,
+.nav-menu a.active{
+    color:#22c55e;
+}
 
-            object-fit: contain;
+.nav-actions{
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
 
-            margin-bottom: 20px;
-        }
+.nav-btn{
+    padding:8px 12px;
 
-        .hero h1 {
-            font-size: 43px;
-            line-height: 1.15;
+    border-radius:6px;
 
-            margin-bottom: 18px;
-        }
+    border:1px solid #344158;
 
-        .hero p {
-            max-width: 720px;
+    background:#1c263b;
 
-            color: #e4e8f0;
+    color:#fff;
 
-            font-size: 17px;
+    font-size:9px;
+    font-weight:600;
+}
 
-            margin-bottom: 28px;
-        }
+.nav-btn:hover{
+    border-color:#22c55e;
+    color:#22c55e;
+}
 
-        .hero-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-        }
+.logout-btn{
+    display:none;
 
-        .btn {
-            display: inline-block;
+    padding:8px 12px;
 
-            background: #22c55e;
-            color: white;
+    border:0;
+    border-radius:6px;
 
-            padding: 12px 25px;
+    background:#22c55e;
+    color:#fff;
 
-            border-radius: 7px;
+    cursor:pointer;
 
-            font-weight: bold;
+    font-size:9px;
+    font-weight:700;
+}
 
-            transition: 0.2s;
-        }
+.mobile-menu{
+    display:none;
 
-        .btn:hover {
-            background: #16a34a;
-            transform: translateY(-2px);
-        }
+    background:transparent;
+    border:0;
 
-        .btn-secondary {
-            background: #3e485e;
-        }
+    color:#fff;
 
-        .btn-secondary:hover {
-            background: #515d75;
-        }
+    font-size:24px;
 
-        /* ================= STATS ================= */
+    cursor:pointer;
+}
 
-        .stats {
-            max-width: 1100px;
+/* HERO */
 
-            margin: 35px auto;
+.hero{
+    position:relative;
 
-            padding: 0 15px;
+    overflow:hidden;
 
-            display: grid;
+    padding:
+    85px 0 75px;
 
-            grid-template-columns:
-                repeat(4, 1fr);
+    background:
+    radial-gradient(
+        circle at 15% 20%,
+        rgba(34,197,94,.10),
+        transparent 30%
+    ),
+    radial-gradient(
+        circle at 85% 30%,
+        rgba(59,130,246,.08),
+        transparent 30%
+    );
+}
 
-            gap: 15px;
-        }
+.hero-grid{
+    display:grid;
 
-        .stat-card {
-            background: #1c263b;
+    grid-template-columns:
+    1.15fr .85fr;
 
-            border: 1px solid #2c3852;
+    gap:55px;
 
-            border-radius: 10px;
+    align-items:center;
+}
 
-            padding: 22px 12px;
+.hero-badge{
+    display:inline-flex;
 
-            text-align: center;
-        }
+    padding:7px 12px;
 
-        .stat-card h2 {
-            color: #22c55e;
+    border-radius:20px;
 
-            font-size: 27px;
+    background:#123521;
 
-            margin-bottom: 5px;
-        }
+    border:1px solid #236b3b;
 
-        .stat-card p {
-            color: #d0d5df;
+    color:#62e993;
 
-            font-size: 14px;
-        }
+    font-size:9px;
+    font-weight:700;
 
-        /* ================= GENERAL SECTION ================= */
+    margin-bottom:16px;
+}
 
-        .section {
-            max-width: 1100px;
+.hero h1{
+    max-width:700px;
 
-            margin: 65px auto;
+    font-size:
+    clamp(38px,5vw,65px);
 
-            padding: 0 20px;
+    line-height:1.05;
 
-            text-align: center;
-        }
+    margin-bottom:18px;
+}
 
-        .section-title {
-            color: #22c55e;
+.hero h1 span{
+    color:#22c55e;
+}
 
-            font-size: 31px;
+.hero-text{
+    max-width:650px;
 
-            margin-bottom: 20px;
-        }
+    color:#9da8bb;
 
-        .section-text {
-            max-width: 850px;
+    font-size:14px;
 
-            margin: auto;
+    line-height:1.8;
 
-            color: #d4d8e0;
+    margin-bottom:25px;
+}
 
-            font-size: 16px;
-        }
+.hero-actions{
+    display:flex;
+    gap:10px;
 
-        /* ================= FEATURES ================= */
+    flex-wrap:wrap;
+}
 
-        .features-grid {
-            margin-top: 30px;
+.primary-btn{
+    display:inline-flex;
 
-            display: grid;
+    align-items:center;
+    justify-content:center;
 
-            grid-template-columns:
-                repeat(3, 1fr);
+    padding:12px 19px;
 
-            gap: 18px;
-        }
+    border-radius:7px;
 
-        .feature-card {
-            background: #1c263b;
+    background:#22c55e;
 
-            border: 1px solid #2d3953;
+    color:#fff;
 
-            border-radius: 10px;
+    font-size:11px;
+    font-weight:700;
+}
 
-            padding: 23px;
+.primary-btn:hover{
+    background:#16a34a;
+}
 
-            text-align: left;
+.secondary-btn{
+    display:inline-flex;
 
-            transition: 0.2s;
-        }
+    align-items:center;
+    justify-content:center;
 
-        .feature-card:hover {
-            transform: translateY(-3px);
+    padding:12px 19px;
 
-            border-color: #22c55e;
-        }
+    border-radius:7px;
 
-        .feature-card h3 {
-            color: #22c55e;
+    background:#1c263b;
 
-            font-size: 18px;
+    border:1px solid #344158;
 
-            margin-bottom: 10px;
-        }
+    color:#dce3ed;
 
-        .feature-card p {
-            color: #d1d6df;
+    font-size:11px;
+    font-weight:700;
+}
 
-            font-size: 14px;
+.secondary-btn:hover{
+    border-color:#22c55e;
+    color:#22c55e;
+}
 
-            min-height: 60px;
-        }
+/* HERO CARD */
 
-        .open-btn {
-            display: inline-block;
+.hero-card{
+    padding:25px;
 
-            margin-top: 14px;
+    background:
+    linear-gradient(
+        145deg,
+        #1c263b,
+        #111a2f
+    );
 
-            padding: 8px 17px;
+    border:
+    1px solid #2d3953;
 
-            background: #3d475d;
+    border-radius:15px;
 
-            border-radius: 6px;
+    box-shadow:
+    0 20px 50px
+    rgba(0,0,0,.25);
+}
 
-            font-weight: bold;
+.shield{
+    width:75px;
+    height:75px;
 
-            font-size: 13px;
-        }
+    margin:0 auto 18px;
 
-        .open-btn:hover {
-            background: #22c55e;
-        }
+    border-radius:20px;
 
-        /* ================= TEAM ================= */
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-        .team-box {
-            max-width: 1000px;
+    background:#123521;
 
-            margin: 25px auto 0;
+    border:1px solid #236b3b;
 
-            padding: 30px;
+    font-size:38px;
+}
 
-            background: #1c263b;
+.hero-card h2{
+    text-align:center;
 
-            border: 1px solid #2d3953;
+    color:#22c55e;
 
-            border-radius: 10px;
+    font-size:20px;
 
-            display: grid;
+    margin-bottom:8px;
+}
 
-            grid-template-columns:
-                repeat(2, 1fr);
+.hero-card > p{
+    text-align:center;
 
-            gap: 20px;
-        }
+    color:#8995a9;
 
-        .team-member {
-            background: #3b4459;
+    font-size:10px;
 
-            border-radius: 8px;
+    line-height:1.6;
 
-            padding: 20px;
-        }
+    margin-bottom:20px;
+}
 
-        .team-member h3 {
-            color: #22c55e;
+.security-list{
+    display:grid;
 
-            font-size: 17px;
+    gap:8px;
+}
 
-            margin-bottom: 5px;
-        }
+.security-item{
+    display:flex;
+    align-items:center;
 
-        .team-member p {
-            color: #e0e3e8;
-        }
+    gap:9px;
 
-        /* ================= CONTACT ================= */
+    padding:10px;
 
-        .contact-box {
-            max-width: 1000px;
+    border-radius:7px;
 
-            margin: 25px auto 0;
+    background:#1c263b;
 
-            padding: 30px;
+    color:#b9c3d1;
 
-            background: #1c263b;
+    font-size:10px;
+}
 
-            border: 1px solid #2d3953;
+.security-item span{
+    color:#22c55e;
+}
 
-            border-radius: 10px;
-        }
+/* STATS */
 
-        .contact-box p {
-            color: #d4d8e0;
+.stats{
+    padding:25px 0;
 
-            margin: 10px 0;
+    background:#10182d;
 
-            font-size: 14px;
-        }
+    border-top:
+    1px solid #202b42;
 
-        /* ================= FOOTER ================= */
+    border-bottom:
+    1px solid #202b42;
+}
 
-        .footer {
-            max-width: 1100px;
+.stats-grid{
+    display:grid;
 
-            margin: 50px auto 25px;
+    grid-template-columns:
+    repeat(4,1fr);
 
-            padding: 30px 20px;
+    gap:15px;
+}
 
-            background: #1c263b;
+.stat{
+    text-align:center;
 
-            border: 1px solid #2d3953;
+    padding:12px;
+}
 
-            border-radius: 10px;
+.stat-number{
+    color:#22c55e;
 
-            text-align: center;
-        }
+    font-size:25px;
+    font-weight:700;
 
-        .footer h3 {
-            margin-bottom: 12px;
+    margin-bottom:4px;
+}
 
-            color: #ffffff;
-        }
+.stat-label{
+    color:#748095;
 
-        .footer p {
-            max-width: 850px;
+    font-size:9px;
+}
 
-            margin: auto;
+/* SECTION */
 
-            color: #cdd2dc;
+.section{
+    padding:65px 0;
+}
 
-            font-size: 13px;
-        }
+.section-header{
+    max-width:700px;
 
-        /* ================= LOADING ================= */
+    margin:
+    0 auto 35px;
 
-        #loading-screen {
-            position: fixed;
+    text-align:center;
+}
 
-            inset: 0;
+.section-header h2{
+    color:#fff;
 
-            background: #0b1328;
+    font-size:
+    clamp(25px,3vw,34px);
 
-            display: flex;
+    margin-bottom:9px;
+}
 
-            align-items: center;
-            justify-content: center;
+.section-header h2 span{
+    color:#22c55e;
+}
 
-            z-index: 9999;
-        }
+.section-header p{
+    color:#8995a9;
 
-        .loading-box {
-            text-align: center;
-        }
+    font-size:11px;
 
-        .loading-box img {
-            width: 70px;
-            height: 70px;
+    line-height:1.7;
+}
 
-            object-fit: contain;
+/* TOOLS */
 
-            margin-bottom: 15px;
-        }
+.tools-grid{
+    display:grid;
 
-        .loading-box h2 {
-            color: #22c55e;
+    grid-template-columns:
+    repeat(4,1fr);
 
-            font-size: 22px;
-        }
+    gap:15px;
+}
 
-        /* ================= MOBILE ================= */
+.tool-card{
+    display:flex;
+    flex-direction:column;
 
-        @media (max-width: 768px) {
+    min-height:190px;
 
-            .nav-container {
-                min-height: 55px;
+    padding:20px;
 
-                padding: 0 12px;
-            }
+    background:#1c263b;
 
-            .brand {
-                font-size: 14px;
-            }
+    border:
+    1px solid #2d3953;
 
-            .brand img {
-                width: 27px;
-                height: 27px;
-            }
+    border-radius:11px;
 
-            .nav-menu {
-                gap: 9px;
+    transition:.2s;
+}
 
-                font-size: 9px;
-            }
+.tool-card:hover{
+    transform:translateY(-3px);
 
-            .logout-btn {
-                padding: 6px 9px;
+    border-color:#22c55e;
+}
 
-                font-size: 9px;
-            }
+.tool-icon{
+    width:45px;
+    height:45px;
 
-            .hero {
-                margin: 15px 12px 0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-                min-height: 365px;
+    margin-bottom:13px;
 
-                padding: 35px 15px;
-            }
+    border-radius:10px;
 
-            .hero-logo {
-                width: 75px;
-                height: 75px;
-            }
+    background:#111a2f;
 
-            .hero h1 {
-                font-size: 28px;
-            }
+    font-size:22px;
+}
 
-            .hero p {
-                font-size: 13px;
+.tool-card h3{
+    color:#22c55e;
 
-                max-width: 500px;
-            }
+    font-size:14px;
 
-            .hero-buttons {
-                flex-wrap: wrap;
-            }
+    margin-bottom:7px;
+}
 
-            .btn {
-                padding: 10px 17px;
+.tool-card p{
+    flex:1;
 
-                font-size: 12px;
-            }
+    color:#8f9bad;
 
-            .stats {
-                grid-template-columns:
-                    repeat(2, 1fr);
+    font-size:10px;
 
-                padding: 0 12px;
+    line-height:1.6;
+}
 
-                gap: 12px;
-            }
+.tool-link{
+    margin-top:13px;
 
-            .stat-card {
-                padding: 18px 8px;
-            }
+    padding:8px;
 
-            .stat-card h2 {
-                font-size: 22px;
-            }
+    text-align:center;
 
-            .stat-card p {
-                font-size: 11px;
-            }
+    border-radius:6px;
 
-            .section {
-                margin: 48px auto;
+    background:#344158;
 
-                padding: 0 12px;
-            }
+    color:#fff;
 
-            .section-title {
-                font-size: 26px;
-            }
+    font-size:9px;
+    font-weight:700;
+}
 
-            .section-text {
-                font-size: 13px;
-            }
+.tool-link:hover{
+    background:#22c55e;
+}
 
-            .features-grid {
-                grid-template-columns:
-                    repeat(2, 1fr);
+/* HOW IT WORKS */
 
-                gap: 12px;
-            }
+.how-section{
+    background:#10182d;
 
-            .feature-card {
-                padding: 14px;
-            }
+    border-top:
+    1px solid #202b42;
 
-            .feature-card h3 {
-                font-size: 13px;
-            }
+    border-bottom:
+    1px solid #202b42;
+}
 
-            .feature-card p {
-                font-size: 11px;
+.steps{
+    display:grid;
 
-                min-height: 58px;
-            }
+    grid-template-columns:
+    repeat(4,1fr);
 
-            .open-btn {
-                font-size: 10px;
+    gap:15px;
+}
 
-                padding: 7px 12px;
-            }
+.step{
+    position:relative;
 
-            .team-box {
-                grid-template-columns:
-                    repeat(2, 1fr);
+    padding:22px;
 
-                padding: 14px;
+    background:#1c263b;
 
-                gap: 10px;
-            }
+    border:
+    1px solid #2d3953;
 
-            .team-member {
-                padding: 15px 7px;
-            }
+    border-radius:11px;
 
-            .team-member h3 {
-                font-size: 11px;
-            }
+    text-align:center;
+}
 
-            .team-member p {
-                font-size: 10px;
-            }
+.step-number{
+    width:38px;
+    height:38px;
 
-            .contact-box {
-                padding: 22px 12px;
-            }
+    margin:0 auto 12px;
 
-            .contact-box p {
-                font-size: 11px;
-            }
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-            .footer {
-                margin: 35px 12px 20px;
+    border-radius:50%;
 
-                padding: 25px 15px;
-            }
+    background:#22c55e;
 
-            .footer p {
-                font-size: 10px;
-            }
-        }
+    font-size:12px;
+    font-weight:700;
+}
 
-    </style>
+.step h3{
+    font-size:13px;
+
+    margin-bottom:7px;
+}
+
+.step p{
+    color:#8995a9;
+
+    font-size:10px;
+
+    line-height:1.6;
+}
+
+/* FEATURES */
+
+.feature-grid{
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:15px;
+}
+
+.feature-card{
+    padding:22px;
+
+    background:#1c263b;
+
+    border:
+    1px solid #2d3953;
+
+    border-radius:11px;
+}
+
+.feature-icon{
+    font-size:26px;
+
+    margin-bottom:11px;
+}
+
+.feature-card h3{
+    color:#22c55e;
+
+    font-size:14px;
+
+    margin-bottom:7px;
+}
+
+.feature-card p{
+    color:#8f9bad;
+
+    font-size:10px;
+
+    line-height:1.7;
+}
+
+/* CTA */
+
+.cta{
+    padding:55px 0;
+}
+
+.cta-box{
+    padding:42px 25px;
+
+    text-align:center;
+
+    background:
+    linear-gradient(
+        135deg,
+        #1c263b,
+        #111a2f
+    );
+
+    border:
+    1px solid #2d3953;
+
+    border-radius:14px;
+}
+
+.cta-box h2{
+    color:#22c55e;
+
+    font-size:27px;
+
+    margin-bottom:10px;
+}
+
+.cta-box p{
+    max-width:650px;
+
+    margin:
+    0 auto 20px;
+
+    color:#9da8bb;
+
+    font-size:11px;
+
+    line-height:1.7;
+}
+
+/* FOOTER */
+
+.footer{
+    padding:40px 0 20px;
+
+    background:#10182d;
+
+    border-top:
+    1px solid #26324b;
+}
+
+.footer-grid{
+    display:grid;
+
+    grid-template-columns:
+    1.5fr 1fr 1fr 1fr;
+
+    gap:30px;
+}
+
+.footer h3{
+    color:#22c55e;
+
+    font-size:14px;
+
+    margin-bottom:10px;
+}
+
+.footer p,
+.footer a{
+    color:#7f8b9f;
+
+    font-size:10px;
+
+    line-height:1.7;
+}
+
+.footer-links{
+    list-style:none;
+}
+
+.footer-links li{
+    margin-bottom:5px;
+}
+
+.footer a:hover{
+    color:#22c55e;
+}
+
+.copyright{
+    margin-top:30px;
+
+    padding-top:16px;
+
+    border-top:
+    1px solid #26324b;
+
+    text-align:center;
+
+    color:#5f6b80;
+
+    font-size:9px;
+}
+
+/* MOBILE */
+
+@media(max-width:1050px){
+
+    .nav-menu{
+        gap:8px;
+
+        font-size:8px;
+    }
+
+    .tools-grid{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:850px){
+
+    .nav-menu,
+    .nav-actions{
+        display:none;
+    }
+
+    .mobile-menu{
+        display:block;
+    }
+
+    .hero{
+        padding-top:55px;
+    }
+
+    .hero-grid{
+        grid-template-columns:1fr;
+
+        gap:35px;
+    }
+
+    .hero-content{
+        text-align:center;
+    }
+
+    .hero-text{
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .hero-actions{
+        justify-content:center;
+    }
+
+    .stats-grid{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+    .steps{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+    .feature-grid{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+    .footer-grid{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:520px){
+
+    .container{
+        width:
+        calc(100% - 22px);
+    }
+
+    .hero{
+        padding:
+        45px 0 50px;
+    }
+
+    .hero h1{
+        font-size:38px;
+    }
+
+    .hero-text{
+        font-size:12px;
+    }
+
+    .hero-actions{
+        flex-direction:column;
+    }
+
+    .primary-btn,
+    .secondary-btn{
+        width:100%;
+    }
+
+    .tools-grid,
+    .steps,
+    .feature-grid,
+    .footer-grid{
+        grid-template-columns:1fr;
+    }
+
+    .stats-grid{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+    .section{
+        padding:45px 0;
+    }
+
+}
+
+</style>
+
 </head>
-
 
 <body>
 
 
-<!-- ================= AUTH LOADING ================= -->
+<header class="navbar">
 
-<div id="loading-screen">
+<div class="container nav-container">
 
-    <div class="loading-box">
 
-        <img src="logo.png"
-             alt="FraudGuard">
+<a
+href="index.html"
+class="logo">
 
-        <h2>
-            Checking Login...
-        </h2>
+<img
+src="logo.png"
+alt="FraudGuard">
 
-    </div>
+<span>
+FraudGuard
+</span>
+
+</a>
+
+
+<ul class="nav-menu">
+
+<li>
+<a
+href="index.html"
+class="active">
+
+Home
+
+</a>
+</li>
+
+<li>
+<a href="dashboard.html">
+Dashboard
+</a>
+</li>
+
+<li>
+<a href="features.html">
+Features
+</a>
+</li>
+
+<li>
+<a href="scanner.html">
+Scanner
+</a>
+</li>
+
+<li>
+<a href="report.html">
+Report
+</a>
+</li>
+
+<li>
+<a href="about.html">
+About
+</a>
+</li>
+
+<li>
+<a href="contact.html">
+Contact
+</a>
+</li>
+
+</ul>
+
+
+<div class="nav-actions">
+
+<a
+id="loginBtn"
+href="login.html"
+class="nav-btn">
+
+Login
+
+</a>
+
+<a
+id="registerBtn"
+href="register.html"
+class="nav-btn">
+
+Register
+
+</a>
+
+<button
+id="logoutBtn"
+class="logout-btn">
+
+Logout
+
+</button>
 
 </div>
 
 
-<!-- ================= NAVBAR ================= -->
+<button
+id="mobileMenuBtn"
+class="mobile-menu">
 
-<header class="navbar">
+☰
 
-    <div class="nav-container">
-
-
-        <a href="index.html"
-           class="brand">
-
-            <img src="logo.png"
-                 alt="FraudGuard">
-
-            <span>
-                FraudGuard
-            </span>
-
-        </a>
+</button>
 
 
-        <nav class="nav-menu">
-
-            <a href="#home">
-                Home
-            </a>
-
-            <a href="#about">
-                About
-            </a>
-
-            <a href="#features">
-                Features
-            </a>
-
-            <a href="#contact">
-                Contact
-            </a>
-
-            <button
-                class="logout-btn"
-                id="logoutBtn">
-
-                Logout
-
-            </button>
-
-        </nav>
-
-    </div>
+</div>
 
 </header>
 
 
-<!-- ================= HERO ================= -->
+<main>
 
-<main id="home">
 
+<section class="hero">
 
-    <section class="hero">
+<div class="container hero-grid">
 
 
-        <img
-            src="logo.png"
-            alt="FraudGuard Logo"
-            class="hero-logo">
+<div class="hero-content">
 
 
-        <h1>
-            Protect Yourself From Online Scams
-        </h1>
+<div class="hero-badge">
 
+🛡️ AI-POWERED FRAUD PROTECTION
 
-        <p>
+</div>
 
-            FraudGuard is an AI-powered fraud detection
-            platform that helps identify phishing websites,
-            scam phone numbers, fake links, investment fraud
-            and other online threats before they cause harm.
 
-        </p>
+<h1>
 
+Protect Yourself From
+Digital <span>Fraud</span>
 
-        <div class="hero-buttons">
+</h1>
 
-            <a
-                href="scanner.html"
-                class="btn">
 
-                🌐 Scan Website
+<p class="hero-text">
 
-            </a>
+FraudGuard is a digital fraud protection
+platform designed to help people detect
+suspicious links, phone numbers, emails,
+social media scams and other online threats.
 
+</p>
 
-            <a
-                href="report.html"
-                class="btn btn-secondary">
 
-                🚨 Report Scam
+<div class="hero-actions">
 
-            </a>
+<a
+href="dashboard.html"
+class="primary-btn">
 
-        </div>
+🚀 Open Dashboard
 
+</a>
 
-    </section>
 
+<a
+href="features.html"
+class="secondary-btn">
 
+Explore Features →
 
-    <!-- ================= STATS ================= -->
+</a>
 
-    <div class="stats">
+</div>
 
 
-        <div class="stat-card">
+</div>
 
-            <h2>
-                24/7
-            </h2>
 
-            <p>
-                AI Protection
-            </p>
+<div class="hero-card">
 
-        </div>
 
+<div class="shield">
+🛡️
+</div>
 
-        <div class="stat-card">
 
-            <h2>
-                AI
-            </h2>
+<h2>
+FraudGuard Protection
+</h2>
 
-            <p>
-                Fraud Detection
-            </p>
 
-        </div>
+<p>
+Check suspicious activity before you trust,
+click, pay or share sensitive information.
+</p>
 
 
-        <div class="stat-card">
+<div class="security-list">
 
-            <h2>
-                Global
-            </h2>
 
-            <p>
-                Scam Reports
-            </p>
+<div class="security-item">
+<span>✓</span>
+URL & Website Analysis
+</div>
 
-        </div>
 
+<div class="security-item">
+<span>✓</span>
+Phone & Email Checking
+</div>
 
-        <div class="stat-card">
 
-            <h2>
-                Secure
-            </h2>
+<div class="security-item">
+<span>✓</span>
+Social Platform Scanners
+</div>
 
-            <p>
-                User Privacy
-            </p>
 
-        </div>
+<div class="security-item">
+<span>✓</span>
+QR Code Analysis
+</div>
 
 
-    </div>
+<div class="security-item">
+<span>✓</span>
+Community Fraud Reports
+</div>
 
 
+</div>
 
-    <!-- ================= ABOUT ================= -->
+</div>
 
-    <section
-        class="section"
-        id="about">
+</div>
 
+</section>
 
-        <h2 class="section-title">
 
-            About FraudGuard
+<section class="stats">
 
-        </h2>
+<div class="container stats-grid">
 
 
-        <p class="section-text">
+<div class="stat">
 
-            FraudGuard is an AI-powered fraud detection
-            platform designed to protect people from
-            phishing websites, scam phone numbers,
-            fake investment schemes, QR scams,
-            romance scams and other cyber threats.
+<div class="stat-number">
+AI
+</div>
 
-            Our mission is to make the internet
-            a safer place for everyone.
+<div class="stat-label">
+Risk Analysis
+</div>
 
-        </p>
+</div>
 
 
-        <br>
+<div class="stat">
 
+<div class="stat-number">
+24/7
+</div>
 
-        <a
-            href="about.html"
-            class="btn">
+<div class="stat-label">
+Security Awareness
+</div>
 
-            Learn More
+</div>
 
-        </a>
 
+<div class="stat">
 
-    </section>
+<div class="stat-number">
+Global
+</div>
 
+<div class="stat-label">
+Fraud Protection Vision
+</div>
 
+</div>
 
-    <!-- ================= FEATURES ================= -->
 
-    <section
-        class="section"
-        id="features">
+<div class="stat">
 
+<div class="stat-number">
+∞
+</div>
 
-        <h2 class="section-title">
+<div class="stat-label">
+Community Reports
+</div>
 
-            Our Features
+</div>
 
-        </h2>
 
+</div>
 
-        <div class="features-grid">
+</section>
 
 
-            <!-- AI -->
+<section class="section">
 
-            <div class="feature-card">
+<div class="container">
 
-                <h3>
-                    🤖 AI Scam Checker
-                </h3>
 
-                <p>
+<div class="section-header">
 
-                    Analyze suspicious messages,
-                    websites and scam content
-                    using AI-powered fraud detection.
+<h2>
+Security <span>Tools</span>
+</h2>
 
-                </p>
+<p>
+Use the right FraudGuard tool to investigate
+suspicious digital activity.
+</p>
 
-                <a
-                    href="ai-chat.html"
-                    class="open-btn">
+</div>
 
-                    Open
 
-                </a>
+<div class="tools-grid">
 
-            </div>
 
+<div class="tool-card">
 
-            <!-- URL -->
+<div class="tool-icon">
+🌐
+</div>
 
-            <div class="feature-card">
+<h3>
+URL Scanner
+</h3>
 
-                <h3>
-                    🌐 URL Scanner
-                </h3>
+<p>
+Analyze suspicious website URLs and
+identify potential risk indicators.
+</p>
 
-                <p>
+<a
+href="scanner.html"
+class="tool-link">
 
-                    Check whether a website or
-                    link is safe, suspicious or
-                    potentially dangerous.
+Open Scanner
 
-                </p>
+</a>
 
-                <a
-                    href="scanner.html"
-                    class="open-btn">
+</div>
 
-                    Open
 
-                </a>
+<div class="tool-card">
 
-            </div>
+<div class="tool-icon">
+📞
+</div>
 
+<h3>
+Phone Checker
+</h3>
 
-            <!-- PHONE -->
+<p>
+Check suspicious phone numbers against
+available FraudGuard reports.
+</p>
 
-            <div class="feature-card">
+<a
+href="phone-checker.html"
+class="tool-link">
 
-                <h3>
-                    📞 Phone Number Checker
-                </h3>
+Check Phone
 
-                <p>
+</a>
 
-                    Search reported scam phone
-                    numbers before trusting an
-                    unknown caller.
+</div>
 
-                </p>
 
-                <a
-                    href="phone-checker.html"
-                    class="open-btn">
+<div class="tool-card">
 
-                    Open
+<div class="tool-icon">
+📧
+</div>
 
-                </a>
+<h3>
+Email Checker
+</h3>
 
-            </div>
+<p>
+Analyze suspicious email addresses and
+common risk indicators.
+</p>
 
+<a
+href="email-checker.html"
+class="tool-link">
 
-            <!-- REPORT -->
+Check Email
 
-            <div class="feature-card">
+</a>
 
-                <h3>
-                    🚨 Report a Scam
-                </h3>
+</div>
 
-                <p>
 
-                    Report suspicious activity
-                    and help protect the
-                    FraudGuard community.
+<div class="tool-card">
 
-                </p>
+<div class="tool-icon">
+🤖
+</div>
 
-                <a
-                    href="report.html"
-                    class="open-btn">
+<h3>
+AI Scam Chat
+</h3>
 
-                    Open
+<p>
+Discuss suspicious messages, links and
+possible scam warning signs.
+</p>
 
-                </a>
+<a
+href="ai-chat.html"
+class="tool-link">
 
-            </div>
+Open AI Chat
 
+</a>
 
-            <!-- EMAIL -->
+</div>
 
-            <div class="feature-card">
 
-                <h3>
-                    📧 Email Checker
-                </h3>
+<div class="tool-card">
 
-                <p>
+<div class="tool-icon">
+📱
+</div>
 
-                    Check suspicious email
-                    addresses and identify
-                    possible fraud signals.
+<h3>
+QR Scanner
+</h3>
 
-                </p>
+<p>
+Scan QR codes and inspect their decoded
+destination before opening it.
+</p>
 
-                <a
-                    href="email-checker.html"
-                    class="open-btn">
+<a
+href="qr-scanner.html"
+class="tool-link">
 
-                    Open
+Scan QR
 
-                </a>
+</a>
 
-            </div>
+</div>
 
 
-            <!-- QR -->
+<div class="tool-card">
 
-            <div class="feature-card">
+<div class="tool-icon">
+🔵
+</div>
 
-                <h3>
-                    📷 QR Scanner
-                </h3>
+<h3>
+Facebook Scanner
+</h3>
 
-                <p>
+<p>
+Check public Facebook links for suspicious
+patterns and available reports.
+</p>
 
-                    Scan QR codes and analyze
-                    their destination for
-                    suspicious activity.
+<a
+href="facebook-scanner.html"
+class="tool-link">
 
-                </p>
+Scan Facebook
 
-                <a
-                    href="qr-scanner.html"
-                    class="open-btn">
+</a>
 
-                    Open
+</div>
 
-                </a>
 
-            </div>
+<div class="tool-card">
 
+<div class="tool-icon">
+✈️
+</div>
 
-        </div>
+<h3>
+Telegram Scanner
+</h3>
 
-    </section>
+<p>
+Check public Telegram links and community
+fraud reports.
+</p>
 
+<a
+href="telegram-scanner.html"
+class="tool-link">
 
+Scan Telegram
 
-    <!-- ================= TEAM ================= -->
+</a>
 
-    <section class="section">
+</div>
 
 
-        <h2 class="section-title">
+<div class="tool-card">
 
-            Leadership Team
+<div class="tool-icon">
+💬
+</div>
 
-        </h2>
+<h3>
+WhatsApp Scanner
+</h3>
 
+<p>
+Check public WhatsApp links and available
+risk indicators.
+</p>
 
-        <div class="team-box">
+<a
+href="whatsapp-scanner.html"
+class="tool-link">
 
+Scan WhatsApp
 
-            <div class="team-member">
+</a>
 
-                <h3>
-                    👨‍💼 Muhammad Sajedur Rahman Biplob
-                </h3>
+</div>
 
-                <p>
-                    Founder & CEO
-                </p>
 
-            </div>
+<div class="tool-card">
 
+<div class="tool-icon">
+🚨
+</div>
 
-            <div class="team-member">
+<h3>
+Report Scam
+</h3>
 
-                <h3>
-                    👩‍💼 Nila Akter
-                </h3>
+<p>
+Submit suspicious digital activity to help
+protect the FraudGuard community.
+</p>
 
-                <p>
-                    Co-Founder
-                </p>
+<a
+href="report.html"
+class="tool-link">
 
-            </div>
+Report Now
 
+</a>
 
-        </div>
+</div>
 
-    </section>
 
+<div class="tool-card">
 
+<div class="tool-icon">
+📊
+</div>
 
-    <!-- ================= CONTACT ================= -->
+<h3>
+Security Dashboard
+</h3>
 
-    <section
-        class="section"
-        id="contact">
+<p>
+Access your account, tools and available
+scan information from one place.
+</p>
 
+<a
+href="dashboard.html"
+class="tool-link">
 
-        <h2 class="section-title">
+Open Dashboard
 
-            Contact
+</a>
 
-        </h2>
+</div>
 
 
-        <div class="contact-box">
+</div>
 
-            <p>
-                📧 Email:
-                rbiplob1005@gmail.com
-            </p>
+</div>
 
-            <p>
-                🌐 Website:
-                https://fruadguard.github.io/fruadguard/
-            </p>
+</section>
 
-        </div>
 
+<section class="section how-section">
 
-    </section>
+<div class="container">
 
 
+<div class="section-header">
 
-    <!-- ================= FOOTER ================= -->
+<h2>
+How <span>FraudGuard</span> Works
+</h2>
 
-    <footer class="footer">
+<p>
+A simple process for investigating suspicious
+digital activity.
+</p>
 
+</div>
 
-        <h3>
-            Privacy Policy
-        </h3>
 
+<div class="steps">
 
-        <p>
 
-            FraudGuard respects your privacy.
-            We collect only the information necessary
-            to improve our services and protect users
-            from fraud.
+<div class="step">
 
-            We do not sell personal data to third parties.
+<div class="step-number">
+1
+</div>
 
-        </p>
+<h3>
+Submit
+</h3>
 
+<p>
+Enter a suspicious URL, phone number,
+email or supported public link.
+</p>
 
-        <br>
+</div>
 
 
-        <h3>
-            Terms of Service
-        </h3>
+<div class="step">
 
+<div class="step-number">
+2
+</div>
 
-        <p>
+<h3>
+Analyze
+</h3>
 
-            FraudGuard provides fraud detection
-            and security assistance.
+<p>
+FraudGuard checks available risk signals
+and community information.
+</p>
 
-            Detection results should not be treated
-            as an absolute guarantee that a website,
-            number, message or account is safe.
+</div>
 
-        </p>
 
+<div class="step">
+
+<div class="step-number">
+3
+</div>
+
+<h3>
+Review
+</h3>
+
+<p>
+Review the risk score, status and detected
+warning indicators.
+</p>
+
+</div>
+
+
+<div class="step">
+
+<div class="step-number">
+4
+</div>
+
+<h3>
+Protect
+</h3>
+
+<p>
+Take appropriate precautions or report
+suspicious activity.
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="section">
+
+<div class="container">
+
+
+<div class="section-header">
+
+<h2>
+Why Use <span>FraudGuard?</span>
+</h2>
+
+<p>
+Built around fraud detection, awareness and
+community protection.
+</p>
+
+</div>
+
+
+<div class="feature-grid">
+
+
+<div class="feature-card">
+
+<div class="feature-icon">
+🔎
+</div>
+
+<h3>
+Risk Analysis
+</h3>
+
+<p>
+Analyze available indicators and provide
+an easy-to-understand risk score.
+</p>
+
+</div>
+
+
+<div class="feature-card">
+
+<div class="feature-icon">
+🗄️
+</div>
+
+<h3>
+Fraud Database
+</h3>
+
+<p>
+Community reports can help identify
+previously reported suspicious activity.
+</p>
+
+</div>
+
+
+<div class="feature-card">
+
+<div class="feature-icon">
+🤝
+</div>
+
+<h3>
+Community Protection
+</h3>
+
+<p>
+Users can contribute reports and help
+increase digital fraud awareness.
+</p>
+
+</div>
+
+
+<div class="feature-card">
+
+<div class="feature-icon">
+⚡
+</div>
+
+<h3>
+Fast Checking
+</h3>
+
+<p>
+Quickly check supported digital identifiers
+without unnecessary steps.
+</p>
+
+</div>
+
+
+<div class="feature-card">
+
+<div class="feature-icon">
+🔐
+</div>
+
+<h3>
+Secure Accounts
+</h3>
+
+<p>
+Firebase authentication is used for
+authenticated account functionality.
+</p>
+
+</div>
+
+
+<div class="feature-card">
+
+<div class="feature-icon">
+🌍
+</div>
+
+<h3>
+Global Vision
+</h3>
+
+<p>
+FraudGuard aims to build a global anti-fraud
+ecosystem across countries and platforms.
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="cta">
+
+<div class="container">
+
+<div class="cta-box">
+
+<h2>
+Ready to Check a Suspicious Link?
+</h2>
+
+<p>
+Don't trust blindly. Check first, understand
+the risk and make a safer decision.
+</p>
+
+<a
+href="scanner.html"
+class="primary-btn">
+
+🛡️ Start Security Check
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<footer class="footer">
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+<div>
+
+<h3>
+FraudGuard
+</h3>
+
+<p>
+AI-powered digital fraud protection platform
+focused on detection, reporting and online
+security awareness.
+</p>
+
+</div>
+
+
+<div>
+
+<h3>
+Tools
+</h3>
+
+<ul class="footer-links">
+
+<li>
+<a href="scanner.html">
+URL Scanner
+</a>
+</li>
+
+<li>
+<a href="phone-checker.html">
+Phone Checker
+</a>
+</li>
+
+<li>
+<a href="email-checker.html">
+Email Checker
+</a>
+</li>
+
+<li>
+<a href="qr-scanner.html">
+QR Scanner
+</a>
+</li>
+
+</ul>
+
+</div>
+
+
+<div>
+
+<h3>
+Scanners
+</h3>
+
+<ul class="footer-links">
+
+<li>
+<a href="facebook-scanner.html">
+Facebook
+</a>
+</li>
+
+<li>
+<a href="telegram-scanner.html">
+Telegram
+</a>
+</li>
+
+<li>
+<a href="whatsapp-scanner.html">
+WhatsApp
+</a>
+</li>
+
+<li>
+<a href="ai-chat.html">
+AI Chat
+</a>
+</li>
+
+</ul>
+
+</div>
+
+
+<div>
+
+<h3>
+Company
+</h3>
+
+<ul class="footer-links">
+
+<li>
+<a href="about.html">
+About
+</a>
+</li>
+
+<li>
+<a href="contact.html">
+Contact
+</a>
+</li>
+
+<li>
+<a href="privacy-policy.html">
+Privacy Policy
+</a>
+</li>
+
+<li>
+<a href="terms.html">
+Terms
+</a>
+</li>
+
+<li>
+<a href="cookie-policy.html">
+Cookie Policy
+</a>
+</li>
+
+<li>
+<a href="disclaimer.html">
+Disclaimer
+</a>
+</li>
+
+</ul>
+
+</div>
+
+
+</div>
+
+
+<p class="copyright">
+
+© 2026 FraudGuard. All Rights Reserved.
+
+</p>
+
+</div>
 
     </footer>
-
-
-</main>
-
-
-<!-- ================= FIREBASE AUTH ================= -->
-
 <script type="module">
 
-    import {
-        auth
-    } from "./firebase.js";
+import {
+    auth
+} from "./firebase.js";
 
-    import {
-        onAuthStateChanged,
-        signOut
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-
-    const loadingScreen =
-        document.getElementById("loading-screen");
+import {
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
-    const logoutBtn =
-        document.getElementById("logoutBtn");
+const loginBtn =
+    document.getElementById(
+        "loginBtn"
+    );
+
+const registerBtn =
+    document.getElementById(
+        "registerBtn"
+    );
+
+const logoutBtn =
+    document.getElementById(
+        "logoutBtn"
+    );
+
+const mobileMenuBtn =
+    document.getElementById(
+        "mobileMenuBtn"
+    );
+
+const navMenu =
+    document.querySelector(
+        ".nav-menu"
+    );
 
 
-    /*
-     * IMPORTANT:
-     *
-     * If user is NOT logged in,
-     * index.html immediately sends
-     * them to login.html.
-     *
-     * If user IS logged in,
-     * this page remains open.
-     */
-
-
-    onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(
+    auth,
+    user => {
 
         if (user) {
 
-            // User is logged in
-            loadingScreen.style.display = "none";
+            if (loginBtn) {
+
+                loginBtn.style.display =
+                    "none";
+
+            }
+
+
+            if (registerBtn) {
+
+                registerBtn.style.display =
+                    "none";
+
+            }
+
+
+            if (logoutBtn) {
+
+                logoutBtn.style.display =
+                    "block";
+
+            }
 
         } else {
 
-            // User is NOT logged in
-            window.location.replace("login.html");
+            if (loginBtn) {
+
+                loginBtn.style.display =
+                    "block";
+
+            }
+
+
+            if (registerBtn) {
+
+                registerBtn.style.display =
+                    "block";
+
+            }
+
+
+            if (logoutBtn) {
+
+                logoutBtn.style.display =
+                    "none";
+
+            }
 
         }
 
-    });
+    }
+);
 
 
-    /*
-     * LOGOUT
-     */
+if (logoutBtn) {
 
     logoutBtn.addEventListener(
         "click",
         async () => {
 
+            logoutBtn.disabled =
+                true;
+
+            logoutBtn.textContent =
+                "Logging out...";
+
+
             try {
 
-                await signOut(auth);
+                await signOut(
+                    auth
+                );
 
                 window.location.replace(
                     "login.html"
@@ -1273,13 +2057,182 @@
                     "Unable to logout. Please try again."
                 );
 
+                logoutBtn.disabled =
+                    false;
+
+                logoutBtn.textContent =
+                    "Logout";
+
             }
 
         }
     );
 
+}
+
+
+if (
+    mobileMenuBtn &&
+    navMenu
+) {
+
+    mobileMenuBtn.addEventListener(
+        "click",
+        () => {
+
+            const open =
+                navMenu.classList.toggle(
+                    "mobile-open"
+                );
+
+
+            if (open) {
+
+                navMenu.style.display =
+                    "flex";
+
+                navMenu.style.position =
+                    "absolute";
+
+                navMenu.style.top =
+                    "58px";
+
+                navMenu.style.left =
+                    "11px";
+
+                navMenu.style.right =
+                    "11px";
+
+                navMenu.style.width =
+                    "auto";
+
+                navMenu.style.padding =
+                    "18px";
+
+                navMenu.style.flexDirection =
+                    "column";
+
+                navMenu.style.alignItems =
+                    "flex-start";
+
+                navMenu.style.background =
+                    "#10182d";
+
+                navMenu.style.border =
+                    "1px solid #26324b";
+
+                navMenu.style.borderRadius =
+                    "10px";
+
+                navMenu.style.boxShadow =
+                    "0 15px 35px rgba(0,0,0,.35)";
+
+            } else {
+
+                navMenu.style.display =
+                    "";
+
+                navMenu.style.position =
+                    "";
+
+                navMenu.style.top =
+                    "";
+
+                navMenu.style.left =
+                    "";
+
+                navMenu.style.right =
+                    "";
+
+                navMenu.style.width =
+                    "";
+
+                navMenu.style.padding =
+                    "";
+
+                navMenu.style.flexDirection =
+                    "";
+
+                navMenu.style.alignItems =
+                    "";
+
+                navMenu.style.background =
+                    "";
+
+                navMenu.style.border =
+                    "";
+
+                navMenu.style.borderRadius =
+                    "";
+
+                navMenu.style.boxShadow =
+                    "";
+
+            }
+
+        }
+    );
+
+
+    navMenu
+        .querySelectorAll("a")
+        .forEach(
+            link => {
+
+                link.addEventListener(
+                    "click",
+                    () => {
+
+                        navMenu.classList.remove(
+                            "mobile-open"
+                        );
+
+                        if (
+                            window.innerWidth <= 850
+                        ) {
+
+                            navMenu.style.display =
+                                "none";
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+window.addEventListener(
+    "resize",
+    () => {
+
+        if (
+            window.innerWidth > 850
+        ) {
+
+            navMenu.style = "";
+
+            navMenu.classList.remove(
+                "mobile-open"
+            );
+
+        }
+
+    }
+);
+
+</script>
+
+
+<script
+src="script.js">
 </script>
 
 
 </body>
-                  </html>
+
+</html>
+
