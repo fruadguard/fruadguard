@@ -1,518 +1,554 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<title>FraudGuard Admin Panel</title>
+<title>Admin Login | FraudGuard</title>
 
-<meta name="description" content="FraudGuard Admin Dashboard">
+<style>
 
-<link rel="stylesheet" href="style.css">
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+body{
+    min-height:100vh;
+    background:#0b1328;
+    color:#fff;
+    font-family:Arial,Helvetica,sans-serif;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+}
+
+.login-card{
+    width:100%;
+    max-width:420px;
+
+    background:#1c263b;
+
+    border:1px solid #2d3953;
+
+    border-radius:14px;
+
+    padding:30px;
+
+    box-shadow:
+    0 15px 45px
+    rgba(0,0,0,.35);
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:22px;
+}
+
+.logo img{
+    width:55px;
+    height:55px;
+    object-fit:contain;
+
+    margin-bottom:10px;
+}
+
+.logo h1{
+    color:#22c55e;
+    font-size:25px;
+}
+
+.logo p{
+    color:#8995aa;
+    font-size:12px;
+    margin-top:6px;
+}
+
+.admin-badge{
+    width:max-content;
+
+    margin:0 auto 22px;
+
+    padding:7px 13px;
+
+    border-radius:20px;
+
+    background:#123521;
+    border:1px solid #236b3b;
+
+    color:#67e895;
+
+    font-size:11px;
+    font-weight:bold;
+}
+
+.field{
+    margin-bottom:16px;
+}
+
+.field label{
+    display:block;
+
+    margin-bottom:7px;
+
+    color:#dce1e9;
+
+    font-size:12px;
+    font-weight:bold;
+}
+
+.field input{
+    width:100%;
+
+    padding:13px;
+
+    border-radius:7px;
+
+    border:1px solid #3b4760;
+
+    background:#111a2f;
+
+    color:#fff;
+
+    outline:none;
+
+    font-size:14px;
+}
+
+.field input:focus{
+    border-color:#22c55e;
+
+    box-shadow:
+    0 0 0 2px
+    rgba(34,197,94,.12);
+}
+
+#adminEmail{
+    opacity:.7;
+}
+
+.login-btn{
+    width:100%;
+
+    padding:13px;
+
+    border:0;
+
+    border-radius:7px;
+
+    background:#22c55e;
+
+    color:#fff;
+
+    font-size:14px;
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.login-btn:hover{
+    background:#16a34a;
+}
+
+.login-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.message{
+    display:none;
+
+    margin-bottom:16px;
+
+    padding:11px;
+
+    border-radius:7px;
+
+    font-size:12px;
+
+    line-height:1.5;
+}
+
+.error{
+    background:#401c28;
+
+    border:1px solid #7f3046;
+
+    color:#ff9daf;
+}
+
+.info{
+    margin-top:18px;
+
+    text-align:center;
+
+    color:#68758a;
+
+    font-size:10px;
+}
+
+.back{
+    display:block;
+
+    text-align:center;
+
+    margin-top:18px;
+
+    color:#8f9bad;
+
+    font-size:11px;
+}
+
+.back:hover{
+    color:#22c55e;
+}
+
+</style>
 
 </head>
 
-
 <body>
 
+<div class="login-card">
 
-<header class="navbar">
+<div class="logo">
 
-<div class="container">
-
-
-<a href="index.html" class="logo">
-Fraud<span>Guard</span>
-</a>
-
-
-<ul class="nav-menu">
-
-<li>
-<a href="index.html">Home</a>
-</li>
-
-<li>
-<a href="dashboard.html">Dashboard</a>
-</li>
-
-<li>
-<a href="report.html">Reports</a>
-</li>
-
-<li>
-<a href="contact.html">Contact</a>
-</li>
-
-</ul>
-
-
-<a href="login.html" class="nav-btn">
-Logout
-</a>
-
-
-<div class="menu-toggle">
-☰
-</div>
-
-
-</div>
-
-</header>
-
-
-
-<section class="hero">
-
-<div class="container">
-
-
-<div class="hero-content">
-
+<img
+src="logo.png"
+alt="FraudGuard">
 
 <h1>
-Admin
-<span>Panel</span>
+FraudGuard
 </h1>
 
-
 <p>
-Manage fraud reports, users and security activities from one place.
-</p>
-
-
-</div>
-
-
-</div>
-
-</section>
-<section>
-
-<div class="container">
-
-
-<div class="stats">
-
-
-<div class="stat-box">
-
-<h2>
-0
-</h2>
-
-<p>
-Total Users
+Administrator Control Panel
 </p>
 
 </div>
 
 
+<div class="admin-badge">
+🔐 ADMIN ACCESS
+</div>
 
-<div class="stat-box">
 
-<h2>
-0
-</h2>
+<div
+id="errorMessage"
+class="message error">
+</div>
 
-<p>
-Fraud Reports
-</p>
+
+<div class="field">
+
+<label>
+ADMIN EMAIL
+</label>
+
+<input
+id="adminEmail"
+type="email"
+value="rbiplob1005@gmail.com"
+readonly>
 
 </div>
 
 
+<div class="field">
 
-<div class="stat-box">
+<label>
+PASSWORD
+</label>
 
-<h2>
-0
-</h2>
-
-<p>
-Pending Reviews
-</p>
-
-</div>
-
-
-
-<div class="stat-box">
-
-<h2>
-Active
-</h2>
-
-<p>
-System Status
-</p>
+<input
+id="adminPassword"
+type="password"
+placeholder="Enter admin password"
+autocomplete="current-password">
 
 </div>
 
 
-</div>
+<button
+id="loginBtn"
+class="login-btn">
 
+Admin Login
 
-</div>
-
-</section>
-
-
-
-<section>
-
-<div class="container">
-
-
-<div class="cards">
-
-
-<div class="card">
-
-<div class="icon">
-📋
-</div>
-
-<h3>
-Manage Reports
-</h3>
-
-<p>
-Review submitted fraud reports and update status.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<div class="icon">
-👥
-</div>
-
-<h3>
-Manage Users
-</h3>
-
-<p>
-Monitor registered users and account activity.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<div class="icon">
-🛡️
-</div>
-
-<h3>
-Security Control
-</h3>
-
-<p>
-Manage fraud database and protection system.
-</p>
-
-</div>
-
-
-</div>
-
-
-</div>
-
-</section>
-<section>
-
-<div class="container">
-
-
-<div class="scanner-box">
-
-
-<h2>
-Fraud Reports
-</h2>
-
-
-<div style="overflow-x:auto;">
-
-
-<table style="width:100%;color:white;border-collapse:collapse;">
-
-
-<thead>
-
-<tr>
-
-<th style="padding:12px;">
-User
-</th>
-
-<th style="padding:12px;">
-Type
-</th>
-
-<th style="padding:12px;">
-Target
-</th>
-
-<th style="padding:12px;">
-Status
-</th>
-
-<th style="padding:12px;">
-Action
-</th>
-
-</tr>
-
-</thead>
-
-
-
-<tbody id="reportTable">
-
-
-<tr>
-
-<td style="padding:12px;">
-No Data
-</td>
-
-<td style="padding:12px;">
--
-</td>
-
-<td style="padding:12px;">
--
-</td>
-
-<td style="padding:12px;">
-Pending
-</td>
-
-<td style="padding:12px;">
-Review
-</td>
-
-</tr>
-
-
-</tbody>
-
-
-</table>
-
-
-</div>
-
-
-</div>
-
-
-</div>
-
-</section>
-
-
-
-<section>
-
-<div class="container">
-
-
-<div class="hero-card">
-
-
-<h2>
-Admin Security Tools
-</h2>
-
-
-<p>
-Control fraud reports, monitor activities and improve the FraudGuard security network.
-</p>
-
-
-<button class="btn">
-Refresh Data
 </button>
 
 
+<a
+href="login.html"
+class="back">
+
+← Back to User Login
+
+</a>
+
+
+<div class="info">
+
+FraudGuard administrator access is restricted
+to authorized personnel.
+
 </div>
 
-
 </div>
-
-</section>
 <script type="module">
 
-import { getReports } from "./firebase.js";
+import {
+    auth
+} from "./firebase.js";
+
+import {
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
-const reportTable=document.getElementById("reportTable");
+const ADMIN_EMAIL =
+    "rbiplob1005@gmail.com";
 
 
-async function loadReports(){
+const adminEmail =
+    document.getElementById("adminEmail");
 
-const reports=await getReports();
+const adminPassword =
+    document.getElementById("adminPassword");
 
+const loginBtn =
+    document.getElementById("loginBtn");
 
-if(reports.length>0){
-
-
-reportTable.innerHTML="";
-
-
-reports.forEach(report=>{
-
-
-reportTable.innerHTML += `
-
-<tr>
-
-<td style="padding:12px;">
-${report.name || "User"}
-</td>
+const errorMessage =
+    document.getElementById("errorMessage");
 
 
-<td style="padding:12px;">
-${report.type || "Unknown"}
-</td>
+function showError(message) {
 
+    errorMessage.textContent =
+        message;
 
-<td style="padding:12px;">
-${report.target || "-"}
-</td>
-
-
-<td style="padding:12px;">
-${report.status || "Pending"}
-</td>
-
-
-<td style="padding:12px;">
-<button class="btn">
-View
-</button>
-</td>
-
-
-</tr>
-
-`;
-
-});
-
-
-}
+    errorMessage.style.display =
+        "block";
 
 }
 
 
-loadReports();
+function hideError() {
+
+    errorMessage.style.display =
+        "none";
+
+}
+
+
+onAuthStateChanged(
+    auth,
+    async (user) => {
+
+        if (!user) {
+            return;
+        }
+
+
+        if (
+            user.email?.toLowerCase() ===
+            ADMIN_EMAIL.toLowerCase()
+        ) {
+
+            window.location.replace(
+                "admin.html"
+            );
+
+            return;
+
+        }
+
+
+        await signOut(auth);
+
+    }
+);
+
+
+async function adminLogin() {
+
+    hideError();
+
+
+    const email =
+        adminEmail.value
+            .trim()
+            .toLowerCase();
+
+
+    const password =
+        adminPassword.value;
+
+
+    if (
+        email !==
+        ADMIN_EMAIL.toLowerCase()
+    ) {
+
+        showError(
+            "This account is not authorized for administrator access."
+        );
+
+        return;
+
+    }
+
+
+    if (!password) {
+
+        showError(
+            "Please enter the admin password."
+        );
+
+        adminPassword.focus();
+
+        return;
+
+    }
+
+
+    loginBtn.disabled =
+        true;
+
+    loginBtn.textContent =
+        "Signing in...";
+
+
+    try {
+
+        const result =
+            await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+
+        const user =
+            result.user;
+
+
+        if (
+            user.email?.toLowerCase() !==
+            ADMIN_EMAIL.toLowerCase()
+        ) {
+
+            await signOut(auth);
+
+            showError(
+                "Administrator access denied."
+            );
+
+            return;
+
+        }
+
+
+        window.location.replace(
+            "admin.html"
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Admin login error:",
+            error
+        );
+
+
+        let message =
+            "Admin login failed.";
+
+
+        if (
+            error.code ===
+            "auth/invalid-credential"
+        ) {
+
+            message =
+                "Incorrect admin email or password.";
+
+        }
+
+
+        if (
+            error.code ===
+            "auth/invalid-email"
+        ) {
+
+            message =
+                "Invalid administrator email.";
+
+        }
+
+
+        if (
+            error.code ===
+            "auth/too-many-requests"
+        ) {
+
+            message =
+                "Too many attempts. Please try again later.";
+
+        }
+
+
+        showError(message);
+
+    }
+
+
+    loginBtn.disabled =
+        false;
+
+    loginBtn.textContent =
+        "Admin Login";
+
+}
+
+
+loginBtn.addEventListener(
+    "click",
+    adminLogin
+);
+
+
+adminPassword.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Enter"
+        ) {
+
+            adminLogin();
+
+        }
+
+    }
+);
 
 
 </script>
-<footer class="footer">
-
-<div class="container">
-
-
-<div class="footer-box">
-
-
-<div>
-
-<h3>
-FraudGuard
-</h3>
-
-<p>
-AI-powered digital fraud protection platform.
-</p>
-
-</div>
-
-
-
-<div>
-
-<h3>
-Admin Links
-</h3>
-
-<ul class="footer-links">
-
-<li>
-<a href="admin.html">Admin Panel</a>
-</li>
-
-<li>
-<a href="dashboard.html">Dashboard</a>
-</li>
-
-<li>
-<a href="report.html">Reports</a>
-</li>
-
-</ul>
-
-</div>
-
-
-
-<div>
-
-<h3>
-Security
-</h3>
-
-<p>
-Fraud monitoring and management system.
-</p>
-
-<p>
-Admin Control Center
-</p>
-
-</div>
-
-
-</div>
-
-
-
-<p class="copyright">
-
-© 2026 FraudGuard. All Rights Reserved.BY MASTER MIND 
-
-</p>
-
-
-</div>
-
-</footer>
-
-
-
-<script src="script.js"></script>
 
 
 </body>
 
 </html>
-
-
