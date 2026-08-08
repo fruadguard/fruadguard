@@ -3,16 +3,559 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
 
-<title>FraudGuard AI Scanner</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-<meta name="description" content="Scan suspicious links and detect possible online fraud with FraudGuard AI Scanner.">
+    <title>URL Scanner | FraudGuard</title>
 
-<link rel="stylesheet" href="style.css">
+    <style>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #0b1328;
+            color: #ffffff;
+            font-family: Georgia, "Times New Roman", serif;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            background: #10182d;
+            border-bottom: 1px solid #26314b;
+
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            min-height: 62px;
+
+            margin: auto;
+            padding: 0 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            color: #22c55e;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .brand img {
+            width: 34px;
+            height: 34px;
+            object-fit: contain;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .nav-menu a:hover {
+            color: #22c55e;
+        }
+
+        .logout-btn {
+            border: none;
+
+            background: #22c55e;
+            color: #ffffff;
+
+            padding: 8px 14px;
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-family: inherit;
+            font-weight: bold;
+        }
+
+        .logout-btn:hover {
+            background: #16a34a;
+        }
+
+        /* ================= PAGE ================= */
+
+        .page {
+            max-width: 1000px;
+
+            margin: 35px auto;
+            padding: 0 18px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .header-icon {
+            font-size: 50px;
+            margin-bottom: 8px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .header h1 span {
+            color: #22c55e;
+        }
+
+        .header p {
+            max-width: 700px;
+
+            margin: auto;
+
+            color: #bfc7d5;
+            font-size: 14px;
+        }
+
+        /* ================= SCANNER CARD ================= */
+
+        .scanner-card {
+            background: #1c263b;
+
+            border: 1px solid #2d3953;
+            border-radius: 12px;
+
+            padding: 28px;
+        }
+
+        .input-label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #dce1e9;
+
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        #urlInput {
+            flex: 1;
+            width: 100%;
+
+            padding: 14px;
+
+            border-radius: 7px;
+            border: 1px solid #3b4760;
+
+            outline: none;
+
+            background: #111a2f;
+            color: #ffffff;
+
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        #urlInput:focus {
+            border-color: #22c55e;
+
+            box-shadow:
+                0 0 0 2px
+                rgba(34, 197, 94, 0.12);
+        }
+
+        #urlInput::placeholder {
+            color: #7f8a9e;
+        }
+
+        #scanBtn {
+            border: none;
+
+            padding: 0 23px;
+
+            border-radius: 7px;
+
+            background: #22c55e;
+            color: #ffffff;
+
+            font-family: inherit;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        #scanBtn:hover {
+            background: #16a34a;
+        }
+
+        #scanBtn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .example {
+            margin-top: 10px;
+
+            color: #7f8a9e;
+            font-size: 11px;
+        }
+
+        /* ================= STATUS ================= */
+
+        .status {
+            display: none;
+
+            margin-top: 20px;
+            padding: 13px;
+
+            border-radius: 8px;
+
+            text-align: center;
+
+            background: #111a2f;
+            border: 1px solid #354158;
+
+            color: #cbd5e1;
+            font-size: 13px;
+        }
+
+        /* ================= RESULT ================= */
+
+        .result {
+            display: none;
+
+            margin-top: 22px;
+
+            background: #111a2f;
+            border: 1px solid #354158;
+
+            border-radius: 10px;
+
+            padding: 25px;
+        }
+
+        .result-title {
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+        }
+
+        .result-title h2 {
+            font-size: 22px;
+        }
+
+        .badge {
+            padding: 7px 13px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .badge.safe {
+            background: #123521;
+            color: #7ff0a2;
+
+            border: 1px solid #236b3b;
+        }
+
+        .badge.suspicious {
+            background: #403415;
+            color: #ffd36b;
+
+            border: 1px solid #80652a;
+        }
+
+        .badge.dangerous {
+            background: #401c28;
+            color: #ff9daf;
+
+            border: 1px solid #7f3046;
+        }
+
+        /* ================= SCORE ================= */
+
+        .score-area {
+            text-align: center;
+
+            padding: 20px;
+            margin-bottom: 20px;
+
+            background: #1c263b;
+            border-radius: 9px;
+        }
+
+        .score {
+            font-size: 50px;
+            font-weight: bold;
+
+            color: #22c55e;
+        }
+
+        .score-label {
+            color: #aeb7c7;
+            font-size: 12px;
+        }
+
+        /* ================= DETAILS ================= */
+
+        .details {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 10px;
+        }
+
+        .detail {
+            background: #1c263b;
+
+            border: 1px solid #2d3953;
+
+            border-radius: 7px;
+
+            padding: 13px;
+        }
+
+        .detail strong {
+            display: block;
+
+            color: #22c55e;
+
+            font-size: 12px;
+
+            margin-bottom: 4px;
+        }
+
+        .detail span {
+            color: #d1d6df;
+
+            font-size: 12px;
+
+            word-break: break-word;
+        }
+
+        /* ================= REASONS ================= */
+
+        .reasons {
+            margin-top: 20px;
+        }
+
+        .reasons h3 {
+            color: #22c55e;
+
+            font-size: 16px;
+
+            margin-bottom: 10px;
+        }
+
+        .reasons ul {
+            padding-left: 20px;
+        }
+
+        .reasons li {
+            color: #d1d6df;
+
+            font-size: 13px;
+
+            margin-bottom: 7px;
+        }
+
+        /* ================= ACTIONS ================= */
+
+        .actions {
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 22px;
+        }
+
+        .action-btn {
+            border: none;
+
+            padding: 10px 16px;
+
+            border-radius: 6px;
+
+            background: #3d475d;
+            color: #ffffff;
+
+            cursor: pointer;
+
+            font-family: inherit;
+            font-weight: bold;
+        }
+
+        .action-btn:hover {
+            background: #22c55e;
+        }
+
+        .report-btn {
+            background: #7f3046;
+        }
+
+        .report-btn:hover {
+            background: #a43c59;
+        }
+
+        /* ================= INFO ================= */
+
+        .info {
+            margin-top: 20px;
+
+            background: #1c263b;
+
+            border: 1px solid #2d3953;
+
+            border-radius: 10px;
+
+            padding: 20px;
+        }
+
+        .info h3 {
+            color: #22c55e;
+
+            font-size: 16px;
+
+            margin-bottom: 8px;
+        }
+
+        .info p {
+            color: #bfc7d5;
+            font-size: 12px;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            max-width: 1000px;
+
+            margin: 45px auto 25px;
+
+            padding: 20px;
+
+            text-align: center;
+
+            color: #69758a;
+
+            font-size: 11px;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 700px) {
+
+            .nav-container {
+                padding: 0 12px;
+            }
+
+            .brand {
+                font-size: 14px;
+            }
+
+            .brand img {
+                width: 27px;
+                height: 27px;
+            }
+
+            .nav-menu {
+                gap: 8px;
+                font-size: 9px;
+            }
+
+            .logout-btn {
+                padding: 6px 9px;
+                font-size: 9px;
+            }
+
+            .page {
+                margin-top: 25px;
+                padding: 0 12px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .header-icon {
+                font-size: 40px;
+            }
+
+            .scanner-card {
+                padding: 18px;
+            }
+
+            .input-row {
+                flex-direction: column;
+            }
+
+            #scanBtn {
+                padding: 12px;
+            }
+
+            .result {
+                padding: 17px;
+            }
+
+            .result-title {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .details {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .action-btn {
+                width: 100%;
+            }
+
+        }
+
+    </style>
 
 </head>
 
@@ -20,427 +563,1329 @@
 <body>
 
 
+<!-- ================= NAVBAR ================= -->
+
 <header class="navbar">
 
-<div class="container">
+    <div class="nav-container">
 
 
-<a href="index.html" class="logo">
-Fraud<span>Guard</span>
-</a>
+        <a
+            href="index.html"
+            class="brand">
+
+            <img
+                src="logo.png"
+                alt="FraudGuard">
+
+            <span>
+                FraudGuard
+            </span>
+
+        </a>
 
 
-<ul class="nav-menu">
+        <nav class="nav-menu">
 
-<li><a href="index.html">Home</a></li>
+            <a href="index.html">
+                Home
+            </a>
 
-<li><a href="features.html">Features</a></li>
+            <a href="scanner.html">
+                Scanner
+            </a>
 
-<li><a href="scanner.html">Scanner</a></li>
+            <a href="report.html">
+                Report
+            </a>
 
-<li><a href="report.html">Report</a></li>
+            <button
+                id="logoutBtn"
+                class="logout-btn">
 
-<li><a href="contact.html">Contact</a></li>
+                Logout
 
-</ul>
+            </button>
 
-
-<a href="login.html" class="nav-btn">
-Login
-</a>
-
-
-<div class="menu-toggle">
-☰
-</div>
+        </nav>
 
 
-</div>
+    </div>
 
 </header>
 
 
+<!-- ================= MAIN ================= -->
 
-<section class="hero">
+<main class="page">
 
-<div class="container">
 
+    <div class="header">
 
-<div class="hero-content">
+        <div class="header-icon">
+            🌐
+        </div>
 
+        <h1>
+            FraudGuard
+            <span>URL Scanner</span>
+        </h1>
 
-<h1>
-AI Fraud
-<span>Scanner</span>
-</h1>
+        <p>
 
+            Check a suspicious website before
+            you open it. FraudGuard analyzes
+            the URL for common fraud and
+            phishing indicators.
 
-<p>
-Check suspicious websites and links before you trust them.
-</p>
+        </p>
 
+    </div>
 
-</div>
 
+    <!-- ================= SCANNER ================= -->
 
-</div>
+    <div class="scanner-card">
 
-</section>
-<section>
 
-<div class="container">
+        <label
+            class="input-label"
+            for="urlInput">
 
+            Enter Website URL
 
-<div class="scanner-box">
+        </label>
 
 
-<h2>
-Website Security Scanner
-</h2>
+        <div class="input-row">
 
 
-<p>
-Enter a link to check possible fraud risk.
-</p>
+            <input
+                id="urlInput"
+                type="text"
+                placeholder="https://example.com"
+                autocomplete="off"
+                spellcheck="false">
 
 
-<input 
-type="url" 
-class="scanner-input" 
-id="urlInput"
-placeholder="https://example.com">
+            <button
+                id="scanBtn">
 
+                Scan URL
 
+            </button>
 
-<button class="btn" id="scanBtn">
-Scan Website
-</button>
 
+        </div>
 
 
-<div class="result-box" id="scanResult">
+        <p class="example">
 
+            Example:
+            https://example.com
 
-<h3>
-Scan Result
-</h3>
+        </p>
 
 
-<p>
-Waiting for scan...
-</p>
+        <!-- STATUS -->
 
+        <div
+            id="status"
+            class="status">
 
-</div>
+            Analyzing URL...
 
+        </div>
 
-</div>
 
+        <!-- RESULT -->
 
-</div>
+        <div
+            id="result"
+            class="result">
 
-</section>
 
+            <div class="result-title">
 
+                <h2>
+                    Scan Result
+                </h2>
 
-<section>
+                <span
+                    id="resultBadge"
+                    class="badge">
 
-<div class="container">
+                    Unknown
 
+                </span>
 
-<div class="cards">
+            </div>
 
 
-<div class="card">
+            <!-- SCORE -->
 
-<div class="icon">
-🔒
-</div>
+            <div class="score-area">
 
-<h3>
-HTTPS Check
-</h3>
+                <div
+                    id="score"
+                    class="score">
 
-<p>
-Verify secure connection status.
-</p>
+                    0
 
-</div>
+                </div>
 
+                <div class="score-label">
 
+                    Risk Score / 100
 
-<div class="card">
+                </div>
 
-<div class="icon">
-⚠️
-</div>
+            </div>
 
-<h3>
-Risk Detection
-</h3>
 
-<p>
-Identify suspicious website patterns.
-</p>
+            <!-- DETAILS -->
 
-</div>
+            <div class="details">
 
 
+                <div class="detail">
 
-<div class="card">
+                    <strong>
+                        URL
+                    </strong>
 
-<div class="icon">
-🤖
-</div>
+                    <span id="resultUrl">
+                        -
+                    </span>
 
-<h3>
-AI Analysis
-</h3>
+                </div>
 
-<p>
-Smart security recommendation system.
-</p>
 
-</div>
+                <div class="detail">
 
+                    <strong>
+                        Protocol
+                    </strong>
 
-</div>
+                    <span id="resultProtocol">
+                        -
+                    </span>
 
+                </div>
 
-</div>
 
-</section>
-<section>
+                <div class="detail">
 
-<div class="container">
+                    <strong>
+                        Domain
+                    </strong>
 
+                    <span id="resultDomain">
+                        -
+                    </span>
 
-<div class="scanner-box">
+                </div>
 
 
-<h2>
-Recent Scan History
-</h2>
+                <div class="detail">
 
+                    <strong>
+                        Database Status
+                    </strong>
 
-<div class="report-card">
+                    <span id="databaseStatus">
+                        -
+                    </span>
 
+                </div>
 
-<h3>
-No Recent Scan
-</h3>
 
+            </div>
 
-<p>
-Your scanned websites will appear here.
-</p>
 
+            <!-- REASONS -->
 
-</div>
+            <div class="reasons">
 
+                <h3>
+                    Detection Details
+                </h3>
 
-</div>
 
+                <ul id="reasonsList">
 
-</div>
+                </ul>
 
-</section>
+            </div>
 
 
+            <!-- ACTIONS -->
 
-<section>
+            <div class="actions">
 
-<div class="container">
 
+                <button
+                    class="action-btn"
+                    id="scanAgainBtn">
 
-<h2>
-Stay Safe Online
-</h2>
+                    Scan Another URL
 
+                </button>
 
-<div class="features">
 
+                <button
+                    class="action-btn report-btn"
+                    id="reportBtn">
 
-<div class="feature-box">
+                    🚨 Report This URL
 
-<div class="icon">
-❌
-</div>
+                </button>
 
-<h3>
-Avoid Unknown Links
-</h3>
 
-<p>
-Do not open suspicious links from unknown sources.
-</p>
+            </div>
 
-</div>
 
+        </div>
 
 
-<div class="feature-box">
+    </div>
 
-<div class="icon">
-🔐
-</div>
 
-<h3>
-Protect Information
-</h3>
+    <!-- ================= INFORMATION ================= -->
 
-<p>
-Never share passwords or sensitive information.
-</p>
+    <div class="info">
 
-</div>
+        <h3>
+            ⚠️ Important
+        </h3>
 
+        <p>
 
+            A low risk score does not guarantee
+            that a website is completely safe.
+            FraudGuard uses available intelligence
+            and detection signals to identify
+            potential risks. Always verify
+            suspicious websites independently.
 
-<div class="feature-box">
+        </p>
 
-<div class="icon">
-✅
-</div>
+    </div>
 
-<h3>
-Verify Before Trust
-</h3>
 
-<p>
-Check websites and numbers before taking action.
-</p>
+</main>
 
-</div>
 
+<footer>
 
-</div>
-
-
-</div>
-
-</section>
-<footer class="footer">
-
-<div class="container">
-
-
-<div class="footer-box">
-
-
-<div>
-
-<h3>
-FraudGuard
-</h3>
-
-<p>
-AI-powered digital fraud protection platform.
-</p>
-
-</div>
-
-
-
-<div>
-
-<h3>
-Quick Links
-</h3>
-
-<ul class="footer-links">
-
-<li>
-<a href="index.html">Home</a>
-</li>
-
-<li>
-<a href="features.html">Features</a>
-</li>
-
-<li>
-<a href="report.html">Report</a>
-</li>
-
-</ul>
-
-</div>
-
-
-
-<div>
-
-<h3>
-Security
-</h3>
-
-<p>
-Stay protected from online scams.
-</p>
-
-<p>
-AI Fraud Detection System
-</p>
-
-</div>
-
-
-</div>
-
-
-
-<p class="copyright">
-© 2026 FraudGuard. All Rights Reserved.
-</p>
-
-
-</div>
+    © 2026 FraudGuard —
+    AI-Powered Fraud Detection & Scam Prevention
 
 </footer>
+<!-- ================= FIREBASE SCANNER ================= -->
+
+<script type="module">
+
+    import {
+        auth,
+        db
+    } from "./firebase.js";
 
 
-
-<script src="script.js"></script>
-
-
-<script>
-
-const scanBtn = document.getElementById("scanBtn");
-const urlInput = document.getElementById("urlInput");
-const scanResult = document.getElementById("scanResult");
+    import {
+        onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
-if(scanBtn){
+    import {
+        collection,
+        query,
+        where,
+        getDocs,
+        addDoc,
+        serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-scanBtn.addEventListener("click",()=>{
 
-let url = urlInput.value;
+    /* =========================================================
+       ELEMENTS
+    ========================================================= */
+
+    const urlInput =
+        document.getElementById("urlInput");
+
+    const scanBtn =
+        document.getElementById("scanBtn");
+
+    const statusBox =
+        document.getElementById("status");
+
+    const resultBox =
+        document.getElementById("result");
+
+    const resultBadge =
+        document.getElementById("resultBadge");
+
+    const scoreElement =
+        document.getElementById("score");
+
+    const resultUrl =
+        document.getElementById("resultUrl");
+
+    const resultProtocol =
+        document.getElementById("resultProtocol");
+
+    const resultDomain =
+        document.getElementById("resultDomain");
+
+    const databaseStatus =
+        document.getElementById("databaseStatus");
+
+    const reasonsList =
+        document.getElementById("reasonsList");
+
+    const scanAgainBtn =
+        document.getElementById("scanAgainBtn");
+
+    const reportBtn =
+        document.getElementById("reportBtn");
 
 
-if(url===""){
+    let currentUser = null;
 
-scanResult.innerHTML =
-"<h3>Warning</h3><p>Please enter a website link.</p>";
+    let currentScannedURL = "";
 
-}
 
-else{
+    /* =========================================================
+       AUTH CHECK
+    ========================================================= */
 
-scanResult.innerHTML =
-"<h3>Analysis Complete</h3><p>Website risk analysis started. Stay alert before trusting this link.</p>";
+    onAuthStateChanged(
+        auth,
+        (user) => {
 
-}
+            if (!user) {
 
-});
+                window.location.replace(
+                    "login.html"
+                );
 
-}
+                return;
+            }
 
+            currentUser = user;
+
+        }
+    );
+
+
+    /* =========================================================
+       NORMALIZE URL
+    ========================================================= */
+
+    function normalizeURL(value) {
+
+        let input =
+            value.trim();
+
+
+        if (!input) {
+            return null;
+        }
+
+
+        if (
+            !input.startsWith("http://") &&
+            !input.startsWith("https://")
+        ) {
+
+            input =
+                "https://" + input;
+
+        }
+
+
+        try {
+
+            return new URL(input);
+
+        } catch {
+
+            return null;
+
+        }
+
+    }
+
+
+    /* =========================================================
+       GET DOMAIN
+    ========================================================= */
+
+    function getDomain(url) {
+
+        return url.hostname
+            .toLowerCase()
+            .replace(/^www\./, "");
+
+    }
+
+
+    /* =========================================================
+       URL ANALYSIS
+    ========================================================= */
+
+    function analyzeURL(url) {
+
+        let riskScore = 0;
+
+        const reasons = [];
+
+        const fullURL =
+            url.href.toLowerCase();
+
+        const hostname =
+            url.hostname.toLowerCase();
+
+
+        /* HTTPS */
+
+        if (
+            url.protocol !== "https:"
+        ) {
+
+            riskScore += 15;
+
+            reasons.push(
+                "The website is not using HTTPS."
+            );
+
+        }
+
+
+        /* IP ADDRESS */
+
+        const ipPattern =
+            /^(\d{1,3}\.){3}\d{1,3}$/;
+
+
+        if (
+            ipPattern.test(hostname)
+        ) {
+
+            riskScore += 25;
+
+            reasons.push(
+                "The URL uses a raw IP address instead of a normal domain."
+            );
+
+        }
+
+
+        /* PUNYCODE */
+
+        if (
+            hostname.includes("xn--")
+        ) {
+
+            riskScore += 25;
+
+            reasons.push(
+                "The domain contains Punycode, which can sometimes be used for look-alike domains."
+            );
+
+        }
+
+
+        /* @ SYMBOL */
+
+        if (
+            fullURL.includes("@")
+        ) {
+
+            riskScore += 20;
+
+            reasons.push(
+                "The URL contains an @ symbol, which can be used to disguise the destination."
+            );
+
+        }
+
+
+        /* TOO MANY SUBDOMAINS */
+
+        const parts =
+            hostname.split(".");
+
+
+        if (
+            parts.length >= 5
+        ) {
+
+            riskScore += 15;
+
+            reasons.push(
+                "The domain contains an unusually large number of subdomains."
+            );
+
+        }
+
+
+        /* VERY LONG URL */
+
+        if (
+            url.href.length > 150
+        ) {
+
+            riskScore += 15;
+
+            reasons.push(
+                "The URL is unusually long."
+            );
+
+        }
+
+
+        /* MANY HYPHENS */
+
+        const hyphens =
+            (
+                hostname.match(/-/g) || []
+            ).length;
+
+
+        if (
+            hyphens >= 4
+        ) {
+
+            riskScore += 10;
+
+            reasons.push(
+                "The domain contains many hyphens."
+            );
+
+        }
+
+
+        /* SUSPICIOUS KEYWORDS */
+
+        const suspiciousKeywords = [
+
+            "login",
+            "verify",
+            "verification",
+            "secure",
+            "security",
+            "account",
+            "update",
+            "confirm",
+            "wallet",
+            "crypto",
+            "bonus",
+            "free",
+            "gift",
+            "claim",
+            "payment",
+            "bank",
+            "password",
+            "signin",
+            "recover",
+            "refund",
+            "investment",
+            "airdrop"
+
+        ];
+
+
+        const foundKeywords =
+            suspiciousKeywords.filter(
+                keyword =>
+                    fullURL.includes(keyword)
+            );
+
+
+        if (
+            foundKeywords.length >= 2
+        ) {
+
+            riskScore += 20;
+
+            reasons.push(
+                "The URL contains multiple words commonly seen in phishing or scam campaigns."
+            );
+
+        } else if (
+            foundKeywords.length === 1
+        ) {
+
+            riskScore += 7;
+
+            reasons.push(
+                "The URL contains a security-sensitive keyword."
+            );
+
+        }
+
+
+        /* SUSPICIOUS TLD */
+
+        const suspiciousTLDs = [
+
+            ".tk",
+            ".ml",
+            ".ga",
+            ".cf",
+            ".gq",
+            ".top",
+            ".click",
+            ".download",
+            ".zip",
+            ".mov"
+
+        ];
+
+
+        const hasSuspiciousTLD =
+            suspiciousTLDs.some(
+                tld =>
+                    hostname.endsWith(tld)
+            );
+
+
+        if (
+            hasSuspiciousTLD
+        ) {
+
+            riskScore += 15;
+
+            reasons.push(
+                "The domain uses a TLD that can be seen in suspicious campaigns."
+            );
+
+        }
+
+
+        /* LARGE QUERY STRING */
+
+        if (
+            url.search.length > 120
+        ) {
+
+            riskScore += 10;
+
+            reasons.push(
+                "The URL contains an unusually large query string."
+            );
+
+        }
+
+
+        riskScore =
+            Math.min(
+                riskScore,
+                100
+            );
+
+
+        return {
+            score: riskScore,
+            reasons: reasons
+        };
+
+    }
+
+
+    /* =========================================================
+       FIRESTORE FRAUD DATABASE
+    ========================================================= */
+
+    async function checkFraudDatabase(
+        domain
+    ) {
+
+        try {
+
+            const fraudCollection =
+                collection(
+                    db,
+                    "fraud_urls"
+                );
+
+
+            const q =
+                query(
+                    fraudCollection,
+                    where(
+                        "domain",
+                        "==",
+                        domain
+                    )
+                );
+
+
+            const snapshot =
+                await getDocs(q);
+
+
+            if (
+                !snapshot.empty
+            ) {
+
+                return {
+                    found: true,
+                    count: snapshot.size
+                };
+
+            }
+
+
+            return {
+                found: false,
+                count: 0
+            };
+
+
+        } catch (error) {
+
+            console.error(
+                "Fraud database error:",
+                error
+            );
+
+
+            return {
+                found: false,
+                count: 0,
+                error: true
+            };
+
+        }
+
+    }
+
+
+    /* =========================================================
+       SAVE SCAN HISTORY
+    ========================================================= */
+
+    async function saveScan(
+        url,
+        analysis,
+        databaseResult
+    ) {
+
+        if (!currentUser) {
+            return;
+        }
+
+
+        try {
+
+            await addDoc(
+                collection(
+                    db,
+                    "scan_history"
+                ),
+                {
+
+                    uid:
+                        currentUser.uid,
+
+                    email:
+                        currentUser.email || "",
+
+                    url:
+                        url.href,
+
+                    domain:
+                        url.hostname,
+
+                    score:
+                        analysis.score,
+
+                    status:
+                        getStatus(
+                            analysis.score,
+                            databaseResult
+                        ),
+
+                    databaseMatch:
+                        databaseResult.found,
+
+                    createdAt:
+                        serverTimestamp()
+
+                }
+            );
+
+
+        } catch (error) {
+
+            console.warn(
+                "Scan history could not be saved:",
+                error
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       GET STATUS
+    ========================================================= */
+
+    function getStatus(
+        score,
+        databaseResult = {
+            found: false
+        }
+    ) {
+
+        if (
+            databaseResult.found
+        ) {
+
+            return "Dangerous";
+
+        }
+
+
+        if (
+            score >= 60
+        ) {
+
+            return "Dangerous";
+
+        }
+
+
+        if (
+            score >= 30
+        ) {
+
+            return "Suspicious";
+
+        }
+
+
+        return "Low Risk";
+
+    }
+
+
+    /* =========================================================
+       DISPLAY RESULT
+    ========================================================= */
+
+    function displayResult(
+        url,
+        analysis,
+        databaseResult
+    ) {
+
+        const score =
+            analysis.score;
+
+
+        const status =
+            getStatus(
+                score,
+                databaseResult
+            );
+
+
+        /* SCORE */
+
+        scoreElement.textContent =
+            score;
+
+
+        /* URL */
+
+        resultUrl.textContent =
+            url.href;
+
+
+        /* PROTOCOL */
+
+        resultProtocol.textContent =
+            url.protocol
+                .replace(":", "")
+                .toUpperCase();
+
+
+        /* DOMAIN */
+
+        resultDomain.textContent =
+            url.hostname;
+
+
+        /* DATABASE */
+
+        if (
+            databaseResult.found
+        ) {
+
+            databaseStatus.textContent =
+                "⚠ Reported " +
+                databaseResult.count +
+                " time(s)";
+
+        } else if (
+            databaseResult.error
+        ) {
+
+            databaseStatus.textContent =
+                "Unavailable";
+
+        } else {
+
+            databaseStatus.textContent =
+                "No matching report";
+
+        }
+
+
+        /* BADGE */
+
+        resultBadge.className =
+            "badge";
+
+
+        if (
+            status === "Dangerous"
+        ) {
+
+            resultBadge.classList.add(
+                "dangerous"
+            );
+
+            resultBadge.textContent =
+                "🚨 Dangerous";
+
+            scoreElement.style.color =
+                "#ff6b81";
+
+
+        } else if (
+            status === "Suspicious"
+        ) {
+
+            resultBadge.classList.add(
+                "suspicious"
+            );
+
+            resultBadge.textContent =
+                "⚠ Suspicious";
+
+            scoreElement.style.color =
+                "#ffd36b";
+
+
+        } else {
+
+            resultBadge.classList.add(
+                "safe"
+            );
+
+            resultBadge.textContent =
+                "✓ Low Risk";
+
+            scoreElement.style.color =
+                "#22c55e";
+
+        }
+
+
+        /* REASONS */
+
+        reasonsList.innerHTML = "";
+
+
+        if (
+            databaseResult.found
+        ) {
+
+            const li =
+                document.createElement("li");
+
+
+            li.textContent =
+                "This domain has been reported in the FraudGuard community database.";
+
+
+            reasonsList.appendChild(li);
+
+        }
+
+
+        if (
+            analysis.reasons.length === 0
+        ) {
+
+            const li =
+                document.createElement("li");
+
+
+            li.textContent =
+                "No major risk indicators were detected by the current scanner.";
+
+
+            reasonsList.appendChild(li);
+
+
+        } else {
+
+            analysis.reasons.forEach(
+                reason => {
+
+                    const li =
+                        document.createElement("li");
+
+
+                    li.textContent =
+                        reason;
+
+
+                    reasonsList.appendChild(li);
+
+                }
+            );
+
+        }
+
+
+        resultBox.style.display =
+            "block";
+
+    }
+
+
+    /* =========================================================
+       MAIN SCAN FUNCTION
+    ========================================================= */
+
+    async function scanURL() {
+
+        const url =
+            normalizeURL(
+                urlInput.value
+            );
+
+
+        if (!url) {
+
+            alert(
+                "Please enter a valid website URL."
+            );
+
+            urlInput.focus();
+
+            return;
+
+        }
+
+
+        currentScannedURL =
+            url.href;
+
+
+        scanBtn.disabled =
+            true;
+
+
+        scanBtn.textContent =
+            "Scanning...";
+
+
+        resultBox.style.display =
+            "none";
+
+
+        statusBox.style.display =
+            "block";
+
+
+        statusBox.textContent =
+            "🔎 Checking URL structure...";
+
+
+        try {
+
+            await new Promise(
+                resolve =>
+                    setTimeout(
+                        resolve,
+                        350
+                    )
+            );
+
+
+            statusBox.textContent =
+                "🛡 Checking FraudGuard database...";
+
+
+            const analysis =
+                analyzeURL(url);
+
+
+            const databaseResult =
+                await checkFraudDatabase(
+                    getDomain(url)
+                );
+
+
+            statusBox.textContent =
+                "📊 Calculating risk score...";
+
+
+            await new Promise(
+                resolve =>
+                    setTimeout(
+                        resolve,
+                        250
+                    )
+            );
+
+
+            displayResult(
+                url,
+                analysis,
+                databaseResult
+            );
+
+
+            await saveScan(
+                url,
+                analysis,
+                databaseResult
+            );
+
+
+            statusBox.style.display =
+                "none";
+
+
+        } catch (error) {
+
+            console.error(
+                "Scanner error:",
+                error
+            );
+
+
+            statusBox.textContent =
+                "Unable to complete the scan. Please try again.";
+
+        }
+
+
+        scanBtn.disabled =
+            false;
+
+
+        scanBtn.textContent =
+            "Scan URL";
+
+    }
+
+
+    /* =========================================================
+       SCAN BUTTON
+    ========================================================= */
+
+    scanBtn.addEventListener(
+        "click",
+        scanURL
+    );
+
+
+    /* =========================================================
+       ENTER KEY
+    ========================================================= */
+
+    urlInput.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                scanURL();
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       SCAN AGAIN
+    ========================================================= */
+
+    scanAgainBtn.addEventListener(
+        "click",
+        () => {
+
+            resultBox.style.display =
+                "none";
+
+            statusBox.style.display =
+                "none";
+
+            urlInput.value =
+                "";
+
+            currentScannedURL =
+                "";
+
+            urlInput.focus();
+
+        }
+    );
+
+
+    /* =========================================================
+       REPORT URL
+    ========================================================= */
+
+    reportBtn.addEventListener(
+        "click",
+        () => {
+
+            if (
+                currentScannedURL
+            ) {
+
+                window.location.href =
+                    "report.html?url=" +
+                    encodeURIComponent(
+                        currentScannedURL
+                    );
+
+            } else {
+
+                window.location.href =
+                    "report.html";
+
+            }
+
+        }
+    );
+
+</script>
+
+
+<!-- ================= GLOBAL AUTH ================= -->
+
+<script
+    type="module"
+    src="script.js">
 </script>
 
 
 </body>
 
-</html>
-
-
-
+  </html>
