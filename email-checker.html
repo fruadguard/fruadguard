@@ -1,486 +1,1658 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-<title>FraudGuard Email Checker</title>
+<title>Email Checker | FraudGuard</title>
 
-<meta name="description" content="Check suspicious emails and detect possible scams with FraudGuard.">
+<style>
 
-<link rel="stylesheet" href="style.css">
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    background:#0b1328;
+    color:#fff;
+    font-family:Georgia,"Times New Roman",serif;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+.navbar{
+    background:#10182d;
+    border-bottom:1px solid #26314b;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.nav-container{
+    max-width:1200px;
+    min-height:62px;
+    margin:auto;
+    padding:0 20px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    color:#22c55e;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.brand img{
+    width:34px;
+    height:34px;
+    object-fit:contain;
+}
+
+.nav-menu{
+    display:flex;
+    align-items:center;
+    gap:20px;
+
+    font-size:13px;
+    font-weight:bold;
+}
+
+.nav-menu a:hover{
+    color:#22c55e;
+}
+
+.logout-btn{
+    border:0;
+    background:#22c55e;
+    color:#fff;
+
+    padding:8px 14px;
+    border-radius:6px;
+
+    cursor:pointer;
+
+    font-family:inherit;
+    font-weight:bold;
+}
+
+.logout-btn:hover{
+    background:#16a34a;
+}
+
+.page{
+    max-width:950px;
+    margin:35px auto;
+    padding:0 18px;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:28px;
+}
+
+.header-icon{
+    font-size:50px;
+    margin-bottom:8px;
+}
+
+.header h1{
+    font-size:36px;
+    margin-bottom:10px;
+}
+
+.header h1 span{
+    color:#22c55e;
+}
+
+.header p{
+    max-width:700px;
+    margin:auto;
+
+    color:#bfc7d5;
+    font-size:14px;
+}
+
+.checker-card{
+    background:#1c263b;
+    border:1px solid #2d3953;
+    border-radius:12px;
+
+    padding:28px;
+}
+
+.input-label{
+    display:block;
+    margin-bottom:8px;
+
+    color:#dce1e9;
+    font-size:14px;
+    font-weight:bold;
+}
+
+.input-row{
+    display:flex;
+    gap:10px;
+}
+
+#emailInput{
+    flex:1;
+
+    padding:14px;
+
+    border-radius:7px;
+    border:1px solid #3b4760;
+
+    outline:none;
+
+    background:#111a2f;
+    color:#fff;
+
+    font-family:inherit;
+    font-size:15px;
+}
+
+#emailInput:focus{
+    border-color:#22c55e;
+
+    box-shadow:
+    0 0 0 2px
+    rgba(34,197,94,.12);
+}
+
+#emailInput::placeholder{
+    color:#7f8a9e;
+}
+
+#checkBtn{
+    border:0;
+
+    padding:0 23px;
+
+    border-radius:7px;
+
+    background:#22c55e;
+    color:#fff;
+
+    font-family:inherit;
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+#checkBtn:hover{
+    background:#16a34a;
+}
+
+#checkBtn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.example{
+    margin-top:10px;
+    color:#7f8a9e;
+    font-size:11px;
+}
+
+.status{
+    display:none;
+
+    margin-top:20px;
+    padding:13px;
+
+    border-radius:8px;
+
+    text-align:center;
+
+    background:#111a2f;
+    border:1px solid #354158;
+
+    color:#cbd5e1;
+    font-size:13px;
+}
+
+.result{
+    display:none;
+
+    margin-top:22px;
+
+    background:#111a2f;
+    border:1px solid #354158;
+
+    border-radius:10px;
+
+    padding:25px;
+}
+
+.result-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.result-title h2{
+    font-size:22px;
+}
+
+.badge{
+    padding:7px 13px;
+    border-radius:20px;
+
+    font-size:12px;
+    font-weight:bold;
+}
+
+.badge.safe{
+    background:#123521;
+    color:#7ff0a2;
+    border:1px solid #236b3b;
+}
+
+.badge.suspicious{
+    background:#403415;
+    color:#ffd36b;
+    border:1px solid #80652a;
+}
+
+.badge.dangerous{
+    background:#401c28;
+    color:#ff9daf;
+    border:1px solid #7f3046;
+}
+
+.score-area{
+    text-align:center;
+
+    padding:20px;
+    margin-bottom:20px;
+
+    background:#1c263b;
+    border-radius:9px;
+}
+
+.score{
+    font-size:46px;
+    font-weight:bold;
+    color:#22c55e;
+}
+
+.score-label{
+    color:#aeb7c7;
+    font-size:12px;
+}
+
+.details{
+    display:grid;
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+    gap:10px;
+}
+
+.detail{
+    background:#1c263b;
+    border:1px solid #2d3953;
+
+    border-radius:7px;
+    padding:13px;
+}
+
+.detail strong{
+    display:block;
+
+    color:#22c55e;
+    font-size:12px;
+
+    margin-bottom:4px;
+}
+
+.detail span{
+    color:#d1d6df;
+    font-size:13px;
+
+    word-break:break-word;
+}
+
+.reasons{
+    margin-top:20px;
+}
+
+.reasons h3{
+    color:#22c55e;
+    font-size:16px;
+    margin-bottom:10px;
+}
+
+.reasons ul{
+    padding-left:20px;
+}
+
+.reasons li{
+    color:#d1d6df;
+    font-size:13px;
+    margin-bottom:7px;
+}
+
+.actions{
+    display:flex;
+    gap:10px;
+    margin-top:22px;
+}
+
+.action-btn{
+    border:0;
+
+    padding:10px 16px;
+
+    border-radius:6px;
+
+    background:#3d475d;
+    color:#fff;
+
+    cursor:pointer;
+
+    font-family:inherit;
+    font-weight:bold;
+}
+
+.action-btn:hover{
+    background:#22c55e;
+}
+
+.report-btn{
+    background:#7f3046;
+}
+
+.report-btn:hover{
+    background:#a43c59;
+}
+
+.info{
+    margin-top:20px;
+
+    background:#1c263b;
+    border:1px solid #2d3953;
+
+    border-radius:10px;
+    padding:20px;
+}
+
+.info h3{
+    color:#22c55e;
+    font-size:16px;
+    margin-bottom:8px;
+}
+
+.info p{
+    color:#bfc7d5;
+    font-size:12px;
+}
+
+footer{
+    max-width:950px;
+    margin:45px auto 25px;
+
+    padding:20px;
+
+    text-align:center;
+
+    color:#69758a;
+    font-size:11px;
+}
+
+@media(max-width:700px){
+
+    .nav-container{
+        padding:0 12px;
+    }
+
+    .brand{
+        font-size:14px;
+    }
+
+    .brand img{
+        width:27px;
+        height:27px;
+    }
+
+    .nav-menu{
+        gap:8px;
+        font-size:9px;
+    }
+
+    .logout-btn{
+        padding:6px 9px;
+        font-size:9px;
+    }
+
+    .page{
+        margin-top:25px;
+        padding:0 12px;
+    }
+
+    .header h1{
+        font-size:28px;
+    }
+
+    .header-icon{
+        font-size:40px;
+    }
+
+    .checker-card{
+        padding:18px;
+    }
+
+    .input-row{
+        flex-direction:column;
+    }
+
+    #checkBtn{
+        padding:12px;
+    }
+
+    .result{
+        padding:17px;
+    }
+
+    .result-title{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .details{
+        grid-template-columns:1fr;
+    }
+
+    .actions{
+        flex-direction:column;
+    }
+
+    .action-btn{
+        width:100%;
+    }
+
+}
+
+</style>
 
 </head>
 
-
 <body>
-
 
 <header class="navbar">
 
-<div class="container">
+<div class="nav-container">
 
+<a href="index.html" class="brand">
 
-<a href="index.html" class="logo">
-Fraud<span>Guard</span>
+<img src="logo.png" alt="FraudGuard">
+
+<span>FraudGuard</span>
+
 </a>
 
+<nav class="nav-menu">
 
-<ul class="nav-menu">
-
-<li>
-<a href="index.html">Home</a>
-</li>
-
-<li>
-<a href="scanner.html">Scanner</a>
-</li>
-
-<li>
-<a href="facebook-scanner.html">Facebook Scanner</a>
-</li>
-
-<li>
-<a href="email-checker.html">Email Checker</a>
-</li>
-
-<li>
-<a href="report.html">Report</a>
-</li>
-
-</ul>
-
-
-<div class="nav-actions">
-
-<a href="login.html" class="nav-btn">
-Login
+<a href="index.html">
+Home
 </a>
 
-<a href="register.html" class="nav-btn">
-Register
+<a href="scanner.html">
+Scanner
 </a>
 
-</div>
+<a href="phone-checker.html">
+Phone
+</a>
 
+<a href="email-checker.html">
+Email
+</a>
 
-<div class="menu-toggle">
-☰
-</div>
+<a href="report.html">
+Report
+</a>
 
+<button
+id="logoutBtn"
+class="logout-btn">
+
+Logout
+
+</button>
+
+</nav>
 
 </div>
 
 </header>
 
 
+<main class="page">
 
-<section class="hero">
+<div class="header">
 
-<div class="container">
-
-
-<div class="hero-content">
-
+<div class="header-icon">
+📧
+</div>
 
 <h1>
-Email
-<span>Checker</span>
+FraudGuard
+<span>Email Checker</span>
 </h1>
 
-
 <p>
-Analyze suspicious emails and detect possible fraud attempts before responding.
+Check a suspicious email address for
+common fraud indicators and see whether
+it has been reported to FraudGuard.
 </p>
-
 
 </div>
 
 
-</div>
+<div class="checker-card">
 
-  </section>
-<section>
+<label
+class="input-label"
+for="emailInput">
 
-<div class="container">
+Enter Email Address
 
-
-<div class="scanner-box">
-
-
-<h2>
-Check Email
-</h2>
+</label>
 
 
-<p>
-Enter a suspicious email address to analyze risk.
-</p>
-
-
+<div class="input-row">
 
 <input
-
-type="email"
-
 id="emailInput"
-
-class="scanner-input"
-
-placeholder="example@email.com">
-
-
+type="email"
+placeholder="example@gmail.com"
+autocomplete="email">
 
 <button
-
-class="btn"
-
-id="emailCheckBtn">
+id="checkBtn">
 
 Check Email
 
 </button>
 
+</div>
 
 
-<div class="result-box" id="emailResult">
-
-
-<h3>
-Check Result
-</h3>
-
-
-<p>
-Waiting for analysis...
+<p class="example">
+Example: support@example.com
 </p>
 
 
+<div
+id="status"
+class="status">
+
+Checking email...
+
 </div>
 
 
+<div
+id="result"
+class="result">
+
+<div class="result-title">
+
+<h2>
+Email Check Result
+</h2>
+
+<span
+id="resultBadge"
+class="badge">
+
+Unknown
+
+</span>
+
 </div>
 
 
+<div class="score-area">
+
+<div
+id="score"
+class="score">
+
+0
+
 </div>
 
-</section>
-
-
-
-<section>
-
-<div class="container">
-
-
-<div class="cards">
-
-
-<div class="card">
-
-<div class="icon">
-📧
+<div class="score-label">
+Risk Score / 100
 </div>
+
+</div>
+
+
+<div class="details">
+
+<div class="detail">
+
+<strong>
+Email Address
+</strong>
+
+<span id="resultEmail">
+-
+</span>
+
+</div>
+
+
+<div class="detail">
+
+<strong>
+Domain
+</strong>
+
+<span id="resultDomain">
+-
+</span>
+
+</div>
+
+
+<div class="detail">
+
+<strong>
+Database Reports
+</strong>
+
+<span id="reportCount">
+-
+</span>
+
+</div>
+
+
+<div class="detail">
+
+<strong>
+Database Status
+</strong>
+
+<span id="databaseStatus">
+-
+</span>
+
+</div>
+
+</div>
+
+
+<div class="reasons">
 
 <h3>
-Email Scam Detection
+Detection Details
 </h3>
 
-<p>
-Identify suspicious email patterns and possible fraud.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<div class="icon">
-🔐
-</div>
-
-<h3>
-Account Protection
-</h3>
-
-<p>
-Avoid phishing attempts and fake messages.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<div class="icon">
-⚠️
-</div>
-
-<h3>
-Risk Warning
-</h3>
-
-<p>
-Get alerts before interacting with suspicious emails.
-</p>
-
-</div>
-
-
-</div>
-
-
-</div>
-
-</section>
-  <script>
-
-const emailBtn=document.getElementById("emailCheckBtn");
-
-const emailInput=document.getElementById("emailInput");
-
-const emailResult=document.getElementById("emailResult");
-
-
-
-emailBtn.addEventListener("click",()=>{
-
-
-const email=emailInput.value.trim().toLowerCase();
-
-
-
-if(email===""){
-
-
-emailResult.innerHTML=`
-
-<h3>
-⚠️ No Email Found
-</h3>
-
-<p>
-Please enter an email address.
-</p>
-
-`;
-
-return;
-
-}
-
-
-
-let risk=15;
-
-let status="Safe";
-
-
-
-const suspiciousWords=[
-
-"verify",
-
-"security",
-
-"account",
-
-"login",
-
-"update",
-
-"payment",
-
-"reward",
-
-"winner",
-
-"free",
-
-"claim"
-
-];
-
-
-
-suspiciousWords.forEach(word=>{
-
-
-if(email.includes(word)){
-
-
-risk+=10;
-
-
-}
-
-});
-
-
-
-const suspiciousDomains=[
-
-"mail.ru",
-
-"tempmail",
-
-"example"
-
-];
-
-
-
-suspiciousDomains.forEach(domain=>{
-
-
-if(email.includes(domain)){
-
-
-risk+=25;
-
-
-}
-
-});
-
-
-
-if(risk>=70){
-
-
-status="Dangerous";
-
-
-}else if(risk>=40){
-
-
-status="Warning";
-
-
-}
-
-
-
-emailResult.innerHTML=`
-
-<h3>
-${status}
-</h3>
-
-<p>
-Risk Score: ${risk}%
-</p>
-
-<p>
-Never share passwords, OTP or personal information through suspicious emails.
-</p>
-
-`;
-
-
-
-});
-
-
-  </script>
-  <footer class="footer">
-
-<div class="container">
-
-
-<div class="footer-box">
-
-
-<div>
-
-<h3>
-FraudGuard
-</h3>
-
-<p>
-AI-powered digital fraud protection platform.
-</p>
-
-</div>
-
-
-
-<div>
-
-<h3>
-Quick Links
-</h3>
-
-<ul class="footer-links">
-
-<li>
-<a href="index.html">Home</a>
-</li>
-
-<li>
-<a href="scanner.html">Scanner</a>
-</li>
-
-<li>
-<a href="facebook-scanner.html">Facebook Scanner</a>
-</li>
-
-<li>
-<a href="report.html">Report</a>
-</li>
-
+<ul id="reasonsList">
 </ul>
 
 </div>
 
 
+<div class="actions">
 
-<div>
+<button
+id="checkAgainBtn"
+class="action-btn">
+
+Check Another Email
+
+</button>
+
+<button
+id="reportBtn"
+class="action-btn report-btn">
+
+🚨 Report This Email
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="info">
 
 <h3>
-Email Security
+⚠️ Important
 </h3>
 
 <p>
-Detect phishing and suspicious email activities.
-</p>
-
-<p>
-Stay safe from digital scams.
+A clean result does not guarantee that
+an email address is legitimate. FraudGuard
+uses available detection signals and
+community reports. Always verify unexpected
+payment requests, login requests and
+attachments independently.
 </p>
 
 </div>
 
-
-</div>
-
+</main>
 
 
-<p class="copyright">
+<footer>
 
-© 2026 FraudGuard. All Rights Reserved.
+© 2026 FraudGuard —
+AI-Powered Fraud Detection & Scam Prevention
 
-</p>
+  </footer>
+  <script type="module">
+
+import {
+    auth,
+    db
+} from "./firebase.js";
+
+import {
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+    collection,
+    query,
+    where,
+    getDocs,
+    addDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-</div>
+const emailInput =
+    document.getElementById("emailInput");
 
-</footer>
+const checkBtn =
+    document.getElementById("checkBtn");
+
+const statusBox =
+    document.getElementById("status");
+
+const resultBox =
+    document.getElementById("result");
+
+const resultBadge =
+    document.getElementById("resultBadge");
+
+const scoreElement =
+    document.getElementById("score");
+
+const resultEmail =
+    document.getElementById("resultEmail");
+
+const resultDomain =
+    document.getElementById("resultDomain");
+
+const reportCount =
+    document.getElementById("reportCount");
+
+const databaseStatus =
+    document.getElementById("databaseStatus");
+
+const reasonsList =
+    document.getElementById("reasonsList");
+
+const checkAgainBtn =
+    document.getElementById("checkAgainBtn");
+
+const reportBtn =
+    document.getElementById("reportBtn");
 
 
+let currentUser = null;
 
-<script src="script.js"></script>
+let currentEmail = "";
 
+
+onAuthStateChanged(
+    auth,
+    (user) => {
+
+        if (!user) {
+
+            window.location.replace(
+                "login.html"
+            );
+
+            return;
+        }
+
+        currentUser = user;
+
+    }
+);
+
+
+function normalizeEmail(value) {
+
+    return value
+        .trim()
+        .toLowerCase();
+
+}
+
+
+function isValidEmail(email) {
+
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        .test(email);
+
+}
+
+
+function getDomain(email) {
+
+    const parts =
+        email.split("@");
+
+    return parts.length === 2
+        ? parts[1]
+        : "";
+
+}
+
+
+function analyzeEmail(email) {
+
+    let score = 0;
+
+    const reasons = [];
+
+    const domain =
+        getDomain(email);
+
+    const localPart =
+        email.split("@")[0];
+
+
+    if (
+        email.length > 100
+    ) {
+
+        score += 10;
+
+        reasons.push(
+            "The email address is unusually long."
+        );
+
+    }
+
+
+    const suspiciousWords = [
+
+        "verify",
+        "verification",
+        "secure",
+        "security",
+        "account",
+        "support",
+        "admin",
+        "payment",
+        "refund",
+        "wallet",
+        "crypto",
+        "bonus",
+        "gift",
+        "claim",
+        "winner",
+        "prize",
+        "urgent",
+        "recovery",
+        "password",
+        "billing",
+        "invoice"
+
+    ];
+
+
+    const foundWords =
+        suspiciousWords.filter(
+            word =>
+                email.includes(word)
+        );
+
+
+    if (
+        foundWords.length >= 2
+    ) {
+
+        score += 20;
+
+        reasons.push(
+            "The email contains multiple words commonly associated with phishing or scam messages."
+        );
+
+    } else if (
+        foundWords.length === 1
+    ) {
+
+        score += 7;
+
+        reasons.push(
+            "The email contains a security-sensitive or financial keyword."
+        );
+
+    }
+
+
+    const freeProviders = [
+
+        "gmail.com",
+        "outlook.com",
+        "hotmail.com",
+        "yahoo.com",
+        "icloud.com",
+        "proton.me",
+        "protonmail.com"
+
+    ];
+
+
+    if (
+        freeProviders.includes(domain)
+    ) {
+
+        reasons.push(
+            "The address uses a common public email provider. This is not itself evidence of fraud."
+        );
+
+    }
+
+
+    const suspiciousTLDs = [
+
+        ".tk",
+        ".ml",
+        ".ga",
+        ".cf",
+        ".gq",
+        ".top",
+        ".click",
+        ".download",
+        ".zip"
+
+    ];
+
+
+    if (
+        suspiciousTLDs.some(
+            tld =>
+                domain.endsWith(tld)
+        )
+    ) {
+
+        score += 20;
+
+        reasons.push(
+            "The email domain uses a TLD that can be seen in suspicious campaigns."
+        );
+
+    }
+
+
+    const numbers =
+        (
+            localPart.match(/\d/g) || []
+        ).length;
+
+
+    if (
+        numbers >= 6
+    ) {
+
+        score += 10;
+
+        reasons.push(
+            "The email username contains an unusually high number of digits."
+        );
+
+    }
+
+
+    const hyphens =
+        (
+            domain.match(/-/g) || []
+        ).length;
+
+
+    if (
+        hyphens >= 3
+    ) {
+
+        score += 10;
+
+        reasons.push(
+            "The email domain contains several hyphens."
+        );
+
+    }
+
+
+    if (
+        domain.includes("xn--")
+    ) {
+
+        score += 25;
+
+        reasons.push(
+            "The email domain contains Punycode and may require additional verification."
+        );
+
+    }
+
+
+    score =
+        Math.min(
+            score,
+            100
+        );
+
+
+    return {
+        score,
+        reasons
+    };
+
+}
+
+
+async function checkFraudDatabase(
+    email
+) {
+
+    try {
+
+        const fraudCollection =
+            collection(
+                db,
+                "fraud_emails"
+            );
+
+
+        const q =
+            query(
+                fraudCollection,
+                where(
+                    "email",
+                    "==",
+                    email
+                )
+            );
+
+
+        const snapshot =
+            await getDocs(q);
+
+
+        return {
+
+            found:
+                !snapshot.empty,
+
+            count:
+                snapshot.size,
+
+            error:
+                false
+
+        };
+
+
+    } catch (error) {
+
+        console.error(
+            "Email database error:",
+            error
+        );
+
+
+        return {
+
+            found: false,
+
+            count: 0,
+
+            error: true
+
+        };
+
+    }
+
+}
+
+
+function getStatus(
+    score,
+    databaseResult
+) {
+
+    if (
+        databaseResult.found
+    ) {
+
+        return "Dangerous";
+
+    }
+
+
+    if (
+        score >= 60
+    ) {
+
+        return "Dangerous";
+
+    }
+
+
+    if (
+        score >= 30
+    ) {
+
+        return "Suspicious";
+
+    }
+
+
+    return "Low Risk";
+
+}
+
+
+async function saveScan(
+    email,
+    analysis,
+    databaseResult
+) {
+
+    if (!currentUser) {
+        return;
+    }
+
+
+    try {
+
+        await addDoc(
+            collection(
+                db,
+                "scan_history"
+            ),
+            {
+
+                uid:
+                    currentUser.uid,
+
+                email:
+                    currentUser.email || "",
+
+                type:
+                    "email",
+
+                checkedEmail:
+                    email,
+
+                score:
+                    analysis.score,
+
+                status:
+                    getStatus(
+                        analysis.score,
+                        databaseResult
+                    ),
+
+                databaseMatch:
+                    databaseResult.found,
+
+                createdAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.warn(
+            "Email scan history error:",
+            error
+        );
+
+    }
+
+}
+
+
+function displayResult(
+    email,
+    analysis,
+    databaseResult
+) {
+
+    const status =
+        getStatus(
+            analysis.score,
+            databaseResult
+        );
+
+
+    scoreElement.textContent =
+        analysis.score;
+
+
+    resultEmail.textContent =
+        email;
+
+
+    resultDomain.textContent =
+        getDomain(email);
+
+
+    if (
+        databaseResult.found
+    ) {
+
+        reportCount.textContent =
+            databaseResult.count;
+
+        databaseStatus.textContent =
+            "⚠ Reported";
+
+    } else if (
+        databaseResult.error
+    ) {
+
+        reportCount.textContent =
+            "Unavailable";
+
+        databaseStatus.textContent =
+            "Database unavailable";
+
+    } else {
+
+        reportCount.textContent =
+            "0";
+
+        databaseStatus.textContent =
+            "No matching report";
+
+    }
+
+
+    resultBadge.className =
+        "badge";
+
+
+    if (
+        status === "Dangerous"
+    ) {
+
+        resultBadge.classList.add(
+            "dangerous"
+        );
+
+        resultBadge.textContent =
+            "🚨 Dangerous";
+
+        scoreElement.style.color =
+            "#ff6b81";
+
+
+    } else if (
+        status === "Suspicious"
+    ) {
+
+        resultBadge.classList.add(
+            "suspicious"
+        );
+
+        resultBadge.textContent =
+            "⚠ Suspicious";
+
+        scoreElement.style.color =
+            "#ffd36b";
+
+
+    } else {
+
+        resultBadge.classList.add(
+            "safe"
+        );
+
+        resultBadge.textContent =
+            "✓ Low Risk";
+
+        scoreElement.style.color =
+            "#22c55e";
+
+    }
+
+
+    reasonsList.innerHTML =
+        "";
+
+
+    if (
+        databaseResult.found
+    ) {
+
+        const li =
+            document.createElement(
+                "li"
+            );
+
+
+        li.textContent =
+            "This email address has been reported in the FraudGuard community database.";
+
+
+        reasonsList.appendChild(
+            li
+        );
+
+    }
+
+
+    if (
+        analysis.reasons.length === 0
+    ) {
+
+        const li =
+            document.createElement(
+                "li"
+            );
+
+
+        li.textContent =
+            "No major risk indicators were detected by the current checker.";
+
+
+        reasonsList.appendChild(
+            li
+        );
+
+
+    } else {
+
+        analysis.reasons.forEach(
+            reason => {
+
+                const li =
+                    document.createElement(
+                        "li"
+                    );
+
+
+                li.textContent =
+                    reason;
+
+
+                reasonsList.appendChild(
+                    li
+                );
+
+            }
+        );
+
+    }
+
+
+    resultBox.style.display =
+        "block";
+
+}
+
+
+async function checkEmail() {
+
+    const email =
+        normalizeEmail(
+            emailInput.value
+        );
+
+
+    if (!email) {
+
+        alert(
+            "Please enter an email address."
+        );
+
+        emailInput.focus();
+
+        return;
+
+    }
+
+
+    if (
+        !isValidEmail(email)
+    ) {
+
+        alert(
+            "Please enter a valid email address."
+        );
+
+        emailInput.focus();
+
+        return;
+
+    }
+
+
+    currentEmail =
+        email;
+
+
+    checkBtn.disabled =
+        true;
+
+    checkBtn.textContent =
+        "Checking...";
+
+
+    resultBox.style.display =
+        "none";
+
+
+    statusBox.style.display =
+        "block";
+
+
+    statusBox.textContent =
+        "🔎 Validating email address...";
+
+
+    try {
+
+        await new Promise(
+            resolve =>
+                setTimeout(
+                    resolve,
+                    300
+                )
+        );
+
+
+        const analysis =
+            analyzeEmail(
+                email
+            );
+
+
+        statusBox.textContent =
+            "🛡 Checking FraudGuard database...";
+
+
+        const databaseResult =
+            await checkFraudDatabase(
+                email
+            );
+
+
+        statusBox.textContent =
+            "📊 Calculating risk score...";
+
+
+        await new Promise(
+            resolve =>
+                setTimeout(
+                    resolve,
+                    250
+                )
+        );
+
+
+        displayResult(
+            email,
+            analysis,
+            databaseResult
+        );
+
+
+        await saveScan(
+            email,
+            analysis,
+            databaseResult
+        );
+
+
+        statusBox.style.display =
+            "none";
+
+
+    } catch (error) {
+
+        console.error(
+            "Email checker error:",
+            error
+        );
+
+
+        statusBox.textContent =
+            "Unable to complete the check.";
+
+    }
+
+
+    checkBtn.disabled =
+        false;
+
+    checkBtn.textContent =
+        "Check Email";
+
+}
+
+
+checkBtn.addEventListener(
+    "click",
+    checkEmail
+);
+
+
+emailInput.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Enter"
+        ) {
+
+            checkEmail();
+
+        }
+
+    }
+);
+
+
+checkAgainBtn.addEventListener(
+    "click",
+    () => {
+
+        resultBox.style.display =
+            "none";
+
+        statusBox.style.display =
+            "none";
+
+        emailInput.value =
+            "";
+
+        currentEmail =
+            "";
+
+        emailInput.focus();
+
+    }
+);
+
+
+reportBtn.addEventListener(
+    "click",
+    () => {
+
+        if (
+            currentEmail
+        ) {
+
+            window.location.href =
+                "report.html?email=" +
+                encodeURIComponent(
+                    currentEmail
+                );
+
+        } else {
+
+            window.location.href =
+                "report.html";
+
+        }
+
+    }
+);
+
+</script>
+
+<script
+    type="module"
+    src="script.js">
+</script>
 
 </body>
 
 </html>
-
