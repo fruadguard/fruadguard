@@ -1,221 +1,796 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<title>FraudGuard Features</title>
+<title>Features | FraudGuard</title>
 
-<meta name="description" content="Explore FraudGuard AI-powered fraud detection features.">
+<meta
+name="description"
+content="Explore FraudGuard's fraud detection, scam checking, reporting and security tools.">
 
-<link rel="stylesheet" href="style.css">
+<style>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    background:#0b1328;
+    color:#fff;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+.navbar{
+    width:100%;
+    background:#10182d;
+    border-bottom:1px solid #26324b;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.nav-container{
+    max-width:1250px;
+    min-height:64px;
+    margin:auto;
+    padding:0 18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:9px;
+
+    color:#22c55e;
+    font-size:20px;
+    font-weight:700;
+}
+
+.brand img{
+    width:36px;
+    height:36px;
+    object-fit:contain;
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    font-size:10px;
+    font-weight:600;
+}
+
+.nav-links a:hover{
+    color:#22c55e;
+}
+
+.nav-links a.active{
+    color:#22c55e;
+}
+
+.logout-btn{
+    border:0;
+    border-radius:6px;
+
+    padding:8px 13px;
+
+    background:#22c55e;
+    color:#fff;
+
+    cursor:pointer;
+    font-weight:700;
+}
+
+.logout-btn:hover{
+    background:#16a34a;
+}
+
+.mobile-menu{
+    display:none;
+
+    border:0;
+    background:transparent;
+    color:#fff;
+
+    font-size:24px;
+    cursor:pointer;
+}
+
+.page{
+    max-width:1150px;
+    margin:auto;
+    padding:45px 16px 60px;
+}
+
+.hero{
+    text-align:center;
+    margin-bottom:42px;
+}
+
+.hero-icon{
+    font-size:50px;
+    margin-bottom:10px;
+}
+
+.hero h1{
+    font-size:38px;
+    margin-bottom:10px;
+}
+
+.hero h1 span{
+    color:#22c55e;
+}
+
+.hero p{
+    max-width:720px;
+    margin:auto;
+
+    color:#aeb8ca;
+
+    font-size:13px;
+    line-height:1.7;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:24px;
+}
+
+.section-title h2{
+    color:#22c55e;
+
+    font-size:24px;
+
+    margin-bottom:7px;
+}
+
+.section-title p{
+    color:#8995a9;
+
+    font-size:11px;
+}
+
+.tools-grid{
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:17px;
+
+    margin-bottom:45px;
+}
+
+.tool-card{
+    background:#1c263b;
+
+    border:1px solid #2d3953;
+
+    border-radius:11px;
+
+    padding:21px;
+
+    min-height:205px;
+
+    display:flex;
+    flex-direction:column;
+
+    transition:.2s;
+}
+
+.tool-card:hover{
+    transform:translateY(-3px);
+
+    border-color:#22c55e;
+
+    box-shadow:
+    0 10px 25px
+    rgba(0,0,0,.22);
+}
+
+.tool-icon{
+    width:46px;
+    height:46px;
+
+    border-radius:10px;
+
+    background:#111a2f;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:22px;
+
+    margin-bottom:14px;
+}
+
+.tool-card h3{
+    color:#22c55e;
+
+    font-size:15px;
+
+    margin-bottom:7px;
+}
+
+.tool-card p{
+    color:#9da8bb;
+
+    font-size:11px;
+
+    line-height:1.6;
+
+    flex:1;
+}
+
+.tool-link{
+    display:block;
+
+    margin-top:13px;
+
+    padding:8px;
+
+    text-align:center;
+
+    border-radius:6px;
+
+    background:#344158;
+
+    color:#fff;
+
+    font-size:10px;
+    font-weight:600;
+}
+
+.tool-link:hover{
+    background:#22c55e;
+}
+
+.security-section{
+    margin-bottom:45px;
+}
+
+.security-grid{
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:16px;
+}
+
+.security-card{
+    background:#1c263b;
+
+    border:1px solid #2d3953;
+
+    border-radius:11px;
+
+    padding:22px;
+}
+
+.security-icon{
+    font-size:28px;
+
+    margin-bottom:12px;
+}
+
+.security-card h3{
+    color:#22c55e;
+
+    font-size:15px;
+
+    margin-bottom:7px;
+}
+
+.security-card p{
+    color:#9da8bb;
+
+    font-size:11px;
+
+    line-height:1.7;
+}
+
+.workflow-section{
+    margin-bottom:45px;
+}
+
+.workflow{
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:14px;
+}
+
+.step{
+    background:#1c263b;
+
+    border:1px solid #2d3953;
+
+    border-radius:11px;
+
+    padding:22px;
+
+    text-align:center;
+}
+
+.step-number{
+    width:35px;
+    height:35px;
+
+    margin:0 auto 11px;
+
+    border-radius:50%;
+
+    background:#22c55e;
+
+    color:#fff;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:13px;
+    font-weight:700;
+}
+
+.step h3{
+    font-size:14px;
+
+    margin-bottom:7px;
+}
+
+.step p{
+    color:#929db1;
+
+    font-size:10px;
+
+    line-height:1.6;
+}
+
+.community{
+    background:
+    linear-gradient(
+        135deg,
+        #1c263b,
+        #151f34
+    );
+
+    border:1px solid #2d3953;
+
+    border-radius:12px;
+
+    padding:32px;
+
+    text-align:center;
+
+    margin-bottom:45px;
+}
+
+.community h2{
+    color:#22c55e;
+
+    font-size:24px;
+
+    margin-bottom:9px;
+}
+
+.community p{
+    max-width:720px;
+
+    margin:0 auto 18px;
+
+    color:#aeb8ca;
+
+    font-size:12px;
+
+    line-height:1.7;
+}
+
+.community-btn{
+    display:inline-block;
+
+    padding:10px 18px;
+
+    border-radius:7px;
+
+    background:#22c55e;
+
+    color:#fff;
+
+    font-size:11px;
+    font-weight:600;
+}
+
+.community-btn:hover{
+    background:#16a34a;
+}
+
+.footer{
+    background:#10182d;
+
+    border-top:1px solid #26324b;
+
+    padding:35px 0 20px;
+}
+
+.footer-grid{
+    max-width:1150px;
+
+    margin:auto;
+
+    padding:0 16px;
+
+    display:grid;
+
+    grid-template-columns:
+    1.4fr 1fr 1fr 1fr;
+
+    gap:28px;
+}
+
+.footer h3{
+    color:#22c55e;
+
+    font-size:14px;
+
+    margin-bottom:10px;
+}
+
+.footer p,
+.footer a{
+    color:#7f8b9f;
+
+    font-size:10px;
+
+    line-height:1.7;
+}
+
+.footer-links{
+    list-style:none;
+}
+
+.footer-links li{
+    margin-bottom:5px;
+}
+
+.footer a:hover{
+    color:#22c55e;
+}
+
+.copyright{
+    max-width:1150px;
+
+    margin:28px auto 0;
+
+    padding:17px 16px 0;
+
+    border-top:1px solid #26324b;
+
+    text-align:center;
+
+    color:#5f6b80;
+
+    font-size:9px;
+}
+
+@media(max-width:1050px){
+
+    .nav-links{
+        gap:7px;
+        font-size:8px;
+    }
+
+    .tools-grid{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:800px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .mobile-menu{
+        display:block;
+    }
+
+    .nav-container{
+        min-height:58px;
+    }
+
+    .brand{
+        font-size:16px;
+    }
+
+    .brand img{
+        width:30px;
+        height:30px;
+    }
+
+    .security-grid{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+    .workflow{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+    .footer-grid{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:550px){
+
+    .page{
+        padding:
+        30px 12px 45px;
+    }
+
+    .hero h1{
+        font-size:29px;
+    }
+
+    .hero-icon{
+        font-size:42px;
+    }
+
+    .tools-grid,
+    .security-grid,
+    .workflow{
+        grid-template-columns:1fr;
+    }
+
+    .tool-card{
+        min-height:185px;
+    }
+
+    .community{
+        padding:23px 17px;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
 
 </head>
 
-
 <body>
-
 
 <header class="navbar">
 
-<div class="container">
+<div class="nav-container">
 
+<a
+href="index.html"
+class="brand">
 
-<a href="index.html" class="logo">
-Fraud<span>Guard</span>
+<img
+src="logo.png"
+alt="FraudGuard">
+
+<span>
+FraudGuard
+</span>
+
 </a>
 
+<nav class="nav-links">
 
-
-<ul class="nav-menu">
-
-<li>
-<a href="index.html">Home</a>
-</li>
-
-
-<li>
-<a href="features.html">Features</a>
-</li>
-
-
-<li>
-<a href="scanner.html">Scanner</a>
-</li>
-
-
-<li>
-<a href="ai-chat.html">AI Assistant</a>
-</li>
-
-
-<li>
-<a href="report.html">Report</a>
-</li>
-
-
-<li>
-<a href="contact.html">Contact</a>
-</li>
-
-
-</ul>
-
-
-
-<div class="nav-actions">
-
-<a href="login.html" class="nav-btn">
-Login
+<a href="index.html">
+Home
 </a>
 
-
-<a href="register.html" class="nav-btn">
-Register
+<a href="dashboard.html">
+Dashboard
 </a>
 
+<a
+href="features.html"
+class="active">
 
-</div>
+Features
 
+</a>
 
+<a href="scanner.html">
+URL Scanner
+</a>
 
-<div class="menu-toggle">
+<a href="phone-checker.html">
+Phone
+</a>
+
+<a href="email-checker.html">
+Email
+</a>
+
+<a href="ai-chat.html">
+AI Chat
+</a>
+
+<a href="qr-scanner.html">
+QR
+</a>
+
+<a href="facebook-scanner.html">
+Facebook
+</a>
+
+<a href="telegram-scanner.html">
+Telegram
+</a>
+
+<a href="whatsapp-scanner.html">
+WhatsApp
+</a>
+
+<a href="report.html">
+Report
+</a>
+
+<a href="about.html">
+About
+</a>
+
+<a href="contact.html">
+Contact
+</a>
+
+<button
+id="logoutBtn"
+class="logout-btn">
+
+Logout
+
+</button>
+
+</nav>
+
+<button
+id="mobileMenuBtn"
+class="mobile-menu">
+
 ☰
-</div>
 
+</button>
 
 </div>
 
 </header>
 
 
-
+<main class="page">
 
 <section class="hero">
 
-<div class="container">
-
-
-<div class="hero-content">
-
+<div class="hero-icon">
+🛡️
+</div>
 
 <h1>
-
-Powerful
-
-<span>
-FraudGuard Features
-</span>
-
+FraudGuard
+<span>Features</span>
 </h1>
 
-
 <p>
-
-Advanced AI security tools designed to detect and prevent digital scams.
-
+A collection of fraud detection, scam
+analysis and community protection tools
+designed to help users stay safer online.
 </p>
 
-
-</div>
-
-
-</div>
-
 </section>
+
+
 <section>
 
-<div class="container">
-
+<div class="section-title">
 
 <h2>
-AI Security Features
+Security Tools
 </h2>
 
+<p>
+Choose the right tool for the suspicious
+activity you want to check.
+</p>
+
+</div>
 
 
-<div class="features">
+<div class="tools-grid">
 
 
+<div class="tool-card">
 
-<div class="feature-box">
-
-<div class="icon">
+<div class="tool-icon">
 🌐
 </div>
 
 <h3>
-Website Scanner
+URL Scanner
 </h3>
 
 <p>
-Detect suspicious websites, phishing links and unsafe pages.
+Analyze suspicious website URLs for
+potential risk indicators and check
+FraudGuard community reports.
 </p>
 
-<a href="scanner.html" class="btn">
-Explore
+<a
+href="scanner.html"
+class="tool-link">
+
+Open Scanner
+
 </a>
 
 </div>
 
 
+<div class="tool-card">
 
-
-<div class="feature-box">
-
-<div class="icon">
+<div class="tool-icon">
 📞
 </div>
 
 <h3>
-Phone Number Checker
+Phone Checker
 </h3>
 
 <p>
-Check reported scam numbers and fraud history.
+Check suspicious phone numbers against
+available FraudGuard community reports
+and risk signals.
 </p>
 
-<a href="phone-checker.html" class="btn">
-Explore
+<a
+href="phone-checker.html"
+class="tool-link">
+
+Check Phone
+
 </a>
 
 </div>
 
 
+<div class="tool-card">
 
-
-<div class="feature-box">
-
-<div class="icon">
-📘
-</div>
-
-<h3>
-Facebook Scanner
-</h3>
-
-<p>
-Analyze suspicious Facebook profiles and pages.
-</p>
-
-<a href="facebook-scanner.html" class="btn">
-Explore
-</a>
-
-</div>
-
-
-
-
-<div class="feature-box">
-
-<div class="icon">
+<div class="tool-icon">
 📧
 </div>
 
@@ -224,21 +799,129 @@ Email Checker
 </h3>
 
 <p>
-Identify possible phishing emails and suspicious patterns.
+Analyze suspicious email addresses and
+identify common risk indicators.
 </p>
 
-<a href="email-checker.html" class="btn">
-Explore
+<a
+href="email-checker.html"
+class="tool-link">
+
+Check Email
+
 </a>
 
 </div>
 
 
+<div class="tool-card">
+
+<div class="tool-icon">
+🤖
+</div>
+
+<h3>
+AI Scam Assistant
+</h3>
+
+<p>
+Discuss suspicious messages, payment
+requests, links and common scam warning
+signs.
+</p>
+
+<a
+href="ai-chat.html"
+class="tool-link">
+
+Open AI Chat
+
+</a>
+
+</div>
 
 
-<div class="feature-box">
+<div class="tool-card">
 
-<div class="icon">
+<div class="tool-icon">
+📱
+</div>
+
+<h3>
+QR Scanner
+</h3>
+
+<p>
+Inspect QR codes and identify the
+destination URL before interacting with it.
+</p>
+
+<a
+href="qr-scanner.html"
+class="tool-link">
+
+Scan QR
+
+</a>
+
+</div>
+
+
+<div class="tool-card">
+
+<div class="tool-icon">
+🔵
+</div>
+
+<h3>
+Facebook Scanner
+</h3>
+
+<p>
+Check public Facebook URLs for suspicious
+URL patterns and FraudGuard reports.
+</p>
+
+<a
+href="facebook-scanner.html"
+class="tool-link">
+
+Scan Facebook
+
+</a>
+
+</div>
+
+
+<div class="tool-card">
+
+<div class="tool-icon">
+✈️
+</div>
+
+<h3>
+Telegram Scanner
+</h3>
+
+<p>
+Check public Telegram links and identifiers
+for available risk signals.
+</p>
+
+<a
+href="telegram-scanner.html"
+class="tool-link">
+
+Scan Telegram
+
+</a>
+
+</div>
+
+
+<div class="tool-card">
+
+<div class="tool-icon">
 💬
 </div>
 
@@ -247,327 +930,307 @@ WhatsApp Scanner
 </h3>
 
 <p>
-Analyze WhatsApp messages and suspicious links.
+Check suspicious WhatsApp links and phone
+numbers against available reports.
 </p>
 
-<a href="whatsapp-scanner.html" class="btn">
-Explore
+<a
+href="whatsapp-scanner.html"
+class="tool-link">
+
+Scan WhatsApp
+
 </a>
 
 </div>
 
 
+<div class="tool-card">
 
-
-<div class="feature-box">
-
-<div class="icon">
-📨
+<div class="tool-icon">
+🚨
 </div>
 
 <h3>
-Telegram Scanner
+Scam Reporting
 </h3>
 
 <p>
-Detect Telegram scam messages and fake offers.
+Submit suspicious websites, phone numbers
+and email addresses to the FraudGuard
+community.
 </p>
 
-<a href="telegram-scanner.html" class="btn">
-Explore
-</a>
+<a
+href="report.html"
+class="tool-link">
 
-</div>
-
-
-
-
-<div class="feature-box">
-
-<div class="icon">
-📷
-</div>
-
-<h3>
-QR Code Scanner
-</h3>
-
-<p>
-Scan QR codes and check connected destinations.
-</p>
-
-<a href="qr-scanner.html" class="btn">
-Explore
-</a>
-
-</div>
-
-
-
-
-<div class="feature-box">
-
-<div class="icon">
-🤖
-</div>
-
-<h3>
-AI Fraud Assistant
-</h3>
-
-<p>
-Get AI-powered guidance about suspicious activities.
-</p>
-
-<a href="ai-chat.html" class="btn">
-Explore
-</a>
-
-</div>
-
-
-
-</div>
-
-
-</div>
-
-</section>
-<section>
-
-<div class="container">
-
-
-<h2>
-Advanced Security System
-</h2>
-
-
-
-<div class="cards">
-
-
-
-<div class="card">
-
-
-<div class="icon">
-🧠
-</div>
-
-
-<h3>
-AI Risk Analysis
-</h3>
-
-
-<p>
-Smart detection system analyzes suspicious patterns and provides risk scores.
-</p>
-
-
-</div>
-
-
-
-
-<div class="card">
-
-
-<div class="icon">
-🌍
-</div>
-
-
-<h3>
-Global Fraud Database
-</h3>
-
-
-<p>
-A growing database of reported scams, links, accounts and fraud activities.
-</p>
-
-
-</div>
-
-
-
-
-<div class="card">
-
-
-<div class="icon">
-👥
-</div>
-
-
-<h3>
-Community Reporting
-</h3>
-
-
-<p>
-Users can report scams and help protect the digital community.
-</p>
-
-
-</div>
-
-
-
-
-<div class="card">
-
-
-<div class="icon">
-🔔
-</div>
-
-
-<h3>
-Instant Alerts
-</h3>
-
-
-<p>
-Get warnings about suspicious online activities.
-</p>
-
-
-</div>
-
-
-
-</div>
-
-
-</div>
-
-</section>
-
-
-
-
-<section>
-
-<div class="container">
-
-
-<div class="hero-card">
-
-
-<h2>
-AI Fraud Protection
-</h2>
-
-
-
-<p>
-FraudGuard combines artificial intelligence, user reports and security tools to create a safer digital environment.
-</p>
-
-
-
-<p>
-Our mission is to reduce online fraud and help people make safer decisions.
-</p>
-
-
-</div>
-
-
-</div>
-
-</section>
-<section>
-
-<div class="container">
-
-
-<div class="card">
-
-
-<h2>
-Our Team
-</h2>
-
-
-
-<h3>
-Muhammad Sajedur Rahman Biplob
-</h3>
-
-
-<p>
-Founder & CEO of FraudGuard. Leading the development of an AI-powered platform to fight digital scams worldwide.
-</p>
-
-
-
-<br>
-
-
-
-<h3>
-Nila Akter
-</h3>
-
-
-<p>
-Co-Founder of FraudGuard. Supporting product innovation and the mission to create a safer online ecosystem.
-</p>
-
-
-
-</div>
-
-
-</div>
-
-</section>
-
-
-
-
-<section>
-
-<div class="container">
-
-
-<div class="report-card">
-
-
-<h2>
-Our Mission
-</h2>
-
-
-
-<p>
-To protect people, businesses and communities from digital fraud through AI technology, smart detection and awareness.
-</p>
-
-
-
-<a href="report.html" class="btn">
 Report Scam
+
 </a>
 
-
 </div>
-
 
 </div>
 
 </section>
+
+
+<section class="security-section">
+
+<div class="section-title">
+
+<h2>
+Security Features
+</h2>
+
+<p>
+Designed around detection, awareness and
+community protection.
+</p>
+
+</div>
+
+
+<div class="security-grid">
+
+
+<div class="security-card">
+
+<div class="security-icon">
+🔎
+</div>
+
+<h3>
+Risk Analysis
+</h3>
+
+<p>
+Analyze available signals and provide a
+risk score to help users understand
+potential warning signs.
+</p>
+
+</div>
+
+
+<div class="security-card">
+
+<div class="security-icon">
+🔥
+</div>
+
+<h3>
+Fraud Database
+</h3>
+
+<p>
+Use community-submitted information to
+identify previously reported suspicious
+digital entities.
+</p>
+
+</div>
+
+
+<div class="security-card">
+
+<div class="security-icon">
+⚡
+</div>
+
+<h3>
+Fast Results
+</h3>
+
+<p>
+Get URL, phone and email checks quickly
+without unnecessary steps.
+</p>
+
+</div>
+
+
+<div class="security-card">
+
+<div class="security-icon">
+🔐
+</div>
+
+<h3>
+Firebase Authentication
+</h3>
+
+<p>
+Authenticated user accounts help protect
+personal scan history and platform features.
+</p>
+
+</div>
+
+
+<div class="security-card">
+
+<div class="security-icon">
+📊
+</div>
+
+<h3>
+Scan History
+</h3>
+
+<p>
+Authenticated users can keep track of
+their previous security checks.
+</p>
+
+</div>
+
+
+<div class="security-card">
+
+<div class="security-icon">
+🤝
+</div>
+
+<h3>
+Community Protection
+</h3>
+
+<p>
+User reports can help create stronger
+awareness around recurring scam activity.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="workflow-section">
+
+<div class="section-title">
+
+<h2>
+How FraudGuard Works
+</h2>
+
+<p>
+A simple process for checking suspicious
+digital activity.
+</p>
+
+</div>
+
+
+<div class="workflow">
+
+<div class="step">
+
+<div class="step-number">
+1
+</div>
+
+<h3>
+Submit
+</h3>
+
+<p>
+Enter a suspicious URL, phone number,
+email or supported identifier.
+</p>
+
+</div>
+
+
+<div class="step">
+
+<div class="step-number">
+2
+</div>
+
+<h3>
+Analyze
+</h3>
+
+<p>
+FraudGuard evaluates available risk
+indicators and database information.
+</p>
+
+</div>
+
+
+<div class="step">
+
+<div class="step-number">
+3
+</div>
+
+<h3>
+Review
+</h3>
+
+<p>
+Review the risk score, status and detected
+warning indicators.
+</p>
+
+</div>
+
+
+<div class="step">
+
+<div class="step-number">
+4
+</div>
+
+<h3>
+Protect
+</h3>
+
+<p>
+Take appropriate precautions or report
+the suspicious activity.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="community">
+
+<h2>
+Help Protect the Community
+</h2>
+
+<p>
+Found something suspicious? Submit a report
+and help other users become aware of
+potential fraud.
+</p>
+
+<a
+href="report.html"
+class="community-btn">
+
+🚨 Report Suspicious Activity
+
+</a>
+
+</section>
+
+</main>
+
+
 <footer class="footer">
 
-<div class="container">
-
-
-<div class="footer-box">
-
+<div class="footer-grid">
 
 <div>
 
@@ -575,115 +1238,126 @@ Report Scam
 FraudGuard
 </h3>
 
-
 <p>
-AI-powered digital fraud protection platform.
+AI-powered digital fraud protection
+platform designed to improve online
+security awareness.
 </p>
 
-
 </div>
-
-
 
 
 <div>
 
 <h3>
-Quick Links
+Tools
 </h3>
-
 
 <ul class="footer-links">
 
-
-<li>
-<a href="index.html">
-Home
-</a>
-</li>
-
-
-<li>
-<a href="features.html">
-Features
-</a>
-</li>
-
-
 <li>
 <a href="scanner.html">
-Scanner
+URL Scanner
 </a>
 </li>
 
+<li>
+<a href="phone-checker.html">
+Phone Checker
+</a>
+</li>
+
+<li>
+<a href="email-checker.html">
+Email Checker
+</a>
+</li>
 
 <li>
 <a href="ai-chat.html">
-AI Assistant
+AI Chat
 </a>
 </li>
-
-
-<li>
-<a href="report.html">
-Report
-</a>
-</li>
-
 
 </ul>
 
-
 </div>
-
-
 
 
 <div>
 
 <h3>
-Founder
+Platform
 </h3>
 
+<ul class="footer-links">
 
-<p>
-Mohammad Sajedur Rahman Biplob
-</p>
+<li>
+<a href="dashboard.html">
+Dashboard
+</a>
+</li>
 
+<li>
+<a href="report.html">
+Report Scam
+</a>
+</li>
 
-<p>
-Founder & CEO
-</p>
+<li>
+<a href="about.html">
+About
+</a>
+</li>
 
+<li>
+<a href="contact.html">
+Contact
+</a>
+</li>
+
+</ul>
 
 </div>
-
-
 
 
 <div>
 
 <h3>
-Co-Founder
+Legal
 </h3>
 
+<ul class="footer-links">
 
-<p>
-Nila Akter
-</p>
+<li>
+<a href="privacy-policy.html">
+Privacy Policy
+</a>
+</li>
 
+<li>
+<a href="cookie-policy.html">
+Cookie Policy
+</a>
+</li>
 
-<p>
-Co-Founder
-</p>
+<li>
+<a href="terms.html">
+Terms
+</a>
+</li>
 
+<li>
+<a href="disclaimer.html">
+Disclaimer
+</a>
+</li>
+
+</ul>
 
 </div>
 
-
-
 </div>
-
 
 
 <p class="copyright">
@@ -692,19 +1366,204 @@ Co-Founder
 
 </p>
 
+  </footer>
+<script type="module">
 
-</div>
+import {
+    auth
+} from "./firebase.js";
 
-</footer>
+import {
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
+const logoutBtn =
+    document.getElementById("logoutBtn");
 
-<script src="script.js"></script>
+const mobileMenuBtn =
+    document.getElementById("mobileMenuBtn");
+
+const navLinks =
+    document.querySelector(".nav-links");
+
+
+onAuthStateChanged(
+    auth,
+    (user) => {
+
+        if (!user) {
+
+            window.location.replace(
+                "login.html"
+            );
+
+        }
+
+    }
+);
+
+
+logoutBtn.addEventListener(
+    "click",
+    async () => {
+
+        logoutBtn.disabled =
+            true;
+
+        logoutBtn.textContent =
+            "Logging out...";
+
+
+        try {
+
+            await signOut(auth);
+
+            window.location.replace(
+                "login.html"
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Logout error:",
+                error
+            );
+
+            logoutBtn.disabled =
+                false;
+
+            logoutBtn.textContent =
+                "Logout";
+
+        }
+
+    }
+);
+
+
+mobileMenuBtn.addEventListener(
+    "click",
+    () => {
+
+        if (
+            navLinks.classList.contains(
+                "mobile-open"
+            )
+        ) {
+
+            navLinks.classList.remove(
+                "mobile-open"
+            );
+
+            navLinks.style.display =
+                "";
+
+            return;
+
+        }
+
+
+        navLinks.classList.add(
+            "mobile-open"
+        );
+
+
+        navLinks.style.display =
+            "flex";
+
+        navLinks.style.flexDirection =
+            "column";
+
+        navLinks.style.position =
+            "absolute";
+
+        navLinks.style.top =
+            "58px";
+
+        navLinks.style.right =
+            "12px";
+
+        navLinks.style.width =
+            "230px";
+
+        navLinks.style.padding =
+            "16px";
+
+        navLinks.style.background =
+            "#10182d";
+
+        navLinks.style.border =
+            "1px solid #26324b";
+
+        navLinks.style.borderRadius =
+            "10px";
+
+        navLinks.style.boxShadow =
+            "0 12px 30px rgba(0,0,0,.35)";
+
+    }
+);
+
+
+navLinks
+    .querySelectorAll("a")
+    .forEach(
+        link => {
+
+            link.addEventListener(
+                "click",
+                () => {
+
+                    navLinks.classList.remove(
+                        "mobile-open"
+                    );
+
+                    if (
+                        window.innerWidth <= 800
+                    ) {
+
+                        navLinks.style.display =
+                            "none";
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+window.addEventListener(
+    "resize",
+    () => {
+
+        if (
+            window.innerWidth > 800
+        ) {
+
+            navLinks.style = "";
+
+            navLinks.classList.remove(
+                "mobile-open"
+            );
+
+        }
+
+    }
+);
+
+</script>
+
+
+<script
+type="module"
+src="script.js">
+</script>
 
 
 </body>
 
 </html>
-
-
-
