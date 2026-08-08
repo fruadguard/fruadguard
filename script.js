@@ -1,122 +1,249 @@
-// ==========================================
-// FraudGuard Global Script
-// ==========================================
-
-
-// Mobile Menu
-
-const menuBtn = document.getElementById("menuBtn");
-const navMenu = document.querySelector(".nav-menu");
-
-
-if(menuBtn && navMenu){
-
-menuBtn.addEventListener("click",()=>{
-
-navMenu.classList.toggle("active");
-
-});
-
-}
-
-
-
-
-// Page Loading Animation
-
-window.addEventListener("load",()=>{
-
-
-document.body.classList.add("loaded");
-
-
-});
-
-
-
-
-
-// Contact Form
-
-const contactForm = document.querySelector(".contact-form form");
-
-
-if(contactForm){
-
-
-contactForm.addEventListener("submit",(e)=>{
-
-
-e.preventDefault();
-
-
-alert("Message sent successfully!");
-
-
-contactForm.reset();
-
-
-
-});
-
-
-}
-import { auth } from "./firebase.js";
+// ============================================================
+// FraudGuard - Global Authentication & Common Script
+// ============================================================
 
 import {
-onAuthStateChanged,
-signOut
-} from 
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    auth
+} from "./firebase.js";
+
+import {
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
-const loginBtn = document.querySelector('a[href="login.html"]');
-const registerBtn = document.querySelector('a[href="register.html"]');
+// ============================================================
+// AUTHENTICATION PROTECTION
+// ============================================================
+
+const currentPage =
+    window.location.pathname
+        .split("/")
+        .pop()
+        .toLowerCase();
 
 
+// Pages that do NOT require login
+const publicPages = [
+    "",
+    "login.html",
+    "register.html"
+];
 
-onAuthStateChanged(auth,(user)=>{
+
+// ============================================================
+// CHECK LOGIN
+// ============================================================
+
+onAuthStateChanged(
+    auth,
+    (user) => {
+
+        if (!user) {
+
+            // User is not logged in
+
+            if (!publicPages.includes(currentPage)) {
+
+                window.location.replace(
+                    "login.html"
+                );
+
+            }
+
+            return;
+        }
 
 
-if(user){
+        // ====================================================
+        // USER IS LOGGED IN
+        // ====================================================
+
+        /*
+         * If logged-in user opens login/register page,
+         * send them directly to the main Home page.
+         */
+
+        if (
+            currentPage === "login.html" ||
+            currentPage === "register.html"
+        ) {
+
+            window.location.replace(
+                "index.html"
+            );
+
+            return;
+        }
 
 
-if(loginBtn){
+        // User is allowed to continue
+        document.documentElement
+            .classList.add("authenticated");
 
-loginBtn.style.display="none";
+
+        // Update user information if elements exist
+        updateUserInformation(user);
+
+    }
+);
+
+
+// ============================================================
+// UPDATE USER INFORMATION
+// ============================================================
+
+function updateUserInformation(user) {
+
+    const userNameElements =
+        document.querySelectorAll(
+            "[data-user-name]"
+        );
+
+
+    const userEmailElements =
+        document.querySelectorAll(
+            "[data-user-email]"
+        );
+
+
+    const userPhotoElements =
+        document.querySelectorAll(
+            "[data-user-photo]"
+        );
+
+
+    const displayName =
+        user.displayName ||
+        user.email?.split("@")[0] ||
+        "User";
+
+
+    const email =
+        user.email || "";
+
+
+    userNameElements.forEach(
+        (element) => {
+
+            element.textContent =
+                displayName;
+
+        }
+    );
+
+
+    userEmailElements.forEach(
+        (element) => {
+
+            element.textContent =
+                email;
+
+        }
+    );
+
+
+    userPhotoElements.forEach(
+        (element) => {
+
+            if (user.photoURL) {
+
+                element.src =
+                    user.photoURL;
+
+            }
+
+        }
+    );
 
 }
 
 
-if(registerBtn){
+// ============================================================
+// LOGOUT FUNCTION
+// ============================================================
 
-registerBtn.innerHTML="Dashboard";
+async function logoutUser() {
 
-registerBtn.href="dashboard.html";
+    try {
+
+        await signOut(auth);
+
+
+        window.location.replace(
+            "login.html"
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Logout error:",
+            error
+        );
+
+
+        alert(
+            "Unable to logout. Please try again."
+        );
+
+    }
 
 }
 
 
-}else{
+// ============================================================
+// MAKE LOGOUT AVAILABLE
+// ============================================================
+
+window.logoutUser =
+    logoutUser;
 
 
-if(loginBtn){
+// ============================================================
+// AUTOMATIC LOGOUT BUTTON SUPPORT
+// ============================================================
+//
+// Any button/link with:
+//
+// id="logoutBtn"
+//
+// or
+//
+// data-logout
+//
+// will automatically logout the user.
+// ============================================================
 
-loginBtn.style.display="block";
+document.addEventListener(
+    "click",
+    (event) => {
 
-}
-
-
-if(registerBtn){
-
-registerBtn.innerHTML="Create Account";
-
-registerBtn.href="register.html";
-
-}
+        const logoutElement =
+            event.target.closest(
+                "#logoutBtn, [data-logout]"
+            );
 
 
-}
+        if (!logoutElement) {
+            return;
+        }
 
 
-});
+        event.preventDefault();
+
+        logoutUser();
+
+    }
+);
+
+
+// ============================================================
+// AUTHENTICATED USER READY EVENT
+// ============================================================
+
+document.dispatchEvent(
+    new CustomEvent(
+        "fraudguard-auth-ready"
+    )
+);
