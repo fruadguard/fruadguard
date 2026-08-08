@@ -1,445 +1,1645 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-<title>FraudGuard Phone Checker</title>
+<title>Phone Checker | FraudGuard</title>
 
-<meta name="description" content="Check suspicious phone numbers with FraudGuard fraud database.">
+<style>
 
-<link rel="stylesheet" href="style.css">
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    background:#0b1328;
+    color:#fff;
+    font-family:Georgia,"Times New Roman",serif;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+.navbar{
+    background:#10182d;
+    border-bottom:1px solid #26314b;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.nav-container{
+    max-width:1200px;
+    min-height:62px;
+    margin:auto;
+    padding:0 20px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    color:#22c55e;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.brand img{
+    width:34px;
+    height:34px;
+    object-fit:contain;
+}
+
+.nav-menu{
+    display:flex;
+    align-items:center;
+    gap:20px;
+
+    font-size:13px;
+    font-weight:bold;
+}
+
+.nav-menu a:hover{
+    color:#22c55e;
+}
+
+.logout-btn{
+    border:0;
+    background:#22c55e;
+    color:#fff;
+
+    padding:8px 14px;
+    border-radius:6px;
+
+    cursor:pointer;
+
+    font-family:inherit;
+    font-weight:bold;
+}
+
+.logout-btn:hover{
+    background:#16a34a;
+}
+
+.page{
+    max-width:950px;
+    margin:35px auto;
+    padding:0 18px;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:28px;
+}
+
+.header-icon{
+    font-size:50px;
+    margin-bottom:8px;
+}
+
+.header h1{
+    font-size:36px;
+    margin-bottom:10px;
+}
+
+.header h1 span{
+    color:#22c55e;
+}
+
+.header p{
+    max-width:700px;
+    margin:auto;
+
+    color:#bfc7d5;
+    font-size:14px;
+}
+
+.checker-card{
+    background:#1c263b;
+    border:1px solid #2d3953;
+    border-radius:12px;
+
+    padding:28px;
+}
+
+.input-label{
+    display:block;
+    margin-bottom:8px;
+
+    color:#dce1e9;
+    font-size:14px;
+    font-weight:bold;
+}
+
+.input-row{
+    display:flex;
+    gap:10px;
+}
+
+#phoneInput{
+    flex:1;
+
+    padding:14px;
+
+    border-radius:7px;
+    border:1px solid #3b4760;
+
+    outline:none;
+
+    background:#111a2f;
+    color:#fff;
+
+    font-family:inherit;
+    font-size:15px;
+}
+
+#phoneInput:focus{
+    border-color:#22c55e;
+
+    box-shadow:
+    0 0 0 2px
+    rgba(34,197,94,.12);
+}
+
+#phoneInput::placeholder{
+    color:#7f8a9e;
+}
+
+#checkBtn{
+    border:0;
+
+    padding:0 23px;
+
+    border-radius:7px;
+
+    background:#22c55e;
+    color:#fff;
+
+    font-family:inherit;
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+#checkBtn:hover{
+    background:#16a34a;
+}
+
+#checkBtn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.example{
+    margin-top:10px;
+    color:#7f8a9e;
+    font-size:11px;
+}
+
+.status{
+    display:none;
+
+    margin-top:20px;
+    padding:13px;
+
+    border-radius:8px;
+
+    text-align:center;
+
+    background:#111a2f;
+    border:1px solid #354158;
+
+    color:#cbd5e1;
+    font-size:13px;
+}
+
+.result{
+    display:none;
+
+    margin-top:22px;
+
+    background:#111a2f;
+    border:1px solid #354158;
+
+    border-radius:10px;
+
+    padding:25px;
+}
+
+.result-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.result-title h2{
+    font-size:22px;
+}
+
+.badge{
+    padding:7px 13px;
+    border-radius:20px;
+
+    font-size:12px;
+    font-weight:bold;
+}
+
+.badge.safe{
+    background:#123521;
+    color:#7ff0a2;
+    border:1px solid #236b3b;
+}
+
+.badge.suspicious{
+    background:#403415;
+    color:#ffd36b;
+    border:1px solid #80652a;
+}
+
+.badge.dangerous{
+    background:#401c28;
+    color:#ff9daf;
+    border:1px solid #7f3046;
+}
+
+.score-area{
+    text-align:center;
+
+    padding:20px;
+    margin-bottom:20px;
+
+    background:#1c263b;
+    border-radius:9px;
+}
+
+.score{
+    font-size:46px;
+    font-weight:bold;
+    color:#22c55e;
+}
+
+.score-label{
+    color:#aeb7c7;
+    font-size:12px;
+}
+
+.details{
+    display:grid;
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+    gap:10px;
+}
+
+.detail{
+    background:#1c263b;
+    border:1px solid #2d3953;
+
+    border-radius:7px;
+    padding:13px;
+}
+
+.detail strong{
+    display:block;
+
+    color:#22c55e;
+    font-size:12px;
+
+    margin-bottom:4px;
+}
+
+.detail span{
+    color:#d1d6df;
+    font-size:13px;
+
+    word-break:break-word;
+}
+
+.reasons{
+    margin-top:20px;
+}
+
+.reasons h3{
+    color:#22c55e;
+    font-size:16px;
+    margin-bottom:10px;
+}
+
+.reasons ul{
+    padding-left:20px;
+}
+
+.reasons li{
+    color:#d1d6df;
+    font-size:13px;
+    margin-bottom:7px;
+}
+
+.actions{
+    display:flex;
+    gap:10px;
+    margin-top:22px;
+}
+
+.action-btn{
+    border:0;
+
+    padding:10px 16px;
+
+    border-radius:6px;
+
+    background:#3d475d;
+    color:#fff;
+
+    cursor:pointer;
+
+    font-family:inherit;
+    font-weight:bold;
+}
+
+.action-btn:hover{
+    background:#22c55e;
+}
+
+.report-btn{
+    background:#7f3046;
+}
+
+.report-btn:hover{
+    background:#a43c59;
+}
+
+.info{
+    margin-top:20px;
+
+    background:#1c263b;
+    border:1px solid #2d3953;
+
+    border-radius:10px;
+    padding:20px;
+}
+
+.info h3{
+    color:#22c55e;
+    font-size:16px;
+    margin-bottom:8px;
+}
+
+.info p{
+    color:#bfc7d5;
+    font-size:12px;
+}
+
+footer{
+    max-width:950px;
+    margin:45px auto 25px;
+
+    padding:20px;
+
+    text-align:center;
+
+    color:#69758a;
+    font-size:11px;
+}
+
+@media(max-width:700px){
+
+    .nav-container{
+        padding:0 12px;
+    }
+
+    .brand{
+        font-size:14px;
+    }
+
+    .brand img{
+        width:27px;
+        height:27px;
+    }
+
+    .nav-menu{
+        gap:8px;
+        font-size:9px;
+    }
+
+    .logout-btn{
+        padding:6px 9px;
+        font-size:9px;
+    }
+
+    .page{
+        margin-top:25px;
+        padding:0 12px;
+    }
+
+    .header h1{
+        font-size:28px;
+    }
+
+    .header-icon{
+        font-size:40px;
+    }
+
+    .checker-card{
+        padding:18px;
+    }
+
+    .input-row{
+        flex-direction:column;
+    }
+
+    #checkBtn{
+        padding:12px;
+    }
+
+    .result{
+        padding:17px;
+    }
+
+    .result-title{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .details{
+        grid-template-columns:1fr;
+    }
+
+    .actions{
+        flex-direction:column;
+    }
+
+    .action-btn{
+        width:100%;
+    }
+
+}
+
+</style>
 
 </head>
 
-
 <body>
-
 
 <header class="navbar">
 
-<div class="container">
+<div class="nav-container">
 
+<a href="index.html" class="brand">
 
-<a href="index.html" class="logo">
-Fraud<span>Guard</span>
+<img src="logo.png" alt="FraudGuard">
+
+<span>FraudGuard</span>
+
 </a>
 
+<nav class="nav-menu">
 
-<ul class="nav-menu">
-
-<li>
-<a href="index.html">Home</a>
-</li>
-
-<li>
-<a href="features.html">Features</a>
-</li>
-
-<li>
-<a href="scanner.html">Scanner</a>
-</li>
-
-<li>
-<a href="phone-checker.html">Phone Checker</a>
-</li>
-
-<li>
-<a href="report.html">Report</a>
-</li>
-
-</ul>
-
-
-<a href="login.html" class="nav-btn">
-Login
+<a href="index.html">
+Home
 </a>
 
+<a href="scanner.html">
+Scanner
+</a>
 
-<div class="menu-toggle">
-☰
-</div>
+<a href="phone-checker.html">
+Phone
+</a>
 
+<a href="report.html">
+Report
+</a>
+
+<button
+id="logoutBtn"
+class="logout-btn">
+
+Logout
+
+</button>
+
+</nav>
 
 </div>
 
 </header>
 
 
+<main class="page">
 
-<section class="hero">
+<div class="header">
 
-<div class="container">
-
-
-<div class="hero-content">
-
+<div class="header-icon">
+📞
+</div>
 
 <h1>
-Phone Number
-<span>Checker</span>
+FraudGuard
+<span>Phone Checker</span>
 </h1>
 
-
 <p>
-Check suspicious phone numbers and identify possible fraud activity.
+Check an unknown phone number against
+the FraudGuard community fraud database
+before trusting the caller.
 </p>
-
 
 </div>
 
 
-</div>
+<div class="checker-card">
 
-</section>
-<section>
+<label
+class="input-label"
+for="phoneInput">
 
-<div class="container">
+Enter Phone Number
 
-
-<div class="scanner-box">
-
-
-<h2>
-Check Phone Number
-</h2>
+</label>
 
 
-<p>
-Enter a phone number to search fraud reports.
-</p>
-
-
+<div class="input-row">
 
 <input
-
-type="tel"
-
 id="phoneInput"
-
-class="scanner-input"
-
-placeholder="+8801XXXXXXXXX">
-
-
+type="tel"
+placeholder="+8801XXXXXXXXX"
+autocomplete="tel">
 
 <button
-
-class="btn"
-
-id="checkPhoneBtn">
+id="checkBtn">
 
 Check Number
 
 </button>
 
+</div>
 
 
-<div class="result-box" id="phoneResult">
-
-
-<h3>
-Result
-</h3>
-
-
-<p>
-Waiting for search...
+<p class="example">
+Example: +8801712345678
 </p>
 
 
+<div
+id="status"
+class="status">
+
+Checking number...
+
 </div>
 
 
+<div
+id="result"
+class="result">
+
+<div class="result-title">
+
+<h2>
+Phone Check Result
+</h2>
+
+<span
+id="resultBadge"
+class="badge">
+
+Unknown
+
+</span>
+
 </div>
 
 
+<div class="score-area">
+
+<div
+id="score"
+class="score">
+
+0
+
 </div>
 
-</section>
-
-
-
-<section>
-
-<div class="container">
-
-
-<div class="cards">
-
-
-<div class="card">
-
-<div class="icon">
-📞
+<div class="score-label">
+Risk Score / 100
 </div>
+
+</div>
+
+
+<div class="details">
+
+<div class="detail">
+
+<strong>
+Phone Number
+</strong>
+
+<span id="resultPhone">
+-
+</span>
+
+</div>
+
+
+<div class="detail">
+
+<strong>
+Database Reports
+</strong>
+
+<span id="reportCount">
+-
+</span>
+
+</div>
+
+
+<div class="detail">
+
+<strong>
+Country
+</strong>
+
+<span id="country">
+-
+</span>
+
+</div>
+
+
+<div class="detail">
+
+<strong>
+Database Status
+</strong>
+
+<span id="databaseStatus">
+-
+</span>
+
+</div>
+
+</div>
+
+
+<div class="reasons">
 
 <h3>
-Fraud Call Detection
+Detection Details
 </h3>
 
-<p>
-Identify reported scam phone numbers.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<div class="icon">
-🗄️
-</div>
-
-<h3>
-Fraud Database
-</h3>
-
-<p>
-Community reports help improve detection.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<div class="icon">
-🛡️
-</div>
-
-<h3>
-Stay Protected
-</h3>
-
-<p>
-Verify numbers before sharing information.
-</p>
-
-</div>
-
-
-</div>
-
-
-</div>
-
-</section>
-<script type="module">
-
-import { db } from "./firebase.js";
-
-import {
-
-collection,
-
-getDocs
-
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-const checkBtn=document.getElementById("checkPhoneBtn");
-
-const phoneInput=document.getElementById("phoneInput");
-
-const phoneResult=document.getElementById("phoneResult");
-
-
-
-checkBtn.addEventListener("click",async()=>{
-
-
-const phone=phoneInput.value.trim();
-
-
-if(phone===""){
-
-
-phoneResult.innerHTML=`
-
-<h3>
-⚠️ Warning
-</h3>
-
-<p>
-Please enter a phone number.
-</p>
-
-`;
-
-
-return;
-
-}
-
-
-
-const snapshot=await getDocs(
-
-collection(db,"fraud_numbers")
-
-);
-
-
-
-let found=false;
-
-
-
-snapshot.forEach(doc=>{
-
-
-const data=doc.data();
-
-
-if(data.number===phone){
-
-
-found=true;
-
-
-}
-
-});
-
-
-
-if(found){
-
-
-phoneResult.innerHTML=`
-
-<h3>
-⚠️ Fraud Warning
-</h3>
-
-<p>
-This number has been reported as suspicious.
-</p>
-
-`;
-
-
-
-}else{
-
-
-phoneResult.innerHTML=`
-
-<h3>
-✅ No Report Found
-</h3>
-
-<p>
-No fraud report found for this number.
-</p>
-
-`;
-
-}
-
-
-
-});
-
-
-</script>
-<footer class="footer">
-
-<div class="container">
-
-
-<div class="footer-box">
-
-
-<div>
-
-<h3>
-FraudGuard
-</h3>
-
-<p>
-AI-powered digital fraud protection platform.
-</p>
-
-</div>
-
-
-
-<div>
-
-<h3>
-Quick Links
-</h3>
-
-<ul class="footer-links">
-
-<li>
-<a href="index.html">Home</a>
-</li>
-
-<li>
-<a href="scanner.html">Scanner</a>
-</li>
-
-<li>
-<a href="report.html">Report</a>
-</li>
-
+<ul id="reasonsList">
 </ul>
 
 </div>
 
 
+<div class="actions">
 
-<div>
+<button
+id="checkAgainBtn"
+class="action-btn">
+
+Check Another Number
+
+</button>
+
+<button
+id="reportBtn"
+class="action-btn report-btn">
+
+🚨 Report This Number
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="info">
 
 <h3>
-Phone Security
+⚠️ Important
 </h3>
 
 <p>
-Check unknown numbers before trusting.
-</p>
-
-<p>
-Community Fraud Database
+A phone number not being present in the
+FraudGuard database does not guarantee
+that it is safe. FraudGuard relies on
+available community reports and detection
+signals.
 </p>
 
 </div>
 
-
-</div>
-
+</main>
 
 
-<p class="copyright">
+<footer>
 
-© 2026 FraudGuard. All Rights Reserved.
+© 2026 FraudGuard —
+AI-Powered Fraud Detection & Scam Prevention
 
-</p>
+  </footer>
+  <script type="module">
+
+import {
+    auth,
+    db
+} from "./firebase.js";
+
+import {
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+    collection,
+    query,
+    where,
+    getDocs,
+    addDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-</div>
+const phoneInput =
+    document.getElementById("phoneInput");
 
-</footer>
+const checkBtn =
+    document.getElementById("checkBtn");
+
+const statusBox =
+    document.getElementById("status");
+
+const resultBox =
+    document.getElementById("result");
+
+const resultBadge =
+    document.getElementById("resultBadge");
+
+const scoreElement =
+    document.getElementById("score");
+
+const resultPhone =
+    document.getElementById("resultPhone");
+
+const reportCount =
+    document.getElementById("reportCount");
+
+const countryElement =
+    document.getElementById("country");
+
+const databaseStatus =
+    document.getElementById("databaseStatus");
+
+const reasonsList =
+    document.getElementById("reasonsList");
+
+const checkAgainBtn =
+    document.getElementById("checkAgainBtn");
+
+const reportBtn =
+    document.getElementById("reportBtn");
 
 
+let currentUser = null;
 
-<script src="script.js"></script>
+let currentPhone = "";
 
+
+onAuthStateChanged(
+    auth,
+    (user) => {
+
+        if (!user) {
+
+            window.location.replace(
+                "login.html"
+            );
+
+            return;
+        }
+
+        currentUser = user;
+
+    }
+);
+
+
+function normalizePhone(value) {
+
+    let phone =
+        value.trim();
+
+
+    phone =
+        phone.replace(
+            /[\s().-]/g,
+            ""
+        );
+
+
+    if (
+        phone.startsWith("00")
+    ) {
+
+        phone =
+            "+" +
+            phone.substring(2);
+
+    }
+
+
+    if (
+        phone.startsWith("01")
+    ) {
+
+        phone =
+            "+880" +
+            phone.substring(1);
+
+    }
+
+
+    if (
+        !phone.startsWith("+")
+    ) {
+
+        return null;
+
+    }
+
+
+    const digits =
+        phone.substring(1);
+
+
+    if (
+        !/^\d+$/.test(digits)
+    ) {
+
+        return null;
+
+    }
+
+
+    if (
+        digits.length < 8 ||
+        digits.length > 15
+    ) {
+
+        return null;
+
+    }
+
+
+    return "+" + digits;
+
+}
+
+
+function getCountry(phone) {
+
+    if (
+        phone.startsWith("+880")
+    ) {
+
+        return "Bangladesh 🇧🇩";
+
+    }
+
+
+    if (
+        phone.startsWith("+91")
+    ) {
+
+        return "India 🇮🇳";
+
+    }
+
+
+    if (
+        phone.startsWith("+92")
+    ) {
+
+        return "Pakistan 🇵🇰";
+
+    }
+
+
+    if (
+        phone.startsWith("+966")
+    ) {
+
+        return "Saudi Arabia 🇸🇦";
+
+    }
+
+
+    if (
+        phone.startsWith("+971")
+    ) {
+
+        return "United Arab Emirates 🇦🇪";
+
+    }
+
+
+    if (
+        phone.startsWith("+1")
+    ) {
+
+        return "United States / Canada 🇺🇸🇨🇦";
+
+    }
+
+
+    if (
+        phone.startsWith("+44")
+    ) {
+
+        return "United Kingdom 🇬🇧";
+
+    }
+
+
+    return "International";
+
+}
+
+
+function analyzePhone(phone) {
+
+    let score = 0;
+
+    const reasons = [];
+
+
+    const digits =
+        phone.substring(1);
+
+
+    if (
+        digits.length < 10
+    ) {
+
+        score += 15;
+
+        reasons.push(
+            "The number has an unusually short length."
+        );
+
+    }
+
+
+    const repeatedPattern =
+        /(\d)\1{5,}/;
+
+
+    if (
+        repeatedPattern.test(digits)
+    ) {
+
+        score += 25;
+
+        reasons.push(
+            "The number contains an unusual repeated-digit pattern."
+        );
+
+    }
+
+
+    const sequentialPatterns = [
+        "012345",
+        "123456",
+        "234567",
+        "345678",
+        "456789",
+        "987654",
+        "876543",
+        "765432"
+    ];
+
+
+    if (
+        sequentialPatterns.some(
+            pattern =>
+                digits.includes(pattern)
+        )
+    ) {
+
+        score += 15;
+
+        reasons.push(
+            "The number contains a highly sequential digit pattern."
+        );
+
+    }
+
+
+    if (
+        phone.startsWith("+880")
+    ) {
+
+        const bdNumber =
+            phone.substring(4);
+
+
+        if (
+            bdNumber.length !== 10
+        ) {
+
+            score += 15;
+
+            reasons.push(
+                "The Bangladesh mobile number format appears unusual."
+            );
+
+        }
+
+    }
+
+
+    score =
+        Math.min(
+            score,
+            100
+        );
+
+
+    return {
+        score,
+        reasons
+    };
+
+}
+
+
+async function checkFraudDatabase(
+    phone
+) {
+
+    try {
+
+        const fraudCollection =
+            collection(
+                db,
+                "fraud_phones"
+            );
+
+
+        const q =
+            query(
+                fraudCollection,
+                where(
+                    "phone",
+                    "==",
+                    phone
+                )
+            );
+
+
+        const snapshot =
+            await getDocs(q);
+
+
+        return {
+            found:
+                !snapshot.empty,
+
+            count:
+                snapshot.size,
+
+            error:
+                false
+        };
+
+
+    } catch (error) {
+
+        console.error(
+            "Phone database error:",
+            error
+        );
+
+
+        return {
+            found: false,
+            count: 0,
+            error: true
+        };
+
+    }
+
+}
+
+
+function getStatus(
+    score,
+    databaseResult
+) {
+
+    if (
+        databaseResult.found
+    ) {
+
+        return "Dangerous";
+
+    }
+
+
+    if (
+        score >= 60
+    ) {
+
+        return "Dangerous";
+
+    }
+
+
+    if (
+        score >= 30
+    ) {
+
+        return "Suspicious";
+
+    }
+
+
+    return "Low Risk";
+
+}
+
+
+async function saveScan(
+    phone,
+    analysis,
+    databaseResult
+) {
+
+    if (!currentUser) {
+        return;
+    }
+
+
+    try {
+
+        await addDoc(
+            collection(
+                db,
+                "scan_history"
+            ),
+            {
+
+                uid:
+                    currentUser.uid,
+
+                email:
+                    currentUser.email || "",
+
+                type:
+                    "phone",
+
+                phone:
+                    phone,
+
+                score:
+                    analysis.score,
+
+                status:
+                    getStatus(
+                        analysis.score,
+                        databaseResult
+                    ),
+
+                databaseMatch:
+                    databaseResult.found,
+
+                createdAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.warn(
+            "Phone scan history error:",
+            error
+        );
+
+    }
+
+}
+
+
+function displayResult(
+    phone,
+    analysis,
+    databaseResult
+) {
+
+    const status =
+        getStatus(
+            analysis.score,
+            databaseResult
+        );
+
+
+    scoreElement.textContent =
+        analysis.score;
+
+
+    resultPhone.textContent =
+        phone;
+
+
+    countryElement.textContent =
+        getCountry(phone);
+
+
+    if (
+        databaseResult.found
+    ) {
+
+        reportCount.textContent =
+            databaseResult.count;
+
+        databaseStatus.textContent =
+            "⚠ Reported";
+
+    } else if (
+        databaseResult.error
+    ) {
+
+        reportCount.textContent =
+            "Unavailable";
+
+        databaseStatus.textContent =
+            "Database unavailable";
+
+    } else {
+
+        reportCount.textContent =
+            "0";
+
+        databaseStatus.textContent =
+            "No matching report";
+
+    }
+
+
+    resultBadge.className =
+        "badge";
+
+
+    if (
+        status === "Dangerous"
+    ) {
+
+        resultBadge.classList.add(
+            "dangerous"
+        );
+
+        resultBadge.textContent =
+            "🚨 Dangerous";
+
+        scoreElement.style.color =
+            "#ff6b81";
+
+    } else if (
+        status === "Suspicious"
+    ) {
+
+        resultBadge.classList.add(
+            "suspicious"
+        );
+
+        resultBadge.textContent =
+            "⚠ Suspicious";
+
+        scoreElement.style.color =
+            "#ffd36b";
+
+    } else {
+
+        resultBadge.classList.add(
+            "safe"
+        );
+
+        resultBadge.textContent =
+            "✓ Low Risk";
+
+        scoreElement.style.color =
+            "#22c55e";
+
+    }
+
+
+    reasonsList.innerHTML =
+        "";
+
+
+    if (
+        databaseResult.found
+    ) {
+
+        const li =
+            document.createElement(
+                "li"
+            );
+
+
+        li.textContent =
+            "This phone number has been reported in the FraudGuard community database.";
+
+
+        reasonsList.appendChild(
+            li
+        );
+
+    }
+
+
+    if (
+        analysis.reasons.length === 0
+    ) {
+
+        const li =
+            document.createElement(
+                "li"
+            );
+
+
+        li.textContent =
+            "No major risk indicators were detected by the current checker.";
+
+
+        reasonsList.appendChild(
+            li
+        );
+
+    } else {
+
+        analysis.reasons.forEach(
+            reason => {
+
+                const li =
+                    document.createElement(
+                        "li"
+                    );
+
+
+                li.textContent =
+                    reason;
+
+
+                reasonsList.appendChild(
+                    li
+                );
+
+            }
+        );
+
+    }
+
+
+    resultBox.style.display =
+        "block";
+
+}
+
+
+async function checkPhone() {
+
+    const phone =
+        normalizePhone(
+            phoneInput.value
+        );
+
+
+    if (!phone) {
+
+        alert(
+            "Please enter a valid international phone number."
+        );
+
+        phoneInput.focus();
+
+        return;
+
+    }
+
+
+    currentPhone =
+        phone;
+
+
+    checkBtn.disabled =
+        true;
+
+    checkBtn.textContent =
+        "Checking...";
+
+
+    resultBox.style.display =
+        "none";
+
+
+    statusBox.style.display =
+        "block";
+
+
+    statusBox.textContent =
+        "🔎 Validating phone number...";
+
+
+    try {
+
+        await new Promise(
+            resolve =>
+                setTimeout(
+                    resolve,
+                    300
+                )
+        );
+
+
+        const analysis =
+            analyzePhone(
+                phone
+            );
+
+
+        statusBox.textContent =
+            "🛡 Checking FraudGuard database...";
+
+
+        const databaseResult =
+            await checkFraudDatabase(
+                phone
+            );
+
+
+        statusBox.textContent =
+            "📊 Calculating risk score...";
+
+
+        await new Promise(
+            resolve =>
+                setTimeout(
+                    resolve,
+                    250
+                )
+        );
+
+
+        displayResult(
+            phone,
+            analysis,
+            databaseResult
+        );
+
+
+        await saveScan(
+            phone,
+            analysis,
+            databaseResult
+        );
+
+
+        statusBox.style.display =
+            "none";
+
+
+    } catch (error) {
+
+        console.error(
+            "Phone checker error:",
+            error
+        );
+
+
+        statusBox.textContent =
+            "Unable to complete the check.";
+
+    }
+
+
+    checkBtn.disabled =
+        false;
+
+    checkBtn.textContent =
+        "Check Number";
+
+}
+
+
+checkBtn.addEventListener(
+    "click",
+    checkPhone
+);
+
+
+phoneInput.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Enter"
+        ) {
+
+            checkPhone();
+
+        }
+
+    }
+);
+
+
+checkAgainBtn.addEventListener(
+    "click",
+    () => {
+
+        resultBox.style.display =
+            "none";
+
+        statusBox.style.display =
+            "none";
+
+        phoneInput.value =
+            "";
+
+        currentPhone =
+            "";
+
+        phoneInput.focus();
+
+    }
+);
+
+
+reportBtn.addEventListener(
+    "click",
+    () => {
+
+        if (
+            currentPhone
+        ) {
+
+            window.location.href =
+                "report.html?phone=" +
+                encodeURIComponent(
+                    currentPhone
+                );
+
+        } else {
+
+            window.location.href =
+                "report.html";
+
+        }
+
+    }
+);
+
+</script>
+
+<script
+    type="module"
+    src="script.js">
+</script>
 
 </body>
 
   </html>
-
-
-
