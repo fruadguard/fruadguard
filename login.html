@@ -2,359 +2,1020 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
 
-<meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | FraudGuard</title>
 
-<title>FraudGuard | Login</title>
+    <style>
 
-<link rel="stylesheet" href="style.css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
+        body {
+            min-height: 100vh;
 
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            background: #0b1328;
+            color: #ffffff;
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
+            padding: 20px;
+        }
+
+        /* ================= LOGIN CONTAINER ================= */
+
+        .login-container {
+            width: 100%;
+            max-width: 430px;
+
+            text-align: center;
+        }
+
+        /* ================= LOGO ================= */
+
+        .logo {
+            width: 85px;
+            height: 85px;
+
+            object-fit: contain;
+
+            margin-bottom: 12px;
+        }
+
+        .brand {
+            color: #22c55e;
+
+            font-size: 30px;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #cbd5e1;
+
+            font-size: 14px;
+
+            margin-bottom: 25px;
+        }
+
+        /* ================= CARD ================= */
+
+        .login-card {
+            background: #1c263b;
+
+            border: 1px solid #2d3953;
+
+            border-radius: 12px;
+
+            padding: 30px 25px;
+
+            box-shadow:
+                0 10px 35px
+                rgba(0, 0, 0, 0.25);
+        }
+
+        .login-card h1 {
+            font-size: 27px;
+
+            margin-bottom: 7px;
+        }
+
+        .login-card .description {
+            color: #aeb7c7;
+
+            font-size: 13px;
+
+            margin-bottom: 23px;
+        }
+
+        /* ================= INPUT ================= */
+
+        .input-group {
+            text-align: left;
+
+            margin-bottom: 16px;
+        }
+
+        .input-group label {
+            display: block;
+
+            color: #dce1e9;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            margin-bottom: 7px;
+        }
+
+        .input-group input {
+            width: 100%;
+
+            padding: 13px 12px;
+
+            border-radius: 7px;
+
+            border: 1px solid #3b4760;
+
+            background: #111a2f;
+
+            color: #ffffff;
+
+            outline: none;
+
+            font-family: inherit;
+
+            font-size: 14px;
+        }
+
+        .input-group input:focus {
+            border-color: #22c55e;
+
+            box-shadow:
+                0 0 0 2px
+                rgba(34, 197, 94, 0.12);
+        }
+
+        .input-group input::placeholder {
+            color: #7f8a9e;
+        }
+
+        /* ================= LOGIN BUTTON ================= */
+
+        .login-btn {
+            width: 100%;
+
+            padding: 12px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            background: #22c55e;
+
+            color: #ffffff;
+
+            font-family: inherit;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .login-btn:hover {
+            background: #16a34a;
+        }
+
+        .login-btn:disabled {
+            opacity: 0.6;
+
+            cursor: not-allowed;
+        }
+
+        /* ================= DIVIDER ================= */
+
+        .divider {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin: 20px 0;
+        }
+
+        .divider span {
+            flex: 1;
+
+            height: 1px;
+
+            background: #354158;
+        }
+
+        .divider p {
+            color: #8e99ac;
+
+            font-size: 12px;
+        }
+
+        /* ================= GOOGLE ================= */
+
+        .google-btn {
+            width: 100%;
+
+            padding: 11px;
+
+            border-radius: 7px;
+
+            border: 1px solid #3b4760;
+
+            background: #111a2f;
+
+            color: #ffffff;
+
+            font-family: inherit;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .google-btn:hover {
+            background: #18233b;
+
+            border-color: #22c55e;
+        }
+
+        /* ================= ERROR ================= */
+
+        .error-message {
+            display: none;
+
+            margin-bottom: 15px;
+
+            padding: 10px;
+
+            border-radius: 7px;
+
+            background: #401c28;
+
+            border: 1px solid #7f3046;
+
+            color: #ff9daf;
+
+            font-size: 12px;
+        }
+
+        /* ================= SUCCESS ================= */
+
+        .success-message {
+            display: none;
+
+            margin-bottom: 15px;
+
+            padding: 10px;
+
+            border-radius: 7px;
+
+            background: #123521;
+
+            border: 1px solid #236b3b;
+
+            color: #7ff0a2;
+
+            font-size: 12px;
+        }
+
+        /* ================= FORGOT ================= */
+
+        .forgot {
+            display: block;
+
+            text-align: right;
+
+            margin-top: -7px;
+
+            margin-bottom: 17px;
+
+            color: #22c55e;
+
+            font-size: 12px;
+
+            cursor: pointer;
+        }
+
+        .forgot:hover {
+            text-decoration: underline;
+        }
+
+        /* ================= REGISTER ================= */
+
+        .register-text {
+            margin-top: 20px;
+
+            color: #aeb7c7;
+
+            font-size: 13px;
+        }
+
+        .register-text a {
+            color: #22c55e;
+
+            font-weight: bold;
+        }
+
+        .register-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+            margin-top: 18px;
+
+            color: #69758a;
+
+            font-size: 11px;
+        }
+
+        /* ================= LOADING ================= */
+
+        .page-loading {
+            position: fixed;
+
+            inset: 0;
+
+            background: #0b1328;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            z-index: 9999;
+        }
+
+        .page-loading-box {
+            text-align: center;
+        }
+
+        .page-loading-box img {
+            width: 60px;
+
+            height: 60px;
+
+            object-fit: contain;
+        }
+
+        .page-loading-box p {
+            margin-top: 10px;
+
+            color: #22c55e;
+
+            font-size: 14px;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 480px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .logo {
+                width: 70px;
+                height: 70px;
+            }
+
+            .brand {
+                font-size: 26px;
+            }
+
+            .login-card {
+                padding: 25px 18px;
+            }
+
+            .login-card h1 {
+                font-size: 24px;
+            }
+
+        }
+
+    </style>
 </head>
+
 
 <body>
 
-<div class="login-page">
 
-<div class="login-left">
+<!-- ================= AUTH CHECK LOADING ================= -->
 
-<div class="brand">
+<div
+    class="page-loading"
+    id="pageLoading">
 
-<h1>
+    <div class="page-loading-box">
 
-<i class="fa-solid fa-shield-halved"></i>
+        <img
+            src="logo.png"
+            alt="FraudGuard">
 
-Fraud<span>Guard</span>
+        <p>
+            Checking session...
+        </p>
 
-</h1>
-
-<p>
-
-AI-Powered Global Anti-Fraud Platform
-
-</p>
-
-</div>
-
-<div class="hero-content">
-
-<h2>
-
-Protect Yourself From Digital Scams
-
-</h2>
-
-<p>
-
-Detect fake websites, phishing links, scam phone numbers, fake social accounts and online fraud using FraudGuard AI.
-
-</p>
-
-<ul>
-
-<li><i class="fa-solid fa-circle-check"></i> AI Scam Detection</li>
-
-<li><i class="fa-solid fa-circle-check"></i> Website Scanner</li>
-
-<li><i class="fa-solid fa-circle-check"></i> Phone Number Checker</li>
-
-<li><i class="fa-solid fa-circle-check"></i> Community Scam Reports</li>
-
-<li><i class="fa-solid fa-circle-check"></i> Real-Time Protection</li>
-
-</ul>
-
-</div>
-
-</div>
-
-<div class="login-right">
-
-<div class="login-card">
-
-<h2>
-
-Welcome Back
-
-</h2>
-
-<p>
-
-Login to your FraudGuard account
-
-</p>
-
-<form id="loginForm">
-  <div class="input-group">
-
-<label>
-
-Email Address
-
-</label>
-
-<div class="input-box">
-
-<i class="fa-solid fa-envelope"></i>
-
-<input
-type="email"
-id="email"
-placeholder="Enter your email"
-required>
-
-</div>
+    </div>
 
 </div>
 
 
+<!-- ================= LOGIN ================= -->
+
+<div class="login-container">
 
 
-<div class="input-group">
-
-<label>
-
-Password
-
-</label>
-
-<div class="input-box">
-
-<i class="fa-solid fa-lock"></i>
-
-<input
-type="password"
-id="password"
-placeholder="Enter your password"
-required>
-
-<button
-type="button"
-class="password-toggle"
-onclick="togglePassword()">
-
-<i id="eyeIcon" class="fa-solid fa-eye"></i>
-
-</button>
-
-</div>
-
-</div>
+    <img
+        src="logo.png"
+        alt="FraudGuard"
+        class="logo">
 
 
+    <div class="brand">
+        FraudGuard
+    </div>
 
 
-<div class="login-options">
-
-<label class="remember-me">
-
-<input
-type="checkbox"
-id="rememberMe">
-
-Remember Me
-
-</label>
+    <div class="subtitle">
+        AI-Powered Fraud Detection & Scam Prevention
+    </div>
 
 
-
-<a href="forgot-password.html">
-
-Forgot Password?
-
-</a>
-
-</div>
+    <div class="login-card">
 
 
+        <h1>
+            Welcome Back
+        </h1>
 
 
-<button
-type="button"
-class="btn login-btn"
-onclick="loginUser()">
-
-<i class="fa-solid fa-right-to-bracket"></i>
-
-Login
-
-</button>
+        <p class="description">
+            Login to protect yourself from online scams.
+        </p>
 
 
+        <!-- ERROR -->
+
+        <div
+            id="errorMessage"
+            class="error-message">
+        </div>
 
 
-<div class="divider">
+        <!-- SUCCESS -->
 
-<span>
-
-OR CONTINUE WITH
-
-</span>
-
-</div>
+        <div
+            id="successMessage"
+            class="success-message">
+        </div>
 
 
+        <!-- EMAIL -->
+
+        <div class="input-group">
+
+            <label for="email">
+                Email Address
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                autocomplete="email"
+                required>
+
+        </div>
 
 
-<button
-type="button"
-class="social-btn google"
-onclick="googleLogin()">
+        <!-- PASSWORD -->
 
-<i class="fa-brands fa-google"></i>
+        <div class="input-group">
 
-Continue with Google
+            <label for="password">
+                Password
+            </label>
 
-</button>
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                required>
 
-
-
-
-<button
-type="button"
-class="social-btn facebook"
-onclick="facebookLogin()">
-
-<i class="fa-brands fa-facebook-f"></i>
-
-Continue with Facebook
-
-</button>
-<div class="create-account">
-
-<p>
-
-Don't have a FraudGuard account?
-
-</p>
+        </div>
 
 
-<a href="register.html">
+        <!-- FORGOT -->
 
-Create New Account
+        <a
+            href="#"
+            class="forgot"
+            id="forgotPassword">
 
-</a>
+            Forgot password?
+
+        </a>
+
+
+        <!-- LOGIN -->
+
+        <button
+            type="button"
+            class="login-btn"
+            id="loginBtn">
+
+            Login
+
+        </button>
+
+
+        <!-- DIVIDER -->
+
+        <div class="divider">
+
+            <span></span>
+
+            <p>
+                OR
+            </p>
+
+            <span></span>
+
+        </div>
+
+
+        <!-- GOOGLE -->
+
+        <button
+            type="button"
+            class="google-btn"
+            id="googleBtn">
+
+            🔵 Continue with Google
+
+        </button>
+
+
+        <!-- REGISTER -->
+
+        <p class="register-text">
+
+            Don't have an account?
+
+            <a href="register.html">
+                Create Account
+            </a>
+
+        </p>
+
+
+    </div>
+
+
+    <div class="footer">
+
+        © 2026 FraudGuard.
+        All rights reserved.
+
+    </div>
 
 
 </div>
 
 
+<!-- ================= FIREBASE ================= -->
 
+<script type="module">
 
-<div class="security-note">
+    import {
+        auth
+    } from "./firebase.js";
 
 
-<i class="fa-solid fa-shield-check"></i>
+    import {
+        onAuthStateChanged,
+        signInWithEmailAndPassword,
+        sendPasswordResetEmail,
+        GoogleAuthProvider,
+        signInWithPopup
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
-<p>
+    const pageLoading =
+        document.getElementById(
+            "pageLoading"
+        );
 
-Your account is protected with Firebase secure authentication.
 
-</p>
+    const emailInput =
+        document.getElementById(
+            "email"
+        );
 
 
-</div>
+    const passwordInput =
+        document.getElementById(
+            "password"
+        );
 
 
+    const loginBtn =
+        document.getElementById(
+            "loginBtn"
+        );
 
 
-<a href="index.html" class="back-home">
+    const googleBtn =
+        document.getElementById(
+            "googleBtn"
+        );
 
 
-<i class="fa-solid fa-arrow-left"></i>
+    const forgotPassword =
+        document.getElementById(
+            "forgotPassword"
+        );
 
-Back to Home
 
+    const errorMessage =
+        document.getElementById(
+            "errorMessage"
+        );
 
-</a>
 
+    const successMessage =
+        document.getElementById(
+            "successMessage"
+        );
 
 
-</form>
+    /* ================= MESSAGE FUNCTIONS ================= */
 
 
-</div>
+    function showError(message) {
 
+        errorMessage.textContent =
+            message;
 
-</div>
+        errorMessage.style.display =
+            "block";
 
+        successMessage.style.display =
+            "none";
+    }
 
-</div>
-<script type="module" src="auth.js"></script>
 
+    function showSuccess(message) {
 
-<script>
+        successMessage.textContent =
+            message;
 
+        successMessage.style.display =
+            "block";
 
-function togglePassword(){
+        errorMessage.style.display =
+            "none";
+    }
 
 
-const password = document.getElementById("password");
+    function clearMessages() {
 
-const eyeIcon = document.getElementById("eyeIcon");
+        errorMessage.style.display =
+            "none";
 
+        successMessage.style.display =
+            "none";
+    }
 
 
-if(password.type === "password"){
+    /* ================= SESSION CHECK ================= */
 
+    onAuthStateChanged(
+        auth,
+        (user) => {
 
-password.type = "text";
+            if (user) {
 
+                /*
+                 * Already logged in.
+                 *
+                 * NO DASHBOARD.
+                 *
+                 * Directly open main Home.
+                 */
 
-eyeIcon.classList.remove("fa-eye");
+                window.location.replace(
+                    "index.html"
+                );
 
+            } else {
 
-eyeIcon.classList.add("fa-eye-slash");
+                pageLoading.style.display =
+                    "none";
 
+            }
 
-}
+        }
+    );
 
-else{
 
+    /* ================= EMAIL LOGIN ================= */
 
-password.type = "password";
+    loginBtn.addEventListener(
+        "click",
+        async () => {
 
+            clearMessages();
 
-eyeIcon.classList.remove("fa-eye-slash");
 
+            const email =
+                emailInput.value.trim();
 
-eyeIcon.classList.add("fa-eye");
 
+            const password =
+                passwordInput.value;
 
-}
 
+            if (!email) {
 
-}
+                showError(
+                    "Please enter your email address."
+                );
 
+                return;
+            }
 
 
-const loginForm = document.getElementById("loginForm");
+            if (!password) {
 
+                showError(
+                    "Please enter your password."
+                );
 
-loginForm.addEventListener("submit", function(e){
+                return;
+            }
 
 
-e.preventDefault();
+            loginBtn.disabled = true;
 
+            loginBtn.textContent =
+                "Logging in...";
 
-});
 
+            try {
 
+                await signInWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
+
+
+                showSuccess(
+                    "Login successful. Opening FraudGuard..."
+                );
+
+
+                /*
+                 * Go directly to Home.
+                 * No dashboard.
+                 */
+
+                setTimeout(() => {
+
+                    window.location.replace(
+                        "index.html"
+                    );
+
+                }, 500);
+
+
+            } catch (error) {
+
+                console.error(error);
+
+
+                let message =
+                    "Unable to login. Please try again.";
+
+
+                switch (error.code) {
+
+                    case "auth/invalid-credential":
+
+                        message =
+                            "Incorrect email or password.";
+
+                        break;
+
+
+                    case "auth/invalid-email":
+
+                        message =
+                            "Please enter a valid email address.";
+
+                        break;
+
+
+                    case "auth/user-disabled":
+
+                        message =
+                            "This account has been disabled.";
+
+                        break;
+
+
+                    case "auth/too-many-requests":
+
+                        message =
+                            "Too many attempts. Please try again later.";
+
+                        break;
+
+                }
+
+
+                showError(message);
+
+
+                loginBtn.disabled =
+                    false;
+
+                loginBtn.textContent =
+                    "Login";
+
+            }
+
+        }
+    );
+
+
+    /* ================= GOOGLE LOGIN ================= */
+
+    googleBtn.addEventListener(
+        "click",
+        async () => {
+
+            clearMessages();
+
+
+            googleBtn.disabled =
+                true;
+
+            googleBtn.textContent =
+                "Connecting...";
+
+
+            try {
+
+                const provider =
+                    new GoogleAuthProvider();
+
+
+                await signInWithPopup(
+                    auth,
+                    provider
+                );
+
+
+                showSuccess(
+                    "Google login successful."
+                );
+
+
+                setTimeout(() => {
+
+                    window.location.replace(
+                        "index.html"
+                    );
+
+                }, 500);
+
+
+            } catch (error) {
+
+                console.error(error);
+
+
+                if (
+                    error.code ===
+                    "auth/popup-closed-by-user"
+                ) {
+
+                    showError(
+                        "Google login was cancelled."
+                    );
+
+                } else {
+
+                    showError(
+                        "Google login failed. Please try again."
+                    );
+
+                }
+
+
+                googleBtn.disabled =
+                    false;
+
+                googleBtn.textContent =
+                    "🔵 Continue with Google";
+
+            }
+
+        }
+    );
+
+
+    /* ================= PASSWORD RESET ================= */
+
+    forgotPassword.addEventListener(
+        "click",
+        async (event) => {
+
+            event.preventDefault();
+
+
+            clearMessages();
+
+
+            const email =
+                emailInput.value.trim();
+
+
+            if (!email) {
+
+                showError(
+                    "Enter your email first to reset your password."
+                );
+
+                emailInput.focus();
+
+                return;
+            }
+
+
+            try {
+
+                await sendPasswordResetEmail(
+                    auth,
+                    email
+                );
+
+
+                showSuccess(
+                    "Password reset email sent. Check your inbox."
+                );
+
+
+            } catch (error) {
+
+                console.error(error);
+
+
+                showError(
+                    "Unable to send password reset email."
+                );
+
+            }
+
+        }
+    );
+
+
+    /* ================= ENTER KEY ================= */
+
+    passwordInput.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (
+                event.key ===
+                "Enter"
+            ) {
+
+                loginBtn.click();
+
+            }
+
+        }
+    );
 
 </script>
 
 
 </body>
-
-
 </html>
