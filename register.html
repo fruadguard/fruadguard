@@ -1,196 +1,1138 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
 
-<meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account | FraudGuard</title>
 
+    <style>
 
-<title>
-Create Account - FraudGuard
-</title>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            min-height: 100vh;
 
-<link rel="stylesheet" href="style.css">
+            background: #0b1328;
+            color: #ffffff;
 
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+        }
+
+        .register-container {
+            width: 100%;
+            max-width: 440px;
+
+            text-align: center;
+        }
+
+        /* ================= LOGO ================= */
+
+        .logo {
+            width: 80px;
+            height: 80px;
+
+            object-fit: contain;
+
+            margin-bottom: 10px;
+        }
+
+        .brand {
+            color: #22c55e;
+
+            font-size: 30px;
+
+            font-weight: bold;
+
+            margin-bottom: 7px;
+        }
+
+        .subtitle {
+            color: #cbd5e1;
+
+            font-size: 14px;
+
+            margin-bottom: 24px;
+        }
+
+        /* ================= CARD ================= */
+
+        .register-card {
+            background: #1c263b;
+
+            border: 1px solid #2d3953;
+
+            border-radius: 12px;
+
+            padding: 30px 25px;
+
+            box-shadow:
+                0 10px 35px
+                rgba(0, 0, 0, 0.25);
+        }
+
+        .register-card h1 {
+            font-size: 27px;
+
+            margin-bottom: 7px;
+        }
+
+        .description {
+            color: #aeb7c7;
+
+            font-size: 13px;
+
+            margin-bottom: 22px;
+        }
+
+        /* ================= INPUT ================= */
+
+        .input-group {
+            text-align: left;
+
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+
+            color: #dce1e9;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            margin-bottom: 7px;
+        }
+
+        .input-group input {
+            width: 100%;
+
+            padding: 12px;
+
+            border-radius: 7px;
+
+            border: 1px solid #3b4760;
+
+            background: #111a2f;
+
+            color: #ffffff;
+
+            outline: none;
+
+            font-family: inherit;
+
+            font-size: 14px;
+        }
+
+        .input-group input:focus {
+            border-color: #22c55e;
+
+            box-shadow:
+                0 0 0 2px
+                rgba(34, 197, 94, 0.12);
+        }
+
+        .input-group input::placeholder {
+            color: #7f8a9e;
+        }
+
+        /* ================= PASSWORD RULE ================= */
+
+        .password-info {
+            margin-top: 6px;
+
+            color: #8490a4;
+
+            font-size: 10px;
+        }
+
+        /* ================= BUTTON ================= */
+
+        .register-btn {
+            width: 100%;
+
+            padding: 12px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            background: #22c55e;
+
+            color: #ffffff;
+
+            font-family: inherit;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            margin-top: 5px;
+
+            transition: 0.2s;
+        }
+
+        .register-btn:hover {
+            background: #16a34a;
+        }
+
+        .register-btn:disabled {
+            opacity: 0.6;
+
+            cursor: not-allowed;
+        }
+
+        /* ================= MESSAGES ================= */
+
+        .error-message,
+        .success-message {
+            display: none;
+
+            margin-bottom: 15px;
+
+            padding: 10px;
+
+            border-radius: 7px;
+
+            font-size: 12px;
+        }
+
+        .error-message {
+            background: #401c28;
+
+            border: 1px solid #7f3046;
+
+            color: #ff9daf;
+        }
+
+        .success-message {
+            background: #123521;
+
+            border: 1px solid #236b3b;
+
+            color: #7ff0a2;
+        }
+
+        /* ================= GOOGLE ================= */
+
+        .divider {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin: 20px 0;
+        }
+
+        .divider span {
+            flex: 1;
+
+            height: 1px;
+
+            background: #354158;
+        }
+
+        .divider p {
+            color: #8e99ac;
+
+            font-size: 12px;
+        }
+
+        .google-btn {
+            width: 100%;
+
+            padding: 11px;
+
+            border-radius: 7px;
+
+            border: 1px solid #3b4760;
+
+            background: #111a2f;
+
+            color: #ffffff;
+
+            font-family: inherit;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .google-btn:hover {
+            background: #18233b;
+
+            border-color: #22c55e;
+        }
+
+        .google-btn:disabled {
+            opacity: 0.6;
+
+            cursor: not-allowed;
+        }
+
+        /* ================= LOGIN LINK ================= */
+
+        .login-text {
+            margin-top: 20px;
+
+            color: #aeb7c7;
+
+            font-size: 13px;
+        }
+
+        .login-text a {
+            color: #22c55e;
+
+            font-weight: bold;
+        }
+
+        .login-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* ================= TERMS ================= */
+
+        .terms {
+            margin-top: 17px;
+
+            color: #7f8a9e;
+
+            font-size: 10px;
+
+            line-height: 1.5;
+        }
+
+        .terms a {
+            color: #22c55e;
+        }
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+            margin-top: 17px;
+
+            color: #69758a;
+
+            font-size: 10px;
+        }
+
+        /* ================= LOADING ================= */
+
+        .page-loading {
+            position: fixed;
+
+            inset: 0;
+
+            background: #0b1328;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            z-index: 9999;
+        }
+
+        .page-loading-box {
+            text-align: center;
+        }
+
+        .page-loading-box img {
+            width: 60px;
+            height: 60px;
+
+            object-fit: contain;
+        }
+
+        .page-loading-box p {
+            margin-top: 10px;
+
+            color: #22c55e;
+
+            font-size: 14px;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 480px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .logo {
+                width: 68px;
+                height: 68px;
+            }
+
+            .brand {
+                font-size: 26px;
+            }
+
+            .register-card {
+                padding: 25px 18px;
+            }
+
+            .register-card h1 {
+                font-size: 24px;
+            }
+        }
+
+    </style>
 </head>
-
 
 
 <body>
 
 
+<!-- ================= SESSION CHECK ================= -->
 
-<div class="auth-container">
+<div
+    class="page-loading"
+    id="pageLoading">
 
+    <div class="page-loading-box">
 
+        <img
+            src="logo.png"
+            alt="FraudGuard">
 
-<div class="auth-box">
+        <p>
+            Checking session...
+        </p>
 
-
-
-<h1>
-
-Fraud<span>Guard</span>
-
-</h1>
-
-
-
-<h2>
-
-Create Account
-
-</h2>
-
-
-
-<p>
-
-Join FraudGuard and stay protected.
-
-</p>
-
-
-
-
-
-<input
-
-type="text"
-
-id="name"
-
-placeholder="Full Name"
-
-required>
-
-
-
-
-<input
-
-type="email"
-
-id="email"
-
-placeholder="Email Address"
-
-required>
-
-
-
-
-<input
-
-type="password"
-
-id="password"
-
-placeholder="Password"
-
-required>
-
-
-
-
-<input
-
-type="password"
-
-id="confirmPassword"
-
-placeholder="Confirm Password"
-
-required>
-<button 
-class="btn"
-onclick="registerUser()">
-
-Create Account
-
-</button>
-
-
-
-
-<div class="divider">
-
-<span>
-OR
-</span>
+    </div>
 
 </div>
 
 
+<!-- ================= REGISTER ================= -->
+
+<div class="register-container">
 
 
-
-<button
-
-class="social-btn google"
-
-onclick="googleLogin()">
-
-🔵 Continue with Google
-
-</button>
+    <img
+        src="logo.png"
+        alt="FraudGuard"
+        class="logo">
 
 
+    <div class="brand">
+        FraudGuard
+    </div>
 
 
-
-<button
-
-class="social-btn facebook"
-
-onclick="facebookLogin()">
-
-🔵 Continue with Facebook
-
-</button>
+    <div class="subtitle">
+        AI-Powered Fraud Detection & Scam Prevention
+    </div>
 
 
+    <div class="register-card">
 
 
-<p class="auth-link">
+        <h1>
+            Create Account
+        </h1>
 
 
-Already have an account?
+        <p class="description">
+            Join FraudGuard and protect yourself from online scams.
+        </p>
 
 
-<a href="login.html">
+        <!-- ERROR -->
 
-Login
-
-</a>
-
-
-</p>
+        <div
+            id="errorMessage"
+            class="error-message">
+        </div>
 
 
+        <!-- SUCCESS -->
 
-<a href="index.html">
+        <div
+            id="successMessage"
+            class="success-message">
+        </div>
 
-← Back to Home
 
-</a>
+        <!-- FULL NAME -->
+
+        <div class="input-group">
+
+            <label for="fullName">
+                Full Name
+            </label>
+
+            <input
+                type="text"
+                id="fullName"
+                placeholder="Enter your full name"
+                autocomplete="name"
+                maxlength="100">
+
+        </div>
+
+
+        <!-- EMAIL -->
+
+        <div class="input-group">
+
+            <label for="email">
+                Email Address
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                autocomplete="email">
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div class="input-group">
+
+            <label for="password">
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Create a password"
+                autocomplete="new-password">
+
+            <p class="password-info">
+                Password must be at least 6 characters.
+            </p>
+
+        </div>
+
+
+        <!-- CONFIRM PASSWORD -->
+
+        <div class="input-group">
+
+            <label for="confirmPassword">
+                Confirm Password
+            </label>
+
+            <input
+                type="password"
+                id="confirmPassword"
+                placeholder="Confirm your password"
+                autocomplete="new-password">
+
+        </div>
+
+
+        <!-- REGISTER -->
+
+        <button
+            type="button"
+            class="register-btn"
+            id="registerBtn">
+
+            Create Account
+
+        </button>
+
+
+        <!-- DIVIDER -->
+
+        <div class="divider">
+
+            <span></span>
+
+            <p>
+                OR
+            </p>
+
+            <span></span>
+
+        </div>
+
+
+        <!-- GOOGLE -->
+
+        <button
+            type="button"
+            class="google-btn"
+            id="googleBtn">
+
+            🔵 Continue with Google
+
+        </button>
+
+
+        <!-- LOGIN -->
+
+        <p class="login-text">
+
+            Already have an account?
+
+            <a href="login.html">
+                Login
+            </a>
+
+        </p>
+
+
+        <!-- TERMS -->
+
+        <p class="terms">
+
+            By creating an account, you agree to our
+            <a href="terms.html">
+                Terms of Service
+            </a>
+            and
+            <a href="privacy.html">
+                Privacy Policy
+            </a>.
+
+        </p>
+
+
+    </div>
+
+
+    <div class="footer">
+
+        © 2026 FraudGuard.
+        All rights reserved.
+
+    </div>
+
+
 </div>
 
 
-</div>
+<!-- ================= FIREBASE ================= -->
+
+<script type="module">
+
+    import {
+        auth,
+        db
+    } from "./firebase.js";
 
 
+    import {
+        onAuthStateChanged,
+        createUserWithEmailAndPassword,
+        updateProfile,
+        GoogleAuthProvider,
+        signInWithPopup
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
-<script type="module" src="auth.js"></script>
+    import {
+        doc,
+        setDoc,
+        serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+    const pageLoading =
+        document.getElementById(
+            "pageLoading"
+        );
+
+
+    const fullNameInput =
+        document.getElementById(
+            "fullName"
+        );
+
+
+    const emailInput =
+        document.getElementById(
+            "email"
+        );
+
+
+    const passwordInput =
+        document.getElementById(
+            "password"
+        );
+
+
+    const confirmPasswordInput =
+        document.getElementById(
+            "confirmPassword"
+        );
+
+
+    const registerBtn =
+        document.getElementById(
+            "registerBtn"
+        );
+
+
+    const googleBtn =
+        document.getElementById(
+            "googleBtn"
+        );
+
+
+    const errorMessage =
+        document.getElementById(
+            "errorMessage"
+        );
+
+
+    const successMessage =
+        document.getElementById(
+            "successMessage"
+        );
+
+
+    /* ================= MESSAGE ================= */
+
+    function showError(message) {
+
+        errorMessage.textContent =
+            message;
+
+        errorMessage.style.display =
+            "block";
+
+        successMessage.style.display =
+            "none";
+    }
+
+
+    function showSuccess(message) {
+
+        successMessage.textContent =
+            message;
+
+        successMessage.style.display =
+            "block";
+
+        errorMessage.style.display =
+            "none";
+    }
+
+
+    function clearMessages() {
+
+        errorMessage.style.display =
+            "none";
+
+        successMessage.style.display =
+            "none";
+    }
+
+
+    /* ================= SESSION CHECK ================= */
+
+    onAuthStateChanged(
+        auth,
+        (user) => {
+
+            if (user) {
+
+                /*
+                 * Already logged in.
+                 * No dashboard.
+                 */
+
+                window.location.replace(
+                    "index.html"
+                );
+
+            } else {
+
+                pageLoading.style.display =
+                    "none";
+
+            }
+
+        }
+    );
+
+
+    /* ================= EMAIL REGISTER ================= */
+
+    registerBtn.addEventListener(
+        "click",
+        async () => {
+
+            clearMessages();
+
+
+            const fullName =
+                fullNameInput.value.trim();
+
+
+            const email =
+                emailInput.value.trim();
+
+
+            const password =
+                passwordInput.value;
+
+
+            const confirmPassword =
+                confirmPasswordInput.value;
+
+
+            /* ================= VALIDATION ================= */
+
+            if (!fullName) {
+
+                showError(
+                    "Please enter your full name."
+                );
+
+                fullNameInput.focus();
+
+                return;
+            }
+
+
+            if (!email) {
+
+                showError(
+                    "Please enter your email address."
+                );
+
+                emailInput.focus();
+
+                return;
+            }
+
+
+            if (!password) {
+
+                showError(
+                    "Please create a password."
+                );
+
+                passwordInput.focus();
+
+                return;
+            }
+
+
+            if (password.length < 6) {
+
+                showError(
+                    "Password must be at least 6 characters."
+                );
+
+                passwordInput.focus();
+
+                return;
+            }
+
+
+            if (
+                password !==
+                confirmPassword
+            ) {
+
+                showError(
+                    "Passwords do not match."
+                );
+
+                confirmPasswordInput.focus();
+
+                return;
+            }
+
+
+            registerBtn.disabled =
+                true;
+
+            registerBtn.textContent =
+                "Creating Account...";
+
+
+            try {
+
+                /* ================= FIREBASE AUTH ================= */
+
+                const credential =
+                    await createUserWithEmailAndPassword(
+                        auth,
+                        email,
+                        password
+                    );
+
+
+                const user =
+                    credential.user;
+
+
+                /* ================= PROFILE ================= */
+
+                await updateProfile(
+                    user,
+                    {
+                        displayName:
+                            fullName
+                    }
+                );
+
+
+                /* ================= FIRESTORE USER ================= */
+
+                await setDoc(
+                    doc(
+                        db,
+                        "users",
+                        user.uid
+                    ),
+                    {
+                        uid:
+                            user.uid,
+
+                        name:
+                            fullName,
+
+                        email:
+                            email,
+
+                        role:
+                            "user",
+
+                        provider:
+                            "password",
+
+                        createdAt:
+                            serverTimestamp()
+                    },
+                    {
+                        merge: true
+                    }
+                );
+
+
+                showSuccess(
+                    "Account created successfully. Opening FraudGuard..."
+                );
+
+
+                /*
+                 * Directly go Home.
+                 * No dashboard.
+                 */
+
+                setTimeout(() => {
+
+                    window.location.replace(
+                        "index.html"
+                    );
+
+                }, 700);
+
+
+            } catch (error) {
+
+                console.error(error);
+
+
+                let message =
+                    "Unable to create account. Please try again.";
+
+
+                switch (error.code) {
+
+                    case "auth/email-already-in-use":
+
+                        message =
+                            "An account with this email already exists.";
+
+                        break;
+
+
+                    case "auth/invalid-email":
+
+                        message =
+                            "Please enter a valid email address.";
+
+                        break;
+
+
+                    case "auth/weak-password":
+
+                        message =
+                            "Password is too weak. Use at least 6 characters.";
+
+                        break;
+
+
+                    case "auth/operation-not-allowed":
+
+                        message =
+                            "Email/Password login is not enabled in Firebase.";
+
+                        break;
+
+                }
+
+
+                showError(message);
+
+
+                registerBtn.disabled =
+                    false;
+
+                registerBtn.textContent =
+                    "Create Account";
+
+            }
+
+        }
+    );
+
+
+    /* ================= GOOGLE REGISTER ================= */
+
+    googleBtn.addEventListener(
+        "click",
+        async () => {
+
+            clearMessages();
+
+
+            googleBtn.disabled =
+                true;
+
+            googleBtn.textContent =
+                "Connecting...";
+
+
+            try {
+
+                const provider =
+                    new GoogleAuthProvider();
+
+
+                const result =
+                    await signInWithPopup(
+                        auth,
+                        provider
+                    );
+
+
+                const user =
+                    result.user;
+
+
+                /* ================= SAVE GOOGLE USER ================= */
+
+                await setDoc(
+                    doc(
+                        db,
+                        "users",
+                        user.uid
+                    ),
+                    {
+                        uid:
+                            user.uid,
+
+                        name:
+                            user.displayName || "",
+
+                        email:
+                            user.email || "",
+
+                        role:
+                            "user",
+
+                        provider:
+                            "google",
+
+                        createdAt:
+                            serverTimestamp()
+                    },
+                    {
+                        merge: true
+                    }
+                );
+
+
+                showSuccess(
+                    "Google account connected. Opening FraudGuard..."
+                );
+
+
+                setTimeout(() => {
+
+                    window.location.replace(
+                        "index.html"
+                    );
+
+                }, 700);
+
+
+            } catch (error) {
+
+                console.error(error);
+
+
+                if (
+                    error.code ===
+                    "auth/popup-closed-by-user"
+                ) {
+
+                    showError(
+                        "Google sign-up was cancelled."
+                    );
+
+                } else {
+
+                    showError(
+                        "Google sign-up failed. Please try again."
+                    );
+
+                }
+
+
+                googleBtn.disabled =
+                    false;
+
+                googleBtn.textContent =
+                    "🔵 Continue with Google";
+
+            }
+
+        }
+    );
+
+
+</script>
 
 
 </body>
-
-</html>
-
+              </html>
