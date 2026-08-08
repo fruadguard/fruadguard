@@ -4,394 +4,1184 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FraudGuard Report Fraud</title>
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-<meta name="description" content="Report online fraud and help protect the community with FraudGuard.">
+<title>Report Scam | FraudGuard</title>
 
-<link rel="stylesheet" href="style.css">
+<style>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    background:#0b1328;
+    color:#fff;
+    font-family:Georgia,"Times New Roman",serif;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+.navbar{
+    background:#10182d;
+    border-bottom:1px solid #26314b;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.nav-container{
+    max-width:1200px;
+    min-height:62px;
+    margin:auto;
+    padding:0 20px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    color:#22c55e;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.brand img{
+    width:34px;
+    height:34px;
+    object-fit:contain;
+}
+
+.nav-menu{
+    display:flex;
+    align-items:center;
+    gap:20px;
+
+    font-size:13px;
+    font-weight:bold;
+}
+
+.nav-menu a:hover{
+    color:#22c55e;
+}
+
+.logout-btn{
+    border:0;
+    background:#22c55e;
+    color:#fff;
+
+    padding:8px 14px;
+    border-radius:6px;
+
+    cursor:pointer;
+
+    font-family:inherit;
+    font-weight:bold;
+}
+
+.logout-btn:hover{
+    background:#16a34a;
+}
+
+.page{
+    max-width:850px;
+    margin:35px auto;
+    padding:0 18px;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:28px;
+}
+
+.header-icon{
+    font-size:48px;
+    margin-bottom:8px;
+}
+
+.header h1{
+    font-size:34px;
+    margin-bottom:10px;
+}
+
+.header h1 span{
+    color:#22c55e;
+}
+
+.header p{
+    max-width:650px;
+    margin:auto;
+
+    color:#bfc7d5;
+    font-size:14px;
+    line-height:1.6;
+}
+
+.report-card{
+    background:#1c263b;
+
+    border:1px solid #2d3953;
+    border-radius:12px;
+
+    padding:28px;
+}
+
+.field{
+    margin-bottom:18px;
+}
+
+.field label{
+    display:block;
+
+    color:#dce1e9;
+    font-size:13px;
+    font-weight:bold;
+
+    margin-bottom:7px;
+}
+
+.field input,
+.field select,
+.field textarea{
+    width:100%;
+
+    padding:13px;
+
+    border-radius:7px;
+
+    border:1px solid #3b4760;
+
+    outline:none;
+
+    background:#111a2f;
+    color:#fff;
+
+    font-family:inherit;
+    font-size:14px;
+}
+
+.field textarea{
+    min-height:130px;
+    resize:vertical;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+    border-color:#22c55e;
+
+    box-shadow:
+    0 0 0 2px
+    rgba(34,197,94,.12);
+}
+
+.field input::placeholder,
+.field textarea::placeholder{
+    color:#7f8a9e;
+}
+
+.submit-btn{
+    width:100%;
+
+    padding:13px;
+
+    border:0;
+    border-radius:7px;
+
+    background:#22c55e;
+    color:#fff;
+
+    font-family:inherit;
+    font-size:15px;
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.submit-btn:hover{
+    background:#16a34a;
+}
+
+.submit-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.message{
+    display:none;
+
+    padding:12px;
+    margin-bottom:18px;
+
+    border-radius:7px;
+
+    font-size:12px;
+    line-height:1.5;
+}
+
+.error{
+    background:#401c28;
+    border:1px solid #7f3046;
+    color:#ff9daf;
+}
+
+.success{
+    background:#123521;
+    border:1px solid #236b3b;
+    color:#7ff0a2;
+}
+
+.notice{
+    margin-bottom:22px;
+
+    padding:14px;
+
+    background:#111a2f;
+
+    border:1px solid #354158;
+
+    border-radius:8px;
+
+    color:#aeb7c7;
+
+    font-size:12px;
+    line-height:1.6;
+}
+
+.notice strong{
+    color:#22c55e;
+}
+
+footer{
+    max-width:850px;
+    margin:45px auto 25px;
+
+    padding:20px;
+
+    text-align:center;
+
+    color:#69758a;
+    font-size:11px;
+}
+
+@media(max-width:700px){
+
+    .nav-container{
+        padding:0 12px;
+    }
+
+    .brand{
+        font-size:14px;
+    }
+
+    .brand img{
+        width:27px;
+        height:27px;
+    }
+
+    .nav-menu{
+        gap:8px;
+        font-size:9px;
+    }
+
+    .logout-btn{
+        padding:6px 9px;
+        font-size:9px;
+    }
+
+    .page{
+        margin-top:25px;
+        padding:0 12px;
+    }
+
+    .header h1{
+        font-size:28px;
+    }
+
+    .report-card{
+        padding:18px;
+    }
+
+}
+
+</style>
 
 </head>
 
-
 <body>
-
 
 <header class="navbar">
 
-<div class="container">
+<div class="nav-container">
 
+<a href="index.html" class="brand">
 
-<a href="index.html" class="logo">
-Fraud<span>Guard</span>
+<img
+src="logo.png"
+alt="FraudGuard">
+
+<span>
+FraudGuard
+</span>
+
 </a>
 
+<nav class="nav-menu">
 
-<ul class="nav-menu">
-
-<li><a href="index.html">Home</a></li>
-
-<li><a href="features.html">Features</a></li>
-
-<li><a href="scanner.html">Scanner</a></li>
-
-<li><a href="report.html">Report</a></li>
-
-<li><a href="contact.html">Contact</a></li>
-
-</ul>
-
-
-<a href="login.html" class="nav-btn">
-Login
+<a href="index.html">
+Home
 </a>
 
+<a href="scanner.html">
+Scanner
+</a>
 
-<div class="menu-toggle">
-☰
-</div>
+<a href="phone-checker.html">
+Phone
+</a>
 
+<a href="email-checker.html">
+Email
+</a>
+
+<a href="report.html">
+Report
+</a>
+
+<button
+id="logoutBtn"
+class="logout-btn">
+
+Logout
+
+</button>
+
+</nav>
 
 </div>
 
 </header>
 
+<main class="page">
 
+<div class="header">
 
-<section class="hero">
-
-<div class="container">
-
-
-<div class="hero-content">
-
+<div class="header-icon">
+🚨
+</div>
 
 <h1>
-Report
-<span>Fraud</span>
+Report a
+<span>Scam</span>
 </h1>
 
-
 <p>
-Help the community by reporting suspicious websites, phone numbers and online scams.
+Help protect the FraudGuard community by
+reporting suspicious websites, phone numbers,
+or email addresses.
 </p>
-
 
 </div>
 
+<div class="report-card">
+
+<div class="notice">
+
+<strong>Before submitting:</strong>
+
+Please provide accurate information.
+False or misleading reports may be rejected
+by the FraudGuard moderation team.
 
 </div>
 
-</section>
-<section>
+<div
+id="errorMessage"
+class="message error">
+</div>
 
-<div class="container">
+<div
+id="successMessage"
+class="message success">
+</div>
 
+<div class="field">
 
-<div class="form-box">
+<label for="reportType">
+What do you want to report?
+</label>
 
+<select id="reportType">
 
-<h2>
-Submit Fraud Report
-</h2>
-
-
-<p>
-Provide details about the suspicious activity.
-</p>
-
-
-<form>
-
-
-<input 
-type="text" 
-placeholder="Your Name">
-
-
-
-<input 
-type="email" 
-placeholder="Your Email">
-
-
-
-<select>
-
-<option>
-Select Fraud Type
+<option value="">
+Select report type
 </option>
 
-<option>
-Fake Website
+<option value="url">
+Website / URL
 </option>
 
-<option>
-Fraud Phone Number
+<option value="phone">
+Phone Number
 </option>
 
-<option>
-Fake Social Account
+<option value="email">
+Email Address
 </option>
 
-<option>
-Online Scam
+</select>
+
+</div>
+
+<div class="field">
+
+<label for="targetInput">
+Website / Phone / Email
+</label>
+
+<input
+id="targetInput"
+type="text"
+placeholder="Enter the suspicious item">
+
+</div>
+
+<div class="field">
+
+<label for="reason">
+Reason
+</label>
+
+<select id="reason">
+
+<option value="">
+Select a reason
 </option>
 
-<option>
+<option value="phishing">
+Phishing / Fake Login
+</option>
+
+<option value="payment_scam">
+Payment Scam
+</option>
+
+<option value="fake_store">
+Fake Store / Website
+</option>
+
+<option value="impersonation">
+Impersonation
+</option>
+
+<option value="investment_scam">
+Investment Scam
+</option>
+
+<option value="crypto_scam">
+Crypto Scam
+</option>
+
+<option value="fraud">
+Fraud / Scam
+</option>
+
+<option value="other">
 Other
 </option>
 
 </select>
 
+</div>
 
+<div class="field">
 
-<input 
-type="text" 
-placeholder="Fraud Link or Phone Number">
+<label for="description">
+Description
+</label>
 
+<textarea
+id="description"
+placeholder="Explain what happened and why you believe this is a scam..."
+maxlength="2000"></textarea>
 
+</div>
 
-<textarea 
-rows="5"
-placeholder="Describe the fraud details"></textarea>
+<div class="field">
 
+<label for="evidence">
+Evidence URL (Optional)
+</label>
 
+<input
+id="evidence"
+type="url"
+placeholder="https://example.com/evidence">
 
-<button type="submit" class="btn">
+</div>
+
+<button
+id="submitBtn"
+class="submit-btn">
+
 Submit Report
+
 </button>
 
-
-</form>
-
-
 </div>
 
+</main>
 
-</div>
+<footer>
 
-</section>
+© 2026 FraudGuard —
+AI-Powered Fraud Detection & Scam Prevention
 
+  </footer>
+<script type="module">
 
+import {
+    auth,
+    db
+} from "./firebase.js";
 
-<section>
+import {
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-<div class="container">
+import {
+    collection,
+    query,
+    where,
+    getDocs,
+    addDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-<div class="cards">
+const reportType =
+    document.getElementById("reportType");
 
+const targetInput =
+    document.getElementById("targetInput");
 
-<div class="card">
+const reason =
+    document.getElementById("reason");
 
-<div class="icon">
-🛡️
-</div>
+const description =
+    document.getElementById("description");
 
-<h3>
-Protect Others
-</h3>
+const evidence =
+    document.getElementById("evidence");
 
-<p>
-Your report helps warn other users about scams.
-</p>
+const submitBtn =
+    document.getElementById("submitBtn");
 
-</div>
+const errorMessage =
+    document.getElementById("errorMessage");
 
+const successMessage =
+    document.getElementById("successMessage");
 
 
-<div class="card">
+let currentUser = null;
 
-<div class="icon">
-🌐
-</div>
 
-<h3>
-Build Database
-</h3>
+onAuthStateChanged(
+    auth,
+    (user) => {
 
-<p>
-Reported fraud helps improve security detection.
-</p>
+        if (!user) {
 
-</div>
+            window.location.replace(
+                "login.html"
+            );
 
+            return;
+        }
 
+        currentUser = user;
 
-<div class="card">
+        loadReportTarget();
 
-<div class="icon">
-🤝
-</div>
+    }
+);
 
-<h3>
-Community Safety
-</h3>
 
-<p>
-Together we can create a safer digital world.
-</p>
+function showError(message) {
 
-</div>
+    errorMessage.textContent =
+        message;
 
+    errorMessage.style.display =
+        "block";
 
-</div>
+    successMessage.style.display =
+        "none";
 
+}
 
-</div>
 
-</section>
-<section>
+function showSuccess(message) {
 
-<div class="container">
+    successMessage.textContent =
+        message;
 
+    successMessage.style.display =
+        "block";
 
-<div class="report-card">
+    errorMessage.style.display =
+        "none";
 
+}
 
-<h2>
-Report Status
-</h2>
 
+function clearMessages() {
 
-<p>
-After submitting a report, our system will review the information and update the security database.
-</p>
+    errorMessage.style.display =
+        "none";
 
+    successMessage.style.display =
+        "none";
 
-<span class="badge">
-Under Review
-</span>
+}
 
 
-</div>
+function loadReportTarget() {
 
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
 
-</div>
 
-</section>
+    const url =
+        params.get("url");
 
+    const phone =
+        params.get("phone");
 
+    const email =
+        params.get("email");
 
-<section>
 
-<div class="container">
+    if (url) {
 
+        reportType.value =
+            "url";
 
-<div class="hero-card">
+        targetInput.value =
+            url;
 
+        return;
 
-<h2>
-Help Fight Digital Fraud
-</h2>
+    }
 
 
-<p>
-Every fraud report makes the online community safer. Share accurate information and help others avoid scams.
-</p>
+    if (phone) {
 
+        reportType.value =
+            "phone";
 
-<a href="scanner.html" class="btn">
-Scan Before Trust
-</a>
+        targetInput.value =
+            phone;
 
+        return;
 
-</div>
+    }
 
 
-</div>
+    if (email) {
 
-</section>
-<footer class="footer">
+        reportType.value =
+            "email";
 
-<div class="container">
+        targetInput.value =
+            email;
 
+    }
 
-<div class="footer-box">
+}
 
 
-<div>
+function validateURL(value) {
 
-<h3>
-FraudGuard
-</h3>
+    try {
 
-<p>
-AI-powered digital fraud protection platform.
-</p>
+        const url =
+            new URL(value);
 
-</div>
+        return (
+            url.protocol === "http:" ||
+            url.protocol === "https:"
+        );
 
+    } catch {
 
+        return false;
 
-<div>
+    }
 
-<h3>
-Quick Links
-</h3>
+}
 
-<ul class="footer-links">
 
-<li>
-<a href="index.html">Home</a>
-</li>
+function validatePhone(value) {
 
-<li>
-<a href="scanner.html">Scanner</a>
-</li>
+    const cleaned =
+        value.replace(
+            /[\s().-]/g,
+            ""
+        );
 
-<li>
-<a href="features.html">Features</a>
-</li>
 
-</ul>
+    return /^\+?[0-9]{8,15}$/
+        .test(cleaned);
 
-</div>
+}
 
 
+function validateEmail(value) {
 
-<div>
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        .test(value);
 
-<h3>
-Report Support
-</h3>
+}
 
-<p>
-Help protect users from online scams.
-</p>
 
-<p>
-Security Team Review System
-</p>
+function normalizePhone(value) {
 
-</div>
+    let phone =
+        value
+            .trim()
+            .replace(
+                /[\s().-]/g,
+                ""
+            );
 
 
-</div>
+    if (
+        phone.startsWith("00")
+    ) {
 
+        phone =
+            "+" +
+            phone.substring(2);
 
+    }
 
-<p class="copyright">
-© 2026 FraudGuard. All Rights Reserved.
-</p>
 
+    if (
+        phone.startsWith("01")
+    ) {
 
-</div>
+        phone =
+            "+880" +
+            phone.substring(1);
 
-</footer>
+    }
 
 
+    return phone;
 
-<script src="script.js"></script>
+}
+
+
+async function checkDuplicateReport(
+    type,
+    target
+) {
+
+    try {
+
+        const reports =
+            collection(
+                db,
+                "reports"
+            );
+
+
+        const q =
+            query(
+                reports,
+
+                where(
+                    "type",
+                    "==",
+                    type
+                ),
+
+                where(
+                    "target",
+                    "==",
+                    target
+                ),
+
+                where(
+                    "uid",
+                    "==",
+                    currentUser.uid
+                )
+            );
+
+
+        const snapshot =
+            await getDocs(q);
+
+
+        return !snapshot.empty;
+
+
+    } catch (error) {
+
+        console.warn(
+            "Duplicate check failed:",
+            error
+        );
+
+
+        return false;
+
+    }
+
+}
+
+
+async function saveReport() {
+
+    clearMessages();
+
+
+    const type =
+        reportType.value;
+
+
+    let target =
+        targetInput.value.trim();
+
+
+    const selectedReason =
+        reason.value;
+
+
+    const details =
+        description.value.trim();
+
+
+    const evidenceURL =
+        evidence.value.trim();
+
+
+    if (!type) {
+
+        showError(
+            "Please select what you want to report."
+        );
+
+        reportType.focus();
+
+        return;
+
+    }
+
+
+    if (!target) {
+
+        showError(
+            "Please enter the website, phone number or email address."
+        );
+
+        targetInput.focus();
+
+        return;
+
+    }
+
+
+    if (
+        type === "url" &&
+        !validateURL(target)
+    ) {
+
+        showError(
+            "Please enter a valid website URL."
+        );
+
+        targetInput.focus();
+
+        return;
+
+    }
+
+
+    if (
+        type === "phone"
+    ) {
+
+        if (
+            !validatePhone(target)
+        ) {
+
+            showError(
+                "Please enter a valid phone number."
+            );
+
+            targetInput.focus();
+
+            return;
+
+        }
+
+
+        target =
+            normalizePhone(target);
+
+    }
+
+
+    if (
+        type === "email"
+    ) {
+
+        target =
+            target.toLowerCase();
+
+
+        if (
+            !validateEmail(target)
+        ) {
+
+            showError(
+                "Please enter a valid email address."
+            );
+
+            targetInput.focus();
+
+            return;
+
+        }
+
+    }
+
+
+    if (!selectedReason) {
+
+        showError(
+            "Please select a reason for the report."
+        );
+
+        reason.focus();
+
+        return;
+
+    }
+
+
+    if (
+        details.length < 10
+    ) {
+
+        showError(
+            "Please provide a little more information about the scam."
+        );
+
+        description.focus();
+
+        return;
+
+    }
+
+
+    if (
+        details.length > 2000
+    ) {
+
+        showError(
+            "Description is too long."
+        );
+
+        return;
+
+    }
+
+
+    if (evidenceURL) {
+
+        if (
+            !validateURL(evidenceURL)
+        ) {
+
+            showError(
+                "Please enter a valid evidence URL."
+            );
+
+            evidence.focus();
+
+            return;
+
+        }
+
+    }
+
+
+    submitBtn.disabled =
+        true;
+
+    submitBtn.textContent =
+        "Submitting...";
+
+
+    try {
+
+        const duplicate =
+            await checkDuplicateReport(
+                type,
+                target
+            );
+
+
+        if (duplicate) {
+
+            showError(
+                "You have already submitted a report for this item."
+            );
+
+            submitBtn.disabled =
+                false;
+
+            submitBtn.textContent =
+                "Submit Report";
+
+            return;
+
+        }
+
+
+        await addDoc(
+            collection(
+                db,
+                "reports"
+            ),
+            {
+
+                uid:
+                    currentUser.uid,
+
+                reporterEmail:
+                    currentUser.email || "",
+
+                type:
+                    type,
+
+                target:
+                    target,
+
+                reason:
+                    selectedReason,
+
+                description:
+                    details,
+
+                evidenceURL:
+                    evidenceURL || "",
+
+                status:
+                    "pending",
+
+                createdAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        showSuccess(
+            "Report submitted successfully. It will be reviewed by the FraudGuard moderation team."
+        );
+
+
+        reportType.value =
+            "";
+
+        targetInput.value =
+            "";
+
+        reason.value =
+            "";
+
+        description.value =
+            "";
+
+        evidence.value =
+            "";
+
+
+    } catch (error) {
+
+        console.error(
+            "Report submission error:",
+            error
+        );
+
+
+        showError(
+            "Unable to submit the report. Please try again."
+        );
+
+    }
+
+
+    submitBtn.disabled =
+        false;
+
+    submitBtn.textContent =
+        "Submit Report";
+
+}
+
+
+submitBtn.addEventListener(
+    "click",
+    saveReport
+);
+
+
+targetInput.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Enter"
+        ) {
+
+            event.preventDefault();
+
+        }
+
+    }
+);
+
+</script>
+
+
+<script
+    type="module"
+    src="script.js">
+</script>
 
 
 </body>
 
 </html>
-
-
-
