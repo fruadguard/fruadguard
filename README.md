@@ -1,114 +1,132 @@
-FraudGuard
+# 🛡️ Inspect Caller
 
-AI-Powered Global Fraud Detection Platform
+### A Bold Vision to Stop Digital Scams Globally
 
-FraudGuard is a digital security platform designed to help users detect, report, and prevent online scams, frauds, and suspicious activities.
+Inspect Caller is a proposed global anti-fraud security platform designed to help users **inspect, detect, report and prevent digital scams** across phone calls, messages, websites and online platforms.
 
-Our mission is to make the internet safer by providing AI-powered fraud detection tools for individuals, businesses, and organizations.
+---
 
-Features
+## 🚀 Project Overview
 
-AI Scam Scanner
+**Founder & CEO:** Mohammad Sajedur Rahman Biplob  
+**Team Leader:** Nila Akter  
+**Country of Origin:** Bangladesh  
+**Startup Type:** Global Anti-Fraud Security Tech  
+**Current Stage:** Idea / Pre-Launch
 
-- Detect suspicious links and websites
-- Risk score analysis
-- HTTPS security checking
-- Scam warning system
+---
 
-Phone Number Checker
+## 🎯 Vision
 
-- Check reported fraud numbers
-- Community-based fraud database
-- Suspicious activity detection
+> **Make the Digital World Safe for Everyone.**
 
-Fraud Reporting System
+Inspect Caller aims to build a unified security layer that can connect users, businesses, platforms and authorized security organizations to help identify and respond to digital fraud.
 
-- Submit scam reports
-- Store fraud information securely
-- Help protect the community
+---
 
-User Dashboard
+## ⚠️ Problem
 
-- Scan history
-- Report tracking
-- User profile management
+Digital fraud affects individuals, families, businesses and governments around the world.
 
-Security Focus
+The platform focuses on major threats including:
 
-- Modern security interface
-- Responsive design
-- AI-based protection system
+- 💰 Financial Fraud
+- 🔗 Phishing & Fake Links
+- 📈 Investment & Crypto Scams
+- ❤️ Romance & Friendship Scams
+- 🪪 Identity Theft
+- 💼 Fake Job Scams
+- 🎁 Lottery & Prize Scams
+- 🏦 Loan & Financial Scams
+- ❤️‍🩹 Charity Fraud
+- 🔐 Ransomware & Data Hijacking
+- ⚠️ Extortion & Blackmail
+- 🛍️ Product & Service Fraud
 
-Technology Stack
+---
 
-Frontend:
+## 💡 Our Solution
 
-- HTML5
-- CSS3
-- JavaScript
+Inspect Caller is designed as a multi-layer anti-fraud ecosystem.
 
-Backend:
+### Core Features
 
-- Firebase Authentication
-- Firebase Firestore
+### 📞 Caller Inspection
+Inspect suspicious phone numbers and view available risk signals and reports.
 
-Tools:
+### 🔗 URL Scanner
+Analyze suspicious websites and links for potential phishing indicators.
 
-- GitHub
-- Google Analytics
+### 📧 Email Checker
+Analyze suspicious emails and identify possible scam indicators.
 
-Project Structure
+### 🤖 AI Scam Detection
+Future AI-powered analysis of suspicious:
 
-- index.html
-- about.html
-- features.html
-- scanner.html
-- report.html
-- dashboard.html
-- firebase.js
-- style.css
-- script.js
+- Text
+- Voice
+- Images
+- Messages
+- Scam patterns
 
-Development Roadmap
+### 🚨 Scam Reporting
+Users can report:
 
-Phase 1
+- Phone numbers
+- Websites
+- Social media pages
+- Messages
+- Fraud attempts
 
-- Professional website UI
-- Responsive design
-- Security theme
+### ⭐ Trust Score
+A planned reputation and safety scoring system for digital interactions.
 
-Phase 2
+### 📷 QR Scanner
+Scan suspicious QR codes and inspect their destination.
 
-- User authentication
-- Database integration
-- Fraud report storage
+### 📱 Social & Messaging Scanners
 
-Phase 3
+Planned modules for:
 
-- AI scam detection
-- Advanced scanner
-- Fraud intelligence system
+- Facebook
+- Telegram
+- WhatsApp
 
-Phase 4
+---
 
-- Android application
-- Mobile security tools
+# 🌍 Global Security Layer
 
-Phase 5
+The long-term vision includes integrations with:
 
-- Global expansion
-- Bank, telecom, and organization partnerships
+- Social media platforms
+- Messaging platforms
+- E-commerce platforms
+- Banking systems
+- Payment gateways
+- Financial regulators
+- Cybersecurity intelligence
+- Authorized government datasets
+- Authorized law-enforcement systems
 
-Vision
+> Government, identity, SIM, location and law-enforcement data would require appropriate legal authorization, partnerships and technical access.
 
-To build a global anti-fraud ecosystem that helps people identify digital threats before becoming victims.
+---
 
-Founder
+# 🚨 Fraud Reporting Workflow
 
-Muhammad Sajedur Rahman Biplob
+The planned workflow:
 
-Founder & CEO, FraudGuard
-
-License
-
-This project is developed for building a safer digital world.
+```text
+User Report
+     ↓
+Evidence Collection
+     ↓
+Risk Analysis
+     ↓
+Verification
+     ↓
+Structured Report
+     ↓
+Authorized Authority
+     ↓
+Investigation
