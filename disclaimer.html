@@ -1,145 +1,1165 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
+    <title>Disclaimer — Inspect Caller</title>
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+    <meta
+        name="description"
+        content="Disclaimer for Inspect Caller — Global Caller Security and Anti-Fraud Technology."
+    >
 
-<title>Disclaimer | FraudGuard</title>
+    <link rel="stylesheet" href="style.css">
 
-<link rel="stylesheet" href="style.css">
+    <style>
 
+        /* ================= DISCLAIMER PAGE ================= */
+
+        .legal-page {
+            min-height: 100vh;
+
+            padding: 80px 20px 100px;
+
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(0,150,255,.12),
+                    transparent 40%
+                ),
+                #050d18;
+        }
+
+        .legal-container {
+            width: min(950px, 100%);
+            margin: auto;
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .legal-header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .legal-badge {
+            display: inline-flex;
+
+            align-items: center;
+            gap: 8px;
+
+            padding: 9px 17px;
+
+            border:
+                1px solid #285873;
+
+            border-radius: 999px;
+
+            background: #071b2c;
+
+            color: #8bdcff;
+
+            font-size: 11px;
+
+            font-weight: 850;
+
+            letter-spacing: .8px;
+        }
+
+        .legal-header h1 {
+            margin-top: 20px;
+
+            font-size:
+                clamp(40px, 6vw, 62px);
+
+            line-height: 1;
+
+            letter-spacing: -2px;
+        }
+
+        .legal-header h1 span {
+            color: var(--blue);
+        }
+
+        .legal-header p {
+            margin-top: 15px;
+
+            color: var(--muted);
+
+            font-size: 13px;
+        }
+
+
+        /* ================= CARD ================= */
+
+        .legal-card {
+            padding: 38px;
+
+            border:
+                1px solid var(--line);
+
+            border-radius: 24px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #0a2034,
+                    #061522
+                );
+
+            box-shadow:
+                0 25px 80px
+                rgba(0,100,180,.08);
+        }
+
+
+        /* ================= SECTION ================= */
+
+        .legal-section {
+            padding: 25px 0;
+
+            border-bottom:
+                1px solid #17384d;
+        }
+
+        .legal-section:first-child {
+            padding-top: 0;
+        }
+
+        .legal-section:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .legal-section h2 {
+            margin-bottom: 12px;
+
+            color: #ffffff;
+
+            font-size: 21px;
+        }
+
+        .legal-section h3 {
+            margin:
+                18px 0 8px;
+
+            color: #a9dfff;
+
+            font-size: 15px;
+        }
+
+        .legal-section p {
+            color: #9bb1bf;
+
+            font-size: 14px;
+
+            line-height: 1.8;
+        }
+
+        .legal-section ul {
+            padding-left: 21px;
+
+            color: #9bb1bf;
+
+            font-size: 14px;
+
+            line-height: 1.9;
+        }
+
+        .legal-section li {
+            margin-bottom: 5px;
+        }
+
+
+        /* ================= WARNING BOX ================= */
+
+        .warning-box {
+            margin-bottom: 25px;
+
+            padding: 19px 20px;
+
+            border:
+                1px solid rgba(255,200,80,.28);
+
+            border-left:
+                4px solid #ffc857;
+
+            border-radius: 12px;
+
+            background:
+                rgba(255,200,80,.06);
+
+            color: #d8c99b;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+
+        /* ================= IMPORTANT BOX ================= */
+
+        .important-box {
+            margin-top: 20px;
+
+            padding: 18px 20px;
+
+            border:
+                1px solid rgba(255,70,95,.25);
+
+            border-left:
+                4px solid #ff7185;
+
+            border-radius: 12px;
+
+            background:
+                rgba(255,70,95,.06);
+
+            color: #d8aeb5;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+
+        /* ================= SAFE BOX ================= */
+
+        .safe-box {
+            margin-top: 20px;
+
+            padding: 18px 20px;
+
+            border:
+                1px solid rgba(45,228,154,.25);
+
+            border-left:
+                4px solid #2de49a;
+
+            border-radius: 12px;
+
+            background:
+                rgba(45,228,154,.05);
+
+            color: #a7d8c5;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+
+        /* ================= LINKS ================= */
+
+        .legal-links {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-top: 30px;
+        }
+
+        .legal-links a {
+            padding:
+                9px 13px;
+
+            border:
+                1px solid #285873;
+
+            border-radius: 10px;
+
+            color: #8bdcff;
+
+            font-size: 12px;
+
+            transition: .2s;
+        }
+
+        .legal-links a:hover {
+            border-color:
+                var(--blue);
+
+            background:
+                rgba(0,150,255,.06);
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media(max-width: 600px) {
+
+            .legal-page {
+                padding:
+                    55px 12px 80px;
+            }
+
+            .legal-card {
+                padding: 23px;
+            }
+
+            .legal-header h1 {
+                font-size: 43px;
+            }
+
+            .legal-section p,
+            .legal-section ul {
+                font-size: 13px;
+            }
+
+        }
+
+    </style>
 </head>
+
 
 <body>
 
+
+<!-- ================= NAVBAR ================= -->
+
 <header class="navbar">
 
-<div class="container">
+    <div class="nav-container">
 
-<a href="index.html" class="logo">
-Fraud<span>Guard</span>
-</a>
+        <a
+            href="index.html"
+            class="brand">
 
-<ul class="nav-menu">
+            INSPECT<span>CALLER</span>
 
-<li><a href="index.html">Home</a></li>
-<li><a href="features.html">Features</a></li>
-<li><a href="scanner.html">Scanner</a></li>
-<li><a href="report.html">Report</a></li>
-<li><a href="about.html">About</a></li>
-<li><a href="contact.html">Contact</a></li>
+        </a>
 
-</ul>
 
-<div class="nav-actions">
+        <nav class="nav-links">
 
-<a href="login.html" class="nav-btn">
-Login
-</a>
+            <a href="index.html">
+                Home
+            </a>
 
-<a href="register.html" class="nav-btn">
-Register
-</a>
+            <a href="features.html">
+                Features
+            </a>
 
-</div>
+            <a href="about.html">
+                About
+            </a>
 
-</div>
+            <a href="contact.html">
+                Contact
+            </a>
+
+        </nav>
+
+
+        <a
+            href="login.html"
+            class="nav-login">
+
+            Login
+
+        </a>
+
+    </div>
 
 </header>
 
 
-<section class="hero">
 
-<div class="container">
+<!-- ================= DISCLAIMER ================= -->
 
-<div class="hero-content">
+<main class="legal-page">
 
-<h1>
-FraudGuard <span>Disclaimer</span>
-</h1>
+<div class="legal-container">
 
-<p>
-Important information about using our fraud detection services.
-</p>
+
+    <!-- HEADER -->
+
+    <div class="legal-header">
+
+        <div class="legal-badge">
+
+            ⚠️ LEGAL NOTICE
+
+        </div>
+
+
+        <h1>
+
+            Important
+            <span>Disclaimer</span>
+
+        </h1>
+
+
+        <p>
+
+            Last Updated: August 2026
+
+        </p>
+
+    </div>
+
+
+
+    <!-- CARD -->
+
+    <article class="legal-card">
+
+
+        <!-- IMPORTANT NOTICE -->
+
+        <div class="warning-box">
+
+            <strong>
+                Important:
+            </strong>
+
+            Inspect Caller is currently an
+            idea / pre-launch startup prototype.
+            Some features, statistics, integrations,
+            AI capabilities and security services
+            shown on this website represent planned
+            or demonstration functionality and may
+            not currently operate as production
+            services.
+
+        </div>
+
+
+
+        <!-- 1 -->
+
+        <section class="legal-section">
+
+            <h2>
+                1. General Information
+            </h2>
+
+            <p>
+
+                Inspect Caller is a proposed global
+                caller security and anti-fraud
+                technology platform.
+
+                <br><br>
+
+                The website is intended to demonstrate
+                the product vision, planned features,
+                business model, roadmap and future
+                technology direction.
+
+                <br><br>
+
+                Information presented on this website
+                should not be interpreted as a guarantee
+                that every described feature is
+                currently available.
+
+            </p>
+
+        </section>
+
+
+
+        <!-- 2 -->
+
+        <section class="legal-section">
+
+            <h2>
+                2. Prototype & Pre-Launch Status
+            </h2>
+
+            <p>
+
+                Inspect Caller is currently in the
+                <strong>
+                    Idea / Pre-Launch
+                </strong>
+                stage.
+
+                <br><br>
+
+                Certain pages, dashboards, scan results,
+                statistics, AI responses, security
+                scores and reports may contain
+                demonstration data for presentation
+                and prototype purposes.
+
+            </p>
+
+            <div class="safe-box">
+
+                <strong>
+                    Prototype Notice:
+                </strong>
+
+                Demo results must not be treated as
+                verified real-world intelligence or
+                official fraud determinations.
+
+            </div>
+
+        </section>
+
+
+
+        <!-- 3 -->
+
+        <section class="legal-section">
+
+            <h2>
+                3. Fraud Detection Disclaimer
+            </h2>
+
+            <p>
+
+                Inspect Caller is intended to assist
+                users in identifying potential warning
+                signs of fraud.
+
+                <br><br>
+
+                A caller, phone number, website,
+                social media account, message or
+                transaction marked as suspicious does
+                not automatically mean that the person,
+                organization or service is fraudulent.
+
+                <br><br>
+
+                Similarly, a low-risk or clean result
+                does not guarantee that an entity is
+                safe.
+
+            </p>
+
+            <div class="important-box">
+
+                <strong>
+                    No automated result is a guarantee
+                    of safety or fraud.
+                </strong>
+
+                Users should independently verify
+                important information before making
+                financial or other sensitive decisions.
+
+            </div>
+
+        </section>
+
+
+
+        <!-- 4 -->
+
+        <section class="legal-section">
+
+            <h2>
+                4. AI Disclaimer
+            </h2>
+
+            <p>
+
+                Future Inspect Caller services may use
+                artificial intelligence to analyze
+                text, voice, images, links, messages
+                and other information.
+
+                <br><br>
+
+                AI-generated results may contain errors,
+                incomplete information or false positives
+                and false negatives.
+
+                <br><br>
+
+                AI analysis should therefore be treated
+                as an assistance tool rather than a
+                definitive determination of fraud.
+
+            </p>
+
+            <h3>
+                AI may be used for:
+            </h3>
+
+            <ul>
+
+                <li>
+                    Scam pattern analysis
+                </li>
+
+                <li>
+                    Suspicious message analysis
+                </li>
+
+                <li>
+                    Potential phishing detection
+                </li>
+
+                <li>
+                    Risk signal generation
+                </li>
+
+                <li>
+                    Security awareness assistance
+                </li>
+
+            </ul>
+
+        </section>
+
+
+
+        <!-- 5 -->
+
+        <section class="legal-section">
+
+            <h2>
+                5. Financial Disclaimer
+            </h2>
+
+            <p>
+
+                Inspect Caller does not provide
+                financial, investment, banking or
+                legal advice.
+
+                <br><br>
+
+                Users should not rely solely on an
+                Inspect Caller result when deciding
+                whether to send money, invest, borrow,
+                purchase a product or enter into a
+                financial transaction.
+
+            </p>
+
+            <div class="important-box">
+
+                Never share passwords, PINs, OTPs,
+                private keys or other sensitive
+                authentication information with
+                unknown individuals or services.
+
+            </div>
+
+        </section>
+
+
+
+        <!-- 6 -->
+
+        <section class="legal-section">
+
+            <h2>
+                6. Fraud Reports
+            </h2>
+
+            <p>
+
+                Users may be able to submit reports
+                concerning suspicious phone numbers,
+                websites, social media accounts,
+                messages or other digital activity.
+
+                <br><br>
+
+                User-submitted reports may be inaccurate,
+                incomplete or malicious.
+
+                <br><br>
+
+                Future production systems may use
+                verification processes before treating
+                reports as confirmed intelligence.
+
+            </p>
+
+        </section>
+
+
+
+        <!-- 7 -->
+
+        <section class="legal-section">
+
+            <h2>
+                7. Government & Law-Enforcement
+                Integration
+            </h2>
+
+            <p>
+
+                The long-term vision of Inspect Caller
+                may include cooperation with authorized
+                government agencies, regulators,
+                cybersecurity organizations and
+                law-enforcement authorities.
+
+                <br><br>
+
+                Any such integration would require
+                appropriate authorization, agreements,
+                technical infrastructure and compliance
+                with applicable laws.
+
+            </p>
+
+            <div class="warning-box">
+
+                Inspect Caller does not currently claim
+                that submitting a report automatically
+                creates a criminal case, identifies a
+                suspect, guarantees arrest or guarantees
+                recovery of stolen funds.
+
+            </div>
+
+        </section>
+
+
+
+        <!-- 8 -->
+
+        <section class="legal-section">
+
+            <h2>
+                8. Third-Party Data & Integrations
+            </h2>
+
+            <p>
+
+                Future versions may integrate with
+                third-party platforms, APIs, databases,
+                financial services, social networks,
+                messaging platforms or cybersecurity
+                intelligence providers.
+
+                <br><br>
+
+                Availability, accuracy and reliability
+                of third-party information are outside
+                Inspect Caller's direct control.
+
+            </p>
+
+        </section>
+
+
+
+        <!-- 9 -->
+
+        <section class="legal-section">
+
+            <h2>
+                9. No Guarantee of Complete Protection
+            </h2>
+
+            <p>
+
+                No cybersecurity system can guarantee
+                complete protection against every form
+                of fraud, cyberattack, social engineering,
+                phishing, identity theft or malicious
+                activity.
+
+                <br><br>
+
+                Inspect Caller aims to reduce risk and
+                improve user awareness, detection and
+                reporting capabilities.
+
+            </p>
+
+        </section>
+
+
+
+        <!-- 10 -->
+
+        <section class="legal-section">
+
+            <h2>
+                10. Statistics & Market Information
+            </h2>
+
+            <p>
+
+                Statistics, market sizes, fraud-loss
+                estimates, user projections, revenue
+                forecasts and other numerical information
+                presented in startup materials may be
+                estimates, projections or research-based
+                figures.
+
+                <br><br>
+
+                Such figures should not be interpreted
+                as guaranteed business results or
+                financial performance.
+
+            </p>
+
+        </section>
+
+
+
+        <!-- 11 -->
+
+        <section class="legal-section">
+
+            <h2>
+                11. Future Features
+            </h2>
+
+            <p>
+
+                Planned features may include:
+
+            </p>
+
+            <ul>
+
+                <li>
+                    Real-time caller inspection
+                </li>
+
+                <li>
+                    AI-powered scam detection
+                </li>
+
+                <li>
+                    Voice, text and image analysis
+                </li>
+
+                <li>
+                    URL and phishing detection
+                </li>
+
+                <li>
+                    Social media scanning
+                </li>
+
+                <li>
+                    Messaging platform scanning
+                </li>
+
+                <li>
+                    Trust Score
+                </li>
+
+                <li>
+                    Global fraud reporting
+                </li>
+
+                <li>
+                    B2B security integrations
+                </li>
+
+                <li>
+                    Authorized B2G integrations
+                </li>
+
+            </ul>
+
+            <p>
+
+                These features are subject to technical
+                development, funding, partnerships,
+                legal requirements and regulatory
+                approval where applicable.
+
+            </p>
+
+        </section>
+
+
+
+        <!-- 12 -->
+
+        <section class="legal-section">
+
+            <h2>
+                12. User Responsibility
+            </h2>
+
+            <p>
+
+                Users are responsible for independently
+                verifying important information and
+                exercising reasonable caution when
+                interacting with unknown individuals,
+                websites, applications or businesses.
+
+            </p>
+
+            <h3>
+                Recommended precautions:
+            </h3>
+
+            <ul>
+
+                <li>
+                    Verify payment requests independently.
+                </li>
+
+                <li>
+                    Do not share OTPs or passwords.
+                </li>
+
+                <li>
+                    Avoid suspicious links.
+                </li>
+
+                <li>
+                    Confirm identities through trusted
+                    channels.
+                </li>
+
+                <li>
+                    Contact your bank immediately if
+                    you suspect unauthorized transactions.
+                </li>
+
+                <li>
+                    Contact the appropriate authorities
+                    when necessary.
+                </li>
+
+            </ul>
+
+        </section>
+
+
+
+        <!-- 13 -->
+
+        <section class="legal-section">
+
+            <h2>
+                13. No Professional Advice
+            </h2>
+
+            <p>
+
+                Content provided through Inspect Caller
+                is not a substitute for professional
+                legal, financial, cybersecurity,
+                medical or law-enforcement advice.
+
+                <br><br>
+
+                Where a situation involves significant
+                financial loss, identity theft,
+                criminal activity or immediate danger,
+                users should contact the appropriate
+                qualified professional or authority.
+
+            </p>
+
+        </section>
+
+
+
+        <!-- 14 -->
+
+        <section class="legal-section">
+
+            <h2>
+                14. Changes To This Disclaimer
+            </h2>
+
+            <p>
+
+                Inspect Caller may update this Disclaimer
+                as the platform develops and its
+                services, integrations and legal
+                requirements change.
+
+                <br><br>
+
+                The updated version will be published
+                on this page with a revised date.
+
+            </p>
+
+        </section>
+
+
+
+        <!-- 15 -->
+
+        <section class="legal-section">
+
+            <h2>
+                15. Contact Information
+            </h2>
+
+            <p>
+
+                For questions regarding this Disclaimer,
+                contact the Inspect Caller team.
+
+                <br><br>
+
+                <strong>
+                    Founder & CEO:
+                </strong>
+
+                Mohammad Sajedur Rahman Biplob
+
+                <br><br>
+
+                <strong>
+                    Team Leader:
+                </strong>
+
+                Nila Akter
+
+                <br><br>
+
+                <strong>
+                    Country:
+                </strong>
+
+                Bangladesh
+
+                <br><br>
+
+                <strong>
+                    Email:
+                </strong>
+
+                <a
+                    href="mailto:rbiplob1005@gmail.com"
+                    style="color:#6dd8ff;">
+
+                    rbiplob1005@gmail.com
+
+                </a>
+
+            </p>
+
+
+            <!-- LEGAL LINKS -->
+
+            <div class="legal-links">
+
+                <a href="privacy-policy.html">
+                    Privacy Policy
+                </a>
+
+                <a href="terms.html">
+                    Terms & Conditions
+                </a>
+
+                <a href="cookie-policy.html">
+                    Cookie Policy
+                </a>
+
+                <a href="contact.html">
+                    Contact Us
+                </a>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- FINAL NOTICE -->
+
+        <div class="warning-box">
+
+            <strong>
+                Final Notice:
+            </strong>
+
+            Inspect Caller is currently a prototype
+            and pre-launch concept. Nothing on this
+            website should be interpreted as a promise
+            of future functionality, guaranteed fraud
+            detection, guaranteed financial recovery,
+            guaranteed legal action or guaranteed
+            cybersecurity protection.
+
+        </div>
+
+
+    </article>
 
 </div>
 
-</div>
-
-</section>
+</main>
 
 
-<section>
 
-<div class="container">
+<!-- ================= FOOTER ================= -->
 
-<div class="card">
+<footer>
 
-<h2>Important Notice</h2>
+    <div class="footer-brand">
 
-<p>
-FraudGuard provides fraud detection, risk analysis and security information for awareness purposes only. Results are not guaranteed to be completely accurate.
-</p>
+        INSPECT<span>CALLER</span>
 
-</div>
+    </div>
 
-
-<div class="card">
-
-<h2>No Guarantee</h2>
-
-<p>
-A website, phone number, email address or account marked as low risk should not be considered completely safe. Users should always verify information independently.
-</p>
-
-</div>
+    <p>
+        Global Caller Security & Anti-Fraud Technology
+    </p>
 
 
-<div class="card">
+    <div class="footer-links">
 
-<h2>User Responsibility</h2>
+        <a href="index.html">
+            Home
+        </a>
 
-<p>
-Do not share passwords, OTPs, banking credentials or other sensitive information based solely on a FraudGuard result.
-</p>
+        <a href="features.html">
+            Features
+        </a>
 
-</div>
+        <a href="about.html">
+            About
+        </a>
+
+        <a href="contact.html">
+            Contact
+        </a>
+
+        <a href="privacy-policy.html">
+            Privacy
+        </a>
+
+        <a href="terms.html">
+            Terms
+        </a>
+
+        <a href="cookie-policy.html">
+            Cookies
+        </a>
+
+        <a href="disclaimer.html">
+            Disclaimer
+        </a>
+
+    </div>
 
 
-<div class="card">
+    <p class="copyright">
 
-<h2>Contact</h2>
+        © 2026 Inspect Caller.
+        Idea / Pre-Launch Prototype.
 
-<p>
-For questions or concerns, please visit our
-<a href="contact.html">Contact page</a>.
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-
-<footer class="footer">
-
-<div class="container">
-
-<p class="copyright">
-© 2026 FraudGuard. All Rights Reserved.
-</p>
-
-</div>
+    </p>
 
 </footer>
 
-<script src="script.js"></script>
 
 </body>
-
 </html>
