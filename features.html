@@ -1,1569 +1,1612 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>Features | FraudGuard</title>
-
-<meta
-name="description"
-content="Explore FraudGuard's fraud detection, scam checking, reporting and security tools.">
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    min-height:100vh;
-    background:#0b1328;
-    color:#fff;
-    font-family:Arial,Helvetica,sans-serif;
-}
-
-a{
-    color:inherit;
-    text-decoration:none;
-}
-
-.navbar{
-    width:100%;
-    background:#10182d;
-    border-bottom:1px solid #26324b;
-    position:sticky;
-    top:0;
-    z-index:1000;
-}
-
-.nav-container{
-    max-width:1250px;
-    min-height:64px;
-    margin:auto;
-    padding:0 18px;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.brand{
-    display:flex;
-    align-items:center;
-    gap:9px;
-
-    color:#22c55e;
-    font-size:20px;
-    font-weight:700;
-}
-
-.brand img{
-    width:36px;
-    height:36px;
-    object-fit:contain;
-}
-
-.nav-links{
-    display:flex;
-    align-items:center;
-    gap:12px;
-
-    font-size:10px;
-    font-weight:600;
-}
+    <title>Features — Inspect Caller</title>
 
-.nav-links a:hover{
-    color:#22c55e;
-}
+    <meta
+        name="description"
+        content="Explore Inspect Caller features for caller security, scam detection, fraud reporting and digital safety."
+    >
 
-.nav-links a.active{
-    color:#22c55e;
-}
+    <link rel="stylesheet" href="style.css">
 
-.logout-btn{
-    border:0;
-    border-radius:6px;
+    <style>
 
-    padding:8px 13px;
+        /* ================= PAGE ================= */
 
-    background:#22c55e;
-    color:#fff;
+        .features-page {
+            min-height: 100vh;
 
-    cursor:pointer;
-    font-weight:700;
-}
+            padding: 75px 20px 110px;
 
-.logout-btn:hover{
-    background:#16a34a;
-}
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(0,150,255,.14),
+                    transparent 42%
+                ),
+                #050d18;
+        }
 
-.mobile-menu{
-    display:none;
+        .features-container {
+            width: min(1200px, 100%);
+            margin: auto;
+        }
 
-    border:0;
-    background:transparent;
-    color:#fff;
 
-    font-size:24px;
-    cursor:pointer;
-}
+        /* ================= HERO ================= */
 
-.page{
-    max-width:1150px;
-    margin:auto;
-    padding:45px 16px 60px;
-}
+        .features-hero {
+            max-width: 850px;
 
-.hero{
-    text-align:center;
-    margin-bottom:42px;
-}
+            margin:
+                0 auto 55px;
 
-.hero-icon{
-    font-size:50px;
-    margin-bottom:10px;
-}
+            text-align: center;
+        }
 
-.hero h1{
-    font-size:38px;
-    margin-bottom:10px;
-}
+        .feature-badge {
+            display: inline-flex;
 
-.hero h1 span{
-    color:#22c55e;
-}
+            align-items: center;
 
-.hero p{
-    max-width:720px;
-    margin:auto;
+            gap: 7px;
 
-    color:#aeb8ca;
+            padding:
+                9px 17px;
 
-    font-size:13px;
-    line-height:1.7;
-}
+            border:
+                1px solid #285873;
 
-.section-title{
-    text-align:center;
-    margin-bottom:24px;
-}
+            border-radius: 999px;
 
-.section-title h2{
-    color:#22c55e;
+            background: #071b2c;
 
-    font-size:24px;
+            color: #8bdcff;
 
-    margin-bottom:7px;
-}
+            font-size: 11px;
 
-.section-title p{
-    color:#8995a9;
+            font-weight: 850;
 
-    font-size:11px;
-}
+            letter-spacing: .8px;
+        }
 
-.tools-grid{
-    display:grid;
+        .features-hero h1 {
+            margin-top: 22px;
 
-    grid-template-columns:
-    repeat(4,1fr);
+            font-size:
+                clamp(43px, 7vw, 72px);
 
-    gap:17px;
+            line-height: .98;
 
-    margin-bottom:45px;
-}
+            letter-spacing: -3px;
+        }
 
-.tool-card{
-    background:#1c263b;
+        .features-hero h1 span {
+            color: var(--blue);
+        }
 
-    border:1px solid #2d3953;
+        .features-hero p {
+            max-width: 720px;
 
-    border-radius:11px;
+            margin:
+                22px auto 0;
 
-    padding:21px;
+            color: var(--muted);
 
-    min-height:205px;
+            font-size: 15px;
 
-    display:flex;
-    flex-direction:column;
+            line-height: 1.75;
+        }
 
-    transition:.2s;
-}
 
-.tool-card:hover{
-    transform:translateY(-3px);
+        /* ================= FEATURE GRID ================= */
 
-    border-color:#22c55e;
+        .feature-grid {
+            display: grid;
 
-    box-shadow:
-    0 10px 25px
-    rgba(0,0,0,.22);
-}
+            grid-template-columns:
+                repeat(3, 1fr);
 
-.tool-icon{
-    width:46px;
-    height:46px;
+            gap: 17px;
+        }
 
-    border-radius:10px;
+        .feature-card {
+            position: relative;
 
-    background:#111a2f;
+            overflow: hidden;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+            padding: 25px;
 
-    font-size:22px;
+            border:
+                1px solid var(--line);
 
-    margin-bottom:14px;
-}
+            border-radius: 22px;
 
-.tool-card h3{
-    color:#22c55e;
+            background:
+                linear-gradient(
+                    145deg,
+                    #0a2034,
+                    #061522
+                );
 
-    font-size:15px;
+            transition:
+                transform .25s,
+                border-color .25s,
+                box-shadow .25s;
+        }
 
-    margin-bottom:7px;
-}
+        .feature-card:hover {
+            transform:
+                translateY(-6px);
 
-.tool-card p{
-    color:#9da8bb;
+            border-color:
+                #267ba8;
 
-    font-size:11px;
+            box-shadow:
+                0 22px 55px
+                rgba(0,120,200,.12);
+        }
 
-    line-height:1.6;
+        .feature-card::after {
+            content: "";
 
-    flex:1;
-}
+            position: absolute;
 
-.tool-link{
-    display:block;
+            width: 130px;
+            height: 130px;
 
-    margin-top:13px;
+            right: -70px;
+            top: -70px;
 
-    padding:8px;
+            border-radius: 50%;
 
-    text-align:center;
+            background:
+                rgba(0,160,255,.07);
 
-    border-radius:6px;
+            filter: blur(20px);
+        }
 
-    background:#344158;
+        .feature-icon {
+            width: 52px;
+            height: 52px;
 
-    color:#fff;
+            display: grid;
 
-    font-size:10px;
-    font-weight:600;
-}
+            place-items: center;
 
-.tool-link:hover{
-    background:#22c55e;
-}
+            margin-bottom: 17px;
 
-.security-section{
-    margin-bottom:45px;
-}
+            border:
+                1px solid #24536d;
 
-.security-grid{
-    display:grid;
+            border-radius: 15px;
 
-    grid-template-columns:
-    repeat(3,1fr);
+            background: #071d30;
 
-    gap:16px;
-}
+            font-size: 24px;
+        }
 
-.security-card{
-    background:#1c263b;
+        .feature-card h2 {
+            margin-bottom: 8px;
 
-    border:1px solid #2d3953;
+            font-size: 18px;
+        }
 
-    border-radius:11px;
+        .feature-card p {
+            color: var(--muted);
 
-    padding:22px;
-}
+            font-size: 12px;
 
-.security-icon{
-    font-size:28px;
+            line-height: 1.7;
+        }
 
-    margin-bottom:12px;
-}
+        .feature-status {
+            display: inline-block;
 
-.security-card h3{
-    color:#22c55e;
+            margin-top: 17px;
 
-    font-size:15px;
+            padding:
+                5px 9px;
 
-    margin-bottom:7px;
-}
+            border-radius: 999px;
 
-.security-card p{
-    color:#9da8bb;
+            background:
+                rgba(45,228,154,.06);
 
-    font-size:11px;
+            border:
+                1px solid rgba(45,228,154,.2);
 
-    line-height:1.7;
-}
+            color: #62eab3;
 
-.workflow-section{
-    margin-bottom:45px;
-}
+            font-size: 9px;
 
-.workflow{
-    display:grid;
+            font-weight: 850;
 
-    grid-template-columns:
-    repeat(4,1fr);
+            letter-spacing: .4px;
+        }
 
-    gap:14px;
-}
+        .feature-status.future {
+            background:
+                rgba(0,160,255,.06);
 
-.step{
-    background:#1c263b;
+            border-color:
+                rgba(0,160,255,.2);
 
-    border:1px solid #2d3953;
+            color:
+                #73d4ff;
+        }
 
-    border-radius:11px;
 
-    padding:22px;
+        /* ================= FEATURE DETAIL ================= */
 
-    text-align:center;
-}
+        .detail-section {
+            margin-top: 25px;
 
-.step-number{
-    width:35px;
-    height:35px;
+            padding: 35px;
 
-    margin:0 auto 11px;
+            border:
+                1px solid #20475e;
 
-    border-radius:50%;
+            border-radius: 25px;
 
-    background:#22c55e;
+            background:
+                linear-gradient(
+                    135deg,
+                    #09263e,
+                    #061724
+                );
+        }
 
-    color:#fff;
+        .detail-header {
+            display: flex;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+            align-items: center;
 
-    font-size:13px;
-    font-weight:700;
-}
+            gap: 15px;
 
-.step h3{
-    font-size:14px;
+            margin-bottom: 25px;
+        }
 
-    margin-bottom:7px;
-}
+        .detail-header-icon {
+            width: 50px;
+            height: 50px;
 
-.step p{
-    color:#929db1;
+            display: grid;
 
-    font-size:10px;
+            place-items: center;
 
-    line-height:1.6;
-}
+            border-radius: 14px;
 
-.community{
-    background:
-    linear-gradient(
-        135deg,
-        #1c263b,
-        #151f34
-    );
+            background: #0b2941;
 
-    border:1px solid #2d3953;
+            font-size: 22px;
+        }
 
-    border-radius:12px;
+        .detail-header h2 {
+            font-size: 23px;
+        }
 
-    padding:32px;
+        .detail-header p {
+            margin-top: 3px;
 
-    text-align:center;
+            color: var(--muted);
 
-    margin-bottom:45px;
-}
+            font-size: 11px;
+        }
 
-.community h2{
-    color:#22c55e;
+        .detail-grid {
+            display: grid;
 
-    font-size:24px;
+            grid-template-columns:
+                repeat(2, 1fr);
 
-    margin-bottom:9px;
-}
+            gap: 13px;
+        }
 
-.community p{
-    max-width:720px;
+        .detail-item {
+            padding: 16px;
 
-    margin:0 auto 18px;
+            border-radius: 14px;
 
-    color:#aeb8ca;
+            background:
+                rgba(4,18,30,.65);
 
-    font-size:12px;
+            border:
+                1px solid #17394f;
+        }
 
-    line-height:1.7;
-}
+        .detail-item strong {
+            display: block;
 
-.community-btn{
-    display:inline-block;
+            margin-bottom: 5px;
 
-    padding:10px 18px;
+            font-size: 12px;
+        }
 
-    border-radius:7px;
+        .detail-item span {
+            color: var(--muted);
 
-    background:#22c55e;
+            font-size: 11px;
 
-    color:#fff;
+            line-height: 1.6;
+        }
 
-    font-size:11px;
-    font-weight:600;
-}
 
-.community-btn:hover{
-    background:#16a34a;
-}
+        /* ================= AI SECTION ================= */
 
-.footer{
-    background:#10182d;
+        .ai-section {
+            display: grid;
 
-    border-top:1px solid #26324b;
+            grid-template-columns:
+                1fr 1fr;
 
-    padding:35px 0 20px;
-}
+            gap: 20px;
 
-.footer-grid{
-    max-width:1150px;
+            margin-top: 25px;
 
-    margin:auto;
+            padding: 35px;
 
-    padding:0 16px;
+            border:
+                1px solid #285873;
 
-    display:grid;
+            border-radius: 25px;
 
-    grid-template-columns:
-    1.4fr 1fr 1fr 1fr;
+            background:
+                radial-gradient(
+                    circle at 90% 20%,
+                    rgba(0,160,255,.1),
+                    transparent 45%
+                ),
+                #071827;
+        }
 
-    gap:28px;
-}
+        .ai-content h2 {
+            margin-bottom: 10px;
 
-.footer h3{
-    color:#22c55e;
+            font-size: 27px;
+        }
 
-    font-size:14px;
+        .ai-content h2 span {
+            color: var(--blue);
+        }
 
-    margin-bottom:10px;
-}
+        .ai-content p {
+            color: var(--muted);
 
-.footer p,
-.footer a{
-    color:#7f8b9f;
+            font-size: 13px;
 
-    font-size:10px;
+            line-height: 1.75;
+        }
 
-    line-height:1.7;
-}
+        .ai-list {
+            display: grid;
 
-.footer-links{
-    list-style:none;
-}
+            gap: 9px;
 
-.footer-links li{
-    margin-bottom:5px;
-}
+            margin-top: 18px;
+        }
 
-.footer a:hover{
-    color:#22c55e;
-}
+        .ai-list div {
+            display: flex;
 
-.copyright{
-    max-width:1150px;
+            align-items: center;
 
-    margin:28px auto 0;
+            gap: 9px;
 
-    padding:17px 16px 0;
+            color: #a8c0cc;
 
-    border-top:1px solid #26324b;
+            font-size: 11px;
+        }
 
-    text-align:center;
+        .ai-list b {
+            color: #42e7a4;
+        }
 
-    color:#5f6b80;
+        .ai-visual {
+            min-height: 280px;
 
-    font-size:9px;
-}
+            display: flex;
 
-@media(max-width:1050px){
+            align-items: center;
 
-    .nav-links{
-        gap:7px;
-        font-size:8px;
-    }
+            justify-content: center;
 
-    .tools-grid{
-        grid-template-columns:
-        repeat(2,1fr);
-    }
+            border:
+                1px solid #173d54;
 
-}
+            border-radius: 20px;
 
-@media(max-width:800px){
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(0,160,255,.09),
+                    transparent 62%
+                );
+        }
 
-    .nav-links{
-        display:none;
-    }
+        .ai-core {
+            width: 150px;
+            height: 150px;
 
-    .mobile-menu{
-        display:block;
-    }
+            display: grid;
 
-    .nav-container{
-        min-height:58px;
-    }
+            place-items: center;
 
-    .brand{
-        font-size:16px;
-    }
+            border:
+                1px solid #2a91c5;
 
-    .brand img{
-        width:30px;
-        height:30px;
-    }
+            border-radius: 50%;
 
-    .security-grid{
-        grid-template-columns:
-        repeat(2,1fr);
-    }
+            background:
+                radial-gradient(
+                    circle,
+                    #0b3855,
+                    #061522
+                );
 
-    .workflow{
-        grid-template-columns:
-        repeat(2,1fr);
-    }
+            box-shadow:
+                0 0 55px
+                rgba(0,160,255,.14);
 
-    .footer-grid{
-        grid-template-columns:
-        repeat(2,1fr);
-    }
+            font-size: 48px;
+        }
 
-}
 
-@media(max-width:550px){
+        /* ================= INTEGRATIONS ================= */
 
-    .page{
-        padding:
-        30px 12px 45px;
-    }
+        .integration-section {
+            margin-top: 25px;
 
-    .hero h1{
-        font-size:29px;
-    }
+            padding: 30px;
 
-    .hero-icon{
-        font-size:42px;
-    }
+            border:
+                1px solid var(--line);
 
-    .tools-grid,
-    .security-grid,
-    .workflow{
-        grid-template-columns:1fr;
-    }
+            border-radius: 24px;
 
-    .tool-card{
-        min-height:185px;
-    }
+            background: #081c2d;
+        }
 
-    .community{
-        padding:23px 17px;
-    }
+        .integration-section h2 {
+            text-align: center;
 
-    .footer-grid{
-        grid-template-columns:1fr;
-    }
+            font-size: 23px;
+        }
 
-}
+        .integration-section > p {
+            max-width: 650px;
 
-</style>
+            margin:
+                9px auto 25px;
 
+            text-align: center;
+
+            color: var(--muted);
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+        .integration-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 12px;
+        }
+
+        .integration {
+            padding: 18px;
+
+            text-align: center;
+
+            border:
+                1px solid #193b51;
+
+            border-radius: 14px;
+
+            background: #071827;
+        }
+
+        .integration-icon {
+            margin-bottom: 9px;
+
+            font-size: 23px;
+        }
+
+        .integration strong {
+            display: block;
+
+            font-size: 11px;
+        }
+
+        .integration span {
+            display: block;
+
+            margin-top: 4px;
+
+            color: var(--muted);
+
+            font-size: 9px;
+        }
+
+
+        /* ================= CTA ================= */
+
+        .features-cta {
+            margin-top: 25px;
+
+            padding: 48px 25px;
+
+            text-align: center;
+
+            border:
+                1px solid #24536d;
+
+            border-radius: 25px;
+
+            background:
+                radial-gradient(
+                    circle at 50% 0,
+                    rgba(0,160,255,.13),
+                    transparent 65%
+                ),
+                #071827;
+        }
+
+        .features-cta h2 {
+            font-size: 30px;
+
+            margin-bottom: 10px;
+        }
+
+        .features-cta h2 span {
+            color: var(--blue);
+        }
+
+        .features-cta p {
+            max-width: 650px;
+
+            margin:
+                0 auto 23px;
+
+            color: var(--muted);
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+        .cta-buttons {
+            display: flex;
+
+            justify-content: center;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-height: 45px;
+
+            padding:
+                0 18px;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #159ddd,
+                    #0873cf
+                );
+
+            color: white;
+
+            font-size: 11px;
+
+            font-weight: 850;
+        }
+
+        .cta-button.secondary {
+            border:
+                1px solid #285873;
+
+            background: #071b2b;
+
+            color: #9fdcff;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media(max-width: 950px) {
+
+            .feature-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .integration-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .ai-section {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media(max-width: 600px) {
+
+            .features-page {
+                padding:
+                    50px 12px 80px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .detail-section,
+            .ai-section,
+            .integration-section {
+                padding: 22px;
+            }
+
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .integration-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .features-hero h1 {
+                font-size: 45px;
+            }
+
+        }
+
+    </style>
 </head>
+
 
 <body>
 
+
+<!-- ================= NAVBAR ================= -->
+
 <header class="navbar">
 
-<div class="nav-container">
+    <div class="nav-container">
 
-<a
-href="index.html"
-class="brand">
+        <a
+            href="index.html"
+            class="brand">
 
-<img
-src="logo.png"
-alt="FraudGuard">
+            INSPECT<span>CALLER</span>
 
-<span>
-FraudGuard
-</span>
+        </a>
 
-</a>
 
-<nav class="nav-links">
+        <nav class="nav-links">
 
-<a href="index.html">
-Home
-</a>
+            <a href="index.html">
+                Home
+            </a>
 
-<a href="dashboard.html">
-Dashboard
-</a>
+            <a href="features.html">
+                Features
+            </a>
 
-<a
-href="features.html"
-class="active">
+            <a href="about.html">
+                About
+            </a>
 
-Features
+            <a href="contact.html">
+                Contact
+            </a>
 
-</a>
+        </nav>
 
-<a href="scanner.html">
-URL Scanner
-</a>
 
-<a href="phone-checker.html">
-Phone
-</a>
+        <a
+            href="login.html"
+            class="nav-login">
 
-<a href="email-checker.html">
-Email
-</a>
+            Login
 
-<a href="ai-chat.html">
-AI Chat
-</a>
+        </a>
 
-<a href="qr-scanner.html">
-QR
-</a>
-
-<a href="facebook-scanner.html">
-Facebook
-</a>
-
-<a href="telegram-scanner.html">
-Telegram
-</a>
-
-<a href="whatsapp-scanner.html">
-WhatsApp
-</a>
-
-<a href="report.html">
-Report
-</a>
-
-<a href="about.html">
-About
-</a>
-
-<a href="contact.html">
-Contact
-</a>
-
-<button
-id="logoutBtn"
-class="logout-btn">
-
-Logout
-
-</button>
-
-</nav>
-
-<button
-id="mobileMenuBtn"
-class="mobile-menu">
-
-☰
-
-</button>
-
-</div>
+    </div>
 
 </header>
 
 
-<main class="page">
 
-<section class="hero">
+<!-- ================= FEATURES PAGE ================= -->
 
-<div class="hero-icon">
-🛡️
+<main class="features-page">
+
+<div class="features-container">
+
+
+    <!-- ================= HERO ================= -->
+
+    <section class="features-hero">
+
+        <div class="feature-badge">
+
+            🛡️ INSPECT CALLER PLATFORM
+
+        </div>
+
+
+        <h1>
+
+            One Platform.
+            <span>Safer Digital Life.</span>
+
+        </h1>
+
+
+        <p>
+
+            Inspect Caller is designed as a global
+            security layer for identifying suspicious
+            calls, links, messages, accounts and
+            digital activity before users become
+            victims of fraud.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- ================= FEATURE GRID ================= -->
+
+    <section class="feature-grid">
+
+
+        <!-- CALLER -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                📞
+            </div>
+
+            <h2>
+                Caller Inspection
+            </h2>
+
+            <p>
+
+                Check suspicious phone numbers and
+                generate risk signals using reports,
+                reputation data and future threat
+                intelligence.
+
+            </p>
+
+            <span class="feature-status">
+                CORE FEATURE
+            </span>
+
+        </div>
+
+
+
+        <!-- AI -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                🤖
+            </div>
+
+            <h2>
+                AI Scam Detection
+            </h2>
+
+            <p>
+
+                Future AI systems can analyze voice,
+                text, images and scam patterns to
+                identify potential warning signals.
+
+            </p>
+
+            <span class="feature-status future">
+                FUTURE AI
+            </span>
+
+        </div>
+
+
+
+        <!-- URL -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                🔗
+            </div>
+
+            <h2>
+                Phishing & URL Scanner
+            </h2>
+
+            <p>
+
+                Inspect suspicious links and identify
+                potential phishing or malicious
+                destination indicators.
+
+            </p>
+
+            <span class="feature-status">
+                SCANNER
+            </span>
+
+        </div>
+
+
+
+        <!-- EMAIL -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                📧
+            </div>
+
+            <h2>
+                Email Security
+            </h2>
+
+            <p>
+
+                Analyze suspicious email addresses,
+                domains and future SPF, DKIM, DMARC
+                security signals.
+
+            </p>
+
+            <span class="feature-status">
+                SCANNER
+            </span>
+
+        </div>
+
+
+
+        <!-- QR -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                📷
+            </div>
+
+            <h2>
+                QR Scanner
+            </h2>
+
+            <p>
+
+                Scan QR destinations before opening
+                potentially suspicious websites,
+                payment pages or links.
+
+            </p>
+
+            <span class="feature-status">
+                SCANNER
+            </span>
+
+        </div>
+
+
+
+        <!-- FACEBOOK -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                📘
+            </div>
+
+            <h2>
+                Facebook Scanner
+            </h2>
+
+            <p>
+
+                Planned analysis of suspicious profiles,
+                pages, impersonation signals and
+                user-submitted reports.
+
+            </p>
+
+            <span class="feature-status future">
+                FUTURE
+            </span>
+
+        </div>
+
+
+
+        <!-- WHATSAPP -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                💬
+            </div>
+
+            <h2>
+                WhatsApp Scanner
+            </h2>
+
+            <p>
+
+                Future analysis of suspicious messages,
+                phone numbers, links and common
+                scam patterns.
+
+            </p>
+
+            <span class="feature-status future">
+                FUTURE
+            </span>
+
+        </div>
+
+
+
+        <!-- TELEGRAM -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                ✈️
+            </div>
+
+            <h2>
+                Telegram Scanner
+            </h2>
+
+            <p>
+
+                Planned protection against suspicious
+                Telegram accounts, channels, links
+                and scam messages.
+
+            </p>
+
+            <span class="feature-status future">
+                FUTURE
+            </span>
+
+        </div>
+
+
+
+        <!-- REPORT -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                🚨
+            </div>
+
+            <h2>
+                Fraud Reporting
+            </h2>
+
+            <p>
+
+                Report suspicious numbers, pages,
+                accounts, links and other digital
+                activity through a structured system.
+
+            </p>
+
+            <span class="feature-status">
+                CORE FEATURE
+            </span>
+
+        </div>
+
+
+
+        <!-- TRUST -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                ⭐
+            </div>
+
+            <h2>
+                Trust Score
+            </h2>
+
+            <p>
+
+                A planned scoring system designed to
+                summarize available risk and reputation
+                signals into an easy-to-understand score.
+
+            </p>
+
+            <span class="feature-status future">
+                PLANNED
+            </span>
+
+        </div>
+
+
+
+        <!-- ALERT -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                🔔
+            </div>
+
+            <h2>
+                Real-Time Alerts
+            </h2>
+
+            <p>
+
+                Future security alerts can notify users
+                about suspicious numbers, links and
+                emerging scam patterns.
+
+            </p>
+
+            <span class="feature-status future">
+                PLANNED
+            </span>
+
+        </div>
+
+
+
+        <!-- GLOBAL -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                🌍
+            </div>
+
+            <h2>
+                Global Fraud Network
+            </h2>
+
+            <p>
+
+                Long-term vision for a global reporting
+                and intelligence layer connecting users,
+                organizations and authorized partners.
+
+            </p>
+
+            <span class="feature-status future">
+                LONG-TERM
+            </span>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ================= DETECTION ENGINE ================= -->
+
+    <section class="detail-section">
+
+        <div class="detail-header">
+
+            <div class="detail-header-icon">
+                🔎
+            </div>
+
+            <div>
+
+                <h2>
+                    Multi-Layer Detection Engine
+                </h2>
+
+                <p>
+                    Multiple security signals working together.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="detail-grid">
+
+
+            <div class="detail-item">
+
+                <strong>
+                    📞 Caller Intelligence
+                </strong>
+
+                <span>
+                    Phone number reports, reputation
+                    signals and suspicious activity
+                    indicators.
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <strong>
+                    🔗 Link Intelligence
+                </strong>
+
+                <span>
+                    URL structure, domain signals,
+                    phishing indicators and reputation
+                    data.
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <strong>
+                    💬 Message Analysis
+                </strong>
+
+                <span>
+                    Potential scam language, urgent
+                    payment requests and suspicious
+                    patterns.
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <strong>
+                    🧠 AI Risk Analysis
+                </strong>
+
+                <span>
+                    Future AI-assisted analysis of
+                    text, voice and image signals.
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <strong>
+                    👥 Community Reports
+                </strong>
+
+                <span>
+                    User-submitted reports and
+                    reputation information.
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <strong>
+                    🚨 Security Alerts
+                </strong>
+
+                <span>
+                    Planned alerts for emerging threats
+                    and high-risk activity.
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= AI ================= -->
+
+    <section class="ai-section">
+
+
+        <div class="ai-content">
+
+            <h2>
+
+                Powered By
+                <span>Intelligent Security</span>
+
+            </h2>
+
+
+            <p>
+
+                Inspect Caller is designed to evolve
+                toward AI-assisted fraud detection,
+                helping users understand suspicious
+                digital activity without relying on
+                a single signal.
+
+            </p>
+
+
+            <div class="ai-list">
+
+                <div>
+                    <b>✓</b>
+                    Voice scam pattern analysis
+                </div>
+
+                <div>
+                    <b>✓</b>
+                    Suspicious text analysis
+                </div>
+
+                <div>
+                    <b>✓</b>
+                    Image and screenshot analysis
+                </div>
+
+                <div>
+                    <b>✓</b>
+                    Phishing pattern detection
+                </div>
+
+                <div>
+                    <b>✓</b>
+                    Scam category classification
+                </div>
+
+                <div>
+                    <b>✓</b>
+                    Security recommendations
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="ai-visual">
+
+            <div class="ai-core">
+                🤖
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ================= INTEGRATIONS ================= -->
+
+    <section class="integration-section">
+
+        <h2>
+            Future Platform Integrations
+        </h2>
+
+
+        <p>
+
+            The long-term vision includes authorized
+            integrations with digital platforms,
+            security providers, financial services
+            and public-sector partners.
+
+        </p>
+
+
+        <div class="integration-grid">
+
+
+            <div class="integration">
+
+                <div class="integration-icon">
+                    📱
+                </div>
+
+                <strong>
+                    Social Platforms
+                </strong>
+
+                <span>
+                    Planned integration
+                </span>
+
+            </div>
+
+
+            <div class="integration">
+
+                <div class="integration-icon">
+                    💬
+                </div>
+
+                <strong>
+                    Messaging Apps
+                </strong>
+
+                <span>
+                    Planned integration
+                </span>
+
+            </div>
+
+
+            <div class="integration">
+
+                <div class="integration-icon">
+                    🛒
+                </div>
+
+                <strong>
+                    E-Commerce
+                </strong>
+
+                <span>
+                    Planned integration
+                </span>
+
+            </div>
+
+
+            <div class="integration">
+
+                <div class="integration-icon">
+                    🏦
+                </div>
+
+                <strong>
+                    Financial Services
+                </strong>
+
+                <span>
+                    Authorized APIs
+                </span>
+
+            </div>
+
+
+            <div class="integration">
+
+                <div class="integration-icon">
+                    🏛️
+                </div>
+
+                <strong>
+                    Government
+                </strong>
+
+                <span>
+                    B2G roadmap
+                </span>
+
+            </div>
+
+
+            <div class="integration">
+
+                <div class="integration-icon">
+                    🛡️
+                </div>
+
+                <strong>
+                    Cybersecurity
+                </strong>
+
+                <span>
+                    Threat intelligence
+                </span>
+
+            </div>
+
+
+            <div class="integration">
+
+                <div class="integration-icon">
+                    ☁️
+                </div>
+
+                <strong>
+                    Cloud Security
+                </strong>
+
+                <span>
+                    Firebase / AWS
+                </span>
+
+            </div>
+
+
+            <div class="integration">
+
+                <div class="integration-icon">
+                    🔌
+                </div>
+
+                <strong>
+                    Security APIs
+                </strong>
+
+                <span>
+                    B2B integrations
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= CTA ================= -->
+
+    <section class="features-cta">
+
+        <h2>
+
+            Security Starts
+            <span>Before The Scam.</span>
+
+        </h2>
+
+
+        <p>
+
+            Inspect Caller aims to make digital safety
+            easier by combining caller inspection,
+            scam detection, reporting and intelligent
+            security tools into one platform.
+
+        </p>
+
+
+        <div class="cta-buttons">
+
+            <a
+                href="dashboard.html"
+                class="cta-button">
+
+                🚀 Open Dashboard
+
+            </a>
+
+
+            <a
+                href="phone-checker.html"
+                class="cta-button secondary">
+
+                📞 Check A Caller
+
+            </a>
+
+
+            <a
+                href="report.html"
+                class="cta-button secondary">
+
+                🚨 Report Fraud
+
+            </a>
+
+        </div>
+
+    </section>
+
+
 </div>
-
-<h1>
-FraudGuard
-<span>Features</span>
-</h1>
-
-<p>
-A collection of fraud detection, scam
-analysis and community protection tools
-designed to help users stay safer online.
-</p>
-
-</section>
-
-
-<section>
-
-<div class="section-title">
-
-<h2>
-Security Tools
-</h2>
-
-<p>
-Choose the right tool for the suspicious
-activity you want to check.
-</p>
-
-</div>
-
-
-<div class="tools-grid">
-
-
-<div class="tool-card">
-
-<div class="tool-icon">
-🌐
-</div>
-
-<h3>
-URL Scanner
-</h3>
-
-<p>
-Analyze suspicious website URLs for
-potential risk indicators and check
-FraudGuard community reports.
-</p>
-
-<a
-href="scanner.html"
-class="tool-link">
-
-Open Scanner
-
-</a>
-
-</div>
-
-
-<div class="tool-card">
-
-<div class="tool-icon">
-📞
-</div>
-
-<h3>
-Phone Checker
-</h3>
-
-<p>
-Check suspicious phone numbers against
-available FraudGuard community reports
-and risk signals.
-</p>
-
-<a
-href="phone-checker.html"
-class="tool-link">
-
-Check Phone
-
-</a>
-
-</div>
-
-
-<div class="tool-card">
-
-<div class="tool-icon">
-📧
-</div>
-
-<h3>
-Email Checker
-</h3>
-
-<p>
-Analyze suspicious email addresses and
-identify common risk indicators.
-</p>
-
-<a
-href="email-checker.html"
-class="tool-link">
-
-Check Email
-
-</a>
-
-</div>
-
-
-<div class="tool-card">
-
-<div class="tool-icon">
-🤖
-</div>
-
-<h3>
-AI Scam Assistant
-</h3>
-
-<p>
-Discuss suspicious messages, payment
-requests, links and common scam warning
-signs.
-</p>
-
-<a
-href="ai-chat.html"
-class="tool-link">
-
-Open AI Chat
-
-</a>
-
-</div>
-
-
-<div class="tool-card">
-
-<div class="tool-icon">
-📱
-</div>
-
-<h3>
-QR Scanner
-</h3>
-
-<p>
-Inspect QR codes and identify the
-destination URL before interacting with it.
-</p>
-
-<a
-href="qr-scanner.html"
-class="tool-link">
-
-Scan QR
-
-</a>
-
-</div>
-
-
-<div class="tool-card">
-
-<div class="tool-icon">
-🔵
-</div>
-
-<h3>
-Facebook Scanner
-</h3>
-
-<p>
-Check public Facebook URLs for suspicious
-URL patterns and FraudGuard reports.
-</p>
-
-<a
-href="facebook-scanner.html"
-class="tool-link">
-
-Scan Facebook
-
-</a>
-
-</div>
-
-
-<div class="tool-card">
-
-<div class="tool-icon">
-✈️
-</div>
-
-<h3>
-Telegram Scanner
-</h3>
-
-<p>
-Check public Telegram links and identifiers
-for available risk signals.
-</p>
-
-<a
-href="telegram-scanner.html"
-class="tool-link">
-
-Scan Telegram
-
-</a>
-
-</div>
-
-
-<div class="tool-card">
-
-<div class="tool-icon">
-💬
-</div>
-
-<h3>
-WhatsApp Scanner
-</h3>
-
-<p>
-Check suspicious WhatsApp links and phone
-numbers against available reports.
-</p>
-
-<a
-href="whatsapp-scanner.html"
-class="tool-link">
-
-Scan WhatsApp
-
-</a>
-
-</div>
-
-
-<div class="tool-card">
-
-<div class="tool-icon">
-🚨
-</div>
-
-<h3>
-Scam Reporting
-</h3>
-
-<p>
-Submit suspicious websites, phone numbers
-and email addresses to the FraudGuard
-community.
-</p>
-
-<a
-href="report.html"
-class="tool-link">
-
-Report Scam
-
-</a>
-
-</div>
-
-</div>
-
-</section>
-
-
-<section class="security-section">
-
-<div class="section-title">
-
-<h2>
-Security Features
-</h2>
-
-<p>
-Designed around detection, awareness and
-community protection.
-</p>
-
-</div>
-
-
-<div class="security-grid">
-
-
-<div class="security-card">
-
-<div class="security-icon">
-🔎
-</div>
-
-<h3>
-Risk Analysis
-</h3>
-
-<p>
-Analyze available signals and provide a
-risk score to help users understand
-potential warning signs.
-</p>
-
-</div>
-
-
-<div class="security-card">
-
-<div class="security-icon">
-🔥
-</div>
-
-<h3>
-Fraud Database
-</h3>
-
-<p>
-Use community-submitted information to
-identify previously reported suspicious
-digital entities.
-</p>
-
-</div>
-
-
-<div class="security-card">
-
-<div class="security-icon">
-⚡
-</div>
-
-<h3>
-Fast Results
-</h3>
-
-<p>
-Get URL, phone and email checks quickly
-without unnecessary steps.
-</p>
-
-</div>
-
-
-<div class="security-card">
-
-<div class="security-icon">
-🔐
-</div>
-
-<h3>
-Firebase Authentication
-</h3>
-
-<p>
-Authenticated user accounts help protect
-personal scan history and platform features.
-</p>
-
-</div>
-
-
-<div class="security-card">
-
-<div class="security-icon">
-📊
-</div>
-
-<h3>
-Scan History
-</h3>
-
-<p>
-Authenticated users can keep track of
-their previous security checks.
-</p>
-
-</div>
-
-
-<div class="security-card">
-
-<div class="security-icon">
-🤝
-</div>
-
-<h3>
-Community Protection
-</h3>
-
-<p>
-User reports can help create stronger
-awareness around recurring scam activity.
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-
-<section class="workflow-section">
-
-<div class="section-title">
-
-<h2>
-How FraudGuard Works
-</h2>
-
-<p>
-A simple process for checking suspicious
-digital activity.
-</p>
-
-</div>
-
-
-<div class="workflow">
-
-<div class="step">
-
-<div class="step-number">
-1
-</div>
-
-<h3>
-Submit
-</h3>
-
-<p>
-Enter a suspicious URL, phone number,
-email or supported identifier.
-</p>
-
-</div>
-
-
-<div class="step">
-
-<div class="step-number">
-2
-</div>
-
-<h3>
-Analyze
-</h3>
-
-<p>
-FraudGuard evaluates available risk
-indicators and database information.
-</p>
-
-</div>
-
-
-<div class="step">
-
-<div class="step-number">
-3
-</div>
-
-<h3>
-Review
-</h3>
-
-<p>
-Review the risk score, status and detected
-warning indicators.
-</p>
-
-</div>
-
-
-<div class="step">
-
-<div class="step-number">
-4
-</div>
-
-<h3>
-Protect
-</h3>
-
-<p>
-Take appropriate precautions or report
-the suspicious activity.
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-
-<section class="community">
-
-<h2>
-Help Protect the Community
-</h2>
-
-<p>
-Found something suspicious? Submit a report
-and help other users become aware of
-potential fraud.
-</p>
-
-<a
-href="report.html"
-class="community-btn">
-
-🚨 Report Suspicious Activity
-
-</a>
-
-</section>
 
 </main>
 
 
-<footer class="footer">
 
-<div class="footer-grid">
+<!-- ================= FOOTER ================= -->
 
-<div>
+<footer>
 
-<h3>
-FraudGuard
-</h3>
+    <div class="footer-brand">
 
-<p>
-AI-powered digital fraud protection
-platform designed to improve online
-security awareness.
-</p>
+        INSPECT<span>CALLER</span>
 
-</div>
+    </div>
 
+    <p>
+        Global Caller Security & Anti-Fraud Technology
+    </p>
 
-<div>
 
-<h3>
-Tools
-</h3>
+    <div class="footer-links">
 
-<ul class="footer-links">
+        <a href="index.html">
+            Home
+        </a>
 
-<li>
-<a href="scanner.html">
-URL Scanner
-</a>
-</li>
+        <a href="features.html">
+            Features
+        </a>
 
-<li>
-<a href="phone-checker.html">
-Phone Checker
-</a>
-</li>
+        <a href="about.html">
+            About
+        </a>
 
-<li>
-<a href="email-checker.html">
-Email Checker
-</a>
-</li>
+        <a href="contact.html">
+            Contact
+        </a>
 
-<li>
-<a href="ai-chat.html">
-AI Chat
-</a>
-</li>
+        <a href="privacy-policy.html">
+            Privacy
+        </a>
 
-</ul>
+        <a href="terms.html">
+            Terms
+        </a>
 
-</div>
+        <a href="cookie-policy.html">
+            Cookies
+        </a>
 
+        <a href="disclaimer.html">
+            Disclaimer
+        </a>
 
-<div>
+    </div>
 
-<h3>
-Platform
-</h3>
 
-<ul class="footer-links">
+    <p class="copyright">
 
-<li>
-<a href="dashboard.html">
-Dashboard
-</a>
-</li>
+        © 2026 Inspect Caller.
+        Idea / Pre-Launch Prototype.
 
-<li>
-<a href="report.html">
-Report Scam
-</a>
-</li>
+    </p>
 
-<li>
-<a href="about.html">
-About
-</a>
-</li>
-
-<li>
-<a href="contact.html">
-Contact
-</a>
-</li>
-
-</ul>
-
-</div>
-
-
-<div>
-
-<h3>
-Legal
-</h3>
-
-<ul class="footer-links">
-
-<li>
-<a href="privacy-policy.html">
-Privacy Policy
-</a>
-</li>
-
-<li>
-<a href="cookie-policy.html">
-Cookie Policy
-</a>
-</li>
-
-<li>
-<a href="terms.html">
-Terms
-</a>
-</li>
-
-<li>
-<a href="disclaimer.html">
-Disclaimer
-</a>
-</li>
-
-</ul>
-
-</div>
-
-</div>
-
-
-<p class="copyright">
-
-© 2026 FraudGuard. All Rights Reserved.
-
-</p>
-
-  </footer>
-<script type="module">
-
-import {
-    auth
-} from "./firebase.js";
-
-import {
-    onAuthStateChanged,
-    signOut
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-
-const logoutBtn =
-    document.getElementById("logoutBtn");
-
-const mobileMenuBtn =
-    document.getElementById("mobileMenuBtn");
-
-const navLinks =
-    document.querySelector(".nav-links");
-
-
-onAuthStateChanged(
-    auth,
-    (user) => {
-
-        if (!user) {
-
-            window.location.replace(
-                "login.html"
-            );
-
-        }
-
-    }
-);
-
-
-logoutBtn.addEventListener(
-    "click",
-    async () => {
-
-        logoutBtn.disabled =
-            true;
-
-        logoutBtn.textContent =
-            "Logging out...";
-
-
-        try {
-
-            await signOut(auth);
-
-            window.location.replace(
-                "login.html"
-            );
-
-        } catch (error) {
-
-            console.error(
-                "Logout error:",
-                error
-            );
-
-            logoutBtn.disabled =
-                false;
-
-            logoutBtn.textContent =
-                "Logout";
-
-        }
-
-    }
-);
-
-
-mobileMenuBtn.addEventListener(
-    "click",
-    () => {
-
-        if (
-            navLinks.classList.contains(
-                "mobile-open"
-            )
-        ) {
-
-            navLinks.classList.remove(
-                "mobile-open"
-            );
-
-            navLinks.style.display =
-                "";
-
-            return;
-
-        }
-
-
-        navLinks.classList.add(
-            "mobile-open"
-        );
-
-
-        navLinks.style.display =
-            "flex";
-
-        navLinks.style.flexDirection =
-            "column";
-
-        navLinks.style.position =
-            "absolute";
-
-        navLinks.style.top =
-            "58px";
-
-        navLinks.style.right =
-            "12px";
-
-        navLinks.style.width =
-            "230px";
-
-        navLinks.style.padding =
-            "16px";
-
-        navLinks.style.background =
-            "#10182d";
-
-        navLinks.style.border =
-            "1px solid #26324b";
-
-        navLinks.style.borderRadius =
-            "10px";
-
-        navLinks.style.boxShadow =
-            "0 12px 30px rgba(0,0,0,.35)";
-
-    }
-);
-
-
-navLinks
-    .querySelectorAll("a")
-    .forEach(
-        link => {
-
-            link.addEventListener(
-                "click",
-                () => {
-
-                    navLinks.classList.remove(
-                        "mobile-open"
-                    );
-
-                    if (
-                        window.innerWidth <= 800
-                    ) {
-
-                        navLinks.style.display =
-                            "none";
-
-                    }
-
-                }
-            );
-
-        }
-    );
-
-
-window.addEventListener(
-    "resize",
-    () => {
-
-        if (
-            window.innerWidth > 800
-        ) {
-
-            navLinks.style = "";
-
-            navLinks.classList.remove(
-                "mobile-open"
-            );
-
-        }
-
-    }
-);
-
-</script>
-
-
-<script
-type="module"
-src="script.js">
-</script>
+</footer>
 
 
 </body>
-
 </html>
