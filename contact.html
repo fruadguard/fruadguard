@@ -1,1557 +1,1206 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
+    <title>Contact — Inspect Caller</title>
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+    <meta
+        name="description"
+        content="Contact Inspect Caller for startup, partnership, support and business inquiries."
+    >
 
-<title>Contact Us | FraudGuard</title>
+    <link rel="stylesheet" href="style.css">
 
-<meta
-name="description"
-content="Contact FraudGuard support team for questions, feedback, fraud reports and partnership inquiries.">
+    <style>
 
-<link
-rel="stylesheet"
-href="style.css">
+        /* ================= CONTACT PAGE ================= */
 
-<link
-href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
-rel="stylesheet">
+        .contact-page {
+            min-height: 100vh;
 
-<style>
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(0,150,255,.13),
+                    transparent 38%
+                ),
+                #050d18;
+        }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+        .contact-container {
+            width: min(1150px, calc(100% - 30px));
 
-body{
-    background:#0b1328;
-    color:#fff;
-    font-family:'Poppins',Arial,sans-serif;
-}
+            margin: auto;
 
-a{
-    text-decoration:none;
-    color:inherit;
-}
+            padding: 90px 0 110px;
+        }
 
-.container{
-    width:100%;
-    max-width:1200px;
-    margin:auto;
-    padding:0 20px;
-}
 
-.navbar{
-    background:#10182d;
-    border-bottom:1px solid #26324b;
+        /* ================= HEADER ================= */
 
-    position:sticky;
-    top:0;
+        .contact-header {
+            max-width: 800px;
 
-    z-index:1000;
-}
+            margin: 0 auto 60px;
 
-.navbar .container{
-    min-height:65px;
+            text-align: center;
+        }
 
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
+        .contact-badge {
+            display: inline-flex;
 
-.logo{
-    color:#fff;
+            padding: 9px 17px;
 
-    font-size:21px;
-    font-weight:700;
-}
+            border:
+                1px solid #285a76;
 
-.logo span{
-    color:#22c55e;
-}
+            border-radius: 999px;
 
-.nav-menu{
-    list-style:none;
+            background: #071b2c;
 
-    display:flex;
-    align-items:center;
+            color: #8bdcff;
 
-    gap:15px;
-}
+            font-size: 12px;
 
-.nav-menu a{
-    color:#c1c9d7;
+            font-weight: 850;
 
-    font-size:11px;
-    font-weight:500;
+            letter-spacing: 1px;
+        }
 
-    transition:.2s;
-}
+        .contact-header h1 {
+            margin-top: 22px;
 
-.nav-menu a:hover,
-.nav-menu a.active{
-    color:#22c55e;
-}
+            font-size:
+                clamp(42px, 7vw, 72px);
 
-.nav-actions{
-    display:flex;
-    align-items:center;
-    gap:8px;
-}
+            line-height: 1;
 
-.nav-btn{
-    padding:8px 13px;
+            letter-spacing: -3px;
 
-    border-radius:6px;
+            font-weight: 950;
+        }
 
-    border:1px solid #344158;
+        .contact-header h1 span {
+            color: var(--blue);
+        }
 
-    color:#d8dee8;
+        .contact-header p {
+            max-width: 700px;
 
-    font-size:10px;
-    font-weight:600;
-}
+            margin: 22px auto 0;
 
-.nav-btn:hover{
-    background:#22c55e;
-    border-color:#22c55e;
-    color:#fff;
-}
+            color: var(--muted);
 
-.nav-btn.register{
-    background:#22c55e;
-    border-color:#22c55e;
-    color:#fff;
-}
+            font-size: 17px;
 
-.mobile-menu{
-    display:none;
+            line-height: 1.75;
+        }
 
-    border:0;
-    background:none;
 
-    color:#fff;
+        /* ================= CONTACT GRID ================= */
 
-    font-size:24px;
+        .contact-grid {
+            display: grid;
 
-    cursor:pointer;
-}
+            grid-template-columns:
+                .9fr 1.4fr;
 
-.hero{
-    padding:65px 0 55px;
+            gap: 22px;
 
-    text-align:center;
+            align-items: stretch;
+        }
 
-    background:
-    radial-gradient(
-        circle at top,
-        rgba(34,197,94,.09),
-        transparent 45%
-    );
-}
 
-.hero-content{
-    max-width:750px;
-    margin:auto;
-}
+        /* ================= INFO CARD ================= */
 
-.hero h1{
-    font-size:39px;
+        .contact-info {
+            padding: 32px;
 
-    margin-bottom:12px;
-}
+            border:
+                1px solid var(--line);
 
-.hero h1 span{
-    color:#22c55e;
-}
+            border-radius: 25px;
 
-.hero p{
-    color:#aeb8ca;
+            background:
+                linear-gradient(
+                    145deg,
+                    #0b2942,
+                    #071827
+                );
 
-    font-size:13px;
+            box-shadow:
+                0 25px 70px
+                rgba(0,100,180,.08);
+        }
 
-    line-height:1.7;
-}
+        .contact-info h2 {
+            margin-bottom: 10px;
 
-.contact-section{
-    padding:10px 0 40px;
-}
+            font-size: 25px;
+        }
 
-.contact-wrapper{
-    display:grid;
+        .contact-info > p {
+            margin-bottom: 28px;
 
-    grid-template-columns:
-    1fr 1fr;
+            color: var(--muted);
 
-    gap:22px;
-}
+            font-size: 14px;
 
-.contact-info,
-.contact-form{
-    background:#1c263b;
+            line-height: 1.7;
+        }
 
-    border:1px solid #2d3953;
 
-    border-radius:12px;
+        /* ================= CONTACT ITEM ================= */
 
-    padding:28px;
-}
+        .contact-item {
+            display: flex;
 
-.contact-info h2,
-.contact-form h2{
-    color:#22c55e;
+            align-items: flex-start;
 
-    font-size:21px;
+            gap: 14px;
 
-    margin-bottom:10px;
-}
+            padding: 17px 0;
 
-.contact-info > p{
-    color:#aeb8ca;
+            border-bottom:
+                1px solid #17384d;
+        }
 
-    font-size:12px;
+        .contact-item:last-child {
+            border-bottom: none;
+        }
 
-    line-height:1.7;
+        .contact-icon {
+            width: 46px;
+            height: 46px;
 
-    margin-bottom:22px;
-}
+            flex-shrink: 0;
 
-.contact-item{
-    padding:16px 0;
+            display: grid;
+            place-items: center;
 
-    border-top:1px solid #2d3953;
-}
+            border:
+                1px solid #285873;
 
-.contact-item h3{
-    color:#e4e8ef;
+            border-radius: 14px;
 
-    font-size:13px;
+            background: #071b2c;
 
-    margin-bottom:5px;
-}
+            font-size: 20px;
+        }
 
-.contact-item p{
-    color:#929db1;
+        .contact-item strong {
+            display: block;
 
-    font-size:11px;
+            margin-bottom: 3px;
 
-    line-height:1.6;
-}
+            font-size: 14px;
+        }
 
-.contact-form form{
-    display:flex;
-    flex-direction:column;
+        .contact-item span,
+        .contact-item a {
+            color: var(--muted);
 
-    gap:13px;
-}
+            font-size: 13px;
 
-.contact-form input,
-.contact-form textarea{
-    width:100%;
+            word-break: break-word;
+        }
 
-    padding:13px 14px;
+        .contact-item a:hover {
+            color: var(--cyan);
+        }
 
-    border-radius:7px;
 
-    border:1px solid #3b4760;
+        /* ================= FORM CARD ================= */
 
-    background:#111a2f;
+        .contact-form-card {
+            padding: 32px;
 
-    color:#fff;
+            border:
+                1px solid var(--line);
 
-    outline:none;
+            border-radius: 25px;
 
-    font-family:'Poppins',Arial,sans-serif;
+            background:
+                linear-gradient(
+                    145deg,
+                    #0a2034,
+                    #061522
+                );
+        }
 
-    font-size:12px;
-}
+        .contact-form-card h2 {
+            margin-bottom: 8px;
 
-.contact-form textarea{
-    resize:vertical;
+            font-size: 25px;
+        }
 
-    min-height:140px;
-}
+        .contact-form-card > p {
+            margin-bottom: 27px;
 
-.contact-form input::placeholder,
-.contact-form textarea::placeholder{
-    color:#69758a;
-}
+            color: var(--muted);
 
-.contact-form input:focus,
-.contact-form textarea:focus{
-    border-color:#22c55e;
+            font-size: 14px;
+        }
 
-    box-shadow:
-    0 0 0 2px
-    rgba(34,197,94,.10);
-}
 
-.btn{
-    display:inline-flex;
+        /* ================= FORM ================= */
 
-    align-items:center;
-    justify-content:center;
+        .contact-form {
+            display: grid;
 
-    width:max-content;
+            gap: 17px;
+        }
 
-    padding:10px 17px;
+        .form-row {
+            display: grid;
 
-    border:0;
+            grid-template-columns:
+                repeat(2, 1fr);
 
-    border-radius:7px;
+            gap: 15px;
+        }
 
-    background:#22c55e;
+        .form-group {
+            display: flex;
 
-    color:#fff;
+            flex-direction: column;
 
-    font-family:'Poppins',Arial,sans-serif;
+            gap: 7px;
+        }
 
-    font-size:11px;
-    font-weight:600;
+        .form-group label {
+            color: #bdd0dc;
 
-    cursor:pointer;
+            font-size: 12px;
 
-    transition:.2s;
-}
+            font-weight: 750;
+        }
 
-.btn:hover{
-    background:#16a34a;
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
 
-    transform:translateY(-1px);
-}
+            padding:
+                13px
+                14px;
 
-.contact-form .btn{
-    width:100%;
-}
+            border:
+                1px solid #28536b;
 
-.team-section{
-    padding:25px 0;
-}
+            border-radius: 13px;
 
-.team-card{
-    background:#1c263b;
+            outline: none;
 
-    border:1px solid #2d3953;
+            background: #061725;
 
-    border-radius:12px;
+            color: #ffffff;
 
-    padding:28px;
-}
+            font-size: 13px;
 
-.section-title{
-    text-align:center;
+            transition: .2s;
+        }
 
-    margin-bottom:25px;
-}
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #5f7a8b;
+        }
 
-.section-title h2{
-    color:#22c55e;
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--blue);
 
-    font-size:24px;
+            box-shadow:
+                0 0 0 3px
+                rgba(0,150,255,.08);
+        }
 
-    margin-bottom:7px;
-}
+        .form-group textarea {
+            min-height: 145px;
 
-.section-title p{
-    color:#8f9bad;
+            resize: vertical;
+        }
 
-    font-size:11px;
-}
 
-.team-grid{
-    display:grid;
+        /* ================= SEND BUTTON ================= */
 
-    grid-template-columns:
-    repeat(2,1fr);
+        .send-message {
+            min-height: 54px;
 
-    gap:18px;
-}
+            border: none;
 
-.team-member{
-    background:#111a2f;
+            border-radius: 15px;
 
-    border:1px solid #2d3953;
+            background:
+                linear-gradient(
+                    135deg,
+                    #25b5ff,
+                    #087ddd
+                );
 
-    border-radius:10px;
+            color: #ffffff;
 
-    padding:22px;
-}
+            cursor: pointer;
 
-.team-avatar{
-    width:45px;
-    height:45px;
+            font-size: 14px;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+            font-weight: 850;
 
-    border-radius:50%;
+            box-shadow:
+                0 14px 35px
+                rgba(0,130,255,.18);
 
-    background:#123521;
+            transition: .25s;
+        }
 
-    color:#22c55e;
+        .send-message:hover {
+            transform: translateY(-2px);
 
-    font-size:18px;
+            box-shadow:
+                0 20px 45px
+                rgba(0,150,255,.28);
+        }
 
-    margin-bottom:12px;
-}
 
-.team-member h3{
-    color:#fff;
+        /* ================= SUPPORT SECTION ================= */
 
-    font-size:15px;
+        .support-section {
+            margin-top: 25px;
 
-    margin-bottom:4px;
-}
+            display: grid;
 
-.team-role{
-    color:#22c55e;
+            grid-template-columns:
+                repeat(3, 1fr);
 
-    font-size:10px;
-    font-weight:600;
+            gap: 18px;
+        }
 
-    margin-bottom:9px;
-}
+        .support-card {
+            padding: 25px;
 
-.team-member p{
-    color:#929db1;
+            border:
+                1px solid var(--line);
 
-    font-size:11px;
+            border-radius: 20px;
 
-    line-height:1.7;
-}
+            background: #081c2d;
 
-.partnership{
-    padding:25px 0 50px;
-}
+            transition: .25s;
+        }
 
-.partnership-card{
-    background:
-    linear-gradient(
-        135deg,
-        #1c263b,
-        #151f34
-    );
+        .support-card:hover {
+            transform: translateY(-5px);
 
-    border:1px solid #2d3953;
+            border-color:
+                var(--blue);
 
-    border-radius:12px;
+            box-shadow:
+                var(--shadow);
+        }
 
-    padding:32px;
+        .support-icon {
+            font-size: 27px;
 
-    text-align:center;
-}
+            margin-bottom: 12px;
+        }
 
-.partnership-card h2{
-    color:#22c55e;
+        .support-card h3 {
+            margin-bottom: 7px;
 
-    font-size:22px;
+            font-size: 18px;
+        }
 
-    margin-bottom:10px;
-}
+        .support-card p {
+            color: var(--muted);
 
-.partnership-card p{
-    max-width:700px;
+            font-size: 13px;
 
-    margin:0 auto 20px;
+            line-height: 1.65;
+        }
 
-    color:#aeb8ca;
+        .support-card a {
+            display: inline-block;
 
-    font-size:12px;
+            margin-top: 13px;
 
-    line-height:1.7;
-}
+            color: var(--cyan);
 
-.footer{
-    background:#10182d;
+            font-size: 12px;
 
-    border-top:1px solid #26324b;
+            font-weight: 800;
+        }
 
-    padding:40px 0 20px;
-}
 
-.footer-box{
-    display:grid;
+        /* ================= FOUNDER CTA ================= */
 
-    grid-template-columns:
-    1.4fr
-    1fr
-    1fr
-    1.2fr;
+        .founder-contact {
+            margin-top: 25px;
 
-    gap:30px;
-}
+            padding: 45px 25px;
 
-.footer-box h3{
-    color:#22c55e;
+            text-align: center;
 
-    font-size:14px;
+            border:
+                1px solid #1e4c67;
 
-    margin-bottom:10px;
-}
+            border-radius: 25px;
 
-.footer-box p{
-    color:#7f8b9f;
+            background:
+                radial-gradient(
+                    circle at 50% 0,
+                    rgba(0,150,255,.13),
+                    transparent 65%
+                ),
+                #071827;
+        }
 
-    font-size:10px;
+        .founder-contact h2 {
+            margin-bottom: 10px;
 
-    line-height:1.7;
+            font-size: 30px;
+        }
 
-    margin-bottom:4px;
-}
+        .founder-contact h2 span {
+            color: var(--blue);
+        }
 
-.footer-links{
-    list-style:none;
-}
+        .founder-contact p {
+            margin-bottom: 22px;
 
-.footer-links li{
-    margin-bottom:7px;
-}
+            color: var(--muted);
 
-.footer-links a{
-    color:#7f8b9f;
+            font-size: 14px;
+        }
 
-    font-size:10px;
-}
 
-.footer-links a:hover{
-    color:#22c55e;
-}
+        /* ================= FORM MESSAGE ================= */
 
-.copyright{
-    text-align:center;
+        .form-message {
+            display: none;
 
-    border-top:1px solid #26324b;
+            padding: 12px 15px;
 
-    margin-top:30px;
+            border-radius: 12px;
 
-    padding-top:18px;
+            font-size: 12px;
 
-    color:#5f6b80;
+            font-weight: 700;
+        }
 
-    font-size:9px;
-}
+        .form-message.success {
+            display: block;
 
-.message{
-    display:none;
+            border:
+                1px solid rgba(45,228,154,.35);
 
-    margin-bottom:13px;
+            background:
+                rgba(45,228,154,.08);
 
-    padding:10px;
+            color: #69efb7;
+        }
 
-    border-radius:6px;
 
-    font-size:10px;
-}
+        /* ================= MOBILE ================= */
 
-.message.success{
-    background:#123521;
+        @media(max-width: 850px) {
 
-    border:1px solid #236b3b;
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
 
-    color:#72ed9b;
-}
+            .support-section {
+                grid-template-columns:
+                    repeat(3, 1fr);
+            }
 
-.message.error{
-    background:#401c28;
+        }
 
-    border:1px solid #7f3046;
+        @media(max-width: 620px) {
 
-    color:#ff9daf;
-}
+            .contact-container {
+                padding:
+                    60px
+                    0
+                    80px;
+            }
 
-@media(max-width:1000px){
+            .contact-header h1 {
+                font-size: 45px;
 
-    .nav-menu{
-        gap:9px;
-    }
+                letter-spacing: -2px;
+            }
 
-    .nav-menu a{
-        font-size:9px;
-    }
+            .contact-header p {
+                font-size: 14px;
+            }
 
-}
+            .contact-info,
+            .contact-form-card {
+                padding: 22px;
+            }
 
-@media(max-width:800px){
+            .form-row {
+                grid-template-columns: 1fr;
+            }
 
-    .nav-menu,
-    .nav-actions{
-        display:none;
-    }
+            .support-section {
+                grid-template-columns: 1fr;
+            }
 
-    .mobile-menu{
-        display:block;
-    }
+            .founder-contact {
+                padding:
+                    38px
+                    18px;
+            }
 
-    .navbar .container{
-        min-height:58px;
-    }
+        }
 
-    .contact-wrapper{
-        grid-template-columns:1fr;
-    }
-
-    .team-grid{
-        grid-template-columns:1fr;
-    }
-
-    .footer-box{
-        grid-template-columns:
-        repeat(2,1fr);
-    }
-
-}
-
-@media(max-width:500px){
-
-    .container{
-        padding:0 13px;
-    }
-
-    .hero{
-        padding:45px 0 40px;
-    }
-
-    .hero h1{
-        font-size:29px;
-    }
-
-    .contact-info,
-    .contact-form,
-    .team-card,
-    .partnership-card{
-        padding:20px;
-    }
-
-    .footer-box{
-        grid-template-columns:1fr;
-    }
-
-}
-
-</style>
-
+    </style>
 </head>
+
 
 <body>
 
+
+<!-- ================= NAVBAR ================= -->
+
 <header class="navbar">
 
-<div class="container">
+    <div class="nav-container">
 
-<a
-href="index.html"
-class="logo">
+        <a
+            href="index.html"
+            class="brand">
 
-Fraud<span>Guard</span>
+            INSPECT<span>CALLER</span>
 
-</a>
-
-
-<ul
-class="nav-menu"
-id="navMenu">
-
-<li>
-<a href="index.html">
-Home
-</a>
-</li>
-
-<li>
-<a href="dashboard.html">
-Dashboard
-</a>
-</li>
-
-<li>
-<a href="features.html">
-Features
-</a>
-</li>
-
-<li>
-<a href="scanner.html">
-Scanner
-</a>
-</li>
-
-<li>
-<a href="phone-checker.html">
-Phone
-</a>
-</li>
-
-<li>
-<a href="email-checker.html">
-Email
-</a>
-</li>
-
-<li>
-<a href="ai-chat.html">
-AI Chat
-</a>
-</li>
-
-<li>
-<a href="qr-scanner.html">
-QR
-</a>
-</li>
-
-<li>
-<a href="facebook-scanner.html">
-Facebook
-</a>
-</li>
-
-<li>
-<a href="telegram-scanner.html">
-Telegram
-</a>
-</li>
-
-<li>
-<a href="whatsapp-scanner.html">
-WhatsApp
-</a>
-</li>
-
-<li>
-<a href="report.html">
-Report
-</a>
-</li>
-
-<li>
-<a href="about.html">
-About
-</a>
-</li>
-
-<li>
-<a
-href="contact.html"
-class="active">
-
-Contact
-
-</a>
-</li>
-
-</ul>
+        </a>
 
 
-<div class="nav-actions">
+        <nav class="nav-links">
 
-<a
-href="login.html"
-class="nav-btn">
+            <a href="index.html">
+                Home
+            </a>
 
-Login
+            <a href="features.html">
+                Features
+            </a>
 
-</a>
+            <a href="about.html">
+                About
+            </a>
 
-<a
-href="register.html"
-class="nav-btn register">
+            <a href="contact.html">
+                Contact
+            </a>
 
-Register
-
-</a>
-
-</div>
+        </nav>
 
 
-<button
-id="mobileMenuBtn"
-class="mobile-menu">
+        <a
+            href="login.html"
+            class="nav-login">
 
-☰
+            Login
 
-</button>
+        </a>
 
-</div>
+    </div>
 
 </header>
 
 
-<section class="hero">
 
-<div class="container">
+<!-- ================= CONTACT PAGE ================= -->
 
-<div class="hero-content">
+<main class="contact-page">
 
-<h1>
-Contact
-<span>FraudGuard</span>
-</h1>
+<div class="contact-container">
 
-<p>
-Get in touch with our team for support,
-feedback, fraud reports and partnership
-inquiries.
-</p>
+
+    <!-- HEADER -->
+
+    <section class="contact-header">
+
+        <div class="contact-badge">
+
+            📩 CONTACT INSPECT CALLER
+
+        </div>
+
+
+        <h1>
+
+            Let's Build A
+            <span>Safer Future</span>
+
+        </h1>
+
+
+        <p>
+
+            Have a startup, partnership, business,
+            technical or support inquiry?
+            Contact the Inspect Caller team.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- ================= MAIN CONTACT ================= -->
+
+    <section class="contact-grid">
+
+
+        <!-- ================= CONTACT INFORMATION ================= -->
+
+        <div class="contact-info">
+
+            <h2>
+                Contact Information
+            </h2>
+
+            <p>
+
+                Reach out to us for startup
+                collaboration, partnerships,
+                product feedback and general
+                inquiries.
+
+            </p>
+
+
+            <!-- EMAIL -->
+
+            <div class="contact-item">
+
+                <div class="contact-icon">
+                    ✉️
+                </div>
+
+                <div>
+
+                    <strong>
+                        Founder Email
+                    </strong>
+
+                    <a
+                        href="mailto:rbiplob1005@gmail.com">
+
+                        rbiplob1005@gmail.com
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- FOUNDER -->
+
+            <div class="contact-item">
+
+                <div class="contact-icon">
+                    👨‍💼
+                </div>
+
+                <div>
+
+                    <strong>
+                        Founder & CEO
+                    </strong>
+
+                    <span>
+                        Mohammad Sajedur Rahman Biplob
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- TEAM LEADER -->
+
+            <div class="contact-item">
+
+                <div class="contact-icon">
+                    👩‍💼
+                </div>
+
+                <div>
+
+                    <strong>
+                        Team Leader
+                    </strong>
+
+                    <span>
+                        Nila Akter
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- COUNTRY -->
+
+            <div class="contact-item">
+
+                <div class="contact-icon">
+                    🌍
+                </div>
+
+                <div>
+
+                    <strong>
+                        Country of Origin
+                    </strong>
+
+                    <span>
+                        Bangladesh
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div class="contact-item">
+
+                <div class="contact-icon">
+                    🚀
+                </div>
+
+                <div>
+
+                    <strong>
+                        Startup Status
+                    </strong>
+
+                    <span>
+                        Idea / Pre-Launch
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= CONTACT FORM ================= -->
+
+        <div class="contact-form-card">
+
+            <h2>
+                Send Us A Message
+            </h2>
+
+            <p>
+
+                Tell us how we can help.
+
+            </p>
+
+
+            <form
+                class="contact-form"
+                id="contactForm">
+
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Your Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="contactName"
+                            placeholder="Enter your name"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="contactEmail"
+                            placeholder="you@example.com"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label>
+                        Inquiry Type
+                    </label>
+
+                    <select
+                        id="contactType"
+                        required>
+
+                        <option value="">
+                            Select inquiry type
+                        </option>
+
+                        <option>
+                            General Inquiry
+                        </option>
+
+                        <option>
+                            Startup Partnership
+                        </option>
+
+                        <option>
+                            Business / B2B
+                        </option>
+
+                        <option>
+                            Government / B2G
+                        </option>
+
+                        <option>
+                            Technical Support
+                        </option>
+
+                        <option>
+                            Investor Inquiry
+                        </option>
+
+                        <option>
+                            Product Feedback
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label>
+                        Message
+                    </label>
+
+                    <textarea
+                        id="contactMessage"
+                        placeholder="Write your message..."
+                        required></textarea>
+
+                </div>
+
+
+                <div
+                    id="formMessage"
+                    class="form-message">
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="send-message">
+
+                    ✈️ Send Message
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= SUPPORT ================= -->
+
+    <section class="support-section">
+
+
+        <div class="support-card">
+
+            <div class="support-icon">
+                💬
+            </div>
+
+            <h3>
+                Live Chat
+            </h3>
+
+            <p>
+
+                Need help using Inspect Caller?
+                Get assistance through the
+                planned support system.
+
+            </p>
+
+            <a href="ai-chat.html">
+
+                Open Assistant →
+
+            </a>
+
+        </div>
+
+
+        <div class="support-card">
+
+            <div class="support-icon">
+                🚨
+            </div>
+
+            <h3>
+                Report Fraud
+            </h3>
+
+            <p>
+
+                If you encounter suspicious
+                activity, submit a structured
+                fraud report.
+
+            </p>
+
+            <a href="report.html">
+
+                Report An Issue →
+
+            </a>
+
+        </div>
+
+
+        <div class="support-card">
+
+            <div class="support-icon">
+                🔐
+            </div>
+
+            <h3>
+                Security
+            </h3>
+
+            <p>
+
+                For security-related questions,
+                use the official contact channel
+                before sharing sensitive data.
+
+            </p>
+
+            <a href="privacy-policy.html">
+
+                Privacy & Security →
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= FOUNDER CTA ================= -->
+
+    <section class="founder-contact">
+
+        <h2>
+
+            Have A Big
+            <span>Idea?</span>
+
+        </h2>
+
+        <p>
+
+            We are building Inspect Caller
+            with a long-term vision for
+            global digital safety.
+
+        </p>
+
+
+        <a
+            href="mailto:rbiplob1005@gmail.com"
+            class="primary-btn">
+
+            ✉️ Contact Founder
+
+        </a>
+
+    </section>
+
 
 </div>
 
-</div>
+</main>
 
-</section>
 
 
-<section class="contact-section">
+<!-- ================= FOOTER ================= -->
 
-<div class="container">
+<footer>
 
-<div class="contact-wrapper">
+    <div class="footer-brand">
 
+        INSPECT<span>CALLER</span>
 
-<div class="contact-info">
+    </div>
 
-<h2>
-Get In Touch
-</h2>
+    <p>
+        Global Caller Security & Anti-Fraud Technology
+    </p>
 
-<p>
-Have questions about FraudGuard?
-Send us a message and our team will
-respond.
-</p>
 
+    <div class="footer-links">
 
-<div class="contact-item">
+        <a href="index.html">
+            Home
+        </a>
 
-<h3>
-📧 Email
-</h3>
+        <a href="features.html">
+            Features
+        </a>
 
-<p>
-support@fraudguard.com
-</p>
+        <a href="about.html">
+            About
+        </a>
 
-</div>
+        <a href="contact.html">
+            Contact
+        </a>
 
+        <a href="privacy-policy.html">
+            Privacy
+        </a>
 
-<div class="contact-item">
+        <a href="terms.html">
+            Terms
+        </a>
 
-<h3>
-🌍 Partnership
-</h3>
+        <a href="disclaimer.html">
+            Disclaimer
+        </a>
 
-<p>
-For business, bank and telecom
-collaboration inquiries.
-</p>
+    </div>
 
-</div>
 
+    <p class="copyright">
 
-<div class="contact-item">
+        © 2026 Inspect Caller.
+        Idea / Pre-Launch Prototype.
 
-<h3>
-🛡️ Fraud Report Support
-</h3>
-
-<p>
-Report suspicious activities and help
-protect the community.
-</p>
-
-</div>
-
-</div>
-
-
-<div class="contact-form">
-
-<h2>
-Send Message
-</h2>
-
-
-<div
-id="formMessage"
-class="message">
-</div>
-
-
-<form
-id="contactForm">
-
-
-<input
-id="contactName"
-type="text"
-placeholder="Your Name"
-required>
-
-
-<input
-id="contactEmail"
-type="email"
-placeholder="Your Email"
-required>
-
-
-<input
-id="contactSubject"
-type="text"
-placeholder="Subject"
-required>
-
-
-<textarea
-id="contactMessage"
-placeholder="Your Message"
-rows="6"
-required></textarea>
-
-
-<button
-type="submit"
-class="btn"
-id="sendBtn">
-
-Send Message
-
-</button>
-
-
-</form>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<section class="team-section">
-
-<div class="container">
-
-<div class="section-title">
-
-<h2>
-FraudGuard Team
-</h2>
-
-<p>
-The people behind the FraudGuard vision.
-</p>
-
-</div>
-
-
-<div class="team-card">
-
-<div class="team-grid">
-
-
-<div class="team-member">
-
-<div class="team-avatar">
-👨‍💻
-</div>
-
-<h3>
-Muhammad Sajedur Rahman Biplob
-</h3>
-
-<div class="team-role">
-Founder & CEO
-</div>
-
-<p>
-Founder & CEO of FraudGuard. Leading
-the vision of creating a global
-AI-powered anti-fraud ecosystem.
-</p>
-
-</div>
-
-
-<div class="team-member">
-
-<div class="team-avatar">
-👩‍💻
-</div>
-
-<h3>
-Nila Akter
-</h3>
-
-<div class="team-role">
-Co-Founder
-</div>
-
-<p>
-Co-Founder of FraudGuard. Supporting
-product growth, innovation and digital
-safety initiatives.
-</p>
-
-</div>
-
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<section class="partnership">
-
-<div class="container">
-
-<div class="partnership-card">
-
-<h2>
-Partnership & Collaboration
-</h2>
-
-<p>
-FraudGuard welcomes collaboration with
-banks, telecom companies, businesses and
-security organizations to fight digital
-fraud.
-</p>
-
-<a
-href="mailto:support@fraudguard.com"
-class="btn">
-
-Contact Team
-
-</a>
-
-</div>
-
-</div>
-
-</section>
-
-
-<footer class="footer">
-
-<div class="container">
-
-<div class="footer-box">
-
-
-<div>
-
-<h3>
-FraudGuard
-</h3>
-
-<p>
-AI-powered digital fraud protection
-platform.
-</p>
-
-</div>
-
-
-<div>
-
-<h3>
-Quick Links
-</h3>
-
-<ul class="footer-links">
-
-<li>
-<a href="index.html">
-Home
-</a>
-</li>
-
-<li>
-<a href="features.html">
-Features
-</a>
-</li>
-
-<li>
-<a href="scanner.html">
-Scanner
-</a>
-</li>
-
-<li>
-<a href="report.html">
-Report
-</a>
-</li>
-
-<li>
-<a href="about.html">
-About
-</a>
-</li>
-
-<li>
-<a href="contact.html">
-Contact
-</a>
-</li>
-
-</ul>
-
-</div>
-
-
-<div>
-
-<h3>
-Legal
-</h3>
-
-<ul class="footer-links">
-
-<li>
-<a href="privacy-policy.html">
-Privacy Policy
-</a>
-</li>
-
-<li>
-<a href="cookie-policy.html">
-Cookie Policy
-</a>
-</li>
-
-<li>
-<a href="terms.html">
-Terms & Conditions
-</a>
-</li>
-
-<li>
-<a href="disclaimer.html">
-Disclaimer
-</a>
-</li>
-
-</ul>
-
-</div>
-
-
-<div>
-
-<h3>
-Team
-</h3>
-
-<p>
-Founder: Muhammad Sajedur Rahman Biplob
-</p>
-
-<p>
-Co-Founder: Nila Akter
-</p>
-
-</div>
-
-
-</div>
-
-
-<p class="copyright">
-
-© 2026 FraudGuard. All Rights Reserved.
-
-</p>
-
-</div>
+    </p>
 
 </footer>
-<script type="module">
-
-import {
-    auth,
-    db
-} from "./firebase.js";
-
-import {
-    onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import {
-    collection,
-    addDoc,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-const mobileMenuBtn =
-    document.getElementById("mobileMenuBtn");
 
-const navMenu =
-    document.getElementById("navMenu");
+<!-- ================= CONTACT FORM DEMO ================= -->
 
-const contactForm =
-    document.getElementById("contactForm");
+<script>
 
-const formMessage =
-    document.getElementById("formMessage");
+document
+    .getElementById("contactForm")
+    .addEventListener(
+        "submit",
+        function(event) {
 
-const sendBtn =
-    document.getElementById("sendBtn");
+            event.preventDefault();
 
 
-let currentUser = null;
+            const name =
+                document.getElementById(
+                    "contactName"
+                ).value.trim();
+
+            const email =
+                document.getElementById(
+                    "contactEmail"
+                ).value.trim();
+
+            const message =
+                document.getElementById(
+                    "contactMessage"
+                ).value.trim();
 
 
-onAuthStateChanged(
-    auth,
-    (user) => {
-
-        currentUser = user || null;
-
-    }
-);
+            const result =
+                document.getElementById(
+                    "formMessage"
+                );
 
 
-function showMessage(
-    message,
-    type
-) {
+            if (
+                !name ||
+                !email ||
+                !message
+            ) {
 
-    formMessage.textContent =
-        message;
+                result.className =
+                    "form-message success";
 
-    formMessage.className =
-        "message " + type;
+                result.style.color =
+                    "#ff8b9b";
 
-    formMessage.style.display =
-        "block";
+                result.style.borderColor =
+                    "rgba(255,70,95,.35)";
 
-}
+                result.style.background =
+                    "rgba(255,70,95,.08)";
 
+                result.textContent =
+                    "Please complete all required fields.";
 
-mobileMenuBtn.addEventListener(
-    "click",
-    () => {
+                return;
 
-        if (
-            navMenu.classList.contains(
-                "mobile-open"
-            )
-        ) {
-
-            navMenu.classList.remove(
-                "mobile-open"
-            );
-
-            navMenu.style.display =
-                "";
-
-            return;
-
-        }
+            }
 
 
-        navMenu.classList.add(
-            "mobile-open"
-        );
+            result.className =
+                "form-message success";
 
+            result.textContent =
+                "Message received in demo mode. Backend email delivery will be connected later.";
 
-        navMenu.style.display =
-            "flex";
-
-        navMenu.style.flexDirection =
-            "column";
-
-        navMenu.style.position =
-            "absolute";
-
-        navMenu.style.top =
-            "58px";
-
-        navMenu.style.left =
-            "12px";
-
-        navMenu.style.right =
-            "12px";
-
-        navMenu.style.padding =
-            "16px";
-
-        navMenu.style.background =
-            "#10182d";
-
-        navMenu.style.border =
-            "1px solid #26324b";
-
-        navMenu.style.borderRadius =
-            "10px";
-
-        navMenu.style.boxShadow =
-            "0 12px 30px rgba(0,0,0,.35)";
-
-    }
-);
-
-
-navMenu
-    .querySelectorAll("a")
-    .forEach(
-        link => {
-
-            link.addEventListener(
-                "click",
-                () => {
-
-                    if (
-                        window.innerWidth <= 800
-                    ) {
-
-                        navMenu.style.display =
-                            "none";
-
-                        navMenu.classList.remove(
-                            "mobile-open"
-                        );
-
-                    }
-
-                }
-            );
+            document
+                .getElementById(
+                    "contactForm"
+                )
+                .reset();
 
         }
     );
 
-
-window.addEventListener(
-    "resize",
-    () => {
-
-        if (
-            window.innerWidth > 800
-        ) {
-
-            navMenu.style = "";
-
-            navMenu.classList.remove(
-                "mobile-open"
-            );
-
-        }
-
-    }
-);
-
-
-contactForm.addEventListener(
-    "submit",
-    async (event) => {
-
-        event.preventDefault();
-
-
-        const name =
-            document
-                .getElementById("contactName")
-                .value
-                .trim();
-
-
-        const email =
-            document
-                .getElementById("contactEmail")
-                .value
-                .trim()
-                .toLowerCase();
-
-
-        const subject =
-            document
-                .getElementById("contactSubject")
-                .value
-                .trim();
-
-
-        const message =
-            document
-                .getElementById("contactMessage")
-                .value
-                .trim();
-
-
-        if (
-            name.length < 2
-        ) {
-
-            showMessage(
-                "Please enter your name.",
-                "error"
-            );
-
-            return;
-
-        }
-
-
-        if (
-            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/
-                .test(email)
-        ) {
-
-            showMessage(
-                "Please enter a valid email address.",
-                "error"
-            );
-
-            return;
-
-        }
-
-
-        if (
-            subject.length < 2
-        ) {
-
-            showMessage(
-                "Please enter a subject.",
-                "error"
-            );
-
-            return;
-
-        }
-
-
-        if (
-            message.length < 10
-        ) {
-
-            showMessage(
-                "Please write a little more about your message.",
-                "error"
-            );
-
-            return;
-
-        }
-
-
-        if (
-            message.length > 3000
-        ) {
-
-            showMessage(
-                "Your message is too long.",
-                "error"
-            );
-
-            return;
-
-        }
-
-
-        sendBtn.disabled =
-            true;
-
-        sendBtn.textContent =
-            "Sending...";
-
-
-        try {
-
-            await addDoc(
-                collection(
-                    db,
-                    "contact_messages"
-                ),
-                {
-
-                    name:
-                        name,
-
-                    email:
-                        email,
-
-                    subject:
-                        subject,
-
-                    message:
-                        message,
-
-                    uid:
-                        currentUser
-                            ? currentUser.uid
-                            : null,
-
-                    status:
-                        "unread",
-
-                    createdAt:
-                        serverTimestamp()
-
-                }
-            );
-
-
-            showMessage(
-                "Your message has been sent successfully. Our team will review it.",
-                "success"
-            );
-
-
-            contactForm.reset();
-
-
-        } catch (error) {
-
-            console.error(
-                "Contact form error:",
-                error
-            );
-
-
-            showMessage(
-                "Unable to send your message right now. Please try again later.",
-                "error"
-            );
-
-        }
-
-
-        sendBtn.disabled =
-            false;
-
-        sendBtn.textContent =
-            "Send Message";
-
-    }
-);
-
-</script>
-
-
-<script
-src="script.js">
 </script>
 
 
 </body>
-
 </html>
-
