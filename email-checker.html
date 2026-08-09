@@ -1,1449 +1,1288 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<title>Email Checker | FraudGuard</title>
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-html{
-    scroll-behavior:smooth;
-}
-
-body{
-    min-height:100vh;
-    background:#0b1328;
-    color:#fff;
-    font-family:Georgia,"Times New Roman",serif;
-}
-
-a{
-    color:inherit;
-    text-decoration:none;
-}
-
-.navbar{
-    background:#10182d;
-    border-bottom:1px solid #26314b;
-    position:sticky;
-    top:0;
-    z-index:1000;
-}
-
-.nav-container{
-    max-width:1200px;
-    min-height:62px;
-    margin:auto;
-    padding:0 20px;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.brand{
-    display:flex;
-    align-items:center;
-    gap:8px;
-
-    color:#22c55e;
-    font-size:20px;
-    font-weight:bold;
-}
-
-.brand img{
-    width:34px;
-    height:34px;
-    object-fit:contain;
-}
-
-.nav-menu{
-    display:flex;
-    align-items:center;
-    gap:20px;
-
-    font-size:13px;
-    font-weight:bold;
-}
-
-.nav-menu a:hover{
-    color:#22c55e;
-}
-
-.logout-btn{
-    border:0;
-    background:#22c55e;
-    color:#fff;
-
-    padding:8px 14px;
-    border-radius:6px;
-
-    cursor:pointer;
-
-    font-family:inherit;
-    font-weight:bold;
-}
-
-.logout-btn:hover{
-    background:#16a34a;
-}
-
-.page{
-    max-width:950px;
-    margin:35px auto;
-    padding:0 18px;
-}
+    <title>Email Checker — Inspect Caller</title>
 
-.header{
-    text-align:center;
-    margin-bottom:28px;
-}
+    <meta
+        name="description"
+        content="Inspect Caller Email Checker — analyze suspicious emails and identify potential scam and phishing indicators."
+    >
 
-.header-icon{
-    font-size:50px;
-    margin-bottom:8px;
-}
+    <link rel="stylesheet" href="style.css">
 
-.header h1{
-    font-size:36px;
-    margin-bottom:10px;
-}
+    <style>
 
-.header h1 span{
-    color:#22c55e;
-}
+        .checker-page {
+            min-height: 100vh;
+            padding: 65px 20px 100px;
 
-.header p{
-    max-width:700px;
-    margin:auto;
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(0,150,255,.13),
+                    transparent 40%
+                ),
+                #050d18;
+        }
 
-    color:#bfc7d5;
-    font-size:14px;
-}
+        .checker-container {
+            width: min(1050px, 100%);
+            margin: auto;
+        }
 
-.checker-card{
-    background:#1c263b;
-    border:1px solid #2d3953;
-    border-radius:12px;
+        /* HEADER */
 
-    padding:28px;
-}
+        .checker-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
 
-.input-label{
-    display:block;
-    margin-bottom:8px;
+        .checker-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
 
-    color:#dce1e9;
-    font-size:14px;
-    font-weight:bold;
-}
+            padding: 9px 16px;
 
-.input-row{
-    display:flex;
-    gap:10px;
-}
+            border: 1px solid #285873;
+            border-radius: 999px;
 
-#emailInput{
-    flex:1;
+            background: #071b2c;
 
-    padding:14px;
+            color: #8bdcff;
 
-    border-radius:7px;
-    border:1px solid #3b4760;
+            font-size: 11px;
+            font-weight: 850;
+            letter-spacing: .8px;
+        }
 
-    outline:none;
+        .checker-header h1 {
+            margin-top: 20px;
 
-    background:#111a2f;
-    color:#fff;
+            font-size:
+                clamp(40px, 7vw, 65px);
 
-    font-family:inherit;
-    font-size:15px;
-}
+            line-height: 1;
 
-#emailInput:focus{
-    border-color:#22c55e;
+            letter-spacing: -3px;
+        }
 
-    box-shadow:
-    0 0 0 2px
-    rgba(34,197,94,.12);
-}
+        .checker-header h1 span {
+            color: var(--blue);
+        }
 
-#emailInput::placeholder{
-    color:#7f8a9e;
-}
+        .checker-header p {
+            max-width: 680px;
 
-#checkBtn{
-    border:0;
+            margin: 18px auto 0;
 
-    padding:0 23px;
+            color: var(--muted);
 
-    border-radius:7px;
+            font-size: 14px;
 
-    background:#22c55e;
-    color:#fff;
+            line-height: 1.7;
+        }
 
-    font-family:inherit;
-    font-weight:bold;
+        /* MAIN CARD */
 
-    cursor:pointer;
-}
+        .checker-card {
+            padding: 30px;
 
-#checkBtn:hover{
-    background:#16a34a;
-}
+            border: 1px solid var(--line);
+            border-radius: 25px;
 
-#checkBtn:disabled{
-    opacity:.6;
-    cursor:not-allowed;
-}
+            background:
+                linear-gradient(
+                    145deg,
+                    #0a2034,
+                    #061522
+                );
 
-.example{
-    margin-top:10px;
-    color:#7f8a9e;
-    font-size:11px;
-}
+            box-shadow:
+                0 25px 80px
+                rgba(0,100,180,.08);
+        }
 
-.status{
-    display:none;
+        .input-title {
+            margin-bottom: 10px;
 
-    margin-top:20px;
-    padding:13px;
+            color: #cce1ec;
 
-    border-radius:8px;
+            font-size: 13px;
+            font-weight: 800;
+        }
 
-    text-align:center;
+        .email-input-wrap {
+            display: flex;
 
-    background:#111a2f;
-    border:1px solid #354158;
+            gap: 10px;
+        }
 
-    color:#cbd5e1;
-    font-size:13px;
-}
+        .email-input {
+            flex: 1;
 
-.result{
-    display:none;
+            width: 100%;
 
-    margin-top:22px;
+            padding: 15px 16px;
 
-    background:#111a2f;
-    border:1px solid #354158;
+            border: 1px solid #28536b;
+            border-radius: 14px;
 
-    border-radius:10px;
+            outline: none;
 
-    padding:25px;
-}
+            background: #061725;
 
-.result-title{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+            color: #ffffff;
 
-    gap:15px;
-    margin-bottom:20px;
-}
+            font-size: 14px;
 
-.result-title h2{
-    font-size:22px;
-}
+            transition: .2s;
+        }
 
-.badge{
-    padding:7px 13px;
-    border-radius:20px;
+        .email-input::placeholder {
+            color: #5e7889;
+        }
 
-    font-size:12px;
-    font-weight:bold;
-}
+        .email-input:focus {
+            border-color: var(--blue);
 
-.badge.safe{
-    background:#123521;
-    color:#7ff0a2;
-    border:1px solid #236b3b;
-}
+            box-shadow:
+                0 0 0 3px
+                rgba(0,150,255,.08);
+        }
 
-.badge.suspicious{
-    background:#403415;
-    color:#ffd36b;
-    border:1px solid #80652a;
-}
+        .check-btn {
+            min-width: 145px;
 
-.badge.dangerous{
-    background:#401c28;
-    color:#ff9daf;
-    border:1px solid #7f3046;
-}
+            border: none;
+            border-radius: 14px;
 
-.score-area{
-    text-align:center;
+            background:
+                linear-gradient(
+                    135deg,
+                    #25b5ff,
+                    #087ddd
+                );
 
-    padding:20px;
-    margin-bottom:20px;
+            color: #ffffff;
 
-    background:#1c263b;
-    border-radius:9px;
-}
+            font-weight: 850;
 
-.score{
-    font-size:46px;
-    font-weight:bold;
-    color:#22c55e;
-}
+            cursor: pointer;
 
-.score-label{
-    color:#aeb7c7;
-    font-size:12px;
-}
+            transition: .25s;
+        }
 
-.details{
-    display:grid;
+        .check-btn:hover {
+            transform: translateY(-2px);
 
-    grid-template-columns:
-    repeat(2,1fr);
+            box-shadow:
+                0 15px 35px
+                rgba(0,140,255,.25);
+        }
 
-    gap:10px;
-}
+        /* DEMO NOTE */
 
-.detail{
-    background:#1c263b;
-    border:1px solid #2d3953;
+        .demo-note {
+            margin-top: 13px;
 
-    border-radius:7px;
-    padding:13px;
-}
+            color: #718d9d;
 
-.detail strong{
-    display:block;
+            font-size: 11px;
+        }
 
-    color:#22c55e;
-    font-size:12px;
+        /* RESULT */
 
-    margin-bottom:4px;
-}
+        .result {
+            display: none;
 
-.detail span{
-    color:#d1d6df;
-    font-size:13px;
+            margin-top: 25px;
+        }
 
-    word-break:break-word;
-}
+        .result.show {
+            display: block;
+        }
 
-.reasons{
-    margin-top:20px;
-}
+        .result-top {
+            display: flex;
 
-.reasons h3{
-    color:#22c55e;
-    font-size:16px;
-    margin-bottom:10px;
-}
+            align-items: center;
 
-.reasons ul{
-    padding-left:20px;
-}
+            justify-content: space-between;
 
-.reasons li{
-    color:#d1d6df;
-    font-size:13px;
-    margin-bottom:7px;
-}
+            gap: 15px;
 
-.actions{
-    display:flex;
-    gap:10px;
-    margin-top:22px;
-}
+            padding: 22px;
 
-.action-btn{
-    border:0;
+            border: 1px solid #285873;
 
-    padding:10px 16px;
+            border-radius: 20px;
 
-    border-radius:6px;
+            background: #071a2a;
+        }
 
-    background:#3d475d;
-    color:#fff;
+        .result-title {
+            display: flex;
 
-    cursor:pointer;
+            align-items: center;
 
-    font-family:inherit;
-    font-weight:bold;
-}
+            gap: 13px;
+        }
 
-.action-btn:hover{
-    background:#22c55e;
-}
+        .result-icon {
+            width: 48px;
+            height: 48px;
 
-.report-btn{
-    background:#7f3046;
-}
+            display: grid;
+            place-items: center;
 
-.report-btn:hover{
-    background:#a43c59;
-}
+            border-radius: 14px;
 
-.info{
-    margin-top:20px;
+            background: #0b2941;
 
-    background:#1c263b;
-    border:1px solid #2d3953;
+            font-size: 22px;
+        }
 
-    border-radius:10px;
-    padding:20px;
-}
+        .result-title strong {
+            display: block;
 
-.info h3{
-    color:#22c55e;
-    font-size:16px;
-    margin-bottom:8px;
-}
+            font-size: 16px;
+        }
 
-.info p{
-    color:#bfc7d5;
-    font-size:12px;
-}
+        .result-title span {
+            color: var(--muted);
 
-footer{
-    max-width:950px;
-    margin:45px auto 25px;
+            font-size: 11px;
+        }
 
-    padding:20px;
+        .risk-score {
+            min-width: 100px;
 
-    text-align:center;
+            padding: 10px 13px;
 
-    color:#69758a;
-    font-size:11px;
-}
+            text-align: center;
 
-@media(max-width:700px){
+            border-radius: 13px;
 
-    .nav-container{
-        padding:0 12px;
-    }
+            background:
+                rgba(45,228,154,.07);
 
-    .brand{
-        font-size:14px;
-    }
+            border:
+                1px solid rgba(45,228,154,.25);
+        }
 
-    .brand img{
-        width:27px;
-        height:27px;
-    }
+        .risk-score strong {
+            display: block;
 
-    .nav-menu{
-        gap:8px;
-        font-size:9px;
-    }
+            color: #48e7a8;
 
-    .logout-btn{
-        padding:6px 9px;
-        font-size:9px;
-    }
+            font-size: 22px;
+        }
 
-    .page{
-        margin-top:25px;
-        padding:0 12px;
-    }
+        .risk-score span {
+            color: #7693a3;
 
-    .header h1{
-        font-size:28px;
-    }
+            font-size: 9px;
+        }
 
-    .header-icon{
-        font-size:40px;
-    }
+        /* CHECK GRID */
 
-    .checker-card{
-        padding:18px;
-    }
+        .checks-grid {
+            display: grid;
 
-    .input-row{
-        flex-direction:column;
-    }
+            grid-template-columns:
+                repeat(2, 1fr);
 
-    #checkBtn{
-        padding:12px;
-    }
+            gap: 13px;
 
-    .result{
-        padding:17px;
-    }
+            margin-top: 15px;
+        }
 
-    .result-title{
-        align-items:flex-start;
-        flex-direction:column;
-    }
+        .check-item {
+            display: flex;
 
-    .details{
-        grid-template-columns:1fr;
-    }
+            align-items: center;
 
-    .actions{
-        flex-direction:column;
-    }
+            justify-content: space-between;
 
-    .action-btn{
-        width:100%;
-    }
+            padding: 15px;
 
-}
+            border:
+                1px solid #193c52;
 
-</style>
+            border-radius: 14px;
 
+            background: #071827;
+        }
+
+        .check-left {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .check-symbol {
+            width: 34px;
+            height: 34px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 10px;
+
+            background: #0b2941;
+        }
+
+        .check-left strong {
+            display: block;
+
+            font-size: 12px;
+        }
+
+        .check-left span {
+            display: block;
+
+            margin-top: 2px;
+
+            color: var(--muted);
+
+            font-size: 9px;
+        }
+
+        .check-status {
+            color: #47e6a5;
+
+            font-size: 10px;
+
+            font-weight: 850;
+        }
+
+        /* DOMAIN INFO */
+
+        .domain-card {
+            margin-top: 15px;
+
+            padding: 20px;
+
+            border:
+                1px solid #193c52;
+
+            border-radius: 17px;
+
+            background: #071827;
+        }
+
+        .domain-card h3 {
+            margin-bottom: 14px;
+
+            font-size: 15px;
+        }
+
+        .domain-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 10px;
+        }
+
+        .domain-item {
+            padding: 13px;
+
+            border-radius: 11px;
+
+            background: #081d2f;
+        }
+
+        .domain-item span {
+            display: block;
+
+            color: var(--muted);
+
+            font-size: 9px;
+        }
+
+        .domain-item strong {
+            display: block;
+
+            margin-top: 5px;
+
+            color: #b9d4df;
+
+            font-size: 12px;
+        }
+
+        /* WARNING */
+
+        .warning {
+            margin-top: 15px;
+
+            padding: 16px 18px;
+
+            border-left:
+                4px solid #ffc857;
+
+            border-radius: 10px;
+
+            background:
+                rgba(255,200,80,.06);
+
+            color: #bcae83;
+
+            font-size: 11px;
+
+            line-height: 1.7;
+        }
+
+        /* ACTIONS */
+
+        .result-actions {
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 18px;
+        }
+
+        .action-btn {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-height: 44px;
+
+            padding:
+                0 17px;
+
+            border:
+                1px solid #285873;
+
+            border-radius: 12px;
+
+            background: #071b2b;
+
+            color: #9fdcff;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+        }
+
+        .action-btn:hover {
+            border-color: var(--blue);
+        }
+
+        .action-btn.primary {
+            border: none;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #159ddd,
+                    #0873cf
+                );
+
+            color: #ffffff;
+        }
+
+        /* INFO */
+
+        .info-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+
+            margin-top: 22px;
+        }
+
+        .info-card {
+            padding: 20px;
+
+            border:
+                1px solid var(--line);
+
+            border-radius: 18px;
+
+            background: #081d2f;
+        }
+
+        .info-card .icon {
+            font-size: 23px;
+
+            margin-bottom: 10px;
+        }
+
+        .info-card h3 {
+            margin-bottom: 6px;
+
+            font-size: 14px;
+        }
+
+        .info-card p {
+            color: var(--muted);
+
+            font-size: 11px;
+
+            line-height: 1.6;
+        }
+
+        /* LOADING */
+
+        .loading {
+            display: none;
+
+            margin-top: 20px;
+
+            text-align: center;
+
+            color: #82d9ff;
+
+            font-size: 12px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            width: 24px;
+            height: 24px;
+
+            margin: 0 auto 9px;
+
+            border:
+                2px solid #1a425a;
+
+            border-top-color:
+                #23b8ff;
+
+            border-radius: 50%;
+
+            animation:
+                spin .8s linear infinite;
+        }
+
+        @keyframes spin {
+
+            to {
+                transform: rotate(360deg);
+            }
+
+        }
+
+        /* MOBILE */
+
+        @media(max-width: 700px) {
+
+            .checker-page {
+                padding:
+                    45px 12px 80px;
+            }
+
+            .checker-card {
+                padding: 20px;
+            }
+
+            .email-input-wrap {
+                flex-direction: column;
+            }
+
+            .check-btn {
+                min-height: 50px;
+            }
+
+            .result-top {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+            .checks-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .domain-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .result-actions {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
 </head>
+
 
 <body>
 
+
+<!-- ================= NAVBAR ================= -->
+
 <header class="navbar">
 
-<div class="nav-container">
+    <div class="nav-container">
 
-<a href="index.html" class="brand">
+        <a
+            href="index.html"
+            class="brand">
 
-<img src="logo.png" alt="FraudGuard">
+            INSPECT<span>CALLER</span>
 
-<span>FraudGuard</span>
+        </a>
 
-</a>
 
-<nav class="nav-menu">
+        <nav class="nav-links">
 
-<a href="index.html">
-Home
-</a>
+            <a href="dashboard.html">
+                Dashboard
+            </a>
 
-<a href="scanner.html">
-Scanner
-</a>
+            <a href="scanner.html">
+                Scanner
+            </a>
 
-<a href="phone-checker.html">
-Phone
-</a>
+            <a href="phone-checker.html">
+                Caller
+            </a>
 
-<a href="email-checker.html">
-Email
-</a>
+            <a href="report.html">
+                Report
+            </a>
 
-<a href="report.html">
-Report
-</a>
+        </nav>
 
-<button
-id="logoutBtn"
-class="logout-btn">
 
-Logout
+        <a
+            href="dashboard.html"
+            class="nav-login">
 
-</button>
+            Dashboard
 
-</nav>
+        </a>
 
-</div>
+    </div>
 
 </header>
 
 
-<main class="page">
 
-<div class="header">
+<!-- ================= PAGE ================= -->
 
-<div class="header-icon">
-📧
-</div>
+<main class="checker-page">
 
-<h1>
-FraudGuard
-<span>Email Checker</span>
-</h1>
+<div class="checker-container">
 
-<p>
-Check a suspicious email address for
-common fraud indicators and see whether
-it has been reported to FraudGuard.
-</p>
 
-</div>
+    <!-- HEADER -->
 
+    <section class="checker-header">
 
-<div class="checker-card">
+        <div class="checker-badge">
 
-<label
-class="input-label"
-for="emailInput">
+            📧 EMAIL SECURITY
 
-Enter Email Address
+        </div>
 
-</label>
 
+        <h1>
 
-<div class="input-row">
+            Email
+            <span>Checker</span>
 
-<input
-id="emailInput"
-type="email"
-placeholder="example@gmail.com"
-autocomplete="email">
+        </h1>
 
-<button
-id="checkBtn">
 
-Check Email
+        <p>
 
-</button>
+            Analyze suspicious email addresses and
+            identify potential phishing, impersonation,
+            domain and security warning signals.
 
-</div>
+        </p>
 
+    </section>
 
-<p class="example">
-Example: support@example.com
-</p>
 
 
-<div
-id="status"
-class="status">
+    <!-- CHECKER -->
 
-Checking email...
+    <section class="checker-card">
 
-</div>
 
+        <div class="input-title">
+            Enter an email address
+        </div>
 
-<div
-id="result"
-class="result">
 
-<div class="result-title">
+        <div class="email-input-wrap">
 
-<h2>
-Email Check Result
-</h2>
+            <input
+                type="email"
+                id="emailInput"
+                class="email-input"
+                placeholder="example@company.com"
+                autocomplete="off"
+            >
 
-<span
-id="resultBadge"
-class="badge">
 
-Unknown
+            <button
+                class="check-btn"
+                onclick="checkEmail()">
 
-</span>
+                🔍 Check Email
 
-</div>
+            </button>
 
+        </div>
 
-<div class="score-area">
 
-<div
-id="score"
-class="score">
+        <div class="demo-note">
 
-0
+            Prototype mode: results shown below are
+            demonstration results until live threat
+            intelligence APIs are connected.
 
-</div>
+        </div>
 
-<div class="score-label">
-Risk Score / 100
-</div>
 
-</div>
+        <!-- LOADING -->
 
+        <div
+            id="loading"
+            class="loading">
 
-<div class="details">
+            <div class="spinner"></div>
 
-<div class="detail">
+            Analyzing email security signals...
 
-<strong>
-Email Address
-</strong>
+        </div>
 
-<span id="resultEmail">
--
-</span>
 
-</div>
 
+        <!-- RESULT -->
 
-<div class="detail">
+        <div
+            id="result"
+            class="result">
 
-<strong>
-Domain
-</strong>
 
-<span id="resultDomain">
--
-</span>
+            <div class="result-top">
 
-</div>
 
+                <div class="result-title">
 
-<div class="detail">
+                    <div class="result-icon">
+                        📧
+                    </div>
 
-<strong>
-Database Reports
-</strong>
+                    <div>
 
-<span id="reportCount">
--
-</span>
+                        <strong id="resultEmail">
+                            example@company.com
+                        </strong>
 
-</div>
+                        <span>
+                            Email security analysis
+                        </span>
 
+                    </div>
 
-<div class="detail">
+                </div>
 
-<strong>
-Database Status
-</strong>
 
-<span id="databaseStatus">
--
-</span>
+                <div class="risk-score">
 
-</div>
+                    <strong id="riskScore">
+                        18
+                    </strong>
 
-</div>
+                    <span>
+                        RISK SCORE / 100
+                    </span>
 
+                </div>
 
-<div class="reasons">
+            </div>
 
-<h3>
-Detection Details
-</h3>
 
-<ul id="reasonsList">
-</ul>
 
-</div>
+            <!-- CHECKS -->
 
+            <div class="checks-grid">
 
-<div class="actions">
 
-<button
-id="checkAgainBtn"
-class="action-btn">
+                <div class="check-item">
 
-Check Another Email
+                    <div class="check-left">
 
-</button>
+                        <div class="check-symbol">
+                            🛡️
+                        </div>
 
-<button
-id="reportBtn"
-class="action-btn report-btn">
+                        <div>
 
-🚨 Report This Email
+                            <strong>
+                                Email Format
+                            </strong>
 
-</button>
+                            <span>
+                                Address structure
+                            </span>
 
-</div>
+                        </div>
 
-</div>
+                    </div>
 
-</div>
+                    <span class="check-status">
+                        ✓ PASS
+                    </span>
 
+                </div>
 
-<div class="info">
 
-<h3>
-⚠️ Important
-</h3>
 
-<p>
-A clean result does not guarantee that
-an email address is legitimate. FraudGuard
-uses available detection signals and
-community reports. Always verify unexpected
-payment requests, login requests and
-attachments independently.
-</p>
+                <div class="check-item">
+
+                    <div class="check-left">
+
+                        <div class="check-symbol">
+                            🌐
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Domain
+                            </strong>
+
+                            <span>
+                                Domain structure
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <span class="check-status">
+                        ✓ CHECKED
+                    </span>
+
+                </div>
+
+
+
+                <div class="check-item">
+
+                    <div class="check-left">
+
+                        <div class="check-symbol">
+                            🔐
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                SPF
+                            </strong>
+
+                            <span>
+                                Sender policy
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <span class="check-status">
+                        ✓ PASS
+                    </span>
+
+                </div>
+
+
+
+                <div class="check-item">
+
+                    <div class="check-left">
+
+                        <div class="check-symbol">
+                            🔑
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                DKIM
+                            </strong>
+
+                            <span>
+                                Email authentication
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <span class="check-status">
+                        ✓ PASS
+                    </span>
+
+                </div>
+
+
+
+                <div class="check-item">
+
+                    <div class="check-left">
+
+                        <div class="check-symbol">
+                            📋
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                DMARC
+                            </strong>
+
+                            <span>
+                                Domain protection
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <span class="check-status">
+                        ✓ PASS
+                    </span>
+
+                </div>
+
+
+
+                <div class="check-item">
+
+                    <div class="check-left">
+
+                        <div class="check-symbol">
+                            🚨
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Scam Signals
+                            </strong>
+
+                            <span>
+                                Known indicators
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <span class="check-status">
+                        ✓ LOW
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- DOMAIN -->
+
+            <div class="domain-card">
+
+                <h3>
+                    🌐 Domain Intelligence
+                </h3>
+
+
+                <div class="domain-grid">
+
+
+                    <div class="domain-item">
+
+                        <span>
+                            DOMAIN
+                        </span>
+
+                        <strong id="domainName">
+                            company.com
+                        </strong>
+
+                    </div>
+
+
+                    <div class="domain-item">
+
+                        <span>
+                            REPUTATION
+                        </span>
+
+                        <strong>
+                            Good
+                        </strong>
+
+                    </div>
+
+
+                    <div class="domain-item">
+
+                        <span>
+                            RISK LEVEL
+                        </span>
+
+                        <strong>
+                            Low
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- WARNING -->
+
+            <div class="warning">
+
+                ⚠️ <strong>Important:</strong>
+                A low-risk email result does not prove
+                that an email or sender is trustworthy.
+                Always independently verify unexpected
+                payment requests, login requests,
+                attachments and links.
+
+            </div>
+
+
+
+            <!-- ACTIONS -->
+
+            <div class="result-actions">
+
+                <a
+                    href="report.html"
+                    class="action-btn primary">
+
+                    🚨 Report Suspicious Email
+
+                </a>
+
+
+                <button
+                    class="action-btn"
+                    onclick="copyResult()">
+
+                    📋 Copy Result
+
+                </button>
+
+
+                <a
+                    href="ai-chat.html"
+                    class="action-btn">
+
+                    🤖 Ask AI
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= INFORMATION ================= -->
+
+    <section class="info-grid">
+
+
+        <div class="info-card">
+
+            <div class="icon">
+                🎣
+            </div>
+
+            <h3>
+                Phishing Detection
+            </h3>
+
+            <p>
+
+                Future versions can analyze email
+                content and links for potential
+                phishing indicators.
+
+            </p>
+
+        </div>
+
+
+
+        <div class="info-card">
+
+            <div class="icon">
+                🔐
+            </div>
+
+            <h3>
+                Email Authentication
+            </h3>
+
+            <p>
+
+                SPF, DKIM and DMARC signals can help
+                determine whether a domain has configured
+                common email authentication controls.
+
+            </p>
+
+        </div>
+
+
+
+        <div class="info-card">
+
+            <div class="icon">
+                🤖
+            </div>
+
+            <h3>
+                AI Risk Analysis
+            </h3>
+
+            <p>
+
+                Future AI systems may analyze suspicious
+                language, links and scam patterns to
+                generate additional risk signals.
+
+            </p>
+
+        </div>
+
+
+    </section>
+
 
 </div>
 
 </main>
 
 
+
+<!-- ================= FOOTER ================= -->
+
 <footer>
 
-© 2026 FraudGuard —
-AI-Powered Fraud Detection & Scam Prevention
+    <div class="footer-brand">
 
-  </footer>
-  <script type="module">
+        INSPECT<span>CALLER</span>
 
-import {
-    auth,
-    db
-} from "./firebase.js";
+    </div>
 
-import {
-    onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    <p>
+        Global Caller Security & Anti-Fraud Technology
+    </p>
 
-import {
-    collection,
-    query,
-    where,
-    getDocs,
-    addDoc,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+    <div class="footer-links">
 
-const emailInput =
-    document.getElementById("emailInput");
+        <a href="index.html">
+            Home
+        </a>
 
-const checkBtn =
-    document.getElementById("checkBtn");
+        <a href="features.html">
+            Features
+        </a>
 
-const statusBox =
-    document.getElementById("status");
+        <a href="about.html">
+            About
+        </a>
 
-const resultBox =
-    document.getElementById("result");
+        <a href="contact.html">
+            Contact
+        </a>
 
-const resultBadge =
-    document.getElementById("resultBadge");
+        <a href="privacy-policy.html">
+            Privacy
+        </a>
 
-const scoreElement =
-    document.getElementById("score");
+        <a href="terms.html">
+            Terms
+        </a>
 
-const resultEmail =
-    document.getElementById("resultEmail");
+        <a href="cookie-policy.html">
+            Cookies
+        </a>
 
-const resultDomain =
-    document.getElementById("resultDomain");
+        <a href="disclaimer.html">
+            Disclaimer
+        </a>
 
-const reportCount =
-    document.getElementById("reportCount");
+    </div>
 
-const databaseStatus =
-    document.getElementById("databaseStatus");
 
-const reasonsList =
-    document.getElementById("reasonsList");
+    <p class="copyright">
 
-const checkAgainBtn =
-    document.getElementById("checkAgainBtn");
+        © 2026 Inspect Caller.
+        Idea / Pre-Launch Prototype.
 
-const reportBtn =
-    document.getElementById("reportBtn");
+    </p>
 
+</footer>
 
-let currentUser = null;
 
-let currentEmail = "";
 
+<!-- ================= SCRIPT ================= -->
 
-onAuthStateChanged(
-    auth,
-    (user) => {
+<script>
 
-        if (!user) {
+function checkEmail() {
 
-            window.location.replace(
-                "login.html"
-            );
-
-            return;
-        }
-
-        currentUser = user;
-
-    }
-);
-
-
-function normalizeEmail(value) {
-
-    return value
-        .trim()
-        .toLowerCase();
-
-}
-
-
-function isValidEmail(email) {
-
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        .test(email);
-
-}
-
-
-function getDomain(email) {
-
-    const parts =
-        email.split("@");
-
-    return parts.length === 2
-        ? parts[1]
-        : "";
-
-}
-
-
-function analyzeEmail(email) {
-
-    let score = 0;
-
-    const reasons = [];
-
-    const domain =
-        getDomain(email);
-
-    const localPart =
-        email.split("@")[0];
-
-
-    if (
-        email.length > 100
-    ) {
-
-        score += 10;
-
-        reasons.push(
-            "The email address is unusually long."
-        );
-
-    }
-
-
-    const suspiciousWords = [
-
-        "verify",
-        "verification",
-        "secure",
-        "security",
-        "account",
-        "support",
-        "admin",
-        "payment",
-        "refund",
-        "wallet",
-        "crypto",
-        "bonus",
-        "gift",
-        "claim",
-        "winner",
-        "prize",
-        "urgent",
-        "recovery",
-        "password",
-        "billing",
-        "invoice"
-
-    ];
-
-
-    const foundWords =
-        suspiciousWords.filter(
-            word =>
-                email.includes(word)
-        );
-
-
-    if (
-        foundWords.length >= 2
-    ) {
-
-        score += 20;
-
-        reasons.push(
-            "The email contains multiple words commonly associated with phishing or scam messages."
-        );
-
-    } else if (
-        foundWords.length === 1
-    ) {
-
-        score += 7;
-
-        reasons.push(
-            "The email contains a security-sensitive or financial keyword."
-        );
-
-    }
-
-
-    const freeProviders = [
-
-        "gmail.com",
-        "outlook.com",
-        "hotmail.com",
-        "yahoo.com",
-        "icloud.com",
-        "proton.me",
-        "protonmail.com"
-
-    ];
-
-
-    if (
-        freeProviders.includes(domain)
-    ) {
-
-        reasons.push(
-            "The address uses a common public email provider. This is not itself evidence of fraud."
-        );
-
-    }
-
-
-    const suspiciousTLDs = [
-
-        ".tk",
-        ".ml",
-        ".ga",
-        ".cf",
-        ".gq",
-        ".top",
-        ".click",
-        ".download",
-        ".zip"
-
-    ];
-
-
-    if (
-        suspiciousTLDs.some(
-            tld =>
-                domain.endsWith(tld)
-        )
-    ) {
-
-        score += 20;
-
-        reasons.push(
-            "The email domain uses a TLD that can be seen in suspicious campaigns."
-        );
-
-    }
-
-
-    const numbers =
-        (
-            localPart.match(/\d/g) || []
-        ).length;
-
-
-    if (
-        numbers >= 6
-    ) {
-
-        score += 10;
-
-        reasons.push(
-            "The email username contains an unusually high number of digits."
-        );
-
-    }
-
-
-    const hyphens =
-        (
-            domain.match(/-/g) || []
-        ).length;
-
-
-    if (
-        hyphens >= 3
-    ) {
-
-        score += 10;
-
-        reasons.push(
-            "The email domain contains several hyphens."
-        );
-
-    }
-
-
-    if (
-        domain.includes("xn--")
-    ) {
-
-        score += 25;
-
-        reasons.push(
-            "The email domain contains Punycode and may require additional verification."
-        );
-
-    }
-
-
-    score =
-        Math.min(
-            score,
-            100
-        );
-
-
-    return {
-        score,
-        reasons
-    };
-
-}
-
-
-async function checkFraudDatabase(
-    email
-) {
-
-    try {
-
-        const fraudCollection =
-            collection(
-                db,
-                "fraud_emails"
-            );
-
-
-        const q =
-            query(
-                fraudCollection,
-                where(
-                    "email",
-                    "==",
-                    email
-                )
-            );
-
-
-        const snapshot =
-            await getDocs(q);
-
-
-        return {
-
-            found:
-                !snapshot.empty,
-
-            count:
-                snapshot.size,
-
-            error:
-                false
-
-        };
-
-
-    } catch (error) {
-
-        console.error(
-            "Email database error:",
-            error
-        );
-
-
-        return {
-
-            found: false,
-
-            count: 0,
-
-            error: true
-
-        };
-
-    }
-
-}
-
-
-function getStatus(
-    score,
-    databaseResult
-) {
-
-    if (
-        databaseResult.found
-    ) {
-
-        return "Dangerous";
-
-    }
-
-
-    if (
-        score >= 60
-    ) {
-
-        return "Dangerous";
-
-    }
-
-
-    if (
-        score >= 30
-    ) {
-
-        return "Suspicious";
-
-    }
-
-
-    return "Low Risk";
-
-}
-
-
-async function saveScan(
-    email,
-    analysis,
-    databaseResult
-) {
-
-    if (!currentUser) {
-        return;
-    }
-
-
-    try {
-
-        await addDoc(
-            collection(
-                db,
-                "scan_history"
-            ),
-            {
-
-                uid:
-                    currentUser.uid,
-
-                email:
-                    currentUser.email || "",
-
-                type:
-                    "email",
-
-                checkedEmail:
-                    email,
-
-                score:
-                    analysis.score,
-
-                status:
-                    getStatus(
-                        analysis.score,
-                        databaseResult
-                    ),
-
-                databaseMatch:
-                    databaseResult.found,
-
-                createdAt:
-                    serverTimestamp()
-
-            }
-        );
-
-
-    } catch (error) {
-
-        console.warn(
-            "Email scan history error:",
-            error
-        );
-
-    }
-
-}
-
-
-function displayResult(
-    email,
-    analysis,
-    databaseResult
-) {
-
-    const status =
-        getStatus(
-            analysis.score,
-            databaseResult
-        );
-
-
-    scoreElement.textContent =
-        analysis.score;
-
-
-    resultEmail.textContent =
-        email;
-
-
-    resultDomain.textContent =
-        getDomain(email);
-
-
-    if (
-        databaseResult.found
-    ) {
-
-        reportCount.textContent =
-            databaseResult.count;
-
-        databaseStatus.textContent =
-            "⚠ Reported";
-
-    } else if (
-        databaseResult.error
-    ) {
-
-        reportCount.textContent =
-            "Unavailable";
-
-        databaseStatus.textContent =
-            "Database unavailable";
-
-    } else {
-
-        reportCount.textContent =
-            "0";
-
-        databaseStatus.textContent =
-            "No matching report";
-
-    }
-
-
-    resultBadge.className =
-        "badge";
-
-
-    if (
-        status === "Dangerous"
-    ) {
-
-        resultBadge.classList.add(
-            "dangerous"
-        );
-
-        resultBadge.textContent =
-            "🚨 Dangerous";
-
-        scoreElement.style.color =
-            "#ff6b81";
-
-
-    } else if (
-        status === "Suspicious"
-    ) {
-
-        resultBadge.classList.add(
-            "suspicious"
-        );
-
-        resultBadge.textContent =
-            "⚠ Suspicious";
-
-        scoreElement.style.color =
-            "#ffd36b";
-
-
-    } else {
-
-        resultBadge.classList.add(
-            "safe"
-        );
-
-        resultBadge.textContent =
-            "✓ Low Risk";
-
-        scoreElement.style.color =
-            "#22c55e";
-
-    }
-
-
-    reasonsList.innerHTML =
-        "";
-
-
-    if (
-        databaseResult.found
-    ) {
-
-        const li =
-            document.createElement(
-                "li"
-            );
-
-
-        li.textContent =
-            "This email address has been reported in the FraudGuard community database.";
-
-
-        reasonsList.appendChild(
-            li
-        );
-
-    }
-
-
-    if (
-        analysis.reasons.length === 0
-    ) {
-
-        const li =
-            document.createElement(
-                "li"
-            );
-
-
-        li.textContent =
-            "No major risk indicators were detected by the current checker.";
-
-
-        reasonsList.appendChild(
-            li
-        );
-
-
-    } else {
-
-        analysis.reasons.forEach(
-            reason => {
-
-                const li =
-                    document.createElement(
-                        "li"
-                    );
-
-
-                li.textContent =
-                    reason;
-
-
-                reasonsList.appendChild(
-                    li
-                );
-
-            }
-        );
-
-    }
-
-
-    resultBox.style.display =
-        "block";
-
-}
-
-
-async function checkEmail() {
+    const input =
+        document.getElementById("emailInput");
 
     const email =
-        normalizeEmail(
-            emailInput.value
-        );
+        input.value.trim();
+
+    const loading =
+        document.getElementById("loading");
+
+    const result =
+        document.getElementById("result");
 
 
     if (!email) {
@@ -1452,207 +1291,183 @@ async function checkEmail() {
             "Please enter an email address."
         );
 
-        emailInput.focus();
+        input.focus();
 
         return;
 
     }
 
 
-    if (
-        !isValidEmail(email)
-    ) {
+    const emailPattern =
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+    if (!emailPattern.test(email)) {
 
         alert(
             "Please enter a valid email address."
         );
 
-        emailInput.focus();
+        input.focus();
 
         return;
 
     }
 
 
-    currentEmail =
-        email;
+    result.classList.remove("show");
+
+    loading.classList.add("show");
 
 
-    checkBtn.disabled =
-        true;
+    /*
+       Prototype simulation.
 
-    checkBtn.textContent =
-        "Checking...";
+       In production this section will connect
+       to the Inspect Caller backend and approved
+       threat-intelligence services.
+    */
 
+    setTimeout(function() {
 
-    resultBox.style.display =
-        "none";
+        loading.classList.remove("show");
 
-
-    statusBox.style.display =
-        "block";
-
-
-    statusBox.textContent =
-        "🔎 Validating email address...";
+        result.classList.add("show");
 
 
-    try {
+        document.getElementById(
+            "resultEmail"
+        ).textContent = email;
 
-        await new Promise(
-            resolve =>
-                setTimeout(
-                    resolve,
-                    300
-                )
+
+        const parts =
+            email.split("@");
+
+
+        const domain =
+            parts[1] || "unknown";
+
+
+        document.getElementById(
+            "domainName"
+        ).textContent = domain;
+
+
+        /*
+           Demo risk calculation.
+           This is NOT a real threat-intelligence
+           result.
+        */
+
+        let score = 18;
+
+
+        const suspiciousWords = [
+
+            "crypto",
+            "winner",
+            "prize",
+            "bonus",
+            "loan",
+            "urgent",
+            "payment",
+            "verify",
+            "support",
+            "claim"
+
+        ];
+
+
+        const lower =
+            email.toLowerCase();
+
+
+        suspiciousWords.forEach(
+            function(word) {
+
+                if (lower.includes(word)) {
+
+                    score += 9;
+
+                }
+
+            }
         );
 
 
-        const analysis =
-            analyzeEmail(
-                email
-            );
+        score =
+            Math.min(score, 95);
 
 
-        statusBox.textContent =
-            "🛡 Checking FraudGuard database...";
+        document.getElementById(
+            "riskScore"
+        ).textContent = score;
 
 
-        const databaseResult =
-            await checkFraudDatabase(
-                email
-            );
-
-
-        statusBox.textContent =
-            "📊 Calculating risk score...";
-
-
-        await new Promise(
-            resolve =>
-                setTimeout(
-                    resolve,
-                    250
-                )
-        );
-
-
-        displayResult(
-            email,
-            analysis,
-            databaseResult
-        );
-
-
-        await saveScan(
-            email,
-            analysis,
-            databaseResult
-        );
-
-
-        statusBox.style.display =
-            "none";
-
-
-    } catch (error) {
-
-        console.error(
-            "Email checker error:",
-            error
-        );
-
-
-        statusBox.textContent =
-            "Unable to complete the check.";
-
-    }
-
-
-    checkBtn.disabled =
-        false;
-
-    checkBtn.textContent =
-        "Check Email";
+    }, 1100);
 
 }
 
 
-checkBtn.addEventListener(
-    "click",
-    checkEmail
-);
+function copyResult() {
+
+    const email =
+        document.getElementById(
+            "resultEmail"
+        ).textContent;
+
+    const score =
+        document.getElementById(
+            "riskScore"
+        ).textContent;
 
 
-emailInput.addEventListener(
-    "keydown",
-    event => {
+    const text =
 
-        if (
-            event.key === "Enter"
-        ) {
-
-            checkEmail();
-
-        }
-
-    }
-);
+        "Inspect Caller Email Check\n" +
+        "Email: " + email + "\n" +
+        "Demo Risk Score: " + score + "/100\n" +
+        "Prototype result — not a verified fraud determination.";
 
 
-checkAgainBtn.addEventListener(
-    "click",
-    () => {
+    navigator.clipboard.writeText(text)
+        .then(function() {
 
-        resultBox.style.display =
-            "none";
+            alert(
+                "Result copied."
+            );
 
-        statusBox.style.display =
-            "none";
+        })
+        .catch(function() {
 
-        emailInput.value =
-            "";
+            alert(
+                "Unable to copy result."
+            );
 
-        currentEmail =
-            "";
+        });
 
-        emailInput.focus();
-
-    }
-);
+}
 
 
-reportBtn.addEventListener(
-    "click",
-    () => {
+/* ENTER KEY */
 
-        if (
-            currentEmail
-        ) {
+document
+    .getElementById("emailInput")
+    .addEventListener(
+        "keydown",
+        function(event) {
 
-            window.location.href =
-                "report.html?email=" +
-                encodeURIComponent(
-                    currentEmail
-                );
+            if (event.key === "Enter") {
 
-        } else {
+                checkEmail();
 
-            window.location.href =
-                "report.html";
+            }
 
         }
-
-    }
-);
+    );
 
 </script>
 
-<script
-    type="module"
-    src="script.js">
-</script>
 
 </body>
-
 </html>
