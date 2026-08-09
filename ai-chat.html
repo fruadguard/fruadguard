@@ -1,1650 +1,1118 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>AI Chat | FraudGuard</title>
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    min-height:100vh;
-    background:#0b1328;
-    color:#fff;
-    font-family:Arial,Helvetica,sans-serif;
-}
-
-a{
-    color:inherit;
-    text-decoration:none;
-}
-
-.navbar{
-    width:100%;
-    background:#10182d;
-    border-bottom:1px solid #26324b;
-    position:sticky;
-    top:0;
-    z-index:1000;
-}
-
-.nav-container{
-    max-width:1250px;
-    min-height:64px;
-    margin:auto;
-    padding:0 18px;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.brand{
-    display:flex;
-    align-items:center;
-    gap:9px;
-
-    color:#22c55e;
-    font-size:20px;
-    font-weight:700;
-}
+    <title>AI Security Assistant — Inspect Caller</title>
 
-.brand img{
-    width:36px;
-    height:36px;
-    object-fit:contain;
-}
+    <meta
+        name="description"
+        content="Inspect Caller AI Security Assistant for scam detection and digital safety guidance."
+    >
 
-.nav-links{
-    display:flex;
-    align-items:center;
-    gap:13px;
+    <link rel="stylesheet" href="style.css">
 
-    font-size:11px;
-    font-weight:600;
-}
+    <style>
 
-.nav-links a:hover{
-    color:#22c55e;
-}
+        /* ================= AI CHAT PAGE ================= */
 
-.logout-btn{
-    border:0;
-    border-radius:6px;
+        .ai-page {
+            min-height: calc(100vh - 88px);
+            padding: 55px 20px 90px;
 
-    padding:8px 13px;
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(0,150,255,.13),
+                    transparent 38%
+                ),
+                #050d18;
+        }
 
-    background:#22c55e;
-    color:#fff;
+        .ai-container {
+            width: min(1100px, 100%);
+            margin: auto;
+        }
 
-    cursor:pointer;
-    font-weight:700;
-}
 
-.logout-btn:hover{
-    background:#16a34a;
-}
+        /* ================= HEADER ================= */
 
-.mobile-menu{
-    display:none;
+        .ai-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
 
-    border:0;
-    background:transparent;
-    color:#fff;
+        .ai-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
 
-    font-size:24px;
-    cursor:pointer;
-}
+            padding: 9px 17px;
 
-.page{
-    max-width:1050px;
-    margin:auto;
-    padding:30px 15px 45px;
-}
+            border: 1px solid #2b607d;
+            border-radius: 999px;
 
-.header{
-    text-align:center;
-    margin-bottom:25px;
-}
+            background: #071c2d;
 
-.header-icon{
-    font-size:45px;
-    margin-bottom:8px;
-}
+            color: #8bdcff;
 
-.header h1{
-    font-size:30px;
-    margin-bottom:7px;
-}
+            font-size: 12px;
+            font-weight: 800;
 
-.header h1 span{
-    color:#22c55e;
-}
+            letter-spacing: .7px;
+        }
 
-.header p{
-    color:#9da8bb;
-    font-size:12px;
-}
+        .ai-header h1 {
+            margin-top: 20px;
 
-.chat-card{
-    height:650px;
+            font-size:
+                clamp(38px, 6vw, 65px);
 
-    background:#1c263b;
+            line-height: 1;
 
-    border:1px solid #2d3953;
+            letter-spacing: -3px;
 
-    border-radius:12px;
+            font-weight: 950;
+        }
 
-    overflow:hidden;
+        .ai-header h1 span {
+            color: var(--blue);
+        }
 
-    display:flex;
-    flex-direction:column;
-}
+        .ai-header p {
+            max-width: 720px;
 
-.chat-header{
-    min-height:65px;
+            margin: 20px auto 0;
 
-    padding:13px 18px;
+            color: var(--muted);
 
-    background:#151f34;
+            font-size: 16px;
 
-    border-bottom:1px solid #2d3953;
+            line-height: 1.7;
+        }
 
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
 
-.ai-info{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
+        /* ================= CHAT BOX ================= */
 
-.ai-avatar{
-    width:38px;
-    height:38px;
+        .chat-card {
+            overflow: hidden;
 
-    border-radius:50%;
+            border:
+                1px solid #214b66;
 
-    background:#22c55e;
+            border-radius: 27px;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+            background:
+                linear-gradient(
+                    145deg,
+                    #091e31,
+                    #050f1b
+                );
 
-    font-size:19px;
-}
+            box-shadow:
+                0 30px 100px rgba(0,90,160,.14);
+        }
 
-.ai-info h3{
-    font-size:14px;
-    margin-bottom:3px;
-}
 
-.ai-status{
-    color:#55e889;
-    font-size:10px;
-}
+        /* ================= CHAT TOPBAR ================= */
 
-.clear-btn{
-    border:1px solid #3b4760;
+        .chat-topbar {
+            min-height: 72px;
 
-    background:#111a2f;
-    color:#b9c2d0;
+            padding: 14px 20px;
 
-    border-radius:6px;
+            display: flex;
 
-    padding:7px 10px;
+            align-items: center;
 
-    cursor:pointer;
+            justify-content: space-between;
 
-    font-size:10px;
-}
+            border-bottom:
+                1px solid #193c54;
 
-.clear-btn:hover{
-    color:#fff;
-    border-color:#22c55e;
-}
+            background:
+                rgba(7,24,39,.85);
+        }
 
-.chat-messages{
-    flex:1;
+        .assistant-profile {
+            display: flex;
 
-    overflow-y:auto;
+            align-items: center;
 
-    padding:20px;
+            gap: 13px;
+        }
 
-    display:flex;
-    flex-direction:column;
+        .assistant-avatar {
+            width: 45px;
+            height: 45px;
 
-    gap:14px;
-}
+            display: grid;
+            place-items: center;
 
-.message{
-    max-width:78%;
+            border-radius: 14px;
 
-    display:flex;
+            background:
+                linear-gradient(
+                    135deg,
+                    #19b7ff,
+                    #087ddd
+                );
 
-    gap:9px;
-}
+            font-size: 21px;
 
-.message.user{
-    margin-left:auto;
+            box-shadow:
+                0 0 25px rgba(0,150,255,.2);
+        }
 
-    flex-direction:row-reverse;
-}
+        .assistant-profile strong {
+            display: block;
 
-.message-avatar{
-    width:31px;
-    height:31px;
+            font-size: 15px;
+        }
 
-    min-width:31px;
+        .assistant-profile span {
+            display: flex;
 
-    border-radius:50%;
+            align-items: center;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+            gap: 6px;
 
-    background:#344158;
+            margin-top: 2px;
 
-    font-size:13px;
-}
+            color: var(--muted);
 
-.message.user .message-avatar{
-    background:#22c55e;
-}
+            font-size: 11px;
+        }
 
-.message-content{
-    padding:11px 13px;
+        .status-dot {
+            width: 7px;
+            height: 7px;
 
-    border-radius:9px;
+            border-radius: 50%;
 
-    background:#111a2f;
+            background: var(--green);
 
-    border:1px solid #2d3953;
+            box-shadow:
+                0 0 10px var(--green);
+        }
 
-    color:#d7dce5;
+        .chat-security {
+            color: #6dd8ff;
 
-    font-size:12px;
+            font-size: 12px;
 
-    line-height:1.6;
+            font-weight: 700;
+        }
 
-    white-space:pre-wrap;
 
-    word-break:break-word;
-}
+        /* ================= MESSAGES ================= */
 
-.message.user .message-content{
-    background:#123521;
+        .chat-messages {
+            height: 560px;
 
-    border-color:#236b3b;
+            overflow-y: auto;
 
-    color:#e9fff0;
-}
+            padding: 30px 25px;
 
-.message-time{
-    color:#69758a;
+            display: flex;
 
-    font-size:8px;
+            flex-direction: column;
 
-    margin-top:4px;
-}
+            gap: 18px;
 
-.typing{
-    display:none;
+            scrollbar-width: thin;
 
-    padding:0 20px 12px;
+            scrollbar-color:
+                #1e5876
+                transparent;
+        }
 
-    color:#7f8b9f;
+        .message {
+            display: flex;
 
-    font-size:10px;
-}
+            max-width: 78%;
+        }
 
-.chat-input-area{
-    padding:14px;
+        .message.bot {
+            align-self: flex-start;
+        }
 
-    background:#151f34;
+        .message.user {
+            align-self: flex-end;
+        }
 
-    border-top:1px solid #2d3953;
-}
+        .message-content {
+            padding:
+                15px 17px;
 
-.input-wrapper{
-    display:flex;
-    gap:9px;
-}
+            border-radius: 18px;
 
-#messageInput{
-    flex:1;
+            font-size: 14px;
 
-    min-height:45px;
+            line-height: 1.65;
+        }
 
-    max-height:120px;
+        .bot .message-content {
+            border:
+                1px solid #1d4862;
 
-    resize:none;
+            border-top-left-radius: 5px;
 
-    padding:12px;
+            background: #0a2034;
 
-    border-radius:7px;
+            color: #c8d9e4;
+        }
 
-    border:1px solid #3b4760;
+        .user .message-content {
+            border:
+                1px solid #0787d1;
 
-    outline:none;
+            border-top-right-radius: 5px;
 
-    background:#111a2f;
+            background:
+                linear-gradient(
+                    135deg,
+                    #0c91dc,
+                    #086db5
+                );
 
-    color:#fff;
+            color: #ffffff;
+        }
 
-    font-family:Arial,Helvetica,sans-serif;
+        .message-label {
+            display: block;
 
-    font-size:12px;
-}
+            margin-bottom: 5px;
 
-#messageInput:focus{
-    border-color:#22c55e;
+            color: #6dd8ff;
 
-    box-shadow:
-    0 0 0 2px
-    rgba(34,197,94,.10);
-}
+            font-size: 10px;
 
-#messageInput::placeholder{
-    color:#69758a;
-}
+            font-weight: 900;
 
-.send-btn{
-    width:48px;
+            text-transform: uppercase;
 
-    border:0;
+            letter-spacing: .8px;
+        }
 
-    border-radius:7px;
+        .user .message-label {
+            color: #bceaff;
+        }
 
-    background:#22c55e;
 
-    color:#fff;
+        /* ================= RISK CARD ================= */
 
-    cursor:pointer;
+        .risk-result {
+            margin-top: 14px;
 
-    font-size:17px;
+            padding: 15px;
 
-    align-self:stretch;
-}
+            border:
+                1px solid #24526c;
 
-.send-btn:hover{
-    background:#16a34a;
-}
+            border-radius: 14px;
 
-.send-btn:disabled{
-    opacity:.55;
-    cursor:not-allowed;
-}
+            background: #071a2a;
+        }
 
-.disclaimer{
-    margin-top:8px;
+        .risk-header {
+            display: flex;
 
-    color:#69758a;
+            align-items: center;
 
-    font-size:8px;
+            justify-content: space-between;
 
-    text-align:center;
-}
+            margin-bottom: 10px;
+        }
 
-.quick-prompts{
-    display:flex;
+        .risk-title {
+            color: #ffffff;
 
-    gap:7px;
+            font-weight: 850;
+        }
 
-    overflow-x:auto;
+        .risk-level {
+            padding: 5px 9px;
 
-    padding-bottom:8px;
-}
+            border-radius: 999px;
 
-.quick-prompt{
-    flex:none;
+            color: #ffd878;
 
-    padding:6px 9px;
+            background:
+                rgba(255,200,80,.09);
 
-    border:1px solid #344158;
+            border:
+                1px solid rgba(255,200,80,.25);
 
-    border-radius:15px;
+            font-size: 10px;
 
-    background:#111a2f;
+            font-weight: 900;
+        }
 
-    color:#aeb7c7;
+        .risk-result p {
+            margin: 0;
 
-    cursor:pointer;
+            color: var(--muted);
 
-    font-size:9px;
-}
+            font-size: 12px;
+        }
 
-.quick-prompt:hover{
-    color:#fff;
 
-    border-color:#22c55e;
-}
+        /* ================= QUICK PROMPTS ================= */
 
-.empty-chat{
-    margin:auto;
+        .quick-prompts {
+            display: flex;
 
-    max-width:450px;
+            flex-wrap: wrap;
 
-    text-align:center;
+            gap: 9px;
 
-    color:#778399;
-}
+            padding:
+                0
+                25px
+                20px;
+        }
 
-.empty-chat-icon{
-    font-size:38px;
-    margin-bottom:10px;
-}
+        .quick-btn {
+            padding:
+                9px
+                13px;
 
-.empty-chat h2{
-    color:#cbd2de;
+            border:
+                1px solid #285873;
 
-    font-size:17px;
+            border-radius: 999px;
 
-    margin-bottom:7px;
-}
+            background: #071a2a;
 
-.empty-chat p{
-    font-size:11px;
+            color: #9fc4d6;
 
-    line-height:1.6;
-}
+            cursor: pointer;
 
-footer{
-    text-align:center;
+            font-size: 11px;
 
-    padding:22px 15px;
+            transition: .2s;
+        }
 
-    color:#69758a;
+        .quick-btn:hover {
+            border-color: var(--blue);
 
-    font-size:10px;
+            color: #ffffff;
 
-    border-top:1px solid #202b42;
-}
+            background: #0a253b;
+        }
 
-@media(max-width:1050px){
 
-    .nav-links{
-        gap:8px;
-        font-size:9px;
-    }
+        /* ================= INPUT ================= */
 
-}
+        .chat-input-area {
+            padding: 18px 20px;
 
-@media(max-width:700px){
+            border-top:
+                1px solid #193c54;
 
-    .nav-links{
-        display:none;
-    }
+            background: #061522;
+        }
 
-    .mobile-menu{
-        display:block;
-    }
+        .chat-input {
+            display: flex;
 
-    .nav-container{
-        min-height:58px;
-    }
+            align-items: center;
 
-    .brand{
-        font-size:16px;
-    }
+            gap: 10px;
 
-    .brand img{
-        width:30px;
-        height:30px;
-    }
+            padding: 8px;
 
-    .page{
-        padding:
-        22px 10px 35px;
-    }
+            border:
+                1px solid #28546d;
 
-    .header h1{
-        font-size:26px;
-    }
+            border-radius: 18px;
 
-    .chat-card{
-        height:620px;
+            background: #071b2c;
 
-        border-radius:9px;
-    }
+            transition: .2s;
+        }
 
-    .chat-messages{
-        padding:14px;
-    }
+        .chat-input:focus-within {
+            border-color: var(--blue);
 
-    .message{
-        max-width:90%;
-    }
+            box-shadow:
+                0 0 0 3px
+                rgba(0,150,255,.08);
+        }
 
-    .chat-input-area{
-        padding:10px;
-    }
+        .chat-input textarea {
+            flex: 1;
 
-}
+            min-height: 42px;
+            max-height: 110px;
 
-</style>
+            padding:
+                10px
+                12px;
 
+            resize: none;
+
+            border: none;
+
+            outline: none;
+
+            background: transparent;
+
+            color: #ffffff;
+
+            font-size: 14px;
+        }
+
+        .chat-input textarea::placeholder {
+            color: #617d90;
+        }
+
+        .send-btn {
+            width: 45px;
+            height: 45px;
+
+            flex-shrink: 0;
+
+            display: grid;
+            place-items: center;
+
+            border: none;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #25b5ff,
+                    #087ddd
+                );
+
+            color: #ffffff;
+
+            cursor: pointer;
+
+            font-size: 18px;
+
+            transition: .2s;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 25px
+                rgba(0,145,255,.25);
+        }
+
+
+        /* ================= DISCLAIMER ================= */
+
+        .ai-disclaimer {
+            margin-top: 15px;
+
+            text-align: center;
+
+            color: #5e788a;
+
+            font-size: 10px;
+
+            line-height: 1.5;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media(max-width: 650px) {
+
+            .ai-page {
+                padding:
+                    35px
+                    12px
+                    60px;
+            }
+
+            .ai-header h1 {
+                font-size: 43px;
+
+                letter-spacing: -2px;
+            }
+
+            .ai-header p {
+                font-size: 14px;
+            }
+
+            .chat-topbar {
+                padding:
+                    12px
+                    14px;
+            }
+
+            .chat-security {
+                display: none;
+            }
+
+            .chat-messages {
+                height: 520px;
+
+                padding:
+                    20px
+                    15px;
+            }
+
+            .message {
+                max-width: 90%;
+            }
+
+            .quick-prompts {
+                padding:
+                    0
+                    15px
+                    15px;
+            }
+
+            .chat-input-area {
+                padding:
+                    13px;
+            }
+
+        }
+
+    </style>
 </head>
+
 
 <body>
 
+
+<!-- ================= NAVBAR ================= -->
+
 <header class="navbar">
 
-<div class="nav-container">
+    <div class="nav-container">
 
-<a
-href="index.html"
-class="brand">
+        <a
+            href="index.html"
+            class="brand">
 
-<img
-src="logo.png"
-alt="FraudGuard">
+            INSPECT<span>CALLER</span>
 
-<span>
-FraudGuard
-</span>
+        </a>
 
-</a>
 
-<nav class="nav-links">
+        <nav class="nav-links">
 
-<a href="index.html">
-Home
-</a>
+            <a href="index.html">
+                Home
+            </a>
 
-<a href="dashboard.html">
-Dashboard
-</a>
+            <a href="features.html">
+                Features
+            </a>
 
-<a href="scanner.html">
-URL Scanner
-</a>
+            <a href="scanner.html">
+                Scanner
+            </a>
 
-<a href="phone-checker.html">
-Phone
-</a>
+            <a href="report.html">
+                Report
+            </a>
 
-<a href="email-checker.html">
-Email
-</a>
+            <a href="about.html">
+                About
+            </a>
 
-<a href="ai-chat.html">
-AI Chat
-</a>
+        </nav>
 
-<a href="qr-scanner.html">
-QR Scanner
-</a>
 
-<a href="facebook-scanner.html">
-Facebook
-</a>
+        <a
+            href="dashboard.html"
+            class="nav-login">
 
-<a href="telegram-scanner.html">
-Telegram
-</a>
+            Dashboard
 
-<a href="whatsapp-scanner.html">
-WhatsApp
-</a>
+        </a>
 
-<a href="report.html">
-Report
-</a>
-
-<a href="features.html">
-Features
-</a>
-
-<a href="about.html">
-About
-</a>
-
-<a href="contact.html">
-Contact
-</a>
-
-<button
-id="logoutBtn"
-class="logout-btn">
-
-Logout
-
-</button>
-
-</nav>
-
-<button
-id="mobileMenuBtn"
-class="mobile-menu">
-
-☰
-
-</button>
-
-</div>
+    </div>
 
 </header>
 
 
-<main class="page">
+<!-- ================= AI PAGE ================= -->
 
-<section class="header">
+<main class="ai-page">
 
-<div class="header-icon">
-🤖
+<div class="ai-container">
+
+
+    <!-- HEADER -->
+
+    <div class="ai-header">
+
+        <div class="ai-badge">
+
+            🤖 AI SECURITY ASSISTANT
+
+        </div>
+
+
+        <h1>
+
+            Your Digital
+            <span>Safety Assistant</span>
+
+        </h1>
+
+
+        <p>
+
+            Ask Inspect Caller AI about suspicious
+            phone numbers, messages, links, payment
+            requests and other potential scam signals.
+
+        </p>
+
+    </div>
+
+
+
+    <!-- ================= CHAT ================= -->
+
+    <div class="chat-card">
+
+
+        <!-- TOP BAR -->
+
+        <div class="chat-topbar">
+
+            <div class="assistant-profile">
+
+                <div class="assistant-avatar">
+                    🤖
+                </div>
+
+                <div>
+
+                    <strong>
+                        Inspect Caller AI
+                    </strong>
+
+                    <span>
+
+                        <i class="status-dot"></i>
+
+                        Security Assistant Online
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="chat-security">
+
+                🔐 Privacy-first prototype
+
+            </div>
+
+        </div>
+
+
+
+        <!-- MESSAGES -->
+
+        <div
+            class="chat-messages"
+            id="chatMessages">
+
+
+            <!-- BOT MESSAGE -->
+
+            <div class="message bot">
+
+                <div class="message-content">
+
+                    <span class="message-label">
+                        AI Assistant
+                    </span>
+
+                    Hello! I'm the Inspect Caller
+                    Security Assistant. 👋
+
+                    <br><br>
+
+                    You can tell me about a suspicious
+                    call, message, website, payment
+                    request or online interaction.
+
+                    <br><br>
+
+                    I can help you identify potential
+                    scam indicators and explain what
+                    information you should verify.
+
+                </div>
+
+            </div>
+
+
+            <!-- DEMO USER MESSAGE -->
+
+            <div
+                class="message user"
+                style="display:none;"
+                id="demoUserMessage">
+
+                <div
+                    class="message-content">
+
+                    <span class="message-label">
+                        You
+                    </span>
+
+                    <span id="userText"></span>
+
+                </div>
+
+            </div>
+
+
+            <!-- DEMO AI RESPONSE -->
+
+            <div
+                class="message bot"
+                style="display:none;"
+                id="demoBotMessage">
+
+                <div class="message-content">
+
+                    <span class="message-label">
+                        AI Analysis
+                    </span>
+
+                    Based on the information provided,
+                    I found some potential warning
+                    indicators.
+
+                    <div class="risk-result">
+
+                        <div class="risk-header">
+
+                            <span class="risk-title">
+                                Risk Assessment
+                            </span>
+
+                            <span class="risk-level">
+                                REVIEW REQUIRED
+                            </span>
+
+                        </div>
+
+                        <p>
+                            This is a prototype analysis.
+                            Do not send money, passwords,
+                            OTPs or sensitive information
+                            until the source is independently
+                            verified.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- QUICK QUESTIONS -->
+
+        <div class="quick-prompts">
+
+            <button
+                class="quick-btn"
+                onclick="askAI('Is this phone number suspicious?')">
+
+                📞 Check a phone number
+
+            </button>
+
+
+            <button
+                class="quick-btn"
+                onclick="askAI('I received a suspicious link.')">
+
+                🔗 Check a suspicious link
+
+            </button>
+
+
+            <button
+                class="quick-btn"
+                onclick="askAI('Someone asked me for money online.')">
+
+                💰 Payment scam
+
+            </button>
+
+
+            <button
+                class="quick-btn"
+                onclick="askAI('I received a suspicious job offer.')">
+
+                💼 Job scam
+
+            </button>
+
+
+            <button
+                class="quick-btn"
+                onclick="askAI('Someone is asking for my OTP.')">
+
+                🔐 OTP warning
+
+            </button>
+
+        </div>
+
+
+
+        <!-- INPUT -->
+
+        <div class="chat-input-area">
+
+            <div class="chat-input">
+
+                <textarea
+                    id="chatInput"
+                    placeholder="Describe the suspicious activity..."
+                    rows="1"></textarea>
+
+
+                <button
+                    class="send-btn"
+                    onclick="sendMessage()"
+                    aria-label="Send">
+
+                    ➤
+
+                </button>
+
+            </div>
+
+
+            <div class="ai-disclaimer">
+
+                Inspect Caller AI is a prototype.
+                AI results are informational and should
+                not replace official investigation,
+                professional advice or emergency services.
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
-
-<h1>
-FraudGuard
-<span>AI Assistant</span>
-</h1>
-
-<p>
-Ask about suspicious messages, links,
-emails, phone numbers or possible scams.
-</p>
-
-</section>
-
-
-<section class="chat-card">
-
-<div class="chat-header">
-
-<div class="ai-info">
-
-<div class="ai-avatar">
-🤖
-</div>
-
-<div>
-
-<h3>
-FraudGuard AI
-</h3>
-
-<div class="ai-status">
-● Security Assistant
-</div>
-
-</div>
-
-</div>
-
-<button
-id="clearBtn"
-class="clear-btn">
-
-Clear Chat
-
-</button>
-
-</div>
-
-
-<div
-id="chatMessages"
-class="chat-messages">
-
-<div
-id="emptyChat"
-class="empty-chat">
-
-<div class="empty-chat-icon">
-🛡️
-</div>
-
-<h2>
-How can I help you stay safe?
-</h2>
-
-<p>
-Describe a suspicious message, website,
-payment request, account or online offer.
-I can help you understand possible warning
-signs.
-</p>
-
-</div>
-
-</div>
-
-
-<div
-id="typing"
-class="typing">
-
-FraudGuard AI is analyzing...
-
-</div>
-
-
-<div class="chat-input-area">
-
-<div class="quick-prompts">
-
-<button
-class="quick-prompt"
-data-prompt="Is this message a scam?">
-
-Is this a scam?
-
-</button>
-
-<button
-class="quick-prompt"
-data-prompt="What are common phishing signs?">
-
-Phishing signs
-
-</button>
-
-<button
-class="quick-prompt"
-data-prompt="Someone is asking me for an OTP. What should I do?">
-
-OTP request
-
-</button>
-
-<button
-class="quick-prompt"
-data-prompt="Someone sent me a suspicious payment link. What should I check?">
-
-Payment link
-
-</button>
-
-</div>
-
-
-<div class="input-wrapper">
-
-<textarea
-id="messageInput"
-placeholder="Describe the suspicious activity..."
-rows="1"
-maxlength="4000"></textarea>
-
-<button
-id="sendBtn"
-class="send-btn"
-title="Send">
-
-➤
-
-</button>
-
-</div>
-
-
-<div class="disclaimer">
-
-FraudGuard AI provides security guidance and
-should not be treated as a guarantee or
-professional investigation.
-
-</div>
-
-</div>
-
-</section>
 
 </main>
 
 
+<!-- ================= FOOTER ================= -->
+
 <footer>
 
-© 2026 FraudGuard —
-AI-Powered Global Fraud Detection Platform
+    <div class="footer-brand">
 
-  </footer>
-  <script type="module">
+        INSPECT<span>CALLER</span>
 
-import {
-    auth,
-    db
-} from "./firebase.js";
+    </div>
 
-import {
-    onAuthStateChanged,
-    signOut
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import {
-    collection,
-    addDoc,
-    query,
-    where,
-    orderBy,
-    getDocs,
-    deleteDoc,
-    doc,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    <p>
+        Global Caller Security & Anti-Fraud Technology
+    </p>
 
 
-const messageInput =
-    document.getElementById("messageInput");
+    <div class="footer-links">
 
-const sendBtn =
-    document.getElementById("sendBtn");
+        <a href="index.html">
+            Home
+        </a>
 
-const clearBtn =
-    document.getElementById("clearBtn");
+        <a href="features.html">
+            Features
+        </a>
 
-const chatMessages =
-    document.getElementById("chatMessages");
+        <a href="about.html">
+            About
+        </a>
 
-const emptyChat =
-    document.getElementById("emptyChat");
+        <a href="contact.html">
+            Contact
+        </a>
 
-const typing =
-    document.getElementById("typing");
+        <a href="privacy-policy.html">
+            Privacy
+        </a>
 
-const logoutBtn =
-    document.getElementById("logoutBtn");
+        <a href="terms.html">
+            Terms
+        </a>
 
-const mobileMenuBtn =
-    document.getElementById("mobileMenuBtn");
-
-const navLinks =
-    document.querySelector(".nav-links");
-
-
-let currentUser = null;
+    </div>
 
 
-onAuthStateChanged(
-    auth,
-    async (user) => {
+    <p class="copyright">
 
-        if (!user) {
+        © 2026 Inspect Caller.
+        Idea / Pre-Launch Prototype.
 
-            window.location.replace(
-                "login.html"
-            );
+    </p>
 
-            return;
-
-        }
-
-        currentUser = user;
-
-        await loadChatHistory();
-
-    }
-);
+</footer>
 
 
-function formatTime(timestamp) {
+<!-- ================= DEMO CHAT SCRIPT ================= -->
 
-    if (!timestamp) {
-        return "";
-    }
+<script>
 
+function askAI(text) {
 
-    const date =
-        timestamp.toDate
-            ? timestamp.toDate()
-            : new Date(timestamp);
+    const input =
+        document.getElementById("chatInput");
 
+    input.value = text;
 
-    return date.toLocaleTimeString(
-        [],
-        {
-            hour: "2-digit",
-            minute: "2-digit"
-        }
-    );
+    sendMessage();
 
 }
 
 
-function addMessage(
-    text,
-    type,
-    timestamp = null
-) {
+function sendMessage() {
 
-    if (emptyChat) {
-
-        emptyChat.style.display =
-            "none";
-
-    }
-
-
-    const wrapper =
-        document.createElement("div");
-
-
-    wrapper.className =
-        "message " + type;
-
-
-    const avatar =
-        document.createElement("div");
-
-
-    avatar.className =
-        "message-avatar";
-
-
-    avatar.textContent =
-        type === "user"
-            ? "U"
-            : "🤖";
-
-
-    const contentWrapper =
-        document.createElement("div");
-
-
-    const content =
-        document.createElement("div");
-
-
-    content.className =
-        "message-content";
-
-
-    content.textContent =
-        text;
-
-
-    const time =
-        document.createElement("div");
-
-
-    time.className =
-        "message-time";
-
-
-    time.textContent =
-        formatTime(timestamp) ||
-        new Date()
-            .toLocaleTimeString(
-                [],
-                {
-                    hour: "2-digit",
-                    minute: "2-digit"
-                }
-            );
-
-
-    contentWrapper.appendChild(
-        content
-    );
-
-    contentWrapper.appendChild(
-        time
-    );
-
-
-    wrapper.appendChild(
-        avatar
-    );
-
-    wrapper.appendChild(
-        contentWrapper
-    );
-
-
-    chatMessages.appendChild(
-        wrapper
-    );
-
-
-    chatMessages.scrollTop =
-        chatMessages.scrollHeight;
-
-}
-
-
-async function loadChatHistory() {
-
-    if (!currentUser) {
-        return;
-    }
-
-
-    try {
-
-        const chatCollection =
-            collection(
-                db,
-                "ai_chats"
-            );
-
-
-        const chatQuery =
-            query(
-                chatCollection,
-
-                where(
-                    "uid",
-                    "==",
-                    currentUser.uid
-                ),
-
-                orderBy(
-                    "createdAt",
-                    "asc"
-                )
-            );
-
-
-        const snapshot =
-            await getDocs(
-                chatQuery
-            );
-
-
-        if (
-            snapshot.empty
-        ) {
-
-            return;
-
-        }
-
-
-        emptyChat.style.display =
-            "none";
-
-
-        snapshot.forEach(
-            item => {
-
-                const data =
-                    item.data();
-
-
-                addMessage(
-                    data.text || "",
-                    data.role === "user"
-                        ? "user"
-                        : "ai",
-                    data.createdAt
-                );
-
-            }
-        );
-
-
-    } catch (error) {
-
-        console.warn(
-            "Chat history could not be loaded:",
-            error
-        );
-
-    }
-
-}
-
-
-async function saveMessage(
-    text,
-    role
-) {
-
-    if (!currentUser) {
-        return;
-    }
-
-
-    try {
-
-        await addDoc(
-            collection(
-                db,
-                "ai_chats"
-            ),
-            {
-
-                uid:
-                    currentUser.uid,
-
-                role:
-                    role,
-
-                text:
-                    text,
-
-                createdAt:
-                    serverTimestamp()
-
-            }
-        );
-
-    } catch (error) {
-
-        console.warn(
-            "Chat message could not be saved:",
-            error
-        );
-
-    }
-
-}
-
-
-function localAIResponse(
-    message
-) {
+    const input =
+        document.getElementById("chatInput");
 
     const text =
-        message.toLowerCase();
+        input.value.trim();
+
+    if (!text) return;
 
 
-    if (
-        text.includes("otp") ||
-        text.includes("verification code")
-    ) {
-
-        return "Never share an OTP or verification code with another person. A legitimate service normally will not ask you to send your one-time code to them. If someone is pressuring you for it, stop the conversation and verify the request through the official service.";
-
-    }
+    const messages =
+        document.getElementById("chatMessages");
 
 
-    if (
-        text.includes("password") ||
-        text.includes("login")
-    ) {
+    /* USER MESSAGE */
 
-        return "Be careful with unexpected login or password-reset links. Open the official website or app yourself instead of using a link sent in a suspicious message. Never share your password or recovery code.";
+    const userMessage =
+        document.createElement("div");
 
-    }
+    userMessage.className =
+        "message user";
 
+    userMessage.innerHTML = `
+        <div class="message-content">
 
-    if (
-        text.includes("payment") ||
-        text.includes("money") ||
-        text.includes("send")
-    ) {
+            <span class="message-label">
+                You
+            </span>
 
-        return "Unexpected payment requests are a common scam signal. Verify the person or business independently, check the payment destination carefully, and avoid sending money under pressure or urgency.";
+            ${escapeHTML(text)}
 
-    }
+        </div>
+    `;
 
-
-    if (
-        text.includes("link") ||
-        text.includes("url") ||
-        text.includes("website")
-    ) {
-
-        return "Before opening a suspicious link, check the domain carefully. Look for misspellings, unusual domains, fake login pages, unexpected redirects and urgent requests for credentials or payment. You can also use the FraudGuard URL Scanner.";
-
-    }
+    messages.appendChild(userMessage);
 
 
-    if (
-        text.includes("email")
-    ) {
+    input.value = "";
 
-        return "For a suspicious email, check the sender address, domain, wording, links, attachments and the reason for the request. Do not rely only on the displayed sender name.";
-
-    }
+    messages.scrollTop =
+        messages.scrollHeight;
 
 
-    if (
-        text.includes("phone") ||
-        text.includes("call")
-    ) {
+    /* DEMO AI RESPONSE */
 
-        return "For suspicious calls, do not share OTPs, passwords, banking information or remote-access codes. If the caller claims to represent a company, end the call and contact that organization through its official contact information.";
+    setTimeout(() => {
 
-    }
+        const botMessage =
+            document.createElement("div");
 
+        botMessage.className =
+            "message bot";
 
-    if (
-        text.includes("scam") ||
-        text.includes("fraud")
-    ) {
+        botMessage.innerHTML = `
 
-        return "Possible scam warning signs include urgency, threats, requests for secrets or money, suspicious links, impersonation and promises that seem too good to be true. If you are unsure, stop before paying or sharing information and verify independently.";
+            <div class="message-content">
 
-    }
+                <span class="message-label">
+                    AI Analysis
+                </span>
 
+                I can help assess the information
+                you provided.
 
-    return "I can help you look for common scam warning signs. Tell me what happened, what the person requested, and whether they sent you a link, phone number, email, payment request or message. Do not share passwords, OTPs or other sensitive credentials here.";
+                <div class="risk-result">
+
+                    <div class="risk-header">
+
+                        <span class="risk-title">
+                            Initial Assessment
+                        </span>
+
+                        <span class="risk-level">
+                            VERIFY
+                        </span>
+
+                    </div>
+
+                    <p>
+
+                        This prototype cannot independently
+                        confirm whether a person or account
+                        is fraudulent. Avoid sending money,
+                        OTPs, passwords or sensitive documents
+                        until you verify the source through
+                        a trusted channel.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        `;
+
+        messages.appendChild(botMessage);
+
+        messages.scrollTop =
+            messages.scrollHeight;
+
+    }, 800);
 
 }
 
 
-async function sendMessage() {
+/* BASIC HTML ESCAPING */
 
-    const text =
-        messageInput.value.trim();
+function escapeHTML(text) {
 
+    const div =
+        document.createElement("div");
 
-    if (!text) {
-        return;
-    }
+    div.textContent = text;
 
-
-    if (
-        text.length > 4000
-    ) {
-
-        alert(
-            "Message is too long."
-        );
-
-        return;
-
-    }
-
-
-    addMessage(
-        text,
-        "user"
-    );
-
-
-    messageInput.value =
-        "";
-
-    messageInput.style.height =
-        "45px";
-
-
-    sendBtn.disabled =
-        true;
-
-
-    typing.style.display =
-        "block";
-
-
-    await saveMessage(
-        text,
-        "user"
-    );
-
-
-    await new Promise(
-        resolve =>
-            setTimeout(
-                resolve,
-                500
-            )
-    );
-
-
-    const response =
-        localAIResponse(
-            text
-        );
-
-
-    typing.style.display =
-        "none";
-
-
-    addMessage(
-        response,
-        "ai"
-    );
-
-
-    await saveMessage(
-        response,
-        "ai"
-    );
-
-
-    sendBtn.disabled =
-        false;
-
-
-    messageInput.focus();
+    return div.innerHTML;
 
 }
 
-
-sendBtn.addEventListener(
-    "click",
-    sendMessage
-);
-
-
-messageInput.addEventListener(
-    "keydown",
-    event => {
-
-        if (
-            event.key === "Enter" &&
-            !event.shiftKey
-        ) {
-
-            event.preventDefault();
-
-            sendMessage();
-
-        }
-
-    }
-);
-
-
-messageInput.addEventListener(
-    "input",
-    () => {
-
-        messageInput.style.height =
-            "45px";
-
-
-        messageInput.style.height =
-            Math.min(
-                messageInput.scrollHeight,
-                120
-            ) + "px";
-
-    }
-);
-
-
-document
-    .querySelectorAll(".quick-prompt")
-    .forEach(
-        button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    messageInput.value =
-                        button.dataset.prompt;
-
-                    messageInput.focus();
-
-                }
-            );
-
-        }
-    );
-
-
-clearBtn.addEventListener(
-    "click",
-    async () => {
-
-        if (!currentUser) {
-            return;
-        }
-
-
-        const confirmed =
-            confirm(
-                "Clear your FraudGuard AI chat history?"
-            );
-
-
-        if (!confirmed) {
-            return;
-        }
-
-
-        clearBtn.disabled =
-            true;
-
-
-        try {
-
-            const chatCollection =
-                collection(
-                    db,
-                    "ai_chats"
-                );
-
-
-            const chatQuery =
-                query(
-                    chatCollection,
-
-                    where(
-                        "uid",
-                        "==",
-                        currentUser.uid
-                    )
-                );
-
-
-            const snapshot =
-                await getDocs(
-                    chatQuery
-                );
-
-
-            await Promise.all(
-                snapshot.docs.map(
-                    item =>
-                        deleteDoc(
-                            doc(
-                                db,
-                                "ai_chats",
-                                item.id
-                            )
-                        )
-                )
-            );
-
-
-            chatMessages.innerHTML =
-                "";
-
-
-            chatMessages.appendChild(
-                emptyChat
-            );
-
-
-            emptyChat.style.display =
-                "block";
-
-
-        } catch (error) {
-
-            console.error(
-                "Clear chat error:",
-                error
-            );
-
-
-            alert(
-                "Unable to clear chat history."
-            );
-
-        }
-
-
-        clearBtn.disabled =
-            false;
-
-    }
-);
-
-
-logoutBtn.addEventListener(
-    "click",
-    async () => {
-
-        logoutBtn.disabled =
-            true;
-
-        logoutBtn.textContent =
-            "Logging out...";
-
-
-        try {
-
-            await signOut(
-                auth
-            );
-
-            window.location.replace(
-                "login.html"
-            );
-
-        } catch (error) {
-
-            console.error(
-                "Logout error:",
-                error
-            );
-
-            logoutBtn.disabled =
-                false;
-
-            logoutBtn.textContent =
-                "Logout";
-
-        }
-
-    }
-);
-
-
-mobileMenuBtn.addEventListener(
-    "click",
-    () => {
-
-        if (
-            navLinks.classList.contains(
-                "mobile-open"
-            )
-        ) {
-
-            navLinks.classList.remove(
-                "mobile-open"
-            );
-
-            navLinks.style.display =
-                "";
-
-            return;
-
-        }
-
-
-        navLinks.classList.add(
-            "mobile-open"
-        );
-
-
-        navLinks.style.display =
-            "flex";
-
-        navLinks.style.flexDirection =
-            "column";
-
-        navLinks.style.position =
-            "absolute";
-
-        navLinks.style.top =
-            "58px";
-
-        navLinks.style.right =
-            "12px";
-
-        navLinks.style.width =
-            "230px";
-
-        navLinks.style.padding =
-            "16px";
-
-        navLinks.style.background =
-            "#10182d";
-
-        navLinks.style.border =
-            "1px solid #26324b";
-
-        navLinks.style.borderRadius =
-            "10px";
-
-        navLinks.style.boxShadow =
-            "0 12px 30px rgba(0,0,0,.35)";
-
-    }
-);
-
-
-navLinks
-    .querySelectorAll("a")
-    .forEach(
-        link => {
-
-            link.addEventListener(
-                "click",
-                () => {
-
-                    navLinks.classList.remove(
-                        "mobile-open"
-                    );
-
-                    if (
-                        window.innerWidth <= 700
-                    ) {
-
-                        navLinks.style.display =
-                            "none";
-
-                    }
-
-                }
-            );
-
-        }
-    );
-
-
-window.addEventListener(
-    "resize",
-    () => {
-
-        if (
-            window.innerWidth > 700
-        ) {
-
-            navLinks.style = "";
-
-            navLinks.classList.remove(
-                "mobile-open"
-            );
-
-        }
-
-    }
-);
-
-</script>
-
-
-<script
-type="module"
-src="script.js">
 </script>
 
 
 </body>
-
 </html>
