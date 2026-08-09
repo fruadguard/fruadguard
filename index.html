@@ -4,683 +4,154 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Inspect Caller — Global Caller Security</title>
+    <title>Inspect Caller — Global Anti-Fraud Security</title>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <meta name="description"
+        content="Inspect Caller is a global anti-fraud security technology platform designed to detect, inspect and report digital scams.">
 
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #061321;
-            color: #f4f8ff;
-            overflow-x: hidden;
-        }
-
-        /* ================= NAVBAR ================= */
-
-        header {
-            width: 100%;
-            background: #050d18;
-            border-bottom: 1px solid rgba(70,150,210,.2);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        nav {
-            max-width: 1250px;
-            margin: auto;
-            min-height: 90px;
-            padding: 0 30px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: 900;
-            letter-spacing: 1px;
-        }
-
-        .logo span {
-            color: #28a9ff;
-        }
-
-        .login-btn {
-            padding: 15px 35px;
-            border-radius: 20px;
-            border: 2px solid #416b88;
-            background: transparent;
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: .3s;
-        }
-
-        .login-btn:hover {
-            background: #1599ed;
-            border-color: #1599ed;
-        }
-
-
-        /* ================= HERO ================= */
-
-        .hero {
-            min-height: 900px;
-            padding: 35px 20px 100px;
-            text-align: center;
-
-            background:
-                radial-gradient(
-                    circle at 50% 35%,
-                    rgba(0,160,255,.22),
-                    transparent 35%
-                ),
-                linear-gradient(
-                    180deg,
-                    #082542,
-                    #071a2d 70%,
-                    #061321
-                );
-
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .badge {
-            border: 2px solid #426d8b;
-            border-radius: 40px;
-            padding: 13px 28px;
-            color: #9edcff;
-            font-size: 18px;
-            margin-bottom: 55px;
-            background: rgba(4,24,40,.6);
-        }
-
-        .badge::first-letter {
-            color: #25e39c;
-        }
-
-
-        /* ================= SHIELD ================= */
-
-        .shield {
-            width: 170px;
-            height: 200px;
-            margin-bottom: 50px;
-
-            clip-path: polygon(
-                50% 0%,
-                95% 20%,
-                90% 65%,
-                50% 100%,
-                10% 65%,
-                5% 20%
-            );
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #0075a8,
-                    #03b8ff,
-                    #075487
-                );
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            box-shadow:
-                0 0 70px rgba(0,170,255,.45);
-        }
-
-        .shield-inner {
-            width: 120px;
-            height: 145px;
-
-            clip-path: polygon(
-                50% 0%,
-                95% 20%,
-                90% 65%,
-                50% 100%,
-                10% 65%,
-                5% 20%
-            );
-
-            background: #03101e;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            font-size: 48px;
-            font-weight: 900;
-            color: #6bd1ff;
-        }
-
-
-        /* ================= HERO TITLE ================= */
-
-        .hero h1 {
-            max-width: 900px;
-            font-size: clamp(52px, 7vw, 94px);
-            line-height: .98;
-            letter-spacing: -4px;
-            margin-bottom: 35px;
-        }
-
-        .hero h1 .blue {
-            color: #32b6ff;
-        }
-
-        .hero h1 .dark-blue {
-            color: #19344b;
-        }
-
-        .hero-description {
-            max-width: 780px;
-            font-size: 25px;
-            line-height: 1.65;
-            color: #9eb2c6;
-            margin-bottom: 45px;
-        }
-
-
-        /* ================= BUTTON ================= */
-
-        .primary-btn {
-            display: inline-block;
-            padding: 20px 42px;
-            border-radius: 20px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #24b4ff,
-                    #067de0
-                );
-
-            color: white;
-            font-size: 22px;
-            font-weight: bold;
-            text-decoration: underline;
-
-            box-shadow:
-                0 15px 40px rgba(0,130,255,.25);
-
-            transition: .3s;
-        }
-
-        .primary-btn:hover {
-            transform: translateY(-4px);
-            box-shadow:
-                0 20px 50px rgba(0,150,255,.4);
-        }
-
-        .secondary-btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 18px 35px;
-
-            border-radius: 20px;
-            border: 2px solid #426d8b;
-
-            color: white;
-            background: #061827;
-
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-
-        /* ================= INFO ================= */
-
-        .founder-info {
-            margin-top: 55px;
-            color: #91a8bb;
-            font-size: 18px;
-            line-height: 2;
-        }
-
-        .founder-info strong {
-            color: #c8d7e5;
-        }
-
-
-        /* ================= SECTIONS ================= */
-
-        section {
-            max-width: 1200px;
-            margin: auto;
-            padding: 110px 25px;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 50px;
-            margin-bottom: 20px;
-        }
-
-        .section-title span {
-            color: #27aaff;
-        }
-
-        .section-text {
-            max-width: 800px;
-            margin: 0 auto 60px;
-            text-align: center;
-            color: #94aabc;
-            font-size: 19px;
-            line-height: 1.7;
-        }
-
-
-        /* ================= CARDS ================= */
-
-        .cards {
-            display: grid;
-            grid-template-columns:
-                repeat(auto-fit, minmax(250px, 1fr));
-
-            gap: 22px;
-        }
-
-        .card {
-            background:
-                linear-gradient(
-                    145deg,
-                    #0c2237,
-                    #071827
-                );
-
-            border: 1px solid #183d59;
-            border-radius: 22px;
-
-            padding: 30px;
-
-            transition: .3s;
-        }
-
-        .card:hover {
-            transform: translateY(-7px);
-            border-color: #159ff0;
-
-            box-shadow:
-                0 20px 50px rgba(0,120,220,.15);
-        }
-
-        .card-icon {
-            font-size: 35px;
-            margin-bottom: 20px;
-        }
-
-        .card h3 {
-            font-size: 23px;
-            margin-bottom: 12px;
-        }
-
-        .card p {
-            color: #91a7ba;
-            line-height: 1.6;
-        }
-
-
-        /* ================= SCANNER ================= */
-
-        .scanner-box {
-            max-width: 800px;
-            margin: auto;
-            background: #081a2b;
-            border: 1px solid #1a4b6d;
-            border-radius: 25px;
-            padding: 35px;
-        }
-
-        .scanner-box input {
-            width: 100%;
-            padding: 18px;
-            background: #04111e;
-            border: 1px solid #2d5773;
-            border-radius: 14px;
-            color: white;
-            font-size: 17px;
-            margin-bottom: 15px;
-            outline: none;
-        }
-
-        .scanner-box button {
-            width: 100%;
-            padding: 17px;
-            border: 0;
-            border-radius: 14px;
-            background: #129eea;
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        #scanResult {
-            margin-top: 20px;
-            padding: 18px;
-            border-radius: 12px;
-            display: none;
-        }
-
-
-        /* ================= TEAM ================= */
-
-        .team {
-            display: grid;
-            grid-template-columns:
-                repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        .team-card {
-            text-align: center;
-            padding: 35px;
-            border-radius: 25px;
-            background: #0a1d30;
-            border: 1px solid #1d405a;
-        }
-
-        .team-avatar {
-            width: 100px;
-            height: 100px;
-            margin: auto auto 20px;
-
-            border-radius: 50%;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #079bea,
-                    #064b80
-                );
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            font-size: 38px;
-        }
-
-        .team-card h3 {
-            margin-bottom: 8px;
-        }
-
-        .role {
-            color: #32b6ff;
-            font-weight: bold;
-        }
-
-        .team-card p {
-            color: #91a7ba;
-            margin-top: 15px;
-            line-height: 1.6;
-        }
-
-
-        /* ================= CTA ================= */
-
-        .cta {
-            text-align: center;
-            padding: 100px 25px;
-
-            background:
-                radial-gradient(
-                    circle,
-                    rgba(0,140,255,.18),
-                    transparent 65%
-                );
-        }
-
-        .cta h2 {
-            font-size: 55px;
-            margin-bottom: 20px;
-        }
-
-        .cta p {
-            color: #9bb0c2;
-            font-size: 20px;
-            margin-bottom: 35px;
-        }
-
-
-        /* ================= FOOTER ================= */
-
-        footer {
-            padding: 60px 25px;
-            text-align: center;
-            background: #030b14;
-            border-top: 1px solid #163149;
-            color: #71879a;
-        }
-
-        footer .footer-logo {
-            color: white;
-            font-size: 25px;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-
-        /* ================= MOBILE ================= */
-
-        @media (max-width: 700px) {
-
-            nav {
-                min-height: 75px;
-                padding: 0 18px;
-            }
-
-            .logo {
-                font-size: 22px;
-            }
-
-            .login-btn {
-                padding: 11px 20px;
-                font-size: 15px;
-            }
-
-            .hero {
-                min-height: 850px;
-                padding-top: 30px;
-            }
-
-            .badge {
-                font-size: 14px;
-                padding: 11px 18px;
-                margin-bottom: 45px;
-            }
-
-            .shield {
-                width: 130px;
-                height: 155px;
-            }
-
-            .shield-inner {
-                width: 90px;
-                height: 110px;
-                font-size: 35px;
-            }
-
-            .hero h1 {
-                font-size: 52px;
-                letter-spacing: -3px;
-            }
-
-            .hero-description {
-                font-size: 18px;
-                padding: 0 10px;
-            }
-
-            .primary-btn {
-                font-size: 18px;
-                padding: 17px 25px;
-            }
-
-            .section-title {
-                font-size: 38px;
-            }
-
-            .cta h2 {
-                font-size: 38px;
-            }
-
-        }
-
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 
 <body>
 
-
 <!-- ================= NAVBAR ================= -->
 
-<header>
+<header class="navbar">
 
-    <nav>
+    <div class="nav-container">
 
-        <div class="logo">
+        <a href="index.html" class="brand">
             INSPECT<span>CALLER</span>
-        </div>
+        </a>
 
-        <button
-            class="login-btn"
-            onclick="openLogin()">
+        <nav class="nav-links">
 
+            <a href="#problem">Problem</a>
+            <a href="#solution">Solution</a>
+            <a href="features.html">Features</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+
+        </nav>
+
+        <a href="login.html" class="nav-login">
             Login
+        </a>
 
-        </button>
-
-    </nav>
+    </div>
 
 </header>
 
 
+<!-- ================= HERO / COVER SLIDE ================= -->
 
-<!-- ================= HERO ================= -->
+<main>
 
 <section class="hero">
 
-    <div class="badge">
-        🟢 GLOBAL CALLER SECURITY TECHNOLOGY
-    </div>
+    <div class="hero-glow"></div>
 
+    <div class="hero-content">
 
-    <div class="shield">
-
-        <div class="shield-inner">
-            IC
+        <div class="hero-badge">
+            🟢 GLOBAL ANTI-FRAUD SECURITY TECHNOLOGY
         </div>
 
-    </div>
+
+        <div class="hero-shield">
+
+            <div class="shield-inner">
+                IC
+            </div>
+
+        </div>
 
 
-    <h1>
+        <h1>
 
-        A Bold Vision to
+            A Bold Vision to
 
-        <span class="dark-blue">
-            Stop
-        </span>
+            <span class="dark-word">
+                Stop
+            </span>
 
-        <br>
+            <br>
 
-        <span class="blue">
-            Digital Scams
-        </span>
+            <span class="blue-word">
+                Digital Scams
+            </span>
 
-        Globally
+            Globally
 
-    </h1>
-
-
-    <p class="hero-description">
-
-        Inspect Caller is a next-generation
-        caller security and anti-fraud ecosystem
-        designed to identify suspicious calls,
-        numbers and digital threats before
-        they cause harm.
-
-    </p>
+        </h1>
 
 
-    <a
-        href="#features"
-        class="primary-btn">
+        <p class="hero-description">
 
-        Explore Product Demo
-
-    </a>
-
-
-    <a
-        href="#login"
-        class="secondary-btn">
-
-        Secure Login
-
-    </a>
-
-
-    <div class="founder-info">
-
-        <p>
-
-            <strong>
-                Founder & CEO:
-            </strong>
-
-            Mohammad Sajedur Rahman Biplob
+            Inspect Caller is a next-generation global
+            anti-fraud security ecosystem designed to
+            detect, inspect, report and help prevent
+            digital scams.
 
         </p>
 
-        <p>
 
-            <strong>
-                Team Leader:
-            </strong>
+        <div class="hero-buttons">
 
-            Nila Akter
+            <a
+                href="features.html"
+                class="primary-btn">
 
-        </p>
+                Explore Inspect Caller
 
-        <p>
+            </a>
 
-            <strong>
-                Country:
-            </strong>
 
-            Bangladesh
+            <a
+                href="register.html"
+                class="secondary-btn">
 
-        </p>
+                Get Started
 
-        <p>
+            </a>
 
-            <strong>
-                Startup Type:
-            </strong>
+        </div>
 
-            Global Caller Security & Anti-Fraud Tech
 
-        </p>
+        <div class="hero-information">
+
+            <div>
+                <strong>Founder & CEO</strong>
+                <span>
+                    Mohammad Sajedur Rahman Biplob
+                </span>
+            </div>
+
+
+            <div>
+                <strong>Team Leader</strong>
+                <span>
+                    Nila Akter
+                </span>
+            </div>
+
+
+            <div>
+                <strong>Country</strong>
+                <span>
+                    Bangladesh
+                </span>
+            </div>
+
+
+            <div>
+                <strong>Stage</strong>
+                <span>
+                    Idea / Pre-Launch
+                </span>
+            </div>
+
+        </div>
 
     </div>
 
@@ -688,131 +159,377 @@
 
 
 
-<!-- ================= FEATURES ================= -->
+<!-- ================= PROBLEM ================= -->
 
-<section id="features">
+<section
+    id="problem"
+    class="section">
 
-    <h2 class="section-title">
-        <span>Inspect Caller</span> Security
-    </h2>
+    <div class="section-heading">
 
-    <p class="section-text">
+        <span class="section-label">
+            THE PROBLEM
+        </span>
 
-        A future-ready security ecosystem
-        designed to help users identify,
-        inspect and report suspicious callers
-        and digital fraud.
+        <h2>
+            Digital Fraud Is A
+            <span>Global Problem</span>
+        </h2>
 
-    </p>
+        <p>
+
+            Individuals, families, businesses and
+            governments are increasingly exposed to
+            digital scams across calls, messages,
+            websites and online platforms.
+
+        </p>
+
+    </div>
 
 
-    <div class="cards">
+    <div class="stats-grid">
+
+        <div class="stat-card">
+
+            <span class="stat-icon">
+                💰
+            </span>
+
+            <strong>
+                $32B+
+            </strong>
+
+            <p>
+                Global digital fraud loss
+                referenced in our startup concept.
+            </p>
+
+        </div>
 
 
-        <div class="card">
+        <div class="stat-card">
 
-            <div class="card-icon">
+            <span class="stat-icon">
+                🌍
+            </span>
+
+            <strong>
+                5B+
+            </strong>
+
+            <p>
+                Internet users representing
+                the proposed global opportunity.
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <span class="stat-icon">
+                🎯
+            </span>
+
+            <strong>
+                1B
+            </strong>
+
+            <p>
+                Proposed active target users
+                in the serviceable market.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="problem-grid">
+
+        <div class="problem-card">
+            💰
+            <h3>
+                Financial Fraud
+            </h3>
+            <p>
+                Fraudsters use fake offers,
+                investments and payment requests
+                to steal money.
+            </p>
+        </div>
+
+
+        <div class="problem-card">
+            🔗
+            <h3>
+                Phishing & Fake Links
+            </h3>
+            <p>
+                Fake websites and links can
+                target passwords, banking details
+                and OTP information.
+            </p>
+        </div>
+
+
+        <div class="problem-card">
+            📈
+            <h3>
+                Investment Scams
+            </h3>
+            <p>
+                Fake crypto, stock, MLM and
+                high-return schemes can cause
+                major financial losses.
+            </p>
+        </div>
+
+
+        <div class="problem-card">
+            ❤️
+            <h3>
+                Romance Scams
+            </h3>
+            <p>
+                Fake relationships can be used
+                to manipulate victims and
+                request money.
+            </p>
+        </div>
+
+
+        <div class="problem-card">
+            🪪
+            <h3>
+                Identity Theft
+            </h3>
+            <p>
+                Stolen identity, SIM or account
+                information can be misused.
+            </p>
+        </div>
+
+
+        <div class="problem-card">
+            💼
+            <h3>
+                Job Scams
+            </h3>
+            <p>
+                Fake jobs can demand registration
+                fees or security deposits.
+            </p>
+        </div>
+
+
+        <div class="problem-card">
+            🎁
+            <h3>
+                Lottery Scams
+            </h3>
+            <p>
+                Fake prizes can demand advance
+                payments before claiming rewards.
+            </p>
+        </div>
+
+
+        <div class="problem-card">
+            🔐
+            <h3>
+                Ransomware
+            </h3>
+            <p>
+                Data hijacking, threats and
+                extortion can create financial
+                and emotional damage.
+            </p>
+        </div>
+
+
+        <div class="problem-card">
+            🛍️
+            <h3>
+                Product Fraud
+            </h3>
+            <p>
+                Scammers may take advance
+                payments for products or services
+                that are never delivered.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= SOLUTION ================= -->
+
+<section
+    id="solution"
+    class="section solution-section">
+
+    <div class="section-heading">
+
+        <span class="section-label">
+            OUR SOLUTION
+        </span>
+
+        <h2>
+            One Platform.
+            <span>Multiple Layers of Protection.</span>
+        </h2>
+
+        <p>
+
+            Inspect Caller is designed to become
+            a unified anti-fraud security layer
+            across calls, messages, links and
+            digital platforms.
+
+        </p>
+
+    </div>
+
+
+    <div class="feature-grid">
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
                 📞
             </div>
 
             <h3>
-                Caller Identification
+                Caller Inspection
             </h3>
 
             <p>
-                Identify unknown callers and
-                display available risk information.
+                Inspect suspicious phone numbers
+                and view available fraud reports
+                and risk signals.
             </p>
+
+            <a href="phone-checker.html">
+                Inspect Caller →
+            </a>
 
         </div>
 
 
-        <div class="card">
+        <div class="feature-card">
 
-            <div class="card-icon">
+            <div class="feature-icon">
+                🔗
+            </div>
+
+            <h3>
+                URL Scanner
+            </h3>
+
+            <p>
+                Check suspicious websites and
+                links for potential phishing
+                indicators.
+            </p>
+
+            <a href="scanner.html">
+                Scan URL →
+            </a>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                📧
+            </div>
+
+            <h3>
+                Email Checker
+            </h3>
+
+            <p>
+                Analyze suspicious emails and
+                identify potential scam signals.
+            </p>
+
+            <a href="email-checker.html">
+                Check Email →
+            </a>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                🤖
+            </div>
+
+            <h3>
+                AI Scam Detection
+            </h3>
+
+            <p>
+                Planned AI analysis for suspicious
+                text, voice and image content.
+            </p>
+
+            <a href="ai-chat.html">
+                AI Analysis →
+            </a>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
                 🚨
             </div>
 
             <h3>
-                Scam Call Detection
+                Scam Reporting
             </h3>
 
             <p>
-                Detect suspicious calling patterns
-                and warn users about potential scams.
+                Report suspicious callers, links,
+                pages and fraudulent activities.
             </p>
+
+            <a href="report.html">
+                Report Scam →
+            </a>
 
         </div>
 
 
-        <div class="card">
+        <div class="feature-card">
 
-            <div class="card-icon">
-                🧠
+            <div class="feature-icon">
+                ⭐
             </div>
 
             <h3>
-                AI Call Analysis
+                Trust Score
             </h3>
 
             <p>
-                Future AI-powered analysis of
-                suspicious conversations and patterns.
+                Future reputation scoring for
+                callers, websites and digital
+                interactions.
             </p>
 
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-icon">
-                📊
-            </div>
-
-            <h3>
-                Caller Trust Score
-            </h3>
-
-            <p>
-                Provide a risk and trust score
-                based on verified reports and signals.
-            </p>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-icon">
-                📝
-            </div>
-
-            <h3>
-                Report Caller
-            </h3>
-
-            <p>
-                Users can report suspicious
-                phone numbers and scam attempts.
-            </p>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-icon">
-                🌍
-            </div>
-
-            <h3>
-                Global Fraud Network
-            </h3>
-
-            <p>
-                Build a future global intelligence
-                network for caller-related fraud.
-            </p>
+            <a href="features.html">
+                Learn More →
+            </a>
 
         </div>
 
@@ -822,38 +539,55 @@
 
 
 
-<!-- ================= PHONE CHECKER ================= -->
+<!-- ================= GLOBAL SECURITY ================= -->
 
-<section id="phone">
+<section class="global-section">
 
-    <h2 class="section-title">
-        Inspect a <span>Caller</span>
-    </h2>
+    <div class="global-content">
 
-    <p class="section-text">
+        <span class="section-label">
+            GLOBAL SECURITY LAYER
+        </span>
 
-        Search a phone number to see its
-        community report and risk information.
+        <h2>
 
-    </p>
+            Built For A
+            <span>Connected World</span>
 
+        </h2>
 
-    <div class="scanner-box">
+        <p>
 
-        <input
-            type="tel"
-            id="phoneNumber"
-            placeholder="+880 17XXXXXXXX"
-        >
+            Our long-term vision is to integrate
+            Inspect Caller with social platforms,
+            messaging services, e-commerce,
+            financial systems and authorized
+            security intelligence sources.
 
-        <button onclick="inspectCaller()">
-
-            🔍 Inspect Caller
-
-        </button>
+        </p>
 
 
-        <div id="scanResult"></div>
+        <div class="integration-list">
+
+            <span>Social Media</span>
+            <span>Messaging Apps</span>
+            <span>E-Commerce</span>
+            <span>Banking</span>
+            <span>Payment Gateways</span>
+            <span>Cybersecurity</span>
+            <span>Government Data*</span>
+            <span>Law Enforcement*</span>
+
+        </div>
+
+
+        <small>
+
+            *Subject to lawful authorization,
+            technical access and appropriate
+            partnerships.
+
+        </small>
 
     </div>
 
@@ -861,129 +595,60 @@
 
 
 
-<!-- ================= REPORT ================= -->
+<!-- ================= VISION ================= -->
 
-<section id="report">
+<section class="vision-section">
 
-    <h2 class="section-title">
-        Report a <span>Scam Caller</span>
-    </h2>
+    <div class="section-heading">
 
-    <p class="section-text">
+        <span class="section-label">
+            OUR VISION
+        </span>
 
-        Help protect other users by reporting
-        suspicious calls and phone numbers.
+        <h2>
 
-    </p>
+            Make The Digital World
+            <span>Safe For Everyone.</span>
 
+        </h2>
 
-    <div class="scanner-box">
+        <p>
 
-        <input
-            type="tel"
-            placeholder="Scam phone number"
-        >
+            Inspect Caller aims to create a
+            future where people can inspect,
+            detect, report and protect themselves
+            from digital fraud through one
+            unified security ecosystem.
 
-        <input
-            type="text"
-            placeholder="What happened?"
-        >
-
-        <button onclick="submitReport()">
-
-            🚨 Submit Report
-
-        </button>
+        </p>
 
     </div>
 
-</section>
 
+    <div class="vision-flow">
 
-
-<!-- ================= TEAM ================= -->
-
-<section id="team">
-
-    <h2 class="section-title">
-        Leadership <span>Team</span>
-    </h2>
-
-
-    <div class="team">
-
-
-        <div class="team-card">
-
-            <div class="team-avatar">
-                👨‍💼
-            </div>
-
-            <h3>
-                Mohammad Sajedur Rahman Biplob
-            </h3>
-
-            <div class="role">
-                Founder & CEO
-            </div>
-
-            <p>
-
-                Leading Inspect Caller's vision,
-                product strategy and global
-                anti-fraud mission.
-
-            </p>
-
+        <div>
+            <span>01</span>
+            <strong>Inspect</strong>
+            <p>Check suspicious activity.</p>
         </div>
 
-
-        <div class="team-card">
-
-            <div class="team-avatar">
-                👩‍💼
-            </div>
-
-            <h3>
-                Nila Akter
-            </h3>
-
-            <div class="role">
-                Team Leader
-            </div>
-
-            <p>
-
-                Leading team coordination,
-                operations and partnerships.
-
-            </p>
-
+        <div>
+            <span>02</span>
+            <strong>Detect</strong>
+            <p>Identify potential threats.</p>
         </div>
 
+        <div>
+            <span>03</span>
+            <strong>Report</strong>
+            <p>Share verified information.</p>
+        </div>
 
-        <div class="team-card">
-
-            <div class="team-avatar">
-                👨‍💻
-            </div>
-
-            <h3>
-                Future CTO / Tech Lead
-            </h3>
-
-            <div class="role">
-                Planned Position
-            </div>
-
-            <p>
-
-                Future responsibility for
-                AI, cybersecurity and
-                technical infrastructure.
-
-            </p>
-
+        <div>
+            <span>04</span>
+            <strong>Protect</strong>
+            <p>Help prevent future scams.</p>
         </div>
 
     </div>
@@ -994,30 +659,48 @@
 
 <!-- ================= CTA ================= -->
 
-<div class="cta">
+<section class="final-cta">
+
+    <span class="section-label">
+        INSPECT CALLER
+    </span>
 
     <h2>
-        Stay One Step Ahead.
+        Stay One Step
+        <span>Ahead.</span>
     </h2>
 
     <p>
 
-        Inspect unknown callers.
-        Report suspicious activity.
-        Help build a safer digital world.
+        Join the vision of building a
+        safer digital world.
 
     </p>
 
 
-    <a
-        href="#phone"
-        class="primary-btn">
+    <div>
 
-        Inspect a Caller
+        <a
+            href="register.html"
+            class="primary-btn">
 
-    </a>
+            Get Started
 
-</div>
+        </a>
+
+        <a
+            href="about.html"
+            class="secondary-btn">
+
+            Meet The Team
+
+        </a>
+
+    </div>
+
+</section>
+
+</main>
 
 
 
@@ -1025,122 +708,50 @@
 
 <footer>
 
-    <div class="footer-logo">
-        INSPECTCALLER
+    <div class="footer-brand">
+        INSPECT<span>CALLER</span>
     </div>
 
     <p>
         Global Caller Security & Anti-Fraud Technology
     </p>
 
-    <br>
+    <div class="footer-links">
 
-    <p>
-        Founder & CEO:
-        Mohammad Sajedur Rahman Biplob
-    </p>
+        <a href="privacy-policy.html">
+            Privacy Policy
+        </a>
 
-    <p>
-        Team Leader:
-        Nila Akter
-    </p>
+        <a href="terms.html">
+            Terms
+        </a>
 
-    <br>
+        <a href="cookie-policy.html">
+            Cookies
+        </a>
 
-    <p>
-        © 2026 Inspect Caller. Prototype / Pre-Launch.
+        <a href="disclaimer.html">
+            Disclaimer
+        </a>
+
+        <a href="contact.html">
+            Contact
+        </a>
+
+    </div>
+
+    <p class="copyright">
+
+        © 2026 Inspect Caller.
+        Idea / Pre-Launch Prototype.
+
     </p>
 
 </footer>
 
 
 
-<!-- ================= JAVASCRIPT ================= -->
-
-<script>
-
-    function inspectCaller() {
-
-        const number =
-            document.getElementById(
-                "phoneNumber"
-            ).value;
-
-        const result =
-            document.getElementById(
-                "scanResult"
-            );
-
-        if (!number) {
-
-            alert(
-                "Please enter a phone number."
-            );
-
-            return;
-        }
-
-        result.style.display = "block";
-
-        result.style.background =
-            "rgba(255,170,0,.12)";
-
-        result.style.border =
-            "1px solid #a77a25";
-
-        result.innerHTML = `
-
-            <strong>
-                ⚠️ Demo Inspection Result
-            </strong>
-
-            <br><br>
-
-            Number:
-            ${number}
-
-            <br><br>
-
-            Risk Score:
-            <strong>78 / 100</strong>
-
-            <br>
-
-            Status:
-            Suspicious
-
-            <br><br>
-
-            <small>
-                This is a prototype demonstration.
-                Real caller intelligence will require
-                verified databases and backend services.
-            </small>
-
-        `;
-
-    }
-
-
-    function submitReport() {
-
-        alert(
-            "Scam report submitted successfully in DEMO mode."
-        );
-
-    }
-
-
-    function openLogin() {
-
-        alert(
-            "Inspect Caller Secure Login — Demo"
-        );
-
-    }
-
-</script>
-
+<script src="script.js"></script>
 
 </body>
 </html>
