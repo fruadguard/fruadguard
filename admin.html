@@ -1,554 +1,1252 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Inspect Caller — Admin Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        /* ================= ADMIN LAYOUT ================= */
+
+        .admin-page {
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    circle at 70% 0%,
+                    rgba(0,145,255,.10),
+                    transparent 35%
+                ),
+                #050d18;
+        }
+
+        .admin-container {
+            width: min(1400px, calc(100% - 35px));
+            margin: auto;
+            padding: 45px 0 80px;
+        }
+
+        .admin-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 35px;
+        }
 
-<meta charset="UTF-8">
+        .admin-title h1 {
+            font-size: 42px;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+        }
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+        .admin-title h1 span {
+            color: var(--blue);
+        }
 
-<title>Admin Login | FraudGuard</title>
+        .admin-title p {
+            margin-top: 8px;
+            color: var(--muted);
+        }
 
-<style>
+        .admin-status {
+            display: flex;
+            align-items: center;
+            gap: 9px;
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+            padding: 11px 17px;
 
-body{
-    min-height:100vh;
-    background:#0b1328;
-    color:#fff;
-    font-family:Arial,Helvetica,sans-serif;
+            border: 1px solid #24536d;
+            border-radius: 999px;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+            background: #071b2b;
 
-    padding:20px;
-}
+            color: #a8c5d4;
+            font-size: 13px;
+        }
 
-.login-card{
-    width:100%;
-    max-width:420px;
+        .online-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 12px var(--green);
+        }
 
-    background:#1c263b;
 
-    border:1px solid #2d3953;
+        /* ================= ADMIN GRID ================= */
 
-    border-radius:14px;
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
 
-    padding:30px;
+        .admin-stat {
+            padding: 25px;
 
-    box-shadow:
-    0 15px 45px
-    rgba(0,0,0,.35);
-}
+            border: 1px solid var(--line);
+            border-radius: 21px;
 
-.logo{
-    text-align:center;
-    margin-bottom:22px;
-}
+            background:
+                linear-gradient(
+                    145deg,
+                    #0b2942,
+                    #071827
+                );
 
-.logo img{
-    width:55px;
-    height:55px;
-    object-fit:contain;
+            transition: .25s;
+        }
 
-    margin-bottom:10px;
-}
+        .admin-stat:hover {
+            transform: translateY(-4px);
+            border-color: var(--blue);
+            box-shadow: var(--shadow);
+        }
 
-.logo h1{
-    color:#22c55e;
-    font-size:25px;
-}
+        .admin-stat-icon {
+            font-size: 26px;
+            margin-bottom: 12px;
+        }
 
-.logo p{
-    color:#8995aa;
-    font-size:12px;
-    margin-top:6px;
-}
+        .admin-stat strong {
+            display: block;
 
-.admin-badge{
-    width:max-content;
+            color: var(--blue);
 
-    margin:0 auto 22px;
+            font-size: 34px;
+            line-height: 1;
+        }
 
-    padding:7px 13px;
+        .admin-stat span {
+            display: block;
 
-    border-radius:20px;
+            margin-top: 8px;
 
-    background:#123521;
-    border:1px solid #236b3b;
+            color: var(--muted);
 
-    color:#67e895;
+            font-size: 13px;
+        }
 
-    font-size:11px;
-    font-weight:bold;
-}
 
-.field{
-    margin-bottom:16px;
-}
+        /* ================= ADMIN CONTENT ================= */
 
-.field label{
-    display:block;
+        .admin-grid {
+            display: grid;
 
-    margin-bottom:7px;
+            grid-template-columns: 1.5fr 1fr;
 
-    color:#dce1e9;
+            gap: 20px;
 
-    font-size:12px;
-    font-weight:bold;
-}
+            margin-bottom: 25px;
+        }
 
-.field input{
-    width:100%;
+        .admin-card {
+            padding: 25px;
 
-    padding:13px;
+            border: 1px solid var(--line);
 
-    border-radius:7px;
+            border-radius: 22px;
 
-    border:1px solid #3b4760;
+            background:
+                linear-gradient(
+                    145deg,
+                    var(--card),
+                    #071827
+                );
+        }
 
-    background:#111a2f;
+        .admin-card-header {
+            display: flex;
 
-    color:#fff;
+            align-items: center;
+            justify-content: space-between;
 
-    outline:none;
+            margin-bottom: 20px;
+        }
 
-    font-size:14px;
-}
+        .admin-card-header h2 {
+            font-size: 21px;
+        }
 
-.field input:focus{
-    border-color:#22c55e;
+        .admin-card-header a {
+            color: var(--cyan);
+            font-size: 13px;
+            font-weight: 800;
+        }
 
-    box-shadow:
-    0 0 0 2px
-    rgba(34,197,94,.12);
-}
 
-#adminEmail{
-    opacity:.7;
-}
+        /* ================= REPORT TABLE ================= */
 
-.login-btn{
-    width:100%;
+        .table-wrapper {
+            overflow-x: auto;
+        }
 
-    padding:13px;
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
 
-    border:0;
+            min-width: 650px;
+        }
 
-    border-radius:7px;
+        .report-table th {
+            padding: 13px;
 
-    background:#22c55e;
+            text-align: left;
 
-    color:#fff;
+            color: #7895a8;
 
-    font-size:14px;
-    font-weight:bold;
+            font-size: 12px;
 
-    cursor:pointer;
-}
+            text-transform: uppercase;
 
-.login-btn:hover{
-    background:#16a34a;
-}
+            border-bottom: 1px solid #1b4059;
+        }
 
-.login-btn:disabled{
-    opacity:.6;
-    cursor:not-allowed;
-}
+        .report-table td {
+            padding: 15px 13px;
 
-.message{
-    display:none;
+            color: #b9cbd7;
 
-    margin-bottom:16px;
+            font-size: 13px;
 
-    padding:11px;
+            border-bottom: 1px solid #142f43;
+        }
 
-    border-radius:7px;
+        .report-table tr:hover td {
+            background: rgba(25,155,225,.035);
+        }
 
-    font-size:12px;
 
-    line-height:1.5;
-}
+        /* ================= STATUS BADGES ================= */
 
-.error{
-    background:#401c28;
+        .badge {
+            display: inline-flex;
 
-    border:1px solid #7f3046;
+            padding: 5px 10px;
 
-    color:#ff9daf;
-}
+            border-radius: 999px;
 
-.info{
-    margin-top:18px;
+            font-size: 11px;
 
-    text-align:center;
+            font-weight: 800;
+        }
 
-    color:#68758a;
+        .badge-danger {
+            color: #ff8b9b;
+            background: rgba(255,70,95,.10);
+            border: 1px solid rgba(255,70,95,.25);
+        }
 
-    font-size:10px;
-}
+        .badge-warning {
+            color: #ffd878;
+            background: rgba(255,200,80,.08);
+            border: 1px solid rgba(255,200,80,.22);
+        }
 
-.back{
-    display:block;
+        .badge-success {
+            color: #68efb7;
+            background: rgba(45,228,154,.08);
+            border: 1px solid rgba(45,228,154,.22);
+        }
 
-    text-align:center;
 
-    margin-top:18px;
+        /* ================= ACTIVITY ================= */
 
-    color:#8f9bad;
+        .activity-list {
+            display: grid;
+            gap: 13px;
+        }
 
-    font-size:11px;
-}
+        .activity {
+            display: grid;
 
-.back:hover{
-    color:#22c55e;
-}
+            grid-template-columns: 38px 1fr;
 
-</style>
+            gap: 12px;
 
+            align-items: center;
+
+            padding: 12px;
+
+            border-radius: 14px;
+
+            background: #071a2a;
+        }
+
+        .activity-icon {
+            width: 38px;
+            height: 38px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 11px;
+
+            background: #0b2941;
+
+            font-size: 18px;
+        }
+
+        .activity strong {
+            display: block;
+
+            font-size: 13px;
+        }
+
+        .activity span {
+            color: var(--muted);
+
+            font-size: 11px;
+        }
+
+
+        /* ================= QUICK ACTIONS ================= */
+
+        .actions {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 14px;
+        }
+
+        .action {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 17px;
+
+            border: 1px solid #214a64;
+
+            border-radius: 16px;
+
+            background: #081d30;
+
+            color: white;
+
+            cursor: pointer;
+
+            transition: .25s;
+        }
+
+        .action:hover {
+            transform: translateY(-3px);
+
+            border-color: var(--blue);
+
+            background: #0b263d;
+        }
+
+        .action-icon {
+            font-size: 23px;
+        }
+
+        .action strong {
+            font-size: 13px;
+        }
+
+
+        /* ================= SYSTEM STATUS ================= */
+
+        .system-list {
+            display: grid;
+            gap: 13px;
+        }
+
+        .system-row {
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 14px 15px;
+
+            border-radius: 13px;
+
+            background: #071a2a;
+
+            color: #b6c8d4;
+
+            font-size: 13px;
+        }
+
+        .system-ok {
+            color: var(--green);
+            font-weight: 800;
+        }
+
+        .system-demo {
+            color: #ffc857;
+            font-weight: 800;
+        }
+
+
+        /* ================= ADMIN NOTICE ================= */
+
+        .admin-notice {
+            padding: 17px 20px;
+
+            margin-top: 20px;
+
+            border-left: 4px solid #ffc857;
+
+            border-radius: 8px;
+
+            background: #171508;
+
+            color: #d8c99b;
+
+            font-size: 13px;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media(max-width: 1000px) {
+
+            .admin-stats {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .admin-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+        @media(max-width: 600px) {
+
+            .admin-container {
+                width: calc(100% - 25px);
+                padding-top: 30px;
+            }
+
+            .admin-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .admin-title h1 {
+                font-size: 34px;
+            }
+
+            .admin-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-card {
+                padding: 19px;
+            }
+
+        }
+
+    </style>
 </head>
+
 
 <body>
 
-<div class="login-card">
+<!-- ================= NAVBAR ================= -->
 
-<div class="logo">
+<header class="navbar">
 
-<img
-src="logo.png"
-alt="FraudGuard">
+    <div class="nav-container">
 
-<h1>
-FraudGuard
-</h1>
+        <a href="index.html" class="brand">
+            INSPECT<span>CALLER</span>
+        </a>
 
-<p>
-Administrator Control Panel
-</p>
+        <nav class="nav-links">
+
+            <a href="index.html">
+                Website
+            </a>
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="report.html">
+                Reports
+            </a>
+
+            <a href="contact.html">
+                Support
+            </a>
+
+        </nav>
+
+        <a href="login.html" class="nav-login">
+            Logout
+        </a>
+
+    </div>
+
+</header>
+
+
+<!-- ================= ADMIN PAGE ================= -->
+
+<main class="admin-page">
+
+<div class="admin-container">
+
+
+    <!-- HEADER -->
+
+    <div class="admin-header">
+
+        <div class="admin-title">
+
+            <h1>
+                Admin <span>Dashboard</span>
+            </h1>
+
+            <p>
+                Inspect Caller security & platform management center.
+            </p>
+
+        </div>
+
+
+        <div class="admin-status">
+
+            <span class="online-dot"></span>
+
+            Admin System Online
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= STATS ================= -->
+
+    <div class="admin-stats">
+
+
+        <div class="admin-stat">
+
+            <div class="admin-stat-icon">
+                👥
+            </div>
+
+            <strong>
+                12,840
+            </strong>
+
+            <span>
+                Registered Users
+            </span>
+
+        </div>
+
+
+        <div class="admin-stat">
+
+            <div class="admin-stat-icon">
+                🚨
+            </div>
+
+            <strong>
+                3,482
+            </strong>
+
+            <span>
+                Scam Reports
+            </span>
+
+        </div>
+
+
+        <div class="admin-stat">
+
+            <div class="admin-stat-icon">
+                📞
+            </div>
+
+            <strong>
+                28,931
+            </strong>
+
+            <span>
+                Caller Checks
+            </span>
+
+        </div>
+
+
+        <div class="admin-stat">
+
+            <div class="admin-stat-icon">
+                🔗
+            </div>
+
+            <strong>
+                19,274
+            </strong>
+
+            <span>
+                URL Scans
+            </span>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= REPORTS + ACTIVITY ================= -->
+
+    <div class="admin-grid">
+
+
+        <!-- REPORTS -->
+
+        <div class="admin-card">
+
+            <div class="admin-card-header">
+
+                <h2>
+                    Recent Scam Reports
+                </h2>
+
+                <a href="report.html">
+                    View All →
+                </a>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table class="report-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                ID
+                            </th>
+
+                            <th>
+                                Type
+                            </th>
+
+                            <th>
+                                Target
+                            </th>
+
+                            <th>
+                                Risk
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>
+                                #FG-1024
+                            </td>
+
+                            <td>
+                                Caller
+                            </td>
+
+                            <td>
+                                +880 17XXXXXX
+                            </td>
+
+                            <td>
+                                <span class="badge badge-danger">
+                                    High
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="badge badge-warning">
+                                    Reviewing
+                                </span>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                #FG-1023
+                            </td>
+
+                            <td>
+                                URL
+                            </td>
+
+                            <td>
+                                suspicious-site.com
+                            </td>
+
+                            <td>
+                                <span class="badge badge-danger">
+                                    High
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="badge badge-success">
+                                    Verified
+                                </span>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                #FG-1022
+                            </td>
+
+                            <td>
+                                Payment
+                            </td>
+
+                            <td>
+                                Transaction
+                            </td>
+
+                            <td>
+                                <span class="badge badge-warning">
+                                    Medium
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="badge badge-warning">
+                                    Reviewing
+                                </span>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                #FG-1021
+                            </td>
+
+                            <td>
+                                Social
+                            </td>
+
+                            <td>
+                                Facebook Page
+                            </td>
+
+                            <td>
+                                <span class="badge badge-danger">
+                                    High
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="badge badge-success">
+                                    Verified
+                                </span>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ACTIVITY -->
+
+        <div class="admin-card">
+
+            <div class="admin-card-header">
+
+                <h2>
+                    Live Activity
+                </h2>
+
+            </div>
+
+
+            <div class="activity-list">
+
+
+                <div class="activity">
+
+                    <div class="activity-icon">
+                        📞
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            New caller report
+                        </strong>
+
+                        <span>
+                            2 minutes ago
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="activity">
+
+                    <div class="activity-icon">
+                        🔗
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            URL scanned
+                        </strong>
+
+                        <span>
+                            5 minutes ago
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="activity">
+
+                    <div class="activity-icon">
+                        👤
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            New user registered
+                        </strong>
+
+                        <span>
+                            8 minutes ago
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="activity">
+
+                    <div class="activity-icon">
+                        🤖
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            AI analysis requested
+                        </strong>
+
+                        <span>
+                            12 minutes ago
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="activity">
+
+                    <div class="activity-icon">
+                        🚨
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            High-risk report received
+                        </strong>
+
+                        <span>
+                            17 minutes ago
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= QUICK ACTIONS ================= -->
+
+    <div class="admin-card">
+
+        <div class="admin-card-header">
+
+            <h2>
+                Quick Actions
+            </h2>
+
+        </div>
+
+
+        <div class="actions">
+
+
+            <a
+                href="report.html"
+                class="action">
+
+                <span class="action-icon">
+                    🚨
+                </span>
+
+                <strong>
+                    Review Reports
+                </strong>
+
+            </a>
+
+
+            <a
+                href="dashboard.html"
+                class="action">
+
+                <span class="action-icon">
+                    👥
+                </span>
+
+                <strong>
+                    Manage Users
+                </strong>
+
+            </a>
+
+
+            <a
+                href="features.html"
+                class="action">
+
+                <span class="action-icon">
+                    ⚙️
+                </span>
+
+                <strong>
+                    Platform Features
+                </strong>
+
+            </a>
+
+
+            <a
+                href="contact.html"
+                class="action">
+
+                <span class="action-icon">
+                    💬
+                </span>
+
+                <strong>
+                    Support Center
+                </strong>
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+
+    <br>
+
+
+    <!-- ================= SYSTEM STATUS ================= -->
+
+    <div class="admin-grid">
+
+
+        <div class="admin-card">
+
+            <div class="admin-card-header">
+
+                <h2>
+                    System Status
+                </h2>
+
+            </div>
+
+
+            <div class="system-list">
+
+
+                <div class="system-row">
+
+                    <span>
+                        Website
+                    </span>
+
+                    <span class="system-ok">
+                        ● Operational
+                    </span>
+
+                </div>
+
+
+                <div class="system-row">
+
+                    <span>
+                        Authentication
+                    </span>
+
+                    <span class="system-demo">
+                        ● Demo
+                    </span>
+
+                </div>
+
+
+                <div class="system-row">
+
+                    <span>
+                        Scam Database
+                    </span>
+
+                    <span class="system-demo">
+                        ● Prototype
+                    </span>
+
+                </div>
+
+
+                <div class="system-row">
+
+                    <span>
+                        AI Detection
+                    </span>
+
+                    <span class="system-demo">
+                        ● Prototype
+                    </span>
+
+                </div>
+
+
+                <div class="system-row">
+
+                    <span>
+                        Government APIs
+                    </span>
+
+                    <span class="system-demo">
+                        ● Planned
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- SECURITY -->
+
+        <div class="admin-card">
+
+            <div class="admin-card-header">
+
+                <h2>
+                    Security Overview
+                </h2>
+
+            </div>
+
+
+            <div class="system-list">
+
+                <div class="system-row">
+
+                    <span>
+                        Active Alerts
+                    </span>
+
+                    <strong style="color:#ff7185;">
+                        17
+                    </strong>
+
+                </div>
+
+
+                <div class="system-row">
+
+                    <span>
+                        Reports Awaiting Review
+                    </span>
+
+                    <strong style="color:#ffc857;">
+                        43
+                    </strong>
+
+                </div>
+
+
+                <div class="system-row">
+
+                    <span>
+                        Verified Reports
+                    </span>
+
+                    <strong style="color:#2de49a;">
+                        1,284
+                    </strong>
+
+                </div>
+
+
+                <div class="system-row">
+
+                    <span>
+                        System Risk
+                    </span>
+
+                    <strong style="color:#2de49a;">
+                        Low
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= NOTICE ================= -->
+
+    <div class="admin-notice">
+
+        <strong>
+            Prototype Notice:
+        </strong>
+
+        This admin dashboard currently displays
+        demonstration data. Real users, reports,
+        authentication, databases, AI services and
+        authority integrations require a secure
+        backend and proper authorization.
+
+    </div>
+
 
 </div>
 
+</main>
 
-<div class="admin-badge">
-🔐 ADMIN ACCESS
-</div>
 
 
-<div
-id="errorMessage"
-class="message error">
-</div>
+<!-- ================= FOOTER ================= -->
 
+<footer>
 
-<div class="field">
+    <div class="footer-brand">
+        INSPECT<span>CALLER</span>
+    </div>
 
-<label>
-ADMIN EMAIL
-</label>
+    <p>
+        Global Caller Security & Anti-Fraud Technology
+    </p>
 
-<input
-id="adminEmail"
-type="email"
-value="rbiplob1005@gmail.com"
-readonly>
+    <div class="footer-links">
 
-</div>
+        <a href="index.html">
+            Home
+        </a>
 
+        <a href="features.html">
+            Features
+        </a>
 
-<div class="field">
+        <a href="about.html">
+            About
+        </a>
 
-<label>
-PASSWORD
-</label>
+        <a href="contact.html">
+            Contact
+        </a>
 
-<input
-id="adminPassword"
-type="password"
-placeholder="Enter admin password"
-autocomplete="current-password">
+        <a href="privacy-policy.html">
+            Privacy
+        </a>
 
-</div>
+        <a href="terms.html">
+            Terms
+        </a>
 
+    </div>
 
-<button
-id="loginBtn"
-class="login-btn">
+    <p class="copyright">
 
-Admin Login
+        © 2026 Inspect Caller.
+        Idea / Pre-Launch Prototype.
 
-</button>
+    </p>
 
+</footer>
 
-<a
-href="login.html"
-class="back">
 
-← Back to User Login
-
-</a>
-
-
-<div class="info">
-
-FraudGuard administrator access is restricted
-to authorized personnel.
-
-</div>
-
-</div>
-<script type="module">
-
-import {
-    auth
-} from "./firebase.js";
-
-import {
-    signInWithEmailAndPassword,
-    onAuthStateChanged,
-    signOut
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-
-const ADMIN_EMAIL =
-    "rbiplob1005@gmail.com";
-
-
-const adminEmail =
-    document.getElementById("adminEmail");
-
-const adminPassword =
-    document.getElementById("adminPassword");
-
-const loginBtn =
-    document.getElementById("loginBtn");
-
-const errorMessage =
-    document.getElementById("errorMessage");
-
-
-function showError(message) {
-
-    errorMessage.textContent =
-        message;
-
-    errorMessage.style.display =
-        "block";
-
-}
-
-
-function hideError() {
-
-    errorMessage.style.display =
-        "none";
-
-}
-
-
-onAuthStateChanged(
-    auth,
-    async (user) => {
-
-        if (!user) {
-            return;
-        }
-
-
-        if (
-            user.email?.toLowerCase() ===
-            ADMIN_EMAIL.toLowerCase()
-        ) {
-
-            window.location.replace(
-                "admin.html"
-            );
-
-            return;
-
-        }
-
-
-        await signOut(auth);
-
-    }
-);
-
-
-async function adminLogin() {
-
-    hideError();
-
-
-    const email =
-        adminEmail.value
-            .trim()
-            .toLowerCase();
-
-
-    const password =
-        adminPassword.value;
-
-
-    if (
-        email !==
-        ADMIN_EMAIL.toLowerCase()
-    ) {
-
-        showError(
-            "This account is not authorized for administrator access."
-        );
-
-        return;
-
-    }
-
-
-    if (!password) {
-
-        showError(
-            "Please enter the admin password."
-        );
-
-        adminPassword.focus();
-
-        return;
-
-    }
-
-
-    loginBtn.disabled =
-        true;
-
-    loginBtn.textContent =
-        "Signing in...";
-
-
-    try {
-
-        const result =
-            await signInWithEmailAndPassword(
-                auth,
-                email,
-                password
-            );
-
-
-        const user =
-            result.user;
-
-
-        if (
-            user.email?.toLowerCase() !==
-            ADMIN_EMAIL.toLowerCase()
-        ) {
-
-            await signOut(auth);
-
-            showError(
-                "Administrator access denied."
-            );
-
-            return;
-
-        }
-
-
-        window.location.replace(
-            "admin.html"
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "Admin login error:",
-            error
-        );
-
-
-        let message =
-            "Admin login failed.";
-
-
-        if (
-            error.code ===
-            "auth/invalid-credential"
-        ) {
-
-            message =
-                "Incorrect admin email or password.";
-
-        }
-
-
-        if (
-            error.code ===
-            "auth/invalid-email"
-        ) {
-
-            message =
-                "Invalid administrator email.";
-
-        }
-
-
-        if (
-            error.code ===
-            "auth/too-many-requests"
-        ) {
-
-            message =
-                "Too many attempts. Please try again later.";
-
-        }
-
-
-        showError(message);
-
-    }
-
-
-    loginBtn.disabled =
-        false;
-
-    loginBtn.textContent =
-        "Admin Login";
-
-}
-
-
-loginBtn.addEventListener(
-    "click",
-    adminLogin
-);
-
-
-adminPassword.addEventListener(
-    "keydown",
-    event => {
-
-        if (
-            event.key === "Enter"
-        ) {
-
-            adminLogin();
-
-        }
-
-    }
-);
-
-
-</script>
-
+<script src="script.js"></script>
 
 </body>
-
 </html>
