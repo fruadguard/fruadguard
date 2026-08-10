@@ -5,552 +5,1057 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>URL Scanner | FraudGuard</title>
+    <title>Security Scanner — Inspect Caller</title>
+
+    <meta
+        name="description"
+        content="Inspect Caller universal security scanner for suspicious links, phone numbers, emails and scam messages."
+    >
+
+    <link rel="stylesheet" href="style.css">
+
 
     <style>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            min-height: 100vh;
-            background: #0b1328;
-            color: #ffffff;
-            font-family: Georgia, "Times New Roman", serif;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        /* ================= NAVBAR ================= */
-
-        .navbar {
-            background: #10182d;
-            border-bottom: 1px solid #26314b;
-
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            min-height: 62px;
-
-            margin: auto;
-            padding: 0 20px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-
-            color: #22c55e;
-            font-weight: bold;
-            font-size: 20px;
-        }
-
-        .brand img {
-            width: 34px;
-            height: 34px;
-            object-fit: contain;
-        }
-
-        .nav-menu {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-
-            font-size: 13px;
-            font-weight: bold;
-        }
-
-        .nav-menu a:hover {
-            color: #22c55e;
-        }
-
-        .logout-btn {
-            border: none;
-
-            background: #22c55e;
-            color: #ffffff;
-
-            padding: 8px 14px;
-            border-radius: 6px;
-
-            cursor: pointer;
-
-            font-family: inherit;
-            font-weight: bold;
-        }
-
-        .logout-btn:hover {
-            background: #16a34a;
-        }
-
         /* ================= PAGE ================= */
 
-        .page {
-            max-width: 1000px;
+        .scanner-page {
 
-            margin: 35px auto;
-            padding: 0 18px;
+            min-height: 100vh;
+
+            padding: 65px 20px 100px;
+
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(0,150,255,.15),
+                    transparent 42%
+                ),
+                #050d18;
+
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 28px;
-        }
 
-        .header-icon {
-            font-size: 50px;
-            margin-bottom: 8px;
-        }
+        .scanner-container {
 
-        .header h1 {
-            font-size: 36px;
-            margin-bottom: 10px;
-        }
-
-        .header h1 span {
-            color: #22c55e;
-        }
-
-        .header p {
-            max-width: 700px;
+            width: min(1050px,100%);
 
             margin: auto;
 
-            color: #bfc7d5;
-            font-size: 14px;
         }
+
+
+        /* ================= HERO ================= */
+
+        .scanner-hero {
+
+            text-align: center;
+
+            margin-bottom: 40px;
+
+        }
+
+
+        .scanner-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 9px 16px;
+
+            border:
+                1px solid #285873;
+
+            border-radius: 999px;
+
+            background: #071b2c;
+
+            color: #8bdcff;
+
+            font-size: 10px;
+
+            font-weight: 850;
+
+            letter-spacing: .8px;
+
+        }
+
+
+        .scanner-hero h1 {
+
+            margin-top: 20px;
+
+            font-size:
+                clamp(42px,7vw,68px);
+
+            line-height: 1;
+
+            letter-spacing: -3px;
+
+        }
+
+
+        .scanner-hero h1 span {
+
+            color: var(--blue);
+
+        }
+
+
+        .scanner-hero p {
+
+            max-width: 720px;
+
+            margin: 18px auto 0;
+
+            color: var(--muted);
+
+            font-size: 13px;
+
+            line-height: 1.7;
+
+        }
+
 
         /* ================= SCANNER CARD ================= */
 
         .scanner-card {
-            background: #1c263b;
 
-            border: 1px solid #2d3953;
-            border-radius: 12px;
+            padding: 30px;
 
-            padding: 28px;
+            border:
+                1px solid var(--line);
+
+            border-radius: 25px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #0a2034,
+                    #061522
+                );
+
+            box-shadow:
+                0 25px 80px
+                rgba(0,100,180,.08);
+
         }
 
-        .input-label {
+
+        /* ================= TYPE SELECTOR ================= */
+
+        .scan-types {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4,1fr);
+
+            gap: 9px;
+
+            margin-bottom: 22px;
+
+        }
+
+
+        .scan-type {
+
+            position: relative;
+
+        }
+
+
+        .scan-type input {
+
+            position: absolute;
+
+            opacity: 0;
+
+        }
+
+
+        .scan-type label {
+
+            min-height: 72px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 5px;
+
+            border:
+                1px solid #193c52;
+
+            border-radius: 13px;
+
+            background: #071827;
+
+            color: #7895a5;
+
+            font-size: 9px;
+
+            font-weight: 850;
+
+            cursor: pointer;
+
+            transition: .2s;
+
+        }
+
+
+        .scan-type label span {
+
+            font-size: 21px;
+
+        }
+
+
+        .scan-type input:checked + label {
+
+            border-color:
+                #25b5ff;
+
+            background:
+                rgba(0,150,255,.08);
+
+            color: #a9e2ff;
+
+            box-shadow:
+                0 0 20px
+                rgba(0,150,255,.06);
+
+        }
+
+
+        /* ================= INPUT ================= */
+
+        .scan-input-area {
+
+            position: relative;
+
+        }
+
+
+        .scan-label {
+
             display: block;
 
             margin-bottom: 8px;
 
-            color: #dce1e9;
+            color: #bfd5df;
 
-            font-size: 14px;
-            font-weight: bold;
+            font-size: 10px;
+
+            font-weight: 850;
+
         }
 
-        .input-row {
-            display: flex;
-            gap: 10px;
-        }
 
-        #urlInput {
-            flex: 1;
+        .scan-input {
+
             width: 100%;
 
-            padding: 14px;
+            min-height: 145px;
 
-            border-radius: 7px;
-            border: 1px solid #3b4760;
+            padding: 17px;
+
+            border:
+                1px solid #28536b;
+
+            border-radius: 15px;
 
             outline: none;
 
-            background: #111a2f;
-            color: #ffffff;
+            resize: vertical;
+
+            background: #061725;
+
+            color: white;
 
             font-family: inherit;
-            font-size: 14px;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+
         }
 
-        #urlInput:focus {
-            border-color: #22c55e;
+
+        .scan-input::placeholder {
+
+            color: #587384;
+
+        }
+
+
+        .scan-input:focus {
+
+            border-color:
+                #25b5ff;
 
             box-shadow:
-                0 0 0 2px
-                rgba(34, 197, 94, 0.12);
+                0 0 0 3px
+                rgba(0,150,255,.08);
+
         }
 
-        #urlInput::placeholder {
-            color: #7f8a9e;
-        }
 
-        #scanBtn {
-            border: none;
+        .input-bottom {
 
-            padding: 0 23px;
-
-            border-radius: 7px;
-
-            background: #22c55e;
-            color: #ffffff;
-
-            font-family: inherit;
-            font-weight: bold;
-
-            cursor: pointer;
-        }
-
-        #scanBtn:hover {
-            background: #16a34a;
-        }
-
-        #scanBtn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .example {
-            margin-top: 10px;
-
-            color: #7f8a9e;
-            font-size: 11px;
-        }
-
-        /* ================= STATUS ================= */
-
-        .status {
-            display: none;
-
-            margin-top: 20px;
-            padding: 13px;
-
-            border-radius: 8px;
-
-            text-align: center;
-
-            background: #111a2f;
-            border: 1px solid #354158;
-
-            color: #cbd5e1;
-            font-size: 13px;
-        }
-
-        /* ================= RESULT ================= */
-
-        .result {
-            display: none;
-
-            margin-top: 22px;
-
-            background: #111a2f;
-            border: 1px solid #354158;
-
-            border-radius: 10px;
-
-            padding: 25px;
-        }
-
-        .result-title {
             display: flex;
 
             align-items: center;
+
             justify-content: space-between;
 
-            gap: 15px;
+            gap: 10px;
 
-            margin-bottom: 20px;
+            margin-top: 10px;
+
         }
 
-        .result-title h2 {
-            font-size: 22px;
+
+        .scan-hint {
+
+            color: #607b8b;
+
+            font-size: 9px;
+
         }
 
-        .badge {
-            padding: 7px 13px;
 
-            border-radius: 20px;
+        .scan-button {
 
-            font-size: 12px;
-            font-weight: bold;
+            min-height: 49px;
+
+            padding:
+                0 24px;
+
+            border: none;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #25b5ff,
+                    #087ddd
+                );
+
+            color: white;
+
+            font-size: 11px;
+
+            font-weight: 900;
+
+            cursor: pointer;
+
+            transition: .25s;
+
         }
 
-        .badge.safe {
-            background: #123521;
-            color: #7ff0a2;
 
-            border: 1px solid #236b3b;
+        .scan-button:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 15px 35px
+                rgba(0,140,255,.22);
+
         }
 
-        .badge.suspicious {
-            background: #403415;
-            color: #ffd36b;
 
-            border: 1px solid #80652a;
-        }
+        /* ================= LOADING ================= */
 
-        .badge.dangerous {
-            background: #401c28;
-            color: #ff9daf;
+        .loading {
 
-            border: 1px solid #7f3046;
-        }
+            display: none;
 
-        /* ================= SCORE ================= */
-
-        .score-area {
             text-align: center;
 
-            padding: 20px;
-            margin-bottom: 20px;
+            padding: 30px;
 
-            background: #1c263b;
-            border-radius: 9px;
         }
 
-        .score {
-            font-size: 50px;
-            font-weight: bold;
 
-            color: #22c55e;
+        .loading.show {
+
+            display: block;
+
         }
 
-        .score-label {
-            color: #aeb7c7;
+
+        .spinner {
+
+            width: 30px;
+
+            height: 30px;
+
+            margin:
+                0 auto 12px;
+
+            border:
+                3px solid #183b51;
+
+            border-top-color:
+                #27b8ff;
+
+            border-radius: 50%;
+
+            animation:
+                spin .8s linear infinite;
+
+        }
+
+
+        @keyframes spin {
+
+            to {
+                transform: rotate(360deg);
+            }
+
+        }
+
+
+        .loading-text {
+
+            color: #82d9ff;
+
+            font-size: 10px;
+
+        }
+
+
+        /* ================= RESULT ================= */
+
+        .scan-result {
+
+            display: none;
+
+            margin-top: 25px;
+
+        }
+
+
+        .scan-result.show {
+
+            display: block;
+
+        }
+
+
+        /* ================= RESULT HEADER ================= */
+
+        .result-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 18px;
+
+            padding: 22px;
+
+            border:
+                1px solid #285873;
+
+            border-radius: 19px;
+
+            background: #071a2a;
+
+        }
+
+
+        .result-title {
+
+            min-width: 0;
+
+        }
+
+
+        .result-title small {
+
+            display: block;
+
+            color: #718d9d;
+
+            font-size: 8px;
+
+            letter-spacing: .6px;
+
+        }
+
+
+        .result-title strong {
+
+            display: block;
+
+            margin-top: 7px;
+
+            color: #c7e4ef;
+
+            font-size: 15px;
+
+            word-break: break-word;
+
+        }
+
+
+        .risk-box {
+
+            min-width: 120px;
+
+            padding: 12px;
+
+            text-align: center;
+
+            border:
+                1px solid rgba(255,200,80,.25);
+
+            border-radius: 14px;
+
+            background:
+                rgba(255,200,80,.06);
+
+        }
+
+
+        .risk-box strong {
+
+            display: block;
+
+            color: #ffd267;
+
+            font-size: 28px;
+
+        }
+
+
+        .risk-box span {
+
+            color: #718b99;
+
+            font-size: 8px;
+
+        }
+
+
+        /* ================= VERDICT ================= */
+
+        .verdict {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            margin-top: 14px;
+
+            padding: 17px;
+
+            border:
+                1px solid #193c52;
+
+            border-radius: 15px;
+
+            background: #071827;
+
+        }
+
+
+        .verdict-icon {
+
+            width: 43px;
+
+            height: 43px;
+
+            display: grid;
+
+            place-items: center;
+
+            flex-shrink: 0;
+
+            border-radius: 12px;
+
+            background:
+                rgba(255,200,80,.08);
+
+            font-size: 20px;
+
+        }
+
+
+        .verdict strong {
+
+            display: block;
+
+            color: #d4e6ed;
+
             font-size: 12px;
+
         }
+
+
+        .verdict span {
+
+            display: block;
+
+            margin-top: 4px;
+
+            color: #7894a2;
+
+            font-size: 9px;
+
+        }
+
+
+        /* ================= SIGNAL GRID ================= */
+
+        .signals-title {
+
+            margin:
+                20px 0 11px;
+
+            color: #c7dbe4;
+
+            font-size: 13px;
+
+            font-weight: 850;
+
+        }
+
+
+        .signal-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3,1fr);
+
+            gap: 11px;
+
+        }
+
+
+        .signal {
+
+            padding: 16px;
+
+            border:
+                1px solid #193c52;
+
+            border-radius: 13px;
+
+            background: #071827;
+
+        }
+
+
+        .signal-top {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 8px;
+
+        }
+
+
+        .signal-icon {
+
+            width: 34px;
+
+            height: 34px;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 9px;
+
+            background: #0b2941;
+
+        }
+
+
+        .signal-status {
+
+            padding:
+                5px 8px;
+
+            border-radius: 999px;
+
+            font-size: 7px;
+
+            font-weight: 900;
+
+        }
+
+
+        .safe {
+
+            color: #4ce7aa;
+
+            background:
+                rgba(45,228,154,.08);
+
+            border:
+                1px solid rgba(45,228,154,.2);
+
+        }
+
+
+        .review {
+
+            color: #ffd267;
+
+            background:
+                rgba(255,200,80,.08);
+
+            border:
+                1px solid rgba(255,200,80,.2);
+
+        }
+
+
+        .danger {
+
+            color: #ff8194;
+
+            background:
+                rgba(255,70,95,.08);
+
+            border:
+                1px solid rgba(255,70,95,.2);
+
+        }
+
+
+        .signal h3 {
+
+            margin-top: 10px;
+
+            font-size: 11px;
+
+        }
+
+
+        .signal p {
+
+            margin-top: 5px;
+
+            color: #698492;
+
+            font-size: 8px;
+
+            line-height: 1.5;
+
+        }
+
 
         /* ================= DETAILS ================= */
 
         .details {
+
             display: grid;
 
             grid-template-columns:
-                repeat(2, 1fr);
+                repeat(3,1fr);
 
             gap: 10px;
+
+            margin-top: 15px;
+
         }
+
 
         .detail {
-            background: #1c263b;
-
-            border: 1px solid #2d3953;
-
-            border-radius: 7px;
 
             padding: 13px;
+
+            border:
+                1px solid #17394f;
+
+            border-radius: 11px;
+
+            background: #061725;
+
         }
 
-        .detail strong {
-            display: block;
-
-            color: #22c55e;
-
-            font-size: 12px;
-
-            margin-bottom: 4px;
-        }
 
         .detail span {
-            color: #d1d6df;
 
-            font-size: 12px;
+            display: block;
 
-            word-break: break-word;
+            color: #5f7b8b;
+
+            font-size: 8px;
+
         }
 
-        /* ================= REASONS ================= */
 
-        .reasons {
-            margin-top: 20px;
+        .detail strong {
+
+            display: block;
+
+            margin-top: 5px;
+
+            color: #b8d0da;
+
+            font-size: 10px;
+
         }
 
-        .reasons h3 {
-            color: #22c55e;
 
-            font-size: 16px;
+        /* ================= WARNING ================= */
 
-            margin-bottom: 10px;
+        .warning {
+
+            margin-top: 15px;
+
+            padding: 15px 17px;
+
+            border-left:
+                4px solid #ffc857;
+
+            border-radius: 9px;
+
+            background:
+                rgba(255,200,80,.06);
+
+            color: #bcae83;
+
+            font-size: 9px;
+
+            line-height: 1.7;
+
         }
 
-        .reasons ul {
-            padding-left: 20px;
-        }
-
-        .reasons li {
-            color: #d1d6df;
-
-            font-size: 13px;
-
-            margin-bottom: 7px;
-        }
 
         /* ================= ACTIONS ================= */
 
         .actions {
+
             display: flex;
 
             gap: 10px;
 
-            margin-top: 22px;
+            margin-top: 17px;
+
         }
 
-        .action-btn {
-            border: none;
 
-            padding: 10px 16px;
+        .action {
 
-            border-radius: 6px;
+            min-height: 43px;
 
-            background: #3d475d;
-            color: #ffffff;
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding:
+                0 16px;
+
+            border:
+                1px solid #285873;
+
+            border-radius: 11px;
+
+            background: #071b2b;
+
+            color: #9fdcff;
+
+            font-size: 9px;
+
+            font-weight: 850;
 
             cursor: pointer;
 
-            font-family: inherit;
-            font-weight: bold;
         }
 
-        .action-btn:hover {
-            background: #22c55e;
+
+        .action.primary {
+
+            border: none;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #159ddd,
+                    #0873cf
+                );
+
+            color: white;
+
         }
 
-        .report-btn {
-            background: #7f3046;
-        }
-
-        .report-btn:hover {
-            background: #a43c59;
-        }
 
         /* ================= INFO ================= */
 
-        .info {
-            margin-top: 20px;
+        .info-grid {
 
-            background: #1c263b;
+            display: grid;
 
-            border: 1px solid #2d3953;
+            grid-template-columns:
+                repeat(3,1fr);
 
-            border-radius: 10px;
+            gap: 15px;
 
-            padding: 20px;
+            margin-top: 22px;
+
         }
 
-        .info h3 {
-            color: #22c55e;
 
-            font-size: 16px;
-
-            margin-bottom: 8px;
-        }
-
-        .info p {
-            color: #bfc7d5;
-            font-size: 12px;
-        }
-
-        /* ================= FOOTER ================= */
-
-        footer {
-            max-width: 1000px;
-
-            margin: 45px auto 25px;
+        .info-card {
 
             padding: 20px;
 
-            text-align: center;
+            border:
+                1px solid var(--line);
 
-            color: #69758a;
+            border-radius: 18px;
 
-            font-size: 11px;
+            background: #081d2f;
+
         }
+
+
+        .info-icon {
+
+            margin-bottom: 10px;
+
+            font-size: 23px;
+
+        }
+
+
+        .info-card h3 {
+
+            margin-bottom: 6px;
+
+            font-size: 13px;
+
+        }
+
+
+        .info-card p {
+
+            color: var(--muted);
+
+            font-size: 9px;
+
+            line-height: 1.7;
+
+        }
+
 
         /* ================= MOBILE ================= */
 
-        @media (max-width: 700px) {
+        @media(max-width:800px) {
 
-            .nav-container {
-                padding: 0 12px;
+            .scan-types {
+
+                grid-template-columns:
+                    repeat(2,1fr);
+
             }
 
-            .brand {
-                font-size: 14px;
+            .signal-grid {
+
+                grid-template-columns:
+                    repeat(2,1fr);
+
             }
 
-            .brand img {
-                width: 27px;
-                height: 27px;
+            .info-grid {
+
+                grid-template-columns:1fr;
+
             }
 
-            .nav-menu {
-                gap: 8px;
-                font-size: 9px;
-            }
+        }
 
-            .logout-btn {
-                padding: 6px 9px;
-                font-size: 9px;
-            }
 
-            .page {
-                margin-top: 25px;
-                padding: 0 12px;
-            }
+        @media(max-width:600px) {
 
-            .header h1 {
-                font-size: 28px;
-            }
+            .scanner-page {
 
-            .header-icon {
-                font-size: 40px;
+                padding:
+                    45px 12px 80px;
+
             }
 
             .scanner-card {
-                padding: 18px;
+
+                padding: 20px;
+
             }
 
-            .input-row {
+            .input-bottom {
+
+                align-items: stretch;
+
                 flex-direction: column;
+
             }
 
-            #scanBtn {
-                padding: 12px;
+            .scan-button {
+
+                width: 100%;
+
             }
 
-            .result {
-                padding: 17px;
-            }
+            .result-header {
 
-            .result-title {
                 align-items: flex-start;
+
                 flex-direction: column;
+
+            }
+
+            .risk-box {
+
+                width: 100%;
+
+            }
+
+            .signal-grid {
+
+                grid-template-columns:1fr;
+
             }
 
             .details {
-                grid-template-columns: 1fr;
+
+                grid-template-columns:
+                    repeat(2,1fr);
+
             }
 
             .actions {
-                flex-direction: column;
-            }
 
-            .action-btn {
-                width: 100%;
+                flex-direction: column;
+
             }
 
         }
@@ -574,173 +1079,551 @@
             href="index.html"
             class="brand">
 
-            <img
-                src="logo.png"
-                alt="FraudGuard">
-
-            <span>
-                FraudGuard
-            </span>
+            INSPECT<span>CALLER</span>
 
         </a>
 
 
-        <nav class="nav-menu">
+        <nav class="nav-links">
 
-            <a href="index.html">
-                Home
+            <a href="dashboard.html">
+                Dashboard
             </a>
 
             <a href="scanner.html">
                 Scanner
             </a>
 
+            <a href="phone-checker.html">
+                Caller
+            </a>
+
             <a href="report.html">
                 Report
             </a>
 
-            <button
-                id="logoutBtn"
-                class="logout-btn">
-
-                Logout
-
-            </button>
-
         </nav>
 
+
+        <a
+            href="dashboard.html"
+            class="nav-login">
+
+            Dashboard
+
+        </a>
 
     </div>
 
 </header>
 
 
-<!-- ================= MAIN ================= -->
 
-<main class="page">
+<!-- ================= PAGE ================= -->
+
+<main class="scanner-page">
 
 
-    <div class="header">
+<div class="scanner-container">
 
-        <div class="header-icon">
-            🌐
+
+    <!-- HERO -->
+
+    <section class="scanner-hero">
+
+
+        <div class="scanner-badge">
+
+            🛡️ AI SECURITY ENGINE
+
         </div>
 
+
         <h1>
-            FraudGuard
-            <span>URL Scanner</span>
+
+            Security
+            <span>Scanner</span>
+
         </h1>
+
 
         <p>
 
-            Check a suspicious website before
-            you open it. FraudGuard analyzes
-            the URL for common fraud and
-            phishing indicators.
+            Inspect suspicious links, phone numbers,
+            emails and messages for potential fraud,
+            phishing and scam indicators.
 
         </p>
 
-    </div>
+    </section>
 
 
-    <!-- ================= SCANNER ================= -->
 
-    <div class="scanner-card">
+    <!-- SCANNER -->
 
-
-        <label
-            class="input-label"
-            for="urlInput">
-
-            Enter Website URL
-
-        </label>
+    <section class="scanner-card">
 
 
-        <div class="input-row">
+        <!-- TYPES -->
+
+        <div class="scan-types">
 
 
-            <input
-                id="urlInput"
-                type="text"
-                placeholder="https://example.com"
-                autocomplete="off"
-                spellcheck="false">
+            <div class="scan-type">
+
+                <input
+                    type="radio"
+                    id="typeUrl"
+                    name="scanType"
+                    value="URL"
+                    checked
+                >
+
+                <label for="typeUrl">
+
+                    <span>🔗</span>
+
+                    URL / Link
+
+                </label>
+
+            </div>
 
 
-            <button
-                id="scanBtn">
+            <div class="scan-type">
 
-                Scan URL
+                <input
+                    type="radio"
+                    id="typePhone"
+                    name="scanType"
+                    value="Phone"
+                >
 
-            </button>
+                <label for="typePhone">
+
+                    <span>📞</span>
+
+                    Phone Number
+
+                </label>
+
+            </div>
+
+
+            <div class="scan-type">
+
+                <input
+                    type="radio"
+                    id="typeEmail"
+                    name="scanType"
+                    value="Email"
+                >
+
+                <label for="typeEmail">
+
+                    <span>✉️</span>
+
+                    Email
+
+                </label>
+
+            </div>
+
+
+            <div class="scan-type">
+
+                <input
+                    type="radio"
+                    id="typeText"
+                    name="scanType"
+                    value="Text"
+                >
+
+                <label for="typeText">
+
+                    <span>💬</span>
+
+                    Message / Text
+
+                </label>
+
+            </div>
 
 
         </div>
 
 
-        <p class="example">
 
-            Example:
-            https://example.com
+        <!-- INPUT -->
 
-        </p>
+        <div class="scan-input-area">
 
 
-        <!-- STATUS -->
+            <label
+                class="scan-label"
+                for="scanInput">
+
+                Content to Inspect
+
+            </label>
+
+
+            <textarea
+                id="scanInput"
+                class="scan-input"
+                placeholder="Paste a suspicious URL, phone number, email address or message here..."
+            ></textarea>
+
+
+            <div class="input-bottom">
+
+
+                <div class="scan-hint">
+
+                    🔒 Prototype mode •
+                    No sensitive credentials required
+
+                </div>
+
+
+                <button
+                    class="scan-button"
+                    id="scanButton"
+                    onclick="startScan()">
+
+                    🔍 Start Security Scan
+
+                </button>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- LOADING -->
 
         <div
-            id="status"
-            class="status">
+            id="loading"
+            class="loading">
 
-            Analyzing URL...
+            <div class="spinner"></div>
+
+            <div class="loading-text">
+
+                Inspect Caller is analyzing
+                security signals...
+
+            </div>
 
         </div>
+
 
 
         <!-- RESULT -->
 
         <div
-            id="result"
-            class="result">
+            id="scanResult"
+            class="scan-result">
 
 
-            <div class="result-title">
+            <!-- HEADER -->
 
-                <h2>
-                    Scan Result
-                </h2>
+            <div class="result-header">
 
-                <span
-                    id="resultBadge"
-                    class="badge">
 
-                    Unknown
+                <div class="result-title">
 
-                </span>
+                    <small>
+                        SCANNED CONTENT
+                    </small>
+
+                    <strong id="resultContent">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="risk-box">
+
+                    <strong id="riskScore">
+                        18
+                    </strong>
+
+                    <span>
+                        RISK SCORE / 100
+                    </span>
+
+                </div>
+
 
             </div>
 
 
-            <!-- SCORE -->
 
-            <div class="score-area">
+            <!-- VERDICT -->
+
+            <div class="verdict">
+
 
                 <div
-                    id="score"
-                    class="score">
+                    class="verdict-icon"
+                    id="verdictIcon">
 
-                    0
+                    🟢
+
+                </div>
+
+
+                <div>
+
+                    <strong id="verdictTitle">
+
+                        Low Risk — No Major Signal
+
+                    </strong>
+
+
+                    <span id="verdictText">
+
+                        This is a prototype assessment.
+                        Always verify important information
+                        independently.
+
+                    </span>
 
                 </div>
 
-                <div class="score-label">
-
-                    Risk Score / 100
-
-                </div>
 
             </div>
+
+
+
+            <!-- SIGNALS -->
+
+            <div class="signals-title">
+
+                Threat Intelligence Signals
+
+            </div>
+
+
+            <div class="signal-grid">
+
+
+                <div class="signal">
+
+
+                    <div class="signal-top">
+
+                        <div class="signal-icon">
+                            🎣
+                        </div>
+
+                        <span
+                            id="phishingStatus"
+                            class="signal-status safe">
+
+                            LOW
+
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Phishing
+                    </h3>
+
+
+                    <p>
+                        Checks for suspicious
+                        authentication and link patterns.
+                    </p>
+
+
+                </div>
+
+
+
+                <div class="signal">
+
+
+                    <div class="signal-top">
+
+                        <div class="signal-icon">
+                            🚨
+                        </div>
+
+                        <span
+                            id="scamStatus"
+                            class="signal-status safe">
+
+                            LOW
+
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Scam Pattern
+                    </h3>
+
+
+                    <p>
+                        Looks for common fraud,
+                        urgency and payment signals.
+                    </p>
+
+
+                </div>
+
+
+
+                <div class="signal">
+
+
+                    <div class="signal-top">
+
+                        <div class="signal-icon">
+                            🔐
+                        </div>
+
+                        <span
+                            id="securityStatus"
+                            class="signal-status safe">
+
+                            GOOD
+
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Security
+                    </h3>
+
+
+                    <p>
+                        Reviews basic security indicators
+                        in the submitted content.
+                    </p>
+
+
+                </div>
+
+
+
+                <div class="signal">
+
+
+                    <div class="signal-top">
+
+                        <div class="signal-icon">
+                            💳
+                        </div>
+
+                        <span
+                            id="paymentStatus"
+                            class="signal-status safe">
+
+                            LOW
+
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Payment Risk
+                    </h3>
+
+
+                    <p>
+                        Detects requests involving money,
+                        cards or financial transfers.
+                    </p>
+
+
+                </div>
+
+
+
+                <div class="signal">
+
+
+                    <div class="signal-top">
+
+                        <div class="signal-icon">
+                            👤
+                        </div>
+
+                        <span
+                            id="identityStatus"
+                            class="signal-status safe">
+
+                            LOW
+
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Identity Risk
+                    </h3>
+
+
+                    <p>
+                        Looks for requests for sensitive
+                        personal information.
+                    </p>
+
+
+                </div>
+
+
+
+                <div class="signal">
+
+
+                    <div class="signal-top">
+
+                        <div class="signal-icon">
+                            ⚡
+                        </div>
+
+                        <span
+                            id="urgencyStatus"
+                            class="signal-status safe">
+
+                            LOW
+
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Urgency
+                    </h3>
+
+
+                    <p>
+                        Identifies pressure tactics such
+                        as immediate payment or threats.
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
 
 
             <!-- DETAILS -->
@@ -750,52 +1633,39 @@
 
                 <div class="detail">
 
-                    <strong>
+                    <span>
+                        SCAN TYPE
+                    </span>
+
+                    <strong id="resultType">
                         URL
                     </strong>
 
-                    <span id="resultUrl">
-                        -
+                </div>
+
+
+                <div class="detail">
+
+                    <span>
+                        ENGINE
                     </span>
+
+                    <strong>
+                        Inspect Caller AI
+                    </strong>
 
                 </div>
 
 
                 <div class="detail">
 
-                    <strong>
-                        Protocol
-                    </strong>
-
-                    <span id="resultProtocol">
-                        -
+                    <span>
+                        STATUS
                     </span>
 
-                </div>
-
-
-                <div class="detail">
-
                     <strong>
-                        Domain
+                        Prototype Analysis
                     </strong>
-
-                    <span id="resultDomain">
-                        -
-                    </span>
-
-                </div>
-
-
-                <div class="detail">
-
-                    <strong>
-                        Database Status
-                    </strong>
-
-                    <span id="databaseStatus">
-                        -
-                    </span>
 
                 </div>
 
@@ -803,20 +1673,20 @@
             </div>
 
 
-            <!-- REASONS -->
 
-            <div class="reasons">
+            <!-- WARNING -->
 
-                <h3>
-                    Detection Details
-                </h3>
+            <div class="warning">
 
-
-                <ul id="reasonsList">
-
-                </ul>
+                ⚠️ <strong>Important:</strong>
+                This result is a prototype security
+                assessment and does not prove that
+                content is safe or fraudulent. Never
+                share passwords, OTPs, private keys or
+                other sensitive credentials.
 
             </div>
+
 
 
             <!-- ACTIONS -->
@@ -824,22 +1694,31 @@
             <div class="actions">
 
 
-                <button
-                    class="action-btn"
-                    id="scanAgainBtn">
+                <a
+                    href="report.html"
+                    class="action primary">
 
-                    Scan Another URL
+                    🚨 Report Suspicious Activity
+
+                </a>
+
+
+                <button
+                    class="action"
+                    onclick="copyScan()">
+
+                    📋 Copy Result
 
                 </button>
 
 
-                <button
-                    class="action-btn report-btn"
-                    id="reportBtn">
+                <a
+                    href="ai-chat.html"
+                    class="action">
 
-                    🚨 Report This URL
+                    🤖 AI Analysis
 
-                </button>
+                </a>
 
 
             </div>
@@ -848,972 +1727,650 @@
         </div>
 
 
-    </div>
+    </section>
 
 
-    <!-- ================= INFORMATION ================= -->
 
-    <div class="info">
+    <!-- INFO -->
 
-        <h3>
-            ⚠️ Important
-        </h3>
+    <section class="info-grid">
 
-        <p>
 
-            A low risk score does not guarantee
-            that a website is completely safe.
-            FraudGuard uses available intelligence
-            and detection signals to identify
-            potential risks. Always verify
-            suspicious websites independently.
+        <div class="info-card">
 
-        </p>
+            <div class="info-icon">
+                🔗
+            </div>
 
-    </div>
+            <h3>
+                Link Protection
+            </h3>
 
+            <p>
+                Planned URL intelligence can inspect
+                suspicious links and identify potential
+                phishing patterns.
+            </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <div class="info-icon">
+                🧠
+            </div>
+
+            <h3>
+                AI-Powered Detection
+            </h3>
+
+            <p>
+                Future AI systems can analyze text,
+                voice, images and other signals for
+                emerging scam patterns.
+            </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <div class="info-icon">
+                🌍
+            </div>
+
+            <h3>
+                Global Fraud Intelligence
+            </h3>
+
+            <p>
+                The long-term vision is to combine
+                community reports and trusted data
+                sources into a global security layer.
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+</div>
 
 </main>
 
 
+
+<!-- ================= FOOTER ================= -->
+
 <footer>
 
-    © 2026 FraudGuard —
-    AI-Powered Fraud Detection & Scam Prevention
+    <div class="footer-brand">
+
+        INSPECT<span>CALLER</span>
+
+    </div>
+
+
+    <p>
+        Global Caller Security & Anti-Fraud Technology
+    </p>
+
+
+    <div class="footer-links">
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="features.html">
+            Features
+        </a>
+
+        <a href="about.html">
+            About
+        </a>
+
+        <a href="contact.html">
+            Contact
+        </a>
+
+        <a href="privacy-policy.html">
+            Privacy
+        </a>
+
+        <a href="terms.html">
+            Terms
+        </a>
+
+        <a href="cookie-policy.html">
+            Cookies
+        </a>
+
+        <a href="disclaimer.html">
+            Disclaimer
+        </a>
+
+    </div>
+
+
+    <p class="copyright">
+
+        © 2026 Inspect Caller.
+        Idea / Pre-Launch Prototype.
+
+    </p>
 
 </footer>
-<!-- ================= FIREBASE SCANNER ================= -->
-
-<script type="module">
-
-    import {
-        auth,
-        db
-    } from "./firebase.js";
 
 
-    import {
-        onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+<script>
 
 
-    import {
-        collection,
-        query,
-        where,
-        getDocs,
-        addDoc,
-        serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+/* ================= START SCAN ================= */
+
+function startScan() {
 
 
-    /* =========================================================
-       ELEMENTS
-    ========================================================= */
-
-    const urlInput =
-        document.getElementById("urlInput");
-
-    const scanBtn =
-        document.getElementById("scanBtn");
-
-    const statusBox =
-        document.getElementById("status");
-
-    const resultBox =
-        document.getElementById("result");
-
-    const resultBadge =
-        document.getElementById("resultBadge");
-
-    const scoreElement =
-        document.getElementById("score");
-
-    const resultUrl =
-        document.getElementById("resultUrl");
-
-    const resultProtocol =
-        document.getElementById("resultProtocol");
-
-    const resultDomain =
-        document.getElementById("resultDomain");
-
-    const databaseStatus =
-        document.getElementById("databaseStatus");
-
-    const reasonsList =
-        document.getElementById("reasonsList");
-
-    const scanAgainBtn =
-        document.getElementById("scanAgainBtn");
-
-    const reportBtn =
-        document.getElementById("reportBtn");
+    const input =
+        document.getElementById(
+            "scanInput"
+        );
 
 
-    let currentUser = null;
+    const value =
+        input.value.trim();
 
-    let currentScannedURL = "";
+
+    const loading =
+        document.getElementById(
+            "loading"
+        );
 
 
-    /* =========================================================
-       AUTH CHECK
-    ========================================================= */
+    const result =
+        document.getElementById(
+            "scanResult"
+        );
 
-    onAuthStateChanged(
-        auth,
-        (user) => {
 
-            if (!user) {
+    if (!value) {
 
-                window.location.replace(
-                    "login.html"
-                );
+        alert(
+            "Please enter something to scan."
+        );
 
-                return;
-            }
+        input.focus();
 
-            currentUser = user;
+        return;
 
-        }
+    }
+
+
+    const type =
+        document.querySelector(
+            'input[name="scanType"]:checked'
+        ).value;
+
+
+    result.classList.remove(
+        "show"
     );
 
 
-    /* =========================================================
-       NORMALIZE URL
-    ========================================================= */
+    loading.classList.add(
+        "show"
+    );
 
-    function normalizeURL(value) {
 
-        let input =
-            value.trim();
+    setTimeout(
+        function() {
 
 
-        if (!input) {
-            return null;
-        }
-
-
-        if (
-            !input.startsWith("http://") &&
-            !input.startsWith("https://")
-        ) {
-
-            input =
-                "https://" + input;
-
-        }
-
-
-        try {
-
-            return new URL(input);
-
-        } catch {
-
-            return null;
-
-        }
-
-    }
-
-
-    /* =========================================================
-       GET DOMAIN
-    ========================================================= */
-
-    function getDomain(url) {
-
-        return url.hostname
-            .toLowerCase()
-            .replace(/^www\./, "");
-
-    }
-
-
-    /* =========================================================
-       URL ANALYSIS
-    ========================================================= */
-
-    function analyzeURL(url) {
-
-        let riskScore = 0;
-
-        const reasons = [];
-
-        const fullURL =
-            url.href.toLowerCase();
-
-        const hostname =
-            url.hostname.toLowerCase();
-
-
-        /* HTTPS */
-
-        if (
-            url.protocol !== "https:"
-        ) {
-
-            riskScore += 15;
-
-            reasons.push(
-                "The website is not using HTTPS."
-            );
-
-        }
-
-
-        /* IP ADDRESS */
-
-        const ipPattern =
-            /^(\d{1,3}\.){3}\d{1,3}$/;
-
-
-        if (
-            ipPattern.test(hostname)
-        ) {
-
-            riskScore += 25;
-
-            reasons.push(
-                "The URL uses a raw IP address instead of a normal domain."
-            );
-
-        }
-
-
-        /* PUNYCODE */
-
-        if (
-            hostname.includes("xn--")
-        ) {
-
-            riskScore += 25;
-
-            reasons.push(
-                "The domain contains Punycode, which can sometimes be used for look-alike domains."
-            );
-
-        }
-
-
-        /* @ SYMBOL */
-
-        if (
-            fullURL.includes("@")
-        ) {
-
-            riskScore += 20;
-
-            reasons.push(
-                "The URL contains an @ symbol, which can be used to disguise the destination."
-            );
-
-        }
-
-
-        /* TOO MANY SUBDOMAINS */
-
-        const parts =
-            hostname.split(".");
-
-
-        if (
-            parts.length >= 5
-        ) {
-
-            riskScore += 15;
-
-            reasons.push(
-                "The domain contains an unusually large number of subdomains."
-            );
-
-        }
-
-
-        /* VERY LONG URL */
-
-        if (
-            url.href.length > 150
-        ) {
-
-            riskScore += 15;
-
-            reasons.push(
-                "The URL is unusually long."
-            );
-
-        }
-
-
-        /* MANY HYPHENS */
-
-        const hyphens =
-            (
-                hostname.match(/-/g) || []
-            ).length;
-
-
-        if (
-            hyphens >= 4
-        ) {
-
-            riskScore += 10;
-
-            reasons.push(
-                "The domain contains many hyphens."
-            );
-
-        }
-
-
-        /* SUSPICIOUS KEYWORDS */
-
-        const suspiciousKeywords = [
-
-            "login",
-            "verify",
-            "verification",
-            "secure",
-            "security",
-            "account",
-            "update",
-            "confirm",
-            "wallet",
-            "crypto",
-            "bonus",
-            "free",
-            "gift",
-            "claim",
-            "payment",
-            "bank",
-            "password",
-            "signin",
-            "recover",
-            "refund",
-            "investment",
-            "airdrop"
-
-        ];
-
-
-        const foundKeywords =
-            suspiciousKeywords.filter(
-                keyword =>
-                    fullURL.includes(keyword)
+            loading.classList.remove(
+                "show"
             );
 
 
-        if (
-            foundKeywords.length >= 2
-        ) {
-
-            riskScore += 20;
-
-            reasons.push(
-                "The URL contains multiple words commonly seen in phishing or scam campaigns."
-            );
-
-        } else if (
-            foundKeywords.length === 1
-        ) {
-
-            riskScore += 7;
-
-            reasons.push(
-                "The URL contains a security-sensitive keyword."
-            );
-
-        }
-
-
-        /* SUSPICIOUS TLD */
-
-        const suspiciousTLDs = [
-
-            ".tk",
-            ".ml",
-            ".ga",
-            ".cf",
-            ".gq",
-            ".top",
-            ".click",
-            ".download",
-            ".zip",
-            ".mov"
-
-        ];
-
-
-        const hasSuspiciousTLD =
-            suspiciousTLDs.some(
-                tld =>
-                    hostname.endsWith(tld)
+            result.classList.add(
+                "show"
             );
 
 
-        if (
-            hasSuspiciousTLD
-        ) {
-
-            riskScore += 15;
-
-            reasons.push(
-                "The domain uses a TLD that can be seen in suspicious campaigns."
-            );
-
-        }
-
-
-        /* LARGE QUERY STRING */
-
-        if (
-            url.search.length > 120
-        ) {
-
-            riskScore += 10;
-
-            reasons.push(
-                "The URL contains an unusually large query string."
-            );
-
-        }
-
-
-        riskScore =
-            Math.min(
-                riskScore,
-                100
+            runDemoAnalysis(
+                value,
+                type
             );
 
 
-        return {
-            score: riskScore,
-            reasons: reasons
-        };
+        },
+        1200
+    );
 
-    }
-
-
-    /* =========================================================
-       FIRESTORE FRAUD DATABASE
-    ========================================================= */
-
-    async function checkFraudDatabase(
-        domain
-    ) {
-
-        try {
-
-            const fraudCollection =
-                collection(
-                    db,
-                    "fraud_urls"
-                );
+}
 
 
-            const q =
-                query(
-                    fraudCollection,
-                    where(
-                        "domain",
-                        "==",
-                        domain
-                    )
-                );
+
+/* ================= ANALYSIS ================= */
+
+function runDemoAnalysis(
+    value,
+    type
+) {
 
 
-            const snapshot =
-                await getDocs(q);
+    const lower =
+        value.toLowerCase();
 
+
+    let score = 12;
+
+
+    const scamWords = [
+
+        "urgent",
+        "immediately",
+        "verify",
+        "account",
+        "suspended",
+        "password",
+        "otp",
+        "winner",
+        "prize",
+        "claim",
+        "refund",
+        "investment",
+        "crypto",
+        "loan",
+        "payment",
+        "send money",
+        "gift card",
+        "bank"
+
+    ];
+
+
+    scamWords.forEach(
+        function(word) {
 
             if (
-                !snapshot.empty
+                lower.includes(word)
             ) {
 
-                return {
-                    found: true,
-                    count: snapshot.size
-                };
+                score += 5;
 
             }
 
-
-            return {
-                found: false,
-                count: 0
-            };
-
-
-        } catch (error) {
-
-            console.error(
-                "Fraud database error:",
-                error
-            );
-
-
-            return {
-                found: false,
-                count: 0,
-                error: true
-            };
-
         }
-
-    }
-
-
-    /* =========================================================
-       SAVE SCAN HISTORY
-    ========================================================= */
-
-    async function saveScan(
-        url,
-        analysis,
-        databaseResult
-    ) {
-
-        if (!currentUser) {
-            return;
-        }
-
-
-        try {
-
-            await addDoc(
-                collection(
-                    db,
-                    "scan_history"
-                ),
-                {
-
-                    uid:
-                        currentUser.uid,
-
-                    email:
-                        currentUser.email || "",
-
-                    url:
-                        url.href,
-
-                    domain:
-                        url.hostname,
-
-                    score:
-                        analysis.score,
-
-                    status:
-                        getStatus(
-                            analysis.score,
-                            databaseResult
-                        ),
-
-                    databaseMatch:
-                        databaseResult.found,
-
-                    createdAt:
-                        serverTimestamp()
-
-                }
-            );
-
-
-        } catch (error) {
-
-            console.warn(
-                "Scan history could not be saved:",
-                error
-            );
-
-        }
-
-    }
-
-
-    /* =========================================================
-       GET STATUS
-    ========================================================= */
-
-    function getStatus(
-        score,
-        databaseResult = {
-            found: false
-        }
-    ) {
-
-        if (
-            databaseResult.found
-        ) {
-
-            return "Dangerous";
-
-        }
-
-
-        if (
-            score >= 60
-        ) {
-
-            return "Dangerous";
-
-        }
-
-
-        if (
-            score >= 30
-        ) {
-
-            return "Suspicious";
-
-        }
-
-
-        return "Low Risk";
-
-    }
-
-
-    /* =========================================================
-       DISPLAY RESULT
-    ========================================================= */
-
-    function displayResult(
-        url,
-        analysis,
-        databaseResult
-    ) {
-
-        const score =
-            analysis.score;
-
-
-        const status =
-            getStatus(
-                score,
-                databaseResult
-            );
-
-
-        /* SCORE */
-
-        scoreElement.textContent =
-            score;
-
-
-        /* URL */
-
-        resultUrl.textContent =
-            url.href;
-
-
-        /* PROTOCOL */
-
-        resultProtocol.textContent =
-            url.protocol
-                .replace(":", "")
-                .toUpperCase();
-
-
-        /* DOMAIN */
-
-        resultDomain.textContent =
-            url.hostname;
-
-
-        /* DATABASE */
-
-        if (
-            databaseResult.found
-        ) {
-
-            databaseStatus.textContent =
-                "⚠ Reported " +
-                databaseResult.count +
-                " time(s)";
-
-        } else if (
-            databaseResult.error
-        ) {
-
-            databaseStatus.textContent =
-                "Unavailable";
-
-        } else {
-
-            databaseStatus.textContent =
-                "No matching report";
-
-        }
-
-
-        /* BADGE */
-
-        resultBadge.className =
-            "badge";
-
-
-        if (
-            status === "Dangerous"
-        ) {
-
-            resultBadge.classList.add(
-                "dangerous"
-            );
-
-            resultBadge.textContent =
-                "🚨 Dangerous";
-
-            scoreElement.style.color =
-                "#ff6b81";
-
-
-        } else if (
-            status === "Suspicious"
-        ) {
-
-            resultBadge.classList.add(
-                "suspicious"
-            );
-
-            resultBadge.textContent =
-                "⚠ Suspicious";
-
-            scoreElement.style.color =
-                "#ffd36b";
-
-
-        } else {
-
-            resultBadge.classList.add(
-                "safe"
-            );
-
-            resultBadge.textContent =
-                "✓ Low Risk";
-
-            scoreElement.style.color =
-                "#22c55e";
-
-        }
-
-
-        /* REASONS */
-
-        reasonsList.innerHTML = "";
-
-
-        if (
-            databaseResult.found
-        ) {
-
-            const li =
-                document.createElement("li");
-
-
-            li.textContent =
-                "This domain has been reported in the FraudGuard community database.";
-
-
-            reasonsList.appendChild(li);
-
-        }
-
-
-        if (
-            analysis.reasons.length === 0
-        ) {
-
-            const li =
-                document.createElement("li");
-
-
-            li.textContent =
-                "No major risk indicators were detected by the current scanner.";
-
-
-            reasonsList.appendChild(li);
-
-
-        } else {
-
-            analysis.reasons.forEach(
-                reason => {
-
-                    const li =
-                        document.createElement("li");
-
-
-                    li.textContent =
-                        reason;
-
-
-                    reasonsList.appendChild(li);
-
-                }
-            );
-
-        }
-
-
-        resultBox.style.display =
-            "block";
-
-    }
-
-
-    /* =========================================================
-       MAIN SCAN FUNCTION
-    ========================================================= */
-
-    async function scanURL() {
-
-        const url =
-            normalizeURL(
-                urlInput.value
-            );
-
-
-        if (!url) {
-
-            alert(
-                "Please enter a valid website URL."
-            );
-
-            urlInput.focus();
-
-            return;
-
-        }
-
-
-        currentScannedURL =
-            url.href;
-
-
-        scanBtn.disabled =
-            true;
-
-
-        scanBtn.textContent =
-            "Scanning...";
-
-
-        resultBox.style.display =
-            "none";
-
-
-        statusBox.style.display =
-            "block";
-
-
-        statusBox.textContent =
-            "🔎 Checking URL structure...";
-
-
-        try {
-
-            await new Promise(
-                resolve =>
-                    setTimeout(
-                        resolve,
-                        350
-                    )
-            );
-
-
-            statusBox.textContent =
-                "🛡 Checking FraudGuard database...";
-
-
-            const analysis =
-                analyzeURL(url);
-
-
-            const databaseResult =
-                await checkFraudDatabase(
-                    getDomain(url)
-                );
-
-
-            statusBox.textContent =
-                "📊 Calculating risk score...";
-
-
-            await new Promise(
-                resolve =>
-                    setTimeout(
-                        resolve,
-                        250
-                    )
-            );
-
-
-            displayResult(
-                url,
-                analysis,
-                databaseResult
-            );
-
-
-            await saveScan(
-                url,
-                analysis,
-                databaseResult
-            );
-
-
-            statusBox.style.display =
-                "none";
-
-
-        } catch (error) {
-
-            console.error(
-                "Scanner error:",
-                error
-            );
-
-
-            statusBox.textContent =
-                "Unable to complete the scan. Please try again.";
-
-        }
-
-
-        scanBtn.disabled =
-            false;
-
-
-        scanBtn.textContent =
-            "Scan URL";
-
-    }
-
-
-    /* =========================================================
-       SCAN BUTTON
-    ========================================================= */
-
-    scanBtn.addEventListener(
-        "click",
-        scanURL
     );
 
 
-    /* =========================================================
-       ENTER KEY
-    ========================================================= */
+    if (
+        lower.includes("http://")
+    ) {
 
-    urlInput.addEventListener(
+        score += 12;
+
+    }
+
+
+    if (
+        lower.includes("bit.ly") ||
+        lower.includes("tinyurl") ||
+        lower.includes("t.co/")
+    ) {
+
+        score += 15;
+
+    }
+
+
+    score =
+        Math.min(
+            score,
+            95
+        );
+
+
+    /* RESULT TEXT */
+
+
+    document.getElementById(
+        "resultContent"
+    ).textContent =
+        value.length > 100
+            ? value.substring(0,100) + "..."
+            : value;
+
+
+    document.getElementById(
+        "riskScore"
+    ).textContent =
+        score;
+
+
+    document.getElementById(
+        "resultType"
+    ).textContent =
+        type;
+
+
+
+    /* STATUS */
+
+    if (
+        score >= 70
+    ) {
+
+        setRisk(
+            "danger"
+        );
+
+
+        document.getElementById(
+            "verdictIcon"
+        ).textContent =
+            "🔴";
+
+
+        document.getElementById(
+            "verdictTitle"
+        ).textContent =
+            "High Risk — Review Immediately";
+
+
+        document.getElementById(
+            "verdictText"
+        ).textContent =
+            "Multiple suspicious indicators were detected in this prototype analysis.";
+
+    }
+
+
+    else if (
+        score >= 40
+    ) {
+
+        setRisk(
+            "review"
+        );
+
+
+        document.getElementById(
+            "verdictIcon"
+        ).textContent =
+            "🟡";
+
+
+        document.getElementById(
+            "verdictTitle"
+        ).textContent =
+            "Medium Risk — Review Carefully";
+
+
+        document.getElementById(
+            "verdictText"
+        ).textContent =
+            "Some suspicious patterns were detected. Verify the source before taking action.";
+
+    }
+
+
+    else {
+
+        setRisk(
+            "safe"
+        );
+
+
+        document.getElementById(
+            "verdictIcon"
+        ).textContent =
+            "🟢";
+
+
+        document.getElementById(
+            "verdictTitle"
+        ).textContent =
+            "Low Risk — No Major Signal";
+
+
+        document.getElementById(
+            "verdictText"
+        ).textContent =
+            "No major suspicious pattern was detected in this prototype assessment.";
+
+    }
+
+
+
+    /* INDIVIDUAL SIGNALS */
+
+    const hasPayment =
+        /payment|money|bank|card|crypto|loan/i
+            .test(value);
+
+
+    const hasIdentity =
+        /password|otp|verify|identity|account|nid/i
+            .test(value);
+
+
+    const hasUrgency =
+        /urgent|immediately|now|suspended|last chance/i
+            .test(value);
+
+
+    const hasPhishing =
+        /login|verify|password|account|secure|signin/i
+            .test(value);
+
+
+    updateSignal(
+        "paymentStatus",
+        hasPayment
+    );
+
+
+    updateSignal(
+        "identityStatus",
+        hasIdentity
+    );
+
+
+    updateSignal(
+        "urgencyStatus",
+        hasUrgency
+    );
+
+
+    updateSignal(
+        "phishingStatus",
+        hasPhishing
+    );
+
+
+    updateSignal(
+        "scamStatus",
+        score >= 40
+    );
+
+
+    updateSignal(
+        "securityStatus",
+        score >= 70
+    );
+
+}
+
+
+
+/* ================= RISK COLOR ================= */
+
+function setRisk(
+    level
+) {
+
+
+    const score =
+        document.getElementById(
+            "riskScore"
+        );
+
+
+    if (
+        level === "danger"
+    ) {
+
+        score.style.color =
+            "#ff7d91";
+
+    }
+
+    else if (
+        level === "review"
+    ) {
+
+        score.style.color =
+            "#ffd267";
+
+    }
+
+    else {
+
+        score.style.color =
+            "#4ce7aa";
+
+    }
+
+}
+
+
+
+/* ================= SIGNAL UPDATE ================= */
+
+function updateSignal(
+    id,
+    suspicious
+) {
+
+
+    const element =
+        document.getElementById(
+            id
+        );
+
+
+    if (
+        suspicious
+    ) {
+
+        element.textContent =
+            "REVIEW";
+
+
+        element.className =
+            "signal-status review";
+
+    }
+
+    else {
+
+        element.textContent =
+            "LOW";
+
+
+        element.className =
+            "signal-status safe";
+
+    }
+
+}
+
+
+
+/* ================= COPY ================= */
+
+function copyScan() {
+
+
+    const content =
+        document.getElementById(
+            "resultContent"
+        ).textContent;
+
+
+    const score =
+        document.getElementById(
+            "riskScore"
+        ).textContent;
+
+
+    const type =
+        document.getElementById(
+            "resultType"
+        ).textContent;
+
+
+    const text =
+
+        "Inspect Caller Security Scan\n" +
+
+        "Type: " +
+        type +
+        "\n" +
+
+        "Content: " +
+        content +
+        "\n" +
+
+        "Demo Risk Score: " +
+        score +
+        "/100\n" +
+
+        "Prototype result — not a verified fraud determination.";
+
+
+    if (
+        navigator.clipboard
+    ) {
+
+        navigator.clipboard
+            .writeText(text)
+            .then(
+                function() {
+
+                    alert(
+                        "Scan result copied."
+                    );
+
+                }
+            );
+
+    }
+
+}
+
+
+
+/* ================= ENTER ================= */
+
+document
+    .getElementById(
+        "scanInput"
+    )
+    .addEventListener(
         "keydown",
-        event => {
+        function(event) {
 
             if (
+                event.ctrlKey &&
                 event.key === "Enter"
             ) {
 
-                scanURL();
+                startScan();
 
             }
 
@@ -1821,71 +2378,9 @@
     );
 
 
-    /* =========================================================
-       SCAN AGAIN
-    ========================================================= */
-
-    scanAgainBtn.addEventListener(
-        "click",
-        () => {
-
-            resultBox.style.display =
-                "none";
-
-            statusBox.style.display =
-                "none";
-
-            urlInput.value =
-                "";
-
-            currentScannedURL =
-                "";
-
-            urlInput.focus();
-
-        }
-    );
-
-
-    /* =========================================================
-       REPORT URL
-    ========================================================= */
-
-    reportBtn.addEventListener(
-        "click",
-        () => {
-
-            if (
-                currentScannedURL
-            ) {
-
-                window.location.href =
-                    "report.html?url=" +
-                    encodeURIComponent(
-                        currentScannedURL
-                    );
-
-            } else {
-
-                window.location.href =
-                    "report.html";
-
-            }
-
-        }
-    );
-
-</script>
-
-
-<!-- ================= GLOBAL AUTH ================= -->
-
-<script
-    type="module"
-    src="script.js">
 </script>
 
 
 </body>
 
-  </html>
+</html>
