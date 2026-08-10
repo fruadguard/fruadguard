@@ -1,2786 +1,1491 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>QR Scanner | FraudGuard</title>
-
-<meta
-name="description"
-content="Scan QR codes and check their decoded destination for potential fraud risks.">
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    min-height:100vh;
-    background:#0b1328;
-    color:#fff;
-    font-family:Arial,Helvetica,sans-serif;
-}
-
-a{
-    color:inherit;
-    text-decoration:none;
-}
-
-.navbar{
-    width:100%;
-    background:#10182d;
-    border-bottom:1px solid #26324b;
-    position:sticky;
-    top:0;
-    z-index:1000;
-}
+    <title>QR Scanner — Inspect Caller</title>
 
-.nav-container{
-    max-width:1250px;
-    min-height:64px;
-    margin:auto;
-    padding:0 18px;
+    <meta
+        name="description"
+        content="Inspect Caller QR Scanner — scan QR codes and inspect their destinations for potential security risks."
+    >
 
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
+    <link rel="stylesheet" href="style.css">
 
-.brand{
-    display:flex;
-    align-items:center;
-    gap:9px;
+    <style>
 
-    color:#22c55e;
-    font-size:20px;
-    font-weight:700;
-}
+        .qr-page {
+            min-height: 100vh;
+            padding: 65px 20px 100px;
 
-.brand img{
-    width:36px;
-    height:36px;
-    object-fit:contain;
-}
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(0,150,255,.14),
+                    transparent 42%
+                ),
+                #050d18;
+        }
 
-.nav-links{
-    display:flex;
-    align-items:center;
-    gap:11px;
+        .qr-container {
+            width: min(1050px, 100%);
+            margin: auto;
+        }
 
-    font-size:10px;
-    font-weight:600;
-}
+        /* HERO */
 
-.nav-links a:hover{
-    color:#22c55e;
-}
+        .qr-hero {
+            text-align: center;
+            margin-bottom: 40px;
+        }
 
-.nav-links a.active{
-    color:#22c55e;
-}
+        .qr-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
 
-.logout-btn{
-    border:0;
-    border-radius:6px;
+            padding: 9px 16px;
 
-    padding:8px 13px;
+            border: 1px solid #285873;
+            border-radius: 999px;
 
-    background:#22c55e;
-    color:#fff;
+            background: #071b2c;
+            color: #8bdcff;
 
-    cursor:pointer;
-    font-weight:700;
-}
+            font-size: 10px;
+            font-weight: 850;
+            letter-spacing: .8px;
+        }
 
-.logout-btn:hover{
-    background:#16a34a;
-}
+        .qr-hero h1 {
+            margin-top: 20px;
 
-.mobile-menu{
-    display:none;
+            font-size:
+                clamp(42px, 7vw, 68px);
 
-    border:0;
-    background:transparent;
-    color:#fff;
+            line-height: 1;
+            letter-spacing: -3px;
+        }
 
-    font-size:24px;
-    cursor:pointer;
-}
+        .qr-hero h1 span {
+            color: var(--blue);
+        }
 
-.page{
-    max-width:1000px;
-    margin:auto;
+        .qr-hero p {
+            max-width: 700px;
+            margin: 18px auto 0;
 
-    padding:38px 15px 55px;
-}
+            color: var(--muted);
 
-.header{
-    text-align:center;
+            font-size: 14px;
+            line-height: 1.7;
+        }
 
-    margin-bottom:28px;
-}
+        /* MAIN CARD */
 
-.header-icon{
-    font-size:50px;
+        .qr-card {
+            padding: 30px;
 
-    margin-bottom:9px;
-}
+            border: 1px solid var(--line);
+            border-radius: 25px;
 
-.header h1{
-    font-size:32px;
+            background:
+                linear-gradient(
+                    145deg,
+                    #0a2034,
+                    #061522
+                );
 
-    margin-bottom:8px;
-}
+            box-shadow:
+                0 25px 80px
+                rgba(0,100,180,.08);
+        }
 
-.header h1 span{
-    color:#22c55e;
-}
+        .scanner-area {
+            display: grid;
 
-.header p{
-    max-width:700px;
+            grid-template-columns:
+                1fr 1fr;
 
-    margin:auto;
+            gap: 20px;
+        }
 
-    color:#9da8bb;
+        /* CAMERA */
 
-    font-size:12px;
+        .camera-box {
+            min-height: 360px;
 
-    line-height:1.7;
-}
+            display: flex;
+            flex-direction: column;
 
-.scanner-card{
-    background:#1c263b;
+            align-items: center;
+            justify-content: center;
 
-    border:1px solid #2d3953;
+            position: relative;
+            overflow: hidden;
 
-    border-radius:13px;
+            border:
+                1px solid #28536b;
 
-    padding:25px;
-}
+            border-radius: 20px;
 
-.scanner-grid{
-    display:grid;
+            background:
+                radial-gradient(
+                    circle,
+                    #0b2941,
+                    #061522 70%
+                );
+        }
 
-    grid-template-columns:
-    1fr 1fr;
+        .camera-frame {
+            width: 220px;
+            height: 220px;
 
-    gap:20px;
-}
+            position: relative;
 
-.camera-panel,
-.result-panel{
-    background:#111a2f;
+            border:
+                2px solid #27b8ff;
 
-    border:1px solid #2d3953;
+            border-radius: 22px;
 
-    border-radius:10px;
+            box-shadow:
+                0 0 40px
+                rgba(0,160,255,.12);
+        }
 
-    padding:18px;
-}
+        .corner {
+            position: absolute;
 
-.panel-title{
-    color:#22c55e;
+            width: 35px;
+            height: 35px;
 
-    font-size:14px;
+            border-color: #61d5ff;
+            border-style: solid;
+        }
 
-    margin-bottom:12px;
-}
+        .corner.tl {
+            top: -3px;
+            left: -3px;
 
-.camera-box{
-    position:relative;
+            border-width: 4px 0 0 4px;
 
-    width:100%;
+            border-radius: 8px 0 0 0;
+        }
 
-    aspect-ratio:1/1;
+        .corner.tr {
+            top: -3px;
+            right: -3px;
 
-    max-height:390px;
+            border-width: 4px 4px 0 0;
 
-    background:#080f20;
+            border-radius: 0 8px 0 0;
+        }
 
-    border:1px solid #344158;
+        .corner.bl {
+            bottom: -3px;
+            left: -3px;
 
-    border-radius:9px;
+            border-width: 0 0 4px 4px;
 
-    overflow:hidden;
+            border-radius: 0 0 0 8px;
+        }
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
+        .corner.br {
+            bottom: -3px;
+            right: -3px;
 
-#video{
-    width:100%;
-    height:100%;
+            border-width: 0 4px 4px 0;
 
-    object-fit:cover;
+            border-radius: 0 0 8px 0;
+        }
 
-    display:none;
-}
+        .scan-line {
+            position: absolute;
 
-.camera-placeholder{
-    text-align:center;
+            left: 10px;
+            right: 10px;
 
-    padding:20px;
+            top: 15px;
 
-    color:#7f8b9f;
-}
+            height: 2px;
 
-.camera-placeholder .icon{
-    font-size:45px;
+            background: #28c2ff;
 
-    margin-bottom:10px;
-}
+            box-shadow:
+                0 0 12px
+                #28c2ff;
 
-.camera-placeholder h3{
-    color:#cdd4df;
+            animation:
+                scanLine 2s linear infinite;
+        }
 
-    font-size:14px;
+        @keyframes scanLine {
 
-    margin-bottom:6px;
-}
+            0% {
+                top: 15px;
+            }
 
-.camera-placeholder p{
-    font-size:10px;
+            50% {
+                top: calc(100% - 17px);
+            }
 
-    line-height:1.6;
-}
+            100% {
+                top: 15px;
+            }
 
-.scan-frame{
-    display:none;
+        }
 
-    position:absolute;
+        .qr-symbol {
+            position: absolute;
 
-    width:62%;
-    height:62%;
+            inset: 0;
 
-    border:2px solid #22c55e;
+            display: grid;
 
-    border-radius:8px;
+            place-items: center;
 
-    box-shadow:
-    0 0 0 9999px
-    rgba(0,0,0,.28);
+            font-size: 65px;
 
-    pointer-events:none;
-}
+            opacity: .12;
+        }
 
-.scan-line{
-    position:absolute;
+        .camera-text {
+            margin-top: 20px;
 
-    left:5%;
-    right:5%;
+            color: #88a8b8;
 
-    top:50%;
+            font-size: 11px;
 
-    height:2px;
+            text-align: center;
+        }
 
-    background:#22c55e;
+        .camera-btn {
+            margin-top: 12px;
 
-    box-shadow:
-    0 0 8px
-    rgba(34,197,94,.8);
+            min-height: 43px;
 
-    animation:
-    scanline 2s infinite ease-in-out;
+            padding: 0 18px;
 
-    display:none;
-}
+            border: 1px solid #285873;
+            border-radius: 12px;
 
-@keyframes scanline{
+            background: #071b2b;
 
-    0%{
-        top:10%;
-    }
+            color: #9fdcff;
 
-    50%{
-        top:90%;
-    }
+            font-size: 11px;
+            font-weight: 800;
 
-    100%{
-        top:10%;
-    }
+            cursor: pointer;
+        }
 
-}
+        .camera-btn:hover {
+            border-color: var(--blue);
+        }
 
-.camera-buttons{
-    display:flex;
+        /* MANUAL */
 
-    gap:8px;
+        .manual-box {
+            padding: 25px;
 
-    margin-top:12px;
-}
+            border:
+                1px solid #193c52;
 
-.camera-btn{
-    flex:1;
+            border-radius: 20px;
 
-    padding:10px;
+            background: #071827;
+        }
 
-    border:1px solid #3b4760;
+        .manual-box h2 {
+            margin-bottom: 8px;
 
-    border-radius:7px;
+            font-size: 18px;
+        }
 
-    background:#1c263b;
+        .manual-box > p {
+            margin-bottom: 22px;
 
-    color:#dbe1eb;
+            color: var(--muted);
 
-    cursor:pointer;
+            font-size: 11px;
+            line-height: 1.6;
+        }
 
-    font-size:10px;
-    font-weight:600;
-}
+        .input-label {
+            display: block;
 
-.camera-btn:hover{
-    border-color:#22c55e;
+            margin-bottom: 8px;
 
-    color:#22c55e;
-}
+            color: #b9d2de;
 
-.camera-btn.primary{
-    background:#22c55e;
+            font-size: 11px;
+            font-weight: 800;
+        }
 
-    border-color:#22c55e;
+        .qr-input {
+            width: 100%;
 
-    color:#fff;
-}
+            min-height: 50px;
 
-.camera-btn.primary:hover{
-    background:#16a34a;
+            padding: 0 15px;
 
-    color:#fff;
-}
+            border:
+                1px solid #28536b;
 
-.camera-btn:disabled{
-    opacity:.55;
+            border-radius: 13px;
 
-    cursor:not-allowed;
-}
+            outline: none;
 
-.upload-label{
-    display:flex;
+            background: #061725;
 
-    align-items:center;
-    justify-content:center;
+            color: white;
 
-    width:100%;
+            font-size: 12px;
+        }
 
-    margin-top:8px;
+        .qr-input::placeholder {
+            color: #587384;
+        }
 
-    padding:10px;
+        .qr-input:focus {
+            border-color: var(--blue);
 
-    border:1px dashed #3b4760;
+            box-shadow:
+                0 0 0 3px
+                rgba(0,150,255,.08);
+        }
 
-    border-radius:7px;
+        .analyze-btn {
+            width: 100%;
 
-    color:#8995a9;
+            min-height: 50px;
 
-    cursor:pointer;
+            margin-top: 12px;
 
-    font-size:10px;
-}
+            border: none;
+            border-radius: 13px;
 
-.upload-label:hover{
-    border-color:#22c55e;
+            background:
+                linear-gradient(
+                    135deg,
+                    #25b5ff,
+                    #087ddd
+                );
 
-    color:#22c55e;
-}
+            color: white;
 
-#qrImage{
-    display:none;
-}
+            font-size: 11px;
+            font-weight: 900;
 
-.status{
-    display:none;
+            cursor: pointer;
+        }
 
-    margin-top:12px;
+        .analyze-btn:hover {
+            transform: translateY(-2px);
 
-    padding:10px;
+            box-shadow:
+                0 14px 30px
+                rgba(0,140,255,.2);
+        }
 
-    border-radius:7px;
+        .sample-btn {
+            width: 100%;
 
-    background:#151f34;
+            min-height: 42px;
 
-    border:1px solid #2d3953;
+            margin-top: 9px;
 
-    color:#aeb8ca;
+            border:
+                1px solid #285873;
 
-    font-size:10px;
+            border-radius: 12px;
 
-    line-height:1.5;
-}
+            background: #071b2b;
 
-.result-empty{
-    min-height:330px;
+            color: #86bdd4;
 
-    display:flex;
+            font-size: 10px;
 
-    align-items:center;
-    justify-content:center;
+            cursor: pointer;
+        }
 
-    text-align:center;
+        /* RESULT */
 
-    color:#68758a;
+        .result {
+            display: none;
 
-    font-size:11px;
+            margin-top: 22px;
+        }
 
-    line-height:1.7;
-}
+        .result.show {
+            display: block;
+        }
 
-.result-content{
-    display:none;
-}
+        .result-header {
+            display: flex;
 
-.result-status{
-    display:flex;
+            align-items: center;
+            justify-content: space-between;
 
-    align-items:center;
-    justify-content:space-between;
+            gap: 15px;
 
-    gap:10px;
+            padding: 20px;
 
-    margin-bottom:15px;
-}
+            border:
+                1px solid #285873;
 
-.result-status h2{
-    color:#fff;
+            border-radius: 18px;
 
-    font-size:16px;
-}
+            background: #071a2a;
+        }
 
-.badge{
-    flex:none;
+        .result-url {
+            min-width: 0;
+        }
 
-    padding:7px 11px;
+        .result-url span {
+            display: block;
 
-    border-radius:20px;
+            color: #718d9d;
 
-    font-size:9px;
+            font-size: 9px;
+        }
 
-    font-weight:700;
-}
+        .result-url strong {
+            display: block;
 
-.badge.safe{
-    background:#123521;
+            margin-top: 6px;
 
-    border:1px solid #236b3b;
+            color: #bfe5f3;
 
-    color:#62e993;
-}
+            font-size: 13px;
 
-.badge.suspicious{
-    background:#423719;
+            word-break: break-all;
+        }
 
-    border:1px solid #725f24;
+        .risk-score {
+            min-width: 110px;
 
-    color:#ffd76b;
-}
+            padding: 10px;
 
-.badge.dangerous{
-    background:#401c28;
+            text-align: center;
 
-    border:1px solid #7f3046;
+            border-radius: 13px;
 
-    color:#ff91a6;
-}
+            background:
+                rgba(255,200,80,.07);
 
-.decoded-box{
-    background:#1c263b;
+            border:
+                1px solid rgba(255,200,80,.25);
+        }
 
-    border:1px solid #2d3953;
+        .risk-score strong {
+            display: block;
 
-    border-radius:8px;
+            color: #ffd267;
 
-    padding:13px;
+            font-size: 24px;
+        }
 
-    margin-bottom:12px;
-}
+        .risk-score span {
+            color: #7693a3;
 
-.decoded-label{
-    color:#69758a;
+            font-size: 8px;
+        }
 
-    font-size:9px;
+        /* SIGNALS */
 
-    margin-bottom:5px;
-}
+        .qr-signals {
+            display: grid;
 
-#decodedResult{
-    color:#dce2ec;
+            grid-template-columns:
+                repeat(2, 1fr);
 
-    font-size:11px;
+            gap: 11px;
 
-    line-height:1.6;
+            margin-top: 14px;
+        }
 
-    word-break:break-all;
-}
+        .qr-signal {
+            display: flex;
 
-.risk-box{
-    display:flex;
+            align-items: center;
 
-    align-items:center;
+            justify-content: space-between;
 
-    gap:15px;
+            padding: 14px;
 
-    background:#1c263b;
+            border:
+                1px solid #193c52;
 
-    border:1px solid #2d3953;
+            border-radius: 12px;
 
-    border-radius:8px;
+            background: #071827;
+        }
 
-    padding:14px;
+        .signal-name {
+            display: flex;
 
-    margin-bottom:12px;
-}
+            align-items: center;
 
-.risk-score{
-    min-width:70px;
+            gap: 9px;
+        }
 
-    text-align:center;
-}
+        .signal-icon {
+            width: 34px;
+            height: 34px;
 
-#riskScore{
-    color:#22c55e;
+            display: grid;
 
-    font-size:31px;
+            place-items: center;
 
-    font-weight:700;
+            border-radius: 9px;
 
-    line-height:1;
-}
+            background: #0b2941;
+        }
 
-.risk-score span{
-    display:block;
+        .signal-name strong {
+            display: block;
 
-    color:#69758a;
+            font-size: 10px;
+        }
 
-    font-size:8px;
+        .signal-name span {
+            display: block;
 
-    margin-top:5px;
-}
+            margin-top: 3px;
 
-.risk-info{
-    flex:1;
-}
+            color: var(--muted);
 
-.risk-info h3{
-    color:#22c55e;
+            font-size: 8px;
+        }
 
-    font-size:12px;
+        .status {
+            padding: 5px 8px;
 
-    margin-bottom:5px;
-}
+            border-radius: 999px;
 
-.risk-info p{
-    color:#8995a9;
+            font-size: 8px;
 
-    font-size:9px;
+            font-weight: 900;
+        }
 
-    line-height:1.5;
-}
+        .safe {
+            color: #4ce7aa;
 
-.details{
-    display:grid;
+            background:
+                rgba(45,228,154,.08);
 
-    grid-template-columns:
-    repeat(2,1fr);
+            border:
+                1px solid rgba(45,228,154,.22);
+        }
 
-    gap:8px;
+        .review {
+            color: #ffd267;
 
-    margin-bottom:12px;
-}
+            background:
+                rgba(255,200,80,.08);
 
-.detail{
-    background:#1c263b;
+            border:
+                1px solid rgba(255,200,80,.22);
+        }
 
-    border-radius:7px;
+        .danger {
+            color: #ff8194;
 
-    padding:10px;
-}
+            background:
+                rgba(255,70,95,.08);
 
-.detail-label{
-    color:#69758a;
+            border:
+                1px solid rgba(255,70,95,.22);
+        }
 
-    font-size:8px;
+        /* WARNING */
 
-    margin-bottom:4px;
-}
+        .warning {
+            margin-top: 14px;
 
-.detail-value{
-    color:#dce2ec;
+            padding: 15px;
 
-    font-size:10px;
+            border-left:
+                4px solid #ffc857;
 
-    word-break:break-word;
-}
+            border-radius: 9px;
 
-.reasons{
-    background:#1c263b;
+            background:
+                rgba(255,200,80,.06);
 
-    border:1px solid #2d3953;
+            color: #bcae83;
 
-    border-radius:8px;
+            font-size: 10px;
 
-    padding:13px;
+            line-height: 1.7;
+        }
 
-    margin-bottom:12px;
-}
+        /* ACTIONS */
 
-.reasons h3{
-    color:#22c55e;
+        .actions {
+            display: flex;
 
-    font-size:12px;
+            gap: 10px;
 
-    margin-bottom:8px;
-}
+            margin-top: 16px;
+        }
 
-.reasons ul{
-    padding-left:17px;
-}
+        .action-btn {
+            display: inline-flex;
 
-.reasons li{
-    color:#aeb8ca;
+            align-items: center;
+            justify-content: center;
 
-    font-size:9px;
+            min-height: 43px;
 
-    line-height:1.6;
+            padding: 0 16px;
 
-    margin-bottom:3px;
-}
+            border:
+                1px solid #285873;
 
-.result-actions{
-    display:flex;
+            border-radius: 11px;
 
-    gap:7px;
-}
+            background: #071b2b;
 
-.result-btn{
-    flex:1;
+            color: #9fdcff;
 
-    padding:9px;
+            font-size: 10px;
+            font-weight: 800;
 
-    border:0;
+            cursor: pointer;
+        }
 
-    border-radius:6px;
+        .action-btn.primary {
+            border: none;
 
-    background:#344158;
+            background:
+                linear-gradient(
+                    135deg,
+                    #159ddd,
+                    #0873cf
+                );
 
-    color:#fff;
+            color: white;
+        }
 
-    cursor:pointer;
+        /* INFO */
 
-    font-size:9px;
+        .info-grid {
+            display: grid;
 
-    font-weight:600;
+            grid-template-columns:
+                repeat(3, 1fr);
 
-    text-align:center;
-}
+            gap: 15px;
 
-.result-btn:hover{
-    background:#22c55e;
-}
+            margin-top: 22px;
+        }
 
-.result-btn.report{
-    background:#7f3046;
-}
+        .info-card {
+            padding: 20px;
 
-.result-btn.report:hover{
-    background:#a83d58;
-}
+            border:
+                1px solid var(--line);
 
-.notice{
-    margin-top:18px;
+            border-radius: 18px;
 
-    padding:13px;
+            background: #081d2f;
+        }
 
-    border-radius:8px;
+        .info-icon {
+            margin-bottom: 10px;
 
-    background:#111a2f;
+            font-size: 23px;
+        }
 
-    border:1px solid #2d3953;
+        .info-card h3 {
+            margin-bottom: 6px;
 
-    color:#7f8b9f;
+            font-size: 14px;
+        }
 
-    font-size:9px;
+        .info-card p {
+            color: var(--muted);
 
-    line-height:1.6;
-}
+            font-size: 10px;
 
-footer{
-    text-align:center;
+            line-height: 1.6;
+        }
 
-    padding:23px 15px;
+        /* MOBILE */
 
-    color:#69758a;
+        @media(max-width: 800px) {
 
-    font-size:10px;
+            .scanner-area {
+                grid-template-columns: 1fr;
+            }
 
-    border-top:1px solid #202b42;
-}
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
 
-@media(max-width:1050px){
+        }
 
-    .nav-links{
-        gap:7px;
+        @media(max-width: 600px) {
 
-        font-size:8px;
-    }
+            .qr-page {
+                padding: 45px 12px 80px;
+            }
 
-}
+            .qr-card {
+                padding: 20px;
+            }
 
-@media(max-width:800px){
+            .camera-box {
+                min-height: 310px;
+            }
 
-    .nav-links{
-        display:none;
-    }
+            .camera-frame {
+                width: 190px;
+                height: 190px;
+            }
 
-    .mobile-menu{
-        display:block;
-    }
+            .qr-signals {
+                grid-template-columns: 1fr;
+            }
 
-    .nav-container{
-        min-height:58px;
-    }
+            .result-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
 
-    .brand{
-        font-size:16px;
-    }
+            .actions {
+                flex-direction: column;
+            }
 
-    .brand img{
-        width:30px;
-        height:30px;
-    }
+        }
 
-    .scanner-grid{
-        grid-template-columns:1fr;
-    }
-
-    .result-empty{
-        min-height:200px;
-    }
-
-}
-
-@media(max-width:500px){
-
-    .page{
-        padding:
-        25px 10px 40px;
-    }
-
-    .header h1{
-        font-size:28px;
-    }
-
-    .scanner-card{
-        padding:14px;
-    }
-
-    .camera-panel,
-    .result-panel{
-        padding:13px;
-    }
-
-    .camera-buttons{
-        flex-direction:column;
-    }
-
-    .details{
-        grid-template-columns:1fr;
-    }
-
-    .result-actions{
-        flex-direction:column;
-    }
-
-}
-
-</style>
-
+    </style>
 </head>
+
 
 <body>
 
+
+<!-- ================= NAVBAR ================= -->
+
 <header class="navbar">
 
-<div class="nav-container">
+    <div class="nav-container">
 
-<a
-href="index.html"
-class="brand">
+        <a href="index.html" class="brand">
+            INSPECT<span>CALLER</span>
+        </a>
 
-<img
-src="logo.png"
-alt="FraudGuard">
+        <nav class="nav-links">
 
-<span>
-FraudGuard
-</span>
+            <a href="dashboard.html">
+                Dashboard
+            </a>
 
-</a>
+            <a href="scanner.html">
+                Scanner
+            </a>
 
-<nav class="nav-links">
+            <a href="phone-checker.html">
+                Caller
+            </a>
 
-<a href="index.html">
-Home
-</a>
+            <a href="report.html">
+                Report
+            </a>
 
-<a href="dashboard.html">
-Dashboard
-</a>
+        </nav>
 
-<a href="scanner.html">
-URL Scanner
-</a>
+        <a href="dashboard.html" class="nav-login">
+            Dashboard
+        </a>
 
-<a href="phone-checker.html">
-Phone
-</a>
-
-<a href="email-checker.html">
-Email
-</a>
-
-<a href="ai-chat.html">
-AI Chat
-</a>
-
-<a
-href="qr-scanner.html"
-class="active">
-
-QR
-
-</a>
-
-<a href="facebook-scanner.html">
-Facebook
-</a>
-
-<a href="telegram-scanner.html">
-Telegram
-</a>
-
-<a href="whatsapp-scanner.html">
-WhatsApp
-</a>
-
-<a href="report.html">
-Report
-</a>
-
-<a href="features.html">
-Features
-</a>
-
-<a href="about.html">
-About
-</a>
-
-<a href="contact.html">
-Contact
-</a>
-
-<button
-id="logoutBtn"
-class="logout-btn">
-
-Logout
-
-</button>
-
-</nav>
-
-<button
-id="mobileMenuBtn"
-class="mobile-menu">
-
-☰
-
-</button>
-
-</div>
+    </div>
 
 </header>
 
 
-<main class="page">
 
-<section class="header">
+<!-- ================= PAGE ================= -->
 
-<div class="header-icon">
-📷
+<main class="qr-page">
+
+<div class="qr-container">
+
+
+    <!-- HERO -->
+
+    <section class="qr-hero">
+
+        <div class="qr-badge">
+            📷 QR SECURITY SCANNER
+        </div>
+
+        <h1>
+            QR <span>Scanner</span>
+        </h1>
+
+        <p>
+            Scan a QR code or enter its decoded
+            destination to inspect potential phishing,
+            malicious-link and scam indicators before
+            opening it.
+        </p>
+
+    </section>
+
+
+
+    <!-- MAIN CARD -->
+
+    <section class="qr-card">
+
+
+        <div class="scanner-area">
+
+
+            <!-- CAMERA AREA -->
+
+            <div class="camera-box">
+
+                <div class="camera-frame">
+
+                    <div class="corner tl"></div>
+                    <div class="corner tr"></div>
+                    <div class="corner bl"></div>
+                    <div class="corner br"></div>
+
+                    <div class="scan-line"></div>
+
+                    <div class="qr-symbol">
+                        ▦
+                    </div>
+
+                </div>
+
+                <div class="camera-text">
+                    Position a QR code inside the frame
+                </div>
+
+                <button
+                    class="camera-btn"
+                    onclick="startCamera()">
+
+                    📷 Start Camera
+
+                </button>
+
+            </div>
+
+
+
+            <!-- MANUAL AREA -->
+
+            <div class="manual-box">
+
+                <h2>
+                    Inspect QR Destination
+                </h2>
+
+                <p>
+                    Already scanned the QR code?
+                    Paste the URL or decoded text below
+                    for a security analysis.
+                </p>
+
+
+                <label
+                    class="input-label"
+                    for="qrInput">
+
+                    QR URL / Data
+
+                </label>
+
+
+                <input
+                    type="text"
+                    id="qrInput"
+                    class="qr-input"
+                    placeholder="https://example.com/..."
+                    autocomplete="off"
+                >
+
+
+                <button
+                    class="analyze-btn"
+                    onclick="analyzeQR()">
+
+                    🔍 Analyze QR Destination
+
+                </button>
+
+
+                <button
+                    class="sample-btn"
+                    onclick="loadSample()">
+
+                    Use Demo QR
+
+                </button>
+
+
+                <!-- RESULT -->
+
+                <div
+                    id="result"
+                    class="result">
+
+
+                    <div class="result-header">
+
+                        <div class="result-url">
+
+                            <span>
+                                DECODED DESTINATION
+                            </span>
+
+                            <strong id="resultUrl">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="risk-score">
+
+                            <strong id="riskScore">
+                                18
+                            </strong>
+
+                            <span>
+                                RISK / 100
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="qr-signals">
+
+
+                        <div class="qr-signal">
+
+                            <div class="signal-name">
+
+                                <div class="signal-icon">
+                                    🌐
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Domain
+                                    </strong>
+
+                                    <span>
+                                        Destination check
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <span
+                                class="status safe"
+                                id="domainStatus">
+
+                                CHECKED
+
+                            </span>
+
+                        </div>
+
+
+                        <div class="qr-signal">
+
+                            <div class="signal-name">
+
+                                <div class="signal-icon">
+                                    🎣
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Phishing Signals
+                                    </strong>
+
+                                    <span>
+                                        Suspicious patterns
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <span
+                                class="status safe"
+                                id="phishingStatus">
+
+                                LOW
+
+                            </span>
+
+                        </div>
+
+
+                        <div class="qr-signal">
+
+                            <div class="signal-name">
+
+                                <div class="signal-icon">
+                                    🔗
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Redirects
+                                    </strong>
+
+                                    <span>
+                                        Link behavior
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <span class="status review">
+                                REVIEW
+                            </span>
+
+                        </div>
+
+
+                        <div class="qr-signal">
+
+                            <div class="signal-name">
+
+                                <div class="signal-icon">
+                                    💳
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Payment Request
+                                    </strong>
+
+                                    <span>
+                                        Financial activity
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <span class="status safe">
+                                LOW
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="warning">
+
+                        ⚠️ <strong>Important:</strong>
+                        A QR scan result is a security
+                        indicator, not proof that a website
+                        is safe or fraudulent. Do not enter
+                        passwords, OTPs or payment details
+                        unless you trust the destination.
+
+                    </div>
+
+
+                    <div class="actions">
+
+                        <a
+                            href="report.html"
+                            class="action-btn primary">
+
+                            🚨 Report Suspicious Link
+
+                        </a>
+
+
+                        <button
+                            class="action-btn"
+                            onclick="copyResult()">
+
+                            📋 Copy Result
+
+                        </button>
+
+
+                        <a
+                            href="ai-chat.html"
+                            class="action-btn">
+
+                            🤖 AI Analysis
+
+                        </a>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- INFO -->
+
+    <section class="info-grid">
+
+
+        <div class="info-card">
+
+            <div class="info-icon">
+                🎣
+            </div>
+
+            <h3>
+                Phishing Protection
+            </h3>
+
+            <p>
+                Inspect QR destinations for potential
+                phishing and suspicious URL patterns.
+            </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <div class="info-icon">
+                🔐
+            </div>
+
+            <h3>
+                Safer Before Opening
+            </h3>
+
+            <p>
+                Analyze a destination before entering
+                sensitive information or making payments.
+            </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <div class="info-icon">
+                🚨
+            </div>
+
+            <h3>
+                Community Reports
+            </h3>
+
+            <p>
+                Future versions can connect QR results
+                with user reports and threat intelligence.
+            </p>
+
+        </div>
+
+
+    </section>
+
+
 </div>
-
-<h1>
-QR
-<span>Scanner</span>
-</h1>
-
-<p>
-Scan a QR code using your camera or upload
-an image. If the QR contains a URL,
-FraudGuard can analyze its destination for
-potential risk indicators.
-</p>
-
-</section>
-
-
-<section class="scanner-card">
-
-<div class="scanner-grid">
-
-
-<div class="camera-panel">
-
-<h2 class="panel-title">
-Scan QR Code
-</h2>
-
-
-<div class="camera-box">
-
-<video
-id="video"
-playsinline>
-</video>
-
-
-<div
-id="cameraPlaceholder"
-class="camera-placeholder">
-
-<div class="icon">
-📷
-</div>
-
-<h3>
-Camera is ready
-</h3>
-
-<p>
-Start the camera and place the QR code
-inside the scanning area.
-</p>
-
-</div>
-
-
-<div
-id="scanFrame"
-class="scan-frame">
-</div>
-
-<div
-id="scanLine"
-class="scan-line">
-</div>
-
-</div>
-
-
-<div class="camera-buttons">
-
-<button
-id="startCameraBtn"
-class="camera-btn primary">
-
-Start Camera
-
-</button>
-
-<button
-id="stopCameraBtn"
-class="camera-btn"
-disabled>
-
-Stop
-
-</button>
-
-</div>
-
-
-<label
-for="qrImage"
-class="upload-label">
-
-📁 Upload QR Image
-
-</label>
-
-<input
-id="qrImage"
-type="file"
-accept="image/*">
-
-
-<div
-id="status"
-class="status">
-</div>
-
-</div>
-
-
-<div class="result-panel">
-
-<h2 class="panel-title">
-Scan Result
-</h2>
-
-
-<div
-id="resultEmpty"
-class="result-empty">
-
-<div>
-
-<div style="font-size:35px;margin-bottom:9px;">
-🛡️
-</div>
-
-Scan a QR code to see
-the decoded result and
-risk analysis.
-
-</div>
-
-</div>
-
-
-<div
-id="resultContent"
-class="result-content">
-
-
-<div class="result-status">
-
-<h2>
-QR Analysis
-</h2>
-
-<div
-id="resultBadge"
-class="badge">
-
--
-
-</div>
-
-</div>
-
-
-<div class="decoded-box">
-
-<div class="decoded-label">
-Decoded Content
-</div>
-
-<div id="decodedResult">
--
-</div>
-
-</div>
-
-
-<div class="risk-box">
-
-<div class="risk-score">
-
-<div id="riskScore">
-0
-</div>
-
-<span>
-RISK / 100
-</span>
-
-</div>
-
-
-<div class="risk-info">
-
-<h3 id="riskTitle">
-Analyzing...
-</h3>
-
-<p id="riskDescription">
-Waiting for QR analysis.
-</p>
-
-</div>
-
-</div>
-
-
-<div class="details">
-
-<div class="detail">
-
-<div class="detail-label">
-Content Type
-</div>
-
-<div
-id="contentType"
-class="detail-value">
-
--
-
-</div>
-
-</div>
-
-
-<div class="detail">
-
-<div class="detail-label">
-Domain
-</div>
-
-<div
-id="qrDomain"
-class="detail-value">
-
--
-
-</div>
-
-</div>
-
-
-<div class="detail">
-
-<div class="detail-label">
-HTTPS
-</div>
-
-<div
-id="qrHttps"
-class="detail-value">
-
--
-
-</div>
-
-</div>
-
-
-<div class="detail">
-
-<div class="detail-label">
-Community Reports
-</div>
-
-<div
-id="qrReports"
-class="detail-value">
-
-0
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="reasons">
-
-<h3>
-Risk Indicators
-</h3>
-
-<ul id="riskReasons">
-
-<li>
-No scan performed yet.
-</li>
-
-</ul>
-
-</div>
-
-
-<div class="result-actions">
-
-<button
-id="copyBtn"
-class="result-btn">
-
-Copy Result
-
-</button>
-
-<button
-id="clearBtn"
-class="result-btn">
-
-Clear
-
-</button>
-
-<a
-id="reportBtn"
-href="report.html"
-class="result-btn report">
-
-Report
-
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="notice">
-
-<strong>Security notice:</strong>
-A QR code itself is not proof that its
-destination is safe. Never enter passwords,
-OTP codes, banking information or payment
-details on a website simply because a QR
-code directed you there.
-
-</div>
-
-</section>
 
 </main>
 
 
+
+<!-- ================= FOOTER ================= -->
+
 <footer>
 
-© 2026 FraudGuard —
-AI-Powered Global Fraud Detection Platform
+    <div class="footer-brand">
+        INSPECT<span>CALLER</span>
+    </div>
 
-  </footer>
-<script type="module">
+    <p>
+        Global Caller Security & Anti-Fraud Technology
+    </p>
 
-import {
-    auth,
-    db
-} from "./firebase.js";
+    <div class="footer-links">
 
-import {
-    onAuthStateChanged,
-    signOut
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        <a href="index.html">Home</a>
 
-import {
-    collection,
-    query,
-    where,
-    getDocs,
-    addDoc,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        <a href="features.html">Features</a>
 
+        <a href="about.html">About</a>
 
-const video =
-    document.getElementById("video");
+        <a href="contact.html">Contact</a>
 
-const startCameraBtn =
-    document.getElementById("startCameraBtn");
+        <a href="privacy-policy.html">Privacy</a>
 
-const stopCameraBtn =
-    document.getElementById("stopCameraBtn");
+        <a href="terms.html">Terms</a>
 
-const qrImage =
-    document.getElementById("qrImage");
+        <a href="cookie-policy.html">Cookies</a>
 
-const cameraPlaceholder =
-    document.getElementById("cameraPlaceholder");
+        <a href="disclaimer.html">Disclaimer</a>
 
-const scanFrame =
-    document.getElementById("scanFrame");
+    </div>
 
-const scanLine =
-    document.getElementById("scanLine");
+    <p class="copyright">
+        © 2026 Inspect Caller.
+        Idea / Pre-Launch Prototype.
+    </p>
 
-const status =
-    document.getElementById("status");
+</footer>
 
-const resultEmpty =
-    document.getElementById("resultEmpty");
 
-const resultContent =
-    document.getElementById("resultContent");
 
-const resultBadge =
-    document.getElementById("resultBadge");
+<script>
 
-const decodedResult =
-    document.getElementById("decodedResult");
+function analyzeQR() {
 
-const riskScore =
-    document.getElementById("riskScore");
+    const input =
+        document.getElementById("qrInput");
 
-const riskTitle =
-    document.getElementById("riskTitle");
+    const value =
+        input.value.trim();
 
-const riskDescription =
-    document.getElementById("riskDescription");
+    const result =
+        document.getElementById("result");
 
-const contentType =
-    document.getElementById("contentType");
+    if (!value) {
 
-const qrDomain =
-    document.getElementById("qrDomain");
-
-const qrHttps =
-    document.getElementById("qrHttps");
-
-const qrReports =
-    document.getElementById("qrReports");
-
-const riskReasons =
-    document.getElementById("riskReasons");
-
-const copyBtn =
-    document.getElementById("copyBtn");
-
-const clearBtn =
-    document.getElementById("clearBtn");
-
-const reportBtn =
-    document.getElementById("reportBtn");
-
-const logoutBtn =
-    document.getElementById("logoutBtn");
-
-const mobileMenuBtn =
-    document.getElementById("mobileMenuBtn");
-
-const navLinks =
-    document.querySelector(".nav-links");
-
-
-let currentUser = null;
-
-let cameraStream = null;
-
-let scanning = false;
-
-let lastDecodedValue = "";
-
-let scanCanvas =
-    document.createElement("canvas");
-
-let scanContext =
-    scanCanvas.getContext("2d");
-
-
-onAuthStateChanged(
-    auth,
-    user => {
-
-        if (!user) {
-
-            window.location.replace(
-                "login.html"
-            );
-
-            return;
-
-        }
-
-        currentUser = user;
-
-    }
-);
-
-
-function showStatus(message) {
-
-    status.textContent =
-        message;
-
-    status.style.display =
-        "block";
-
-}
-
-
-function hideStatus() {
-
-    status.style.display =
-        "none";
-
-}
-
-
-function getContentType(value) {
-
-    try {
-
-        const url =
-            new URL(value);
-
-        if (
-            url.protocol === "http:" ||
-            url.protocol === "https:"
-        ) {
-
-            return "URL";
-
-        }
-
-        if (
-            url.protocol === "mailto:"
-        ) {
-
-            return "Email";
-
-        }
-
-        if (
-            url.protocol === "tel:"
-        ) {
-
-            return "Phone";
-
-        }
-
-    } catch {
-
-        /* Not a standard URL */
-
-    }
-
-
-    if (
-        /^WIFI:/i.test(value)
-    ) {
-
-        return "Wi-Fi";
-
-    }
-
-
-    if (
-        /^BEGIN:VCARD/i.test(value)
-    ) {
-
-        return "Contact";
-
-    }
-
-
-    return "Text";
-
-}
-
-
-function getURLData(value) {
-
-    try {
-
-        const url =
-            new URL(value);
-
-
-        if (
-            url.protocol !== "http:" &&
-            url.protocol !== "https:"
-        ) {
-
-            return null;
-
-        }
-
-
-        return url;
-
-    } catch {
-
-        return null;
-
-    }
-
-}
-
-
-function analyzeContent(value) {
-
-    let score = 0;
-
-    const reasons = [];
-
-    const url =
-        getURLData(value);
-
-
-    if (!url) {
-
-        return {
-            score: 0,
-            reasons: [
-                "The QR code contains text or data rather than a standard web URL."
-            ],
-            url: null
-        };
-
-    }
-
-
-    const full =
-        url.href.toLowerCase();
-
-
-    if (
-        url.protocol !== "https:"
-    ) {
-
-        score += 25;
-
-        reasons.push(
-            "The destination does not use HTTPS."
+        alert(
+            "Please enter a QR URL or decoded data."
         );
 
-    } else {
+        input.focus();
 
-        reasons.push(
-            "The destination uses HTTPS."
-        );
+        return;
 
     }
+
+
+    result.classList.add("show");
+
+
+    document.getElementById(
+        "resultUrl"
+    ).textContent = value;
+
+
+    /*
+        Demo risk analysis.
+
+        Production version can connect this
+        interface to an authorized URL reputation
+        / threat-intelligence backend.
+    */
+
+    let score = 18;
 
 
     const suspiciousWords = [
 
         "login",
         "verify",
-        "verification",
+        "account",
         "password",
-        "secure",
-        "security",
-        "unlock",
-        "recover",
-        "claim",
-        "winner",
-        "bonus",
-        "gift",
-        "free",
-        "prize",
-        "payment",
         "wallet",
-        "support",
-        "appeal"
+        "crypto",
+        "payment",
+        "prize",
+        "winner",
+        "claim",
+        "free",
+        "gift",
+        "loan"
 
     ];
 
 
-    const found =
-        suspiciousWords.filter(
-            word =>
-                full.includes(word)
-        );
+    const lower =
+        value.toLowerCase();
+
+
+    suspiciousWords.forEach(
+        function(word) {
+
+            if (
+                lower.includes(word)
+            ) {
+
+                score += 6;
+
+            }
+
+        }
+    );
 
 
     if (
-        found.length >= 3
-    ) {
-
-        score += 25;
-
-        reasons.push(
-            "The destination contains several words commonly associated with phishing or scam pages."
-        );
-
-    } else if (
-        found.length > 0
-    ) {
-
-        score += 10;
-
-        reasons.push(
-            "The destination contains a security-sensitive or promotional keyword."
-        );
-
-    }
-
-
-    if (
-        url.username ||
-        url.password
-    ) {
-
-        score += 30;
-
-        reasons.push(
-            "The URL contains embedded credentials."
-        );
-
-    }
-
-
-    if (
-        url.search.length > 500
-    ) {
-
-        score += 8;
-
-        reasons.push(
-            "The URL contains an unusually large query string."
-        );
-
-    }
-
-
-    const redirectTerms = [
-
-        "redirect=",
-        "url=",
-        "target=",
-        "next=",
-        "return="
-
-    ];
-
-
-    const redirectCount =
-        redirectTerms.filter(
-            term =>
-                full.includes(term)
-        ).length;
-
-
-    if (
-        redirectCount >= 2
+        lower.startsWith("http://")
     ) {
 
         score += 15;
 
-        reasons.push(
-            "Multiple redirect-style parameters were detected."
-        );
+    }
+
+
+    if (
+        !lower.includes("https://") &&
+        lower.includes("login")
+    ) {
+
+        score += 15;
 
     }
 
 
     score =
-        Math.min(
-            score,
-            100
+        Math.min(score, 95);
+
+
+    document.getElementById(
+        "riskScore"
+    ).textContent = score;
+
+
+    const risk =
+        document.querySelector(
+            "#riskScore"
         );
 
 
-    return {
-        score,
-        reasons,
-        url
-    };
+    if (score >= 70) {
 
-}
+        risk.style.color =
+            "#ff7d91";
 
+        document.getElementById(
+            "phishingStatus"
+        ).textContent =
+            "HIGH";
 
-async function checkDatabase(
-    value
-) {
+        document.getElementById(
+            "phishingStatus"
+        ).className =
+            "status danger";
 
-    try {
+    }
 
-        const collectionRef =
-            collection(
-                db,
-                "fraud_qr"
-            );
+    else if (score >= 40) {
 
+        risk.style.color =
+            "#ffd267";
 
-        const q =
-            query(
-                collectionRef,
-                where(
-                    "content",
-                    "==",
-                    value
-                )
-            );
+        document.getElementById(
+            "phishingStatus"
+        ).textContent =
+            "REVIEW";
 
+        document.getElementById(
+            "phishingStatus"
+        ).className =
+            "status review";
 
-        const snapshot =
-            await getDocs(q);
+    }
 
+    else {
 
-        return {
-            found:
-                !snapshot.empty,
-
-            count:
-                snapshot.size,
-
-            error:
-                false
-        };
-
-
-    } catch (error) {
-
-        console.warn(
-            "QR database lookup failed:",
-            error
-        );
-
-
-        return {
-            found: false,
-            count: 0,
-            error: true
-        };
+        risk.style.color =
+            "#4ce7aa";
 
     }
 
 }
 
 
-function getStatus(
-    score,
-    database
-) {
+function loadSample() {
 
-    if (
-        database.found
-    ) {
+    document.getElementById(
+        "qrInput"
+    ).value =
+        "https://example.com/security-check";
 
-        return "Dangerous";
-
-    }
-
-
-    if (
-        score >= 60
-    ) {
-
-        return "Dangerous";
-
-    }
-
-
-    if (
-        score >= 30
-    ) {
-
-        return "Suspicious";
-
-    }
-
-
-    return "Low Risk";
+    analyzeQR();
 
 }
 
 
-function displayResult(
-    value,
-    analysis,
-    database
-) {
+function copyResult() {
 
-    const statusName =
-        getStatus(
-            analysis.score,
-            database
-        );
+    const url =
+        document.getElementById(
+            "resultUrl"
+        ).textContent;
 
-
-    resultEmpty.style.display =
-        "none";
-
-    resultContent.style.display =
-        "block";
+    const score =
+        document.getElementById(
+            "riskScore"
+        ).textContent;
 
 
-    decodedResult.textContent =
-        value;
+    const text =
+
+        "Inspect Caller QR Scan\n" +
+        "Destination: " + url + "\n" +
+        "Demo Risk Score: " +
+        score +
+        "/100\n" +
+        "Prototype result — not a verified security determination.";
 
 
-    riskScore.textContent =
-        analysis.score;
+    if (navigator.clipboard) {
 
+        navigator.clipboard
+            .writeText(text)
+            .then(function() {
 
-    contentType.textContent =
-        getContentType(value);
-
-
-    if (
-        analysis.url
-    ) {
-
-        qrDomain.textContent =
-            analysis.url.hostname;
-
-        qrHttps.textContent =
-            analysis.url.protocol === "https:"
-                ? "Secure HTTPS"
-                : "Not HTTPS";
-
-    } else {
-
-        qrDomain.textContent =
-            "Not applicable";
-
-        qrHttps.textContent =
-            "Not applicable";
-
-    }
-
-
-    qrReports.textContent =
-        database.error
-            ? "Unavailable"
-            : database.count;
-
-
-    resultBadge.className =
-        "badge";
-
-
-    if (
-        statusName === "Dangerous"
-    ) {
-
-        resultBadge.classList.add(
-            "dangerous"
-        );
-
-        resultBadge.textContent =
-            "🚨 Dangerous";
-
-        riskScore.style.color =
-            "#ff7186";
-
-        riskTitle.textContent =
-            "Potentially Dangerous";
-
-        riskTitle.style.color =
-            "#ff7186";
-
-        riskDescription.textContent =
-            database.found
-                ? "This QR content has matching FraudGuard community reports."
-                : "Several high-risk indicators were detected.";
-
-    } else if (
-        statusName === "Suspicious"
-    ) {
-
-        resultBadge.classList.add(
-            "suspicious"
-        );
-
-        resultBadge.textContent =
-            "⚠ Suspicious";
-
-        riskScore.style.color =
-            "#ffd76b";
-
-        riskTitle.textContent =
-            "Suspicious";
-
-        riskTitle.style.color =
-            "#ffd76b";
-
-        riskDescription.textContent =
-            "Some warning indicators were detected. Verify the destination before continuing.";
-
-    } else {
-
-        resultBadge.classList.add(
-            "safe"
-        );
-
-        resultBadge.textContent =
-            "✓ Low Risk";
-
-        riskScore.style.color =
-            "#22c55e";
-
-        riskTitle.textContent =
-            "Low Risk";
-
-        riskTitle.style.color =
-            "#22c55e";
-
-        riskDescription.textContent =
-            "No major URL-level warning indicators were detected.";
-
-    }
-
-
-    riskReasons.innerHTML =
-        "";
-
-
-    if (
-        database.found
-    ) {
-
-        const li =
-            document.createElement(
-                "li"
-            );
-
-        li.textContent =
-            "This QR content has been reported in the FraudGuard community database.";
-
-        riskReasons.appendChild(
-            li
-        );
-
-    }
-
-
-    analysis.reasons.forEach(
-        reason => {
-
-            const li =
-                document.createElement(
-                    "li"
+                alert(
+                    "QR scan result copied."
                 );
 
-            li.textContent =
-                reason;
+            });
 
-            riskReasons.appendChild(
-                li
-            );
+    }
 
-        }
+}
+
+
+function startCamera() {
+
+    alert(
+        "Camera QR scanning is planned for the next prototype version. For now, paste the decoded QR destination below."
     );
 
-
-    reportBtn.href =
-        "report.html?url=" +
-        encodeURIComponent(
-            value
-        );
-
 }
 
-
-async function saveHistory(
-    value,
-    analysis,
-    database
-) {
-
-    if (!currentUser) {
-        return;
-    }
-
-
-    try {
-
-        await addDoc(
-            collection(
-                db,
-                "scan_history"
-            ),
-            {
-
-                uid:
-                    currentUser.uid,
-
-                type:
-                    "qr",
-
-                content:
-                    value,
-
-                score:
-                    analysis.score,
-
-                status:
-                    getStatus(
-                        analysis.score,
-                        database
-                    ),
-
-                databaseMatch:
-                    database.found,
-
-                createdAt:
-                    serverTimestamp()
-
-            }
-        );
-
-    } catch (error) {
-
-        console.warn(
-            "QR scan history could not be saved:",
-            error
-        );
-
-    }
-
-}
-
-
-async function processDecoded(
-    value
-) {
-
-    if (
-        !value ||
-        value === lastDecodedValue
-    ) {
-
-        return;
-
-    }
-
-
-    lastDecodedValue =
-        value;
-
-
-    stopCamera();
-
-
-    showStatus(
-        "🔎 QR detected. Checking FraudGuard database..."
-    );
-
-
-    try {
-
-        const analysis =
-            analyzeContent(value);
-
-
-        const database =
-            await checkDatabase(
-                value
-            );
-
-
-        displayResult(
-            value,
-            analysis,
-            database
-        );
-
-
-        await saveHistory(
-            value,
-            analysis,
-            database
-        );
-
-
-        hideStatus();
-
-
-    } catch (error) {
-
-        console.error(
-            "QR processing error:",
-            error
-        );
-
-        showStatus(
-            "Unable to complete QR analysis."
-        );
-
-    }
-
-}
-
-
-async function startCamera() {
-
-    if (
-        !navigator.mediaDevices ||
-        !navigator.mediaDevices.getUserMedia
-    ) {
-
-        showStatus(
-            "Camera access is not supported by this browser."
-        );
-
-        return;
-
-    }
-
-
-    try {
-
-        stopCamera();
-
-
-        cameraStream =
-            await navigator
-                .mediaDevices
-                .getUserMedia({
-
-                    video: {
-                        facingMode: {
-                            ideal:
-                                "environment"
-                        }
-                    },
-
-                    audio: false
-
-                });
-
-
-        video.srcObject =
-            cameraStream;
-
-
-        await video.play();
-
-
-        video.style.display =
-            "block";
-
-
-        cameraPlaceholder.style.display =
-            "none";
-
-
-        scanFrame.style.display =
-            "block";
-
-        scanLine.style.display =
-            "block";
-
-
-        startCameraBtn.disabled =
-            true;
-
-        stopCameraBtn.disabled =
-            false;
-
-
-        scanning =
-            true;
-
-
-        lastDecodedValue =
-            "";
-
-
-        showStatus(
-            "📷 Camera active. Point it at a QR code."
-        );
-
-
-        requestAnimationFrame(
-            scanCameraFrame
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "Camera error:",
-            error
-        );
-
-
-        showStatus(
-            "Camera permission was denied or the camera is unavailable."
-        );
-
-    }
-
-}
-
-
-function stopCamera() {
-
-    scanning =
-        false;
-
-
-    if (
-        cameraStream
-    ) {
-
-        cameraStream
-            .getTracks()
-            .forEach(
-                track =>
-                    track.stop()
-            );
-
-        cameraStream =
-            null;
-
-    }
-
-
-    video.srcObject =
-        null;
-
-    video.style.display =
-        "none";
-
-
-    cameraPlaceholder.style.display =
-        "block";
-
-
-    scanFrame.style.display =
-        "none";
-
-    scanLine.style.display =
-        "none";
-
-
-    startCameraBtn.disabled =
-        false;
-
-    stopCameraBtn.disabled =
-        true;
-
-}
-
-
-async function scanCameraFrame() {
-
-    if (
-        !scanning ||
-        !video.videoWidth
-    ) {
-
-        if (scanning) {
-
-            requestAnimationFrame(
-                scanCameraFrame
-            );
-
-        }
-
-        return;
-
-    }
-
-
-    scanCanvas.width =
-        video.videoWidth;
-
-    scanCanvas.height =
-        video.videoHeight;
-
-
-    scanContext.drawImage(
-        video,
-        0,
-        0,
-        scanCanvas.width,
-        scanCanvas.height
-    );
-
-
-    try {
-
-        const imageData =
-            scanContext.getImageData(
-                0,
-                0,
-                scanCanvas.width,
-                scanCanvas.height
-            );
-
-
-        if (
-            "BarcodeDetector"
-            in window
-        ) {
-
-            const detector =
-                new BarcodeDetector({
-                    formats: [
-                        "qr_code"
-                    ]
-                });
-
-
-            const codes =
-                await detector.detect(
-                    imageData
-                );
-
-
-            if (
-                codes.length > 0 &&
-                codes[0].rawValue
-            ) {
-
-                await processDecoded(
-                    codes[0].rawValue
-                );
-
-                return;
-
-            }
-
-        }
-
-    } catch (error) {
-
-        console.warn(
-            "QR detection frame error:",
-            error
-        );
-
-    }
-
-
-    if (scanning) {
-
-        requestAnimationFrame(
-            scanCameraFrame
-        );
-
-    }
-
-}
-
-
-async function scanImage(
-    file
-) {
-
-    if (!file) {
-        return;
-    }
-
-
-    if (
-        !file.type.startsWith(
-            "image/"
-        )
-    ) {
-
-        showStatus(
-            "Please select a valid image file."
-        );
-
-        return;
-
-    }
-
-
-    showStatus(
-        "🔎 Reading QR code from image..."
-    );
-
-
-    try {
-
-        const image =
-            new Image();
-
-
-        const objectURL =
-            URL.createObjectURL(
-                file
-            );
-
-
-        image.src =
-            objectURL;
-
-
-        await new Promise(
-            (resolve, reject) => {
-
-                image.onload =
-                    resolve;
-
-                image.onerror =
-                    reject;
-
-            }
-        );
-
-
-        scanCanvas.width =
-            image.naturalWidth;
-
-        scanCanvas.height =
-            image.naturalHeight;
-
-
-        scanContext.drawImage(
-            image,
-            0,
-            0
-        );
-
-
-        URL.revokeObjectURL(
-            objectURL
-        );
-
-
-        if (
-            "BarcodeDetector"
-            in window
-        ) {
-
-            const detector =
-                new BarcodeDetector({
-                    formats: [
-                        "qr_code"
-                    ]
-                });
-
-
-            const codes =
-                await detector.detect(
-                    scanCanvas
-                );
-
-
-            if (
-                codes.length > 0 &&
-                codes[0].rawValue
-            ) {
-
-                await processDecoded(
-                    codes[0].rawValue
-                );
-
-                return;
-
-            }
-
-        }
-
-
-        showStatus(
-            "No QR code was detected in this image. Try a clearer QR image."
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "Image QR scan error:",
-            error
-        );
-
-
-        showStatus(
-            "Unable to read the QR image."
-        );
-
-    }
-
-}
-
-
-startCameraBtn.addEventListener(
-    "click",
-    startCamera
-);
-
-
-stopCameraBtn.addEventListener(
-    "click",
-    () => {
-
-        stopCamera();
-
-        hideStatus();
-
-    }
-);
-
-
-qrImage.addEventListener(
-    "change",
-    event => {
-
-        const file =
-            event.target.files[0];
-
-        scanImage(file);
-
-    }
-);
-
-
-copyBtn.addEventListener(
-    "click",
-    async () => {
-
-        const value =
-            decodedResult.textContent;
-
-
-        if (
-            !value ||
-            value === "-"
-        ) {
-
-            return;
-
-        }
-
-
-        try {
-
-            await navigator.clipboard.writeText(
-                value
-            );
-
-            copyBtn.textContent =
-                "Copied ✓";
-
-
-            setTimeout(
-                () => {
-
-                    copyBtn.textContent =
-                        "Copy Result";
-
-                },
-                1500
-            );
-
-        } catch {
-
-            alert(
-                "Unable to copy the result."
-            );
-
-        }
-
-    }
-);
-
-
-clearBtn.addEventListener(
-    "click",
-    () => {
-
-        stopCamera();
-
-
-        lastDecodedValue =
-            "";
-
-
-        resultContent.style.display =
-            "none";
-
-
-        resultEmpty.style.display =
-            "flex";
-
-
-        decodedResult.textContent =
-            "-";
-
-
-        riskReasons.innerHTML =
-            "<li>No scan performed yet.</li>";
-
-
-        qrImage.value =
-            "";
-
-
-        hideStatus();
-
-    }
-);
-
-
-logoutBtn.addEventListener(
-    "click",
-    async () => {
-
-        stopCamera();
-
-
-        logoutBtn.disabled =
-            true;
-
-        logoutBtn.textContent =
-            "Logging out...";
-
-
-        try {
-
-            await signOut(
-                auth
-            );
-
-            window.location.replace(
-                "login.html"
-            );
-
-        } catch (error) {
-
-            console.error(
-                "Logout error:",
-                error
-            );
-
-            logoutBtn.disabled =
-                false;
-
-            logoutBtn.textContent =
-                "Logout";
-
-        }
-
-    }
-);
-
-
-mobileMenuBtn.addEventListener(
-    "click",
-    () => {
-
-        if (
-            navLinks.classList.contains(
-                "mobile-open"
-            )
-        ) {
-
-            navLinks.classList.remove(
-                "mobile-open"
-            );
-
-            navLinks.style.display =
-                "";
-
-            return;
-
-        }
-
-
-        navLinks.classList.add(
-            "mobile-open"
-        );
-
-
-        navLinks.style.display =
-            "flex";
-
-        navLinks.style.flexDirection =
-            "column";
-
-        navLinks.style.position =
-            "absolute";
-
-        navLinks.style.top =
-            "58px";
-
-        navLinks.style.right =
-            "12px";
-
-        navLinks.style.width =
-            "230px";
-
-        navLinks.style.padding =
-            "16px";
-
-        navLinks.style.background =
-            "#10182d";
-
-        navLinks.style.border =
-            "1px solid #26324b";
-
-        navLinks.style.borderRadius =
-            "10px";
-
-        navLinks.style.boxShadow =
-            "0 12px 30px rgba(0,0,0,.35)";
-
-    }
-);
-
-
-navLinks
-    .querySelectorAll("a")
-    .forEach(
-        link => {
-
-            link.addEventListener(
-                "click",
-                () => {
-
-                    navLinks.classList.remove(
-                        "mobile-open"
-                    );
-
-                    if (
-                        window.innerWidth <= 800
-                    ) {
-
-                        navLinks.style.display =
-                            "none";
-
-                    }
-
-                }
-            );
-
-        }
-    );
-
-
-window.addEventListener(
-    "resize",
-    () => {
-
-        if (
-            window.innerWidth > 800
-        ) {
-
-            navLinks.style = "";
-
-            navLinks.classList.remove(
-                "mobile-open"
-            );
-
-        }
-
-    }
-);
-
-
-window.addEventListener(
-    "beforeunload",
-    () => {
-
-        stopCamera();
-
-    }
-);
-
-</script>
-
-
-<script
-type="module"
-src="script.js">
 </script>
 
 
 </body>
-
-  </html>
+</html>
