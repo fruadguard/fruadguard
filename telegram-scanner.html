@@ -3,1414 +3,1516 @@
 
 <head>
 
-<meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>Telegram Scanner | FraudGuard</title>
-
-<meta
-name="description"
-content="Check public Telegram links for suspicious patterns and FraudGuard community reports.">
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    min-height:100vh;
-    background:#0b1328;
-    color:#fff;
-    font-family:Arial,Helvetica,sans-serif;
-}
-
-a{
-    color:inherit;
-    text-decoration:none;
-}
-
-.navbar{
-    width:100%;
-    background:#10182d;
-    border-bottom:1px solid #26324b;
-    position:sticky;
-    top:0;
-    z-index:1000;
-}
-
-.nav-container{
-    max-width:1250px;
-    min-height:64px;
-    margin:auto;
-    padding:0 18px;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.brand{
-    display:flex;
-    align-items:center;
-    gap:9px;
-
-    color:#22c55e;
-    font-size:20px;
-    font-weight:700;
-}
-
-.brand img{
-    width:36px;
-    height:36px;
-    object-fit:contain;
-}
-
-.nav-links{
-    display:flex;
-    align-items:center;
-    gap:11px;
-
-    font-size:10px;
-    font-weight:600;
-}
-
-.nav-links a:hover{
-    color:#22c55e;
-}
-
-.nav-links a.active{
-    color:#22c55e;
-}
-
-.logout-btn{
-    border:0;
-    border-radius:6px;
-
-    padding:8px 13px;
-
-    background:#22c55e;
-    color:#fff;
-
-    cursor:pointer;
-    font-weight:700;
-}
-
-.logout-btn:hover{
-    background:#16a34a;
-}
-
-.mobile-menu{
-    display:none;
-
-    border:0;
-    background:transparent;
-    color:#fff;
-
-    font-size:24px;
-    cursor:pointer;
-}
-
-.page{
-    max-width:950px;
-    margin:auto;
-    padding:38px 16px 55px;
-}
-
-.header{
-    text-align:center;
-    margin-bottom:28px;
-}
-
-.header-icon{
-    font-size:48px;
-    margin-bottom:9px;
-}
-
-.header h1{
-    font-size:32px;
-    margin-bottom:8px;
-}
-
-.header h1 span{
-    color:#22c55e;
-}
-
-.header p{
-    max-width:700px;
-    margin:auto;
-
-    color:#9da8bb;
-    font-size:12px;
-    line-height:1.7;
-}
-
-.scanner-card{
-    background:#1c263b;
-
-    border:1px solid #2d3953;
-    border-radius:13px;
-
-    padding:28px;
-}
-
-.input-label{
-    display:block;
-
-    color:#dce1e9;
-
-    font-size:12px;
-    font-weight:600;
-
-    margin-bottom:8px;
-}
-
-.input-row{
-    display:flex;
-    gap:9px;
-}
-
-#telegramUrl{
-    flex:1;
-    min-width:0;
-
-    padding:14px;
-
-    border-radius:7px;
-    border:1px solid #3b4760;
-
-    background:#111a2f;
-    color:#fff;
-
-    outline:none;
-    font-size:13px;
-}
-
-#telegramUrl:focus{
-    border-color:#22c55e;
-
-    box-shadow:
-    0 0 0 2px
-    rgba(34,197,94,.10);
-}
-
-#telegramUrl::placeholder{
-    color:#69758a;
-}
-
-.scan-btn{
-    min-width:125px;
-
-    padding:12px 17px;
-
-    border:0;
-    border-radius:7px;
-
-    background:#22c55e;
-    color:#fff;
-
-    cursor:pointer;
-
-    font-weight:700;
-    font-size:12px;
-}
-
-.scan-btn:hover{
-    background:#16a34a;
-}
-
-.scan-btn:disabled{
-    opacity:.6;
-    cursor:not-allowed;
-}
-
-.example{
-    margin-top:9px;
-
-    color:#69758a;
-    font-size:10px;
-}
-
-.status{
-    display:none;
-
-    margin-top:18px;
-
-    padding:11px;
-
-    border-radius:7px;
-
-    background:#111a2f;
-    border:1px solid #2d3953;
-
-    color:#aeb7c7;
-    font-size:11px;
-}
-
-.result{
-    display:none;
-    margin-top:20px;
-}
-
-.result-top{
-    display:flex;
-
-    align-items:center;
-    justify-content:space-between;
-
-    gap:15px;
-
-    padding:20px;
-
-    background:#111a2f;
-    border:1px solid #2d3953;
-
-    border-radius:10px;
-}
-
-.result-title{
-    min-width:0;
-}
-
-.result-title h2{
-    color:#fff;
-    font-size:18px;
-    margin-bottom:5px;
-}
-
-.result-title p{
-    color:#7f8b9f;
-    font-size:10px;
-
-    word-break:break-all;
-}
-
-.badge{
-    flex:none;
-
-    padding:8px 12px;
-
-    border-radius:20px;
-
-    font-size:10px;
-    font-weight:700;
-}
-
-.badge.safe{
-    background:#123521;
-    color:#62e993;
-    border:1px solid #236b3b;
-}
-
-.badge.suspicious{
-    background:#423719;
-    color:#ffd76b;
-    border:1px solid #725f24;
-}
-
-.badge.dangerous{
-    background:#401c28;
-    color:#ff91a6;
-    border:1px solid #7f3046;
-}
-
-.score-card{
-    display:grid;
-
-    grid-template-columns:180px 1fr;
-
-    gap:18px;
-
-    margin-top:15px;
-}
-
-.score{
-    background:#111a2f;
-
-    border:1px solid #2d3953;
-    border-radius:10px;
-
-    padding:20px;
-
-    text-align:center;
-}
-
-.score-number{
-    color:#22c55e;
-
-    font-size:42px;
-    font-weight:700;
-
-    line-height:1;
-
-    margin-bottom:8px;
-}
-
-.score-label{
-    color:#8f9bad;
-    font-size:10px;
-}
-
-.details{
-    background:#111a2f;
-
-    border:1px solid #2d3953;
-    border-radius:10px;
-
-    padding:20px;
-}
-
-.details h3{
-    color:#22c55e;
-
-    font-size:14px;
-    margin-bottom:13px;
-}
-
-.detail-grid{
-    display:grid;
-
-    grid-template-columns:
-    repeat(2,1fr);
-
-    gap:12px;
-}
-
-.detail{
-    background:#1c263b;
-
-    border-radius:7px;
-    padding:12px;
-}
-
-.detail-label{
-    color:#69758a;
-
-    font-size:9px;
-    margin-bottom:4px;
-}
-
-.detail-value{
-    color:#dce1e9;
-
-    font-size:11px;
-    word-break:break-word;
-}
-
-.reasons{
-    margin-top:15px;
-
-    background:#111a2f;
-
-    border:1px solid #2d3953;
-    border-radius:10px;
-
-    padding:20px;
-}
-
-.reasons h3{
-    color:#22c55e;
-
-    font-size:14px;
-    margin-bottom:10px;
-}
-
-.reasons ul{
-    padding-left:18px;
-}
-
-.reasons li{
-    color:#aeb7c7;
-
-    font-size:11px;
-    line-height:1.7;
-
-    margin-bottom:4px;
-}
-
-.actions{
-    display:flex;
-    gap:9px;
-
-    margin-top:15px;
-}
-
-.action-btn{
-    flex:1;
-
-    padding:11px;
-
-    border-radius:7px;
-
-    text-align:center;
-
-    font-size:11px;
-    font-weight:600;
-
-    background:#344158;
-    color:#fff;
-
-    border:0;
-    cursor:pointer;
-}
-
-.action-btn:hover{
-    background:#22c55e;
-}
-
-.action-btn.report{
-    background:#7f3046;
-}
-
-.action-btn.report:hover{
-    background:#a83d58;
-}
-
-.notice{
-    margin-top:18px;
-
-    padding:14px;
-
-    border-radius:8px;
-
-    background:#111a2f;
-
-    border:1px solid #2d3953;
-
-    color:#7f8b9f;
-
-    font-size:10px;
-
-    line-height:1.6;
-}
-
-footer{
-    text-align:center;
-
-    padding:23px 15px;
-
-    color:#69758a;
-
-    font-size:10px;
-
-    border-top:1px solid #202b42;
-}
-
-@media(max-width:1050px){
-
-    .nav-links{
-        gap:7px;
-        font-size:8px;
-    }
-
-}
-
-@media(max-width:750px){
-
-    .nav-links{
-        display:none;
-    }
-
-    .mobile-menu{
-        display:block;
-    }
-
-    .nav-container{
-        min-height:58px;
-    }
-
-    .brand{
-        font-size:16px;
-    }
-
-    .brand img{
-        width:30px;
-        height:30px;
-    }
-
-    .page{
-        padding:
-        25px 11px 40px;
-    }
-
-    .scanner-card{
-        padding:18px;
-    }
-
-    .input-row{
-        flex-direction:column;
-    }
-
-    .scan-btn{
-        width:100%;
-    }
-
-    .result-top{
-        align-items:flex-start;
-        flex-direction:column;
-    }
-
-    .score-card{
-        grid-template-columns:1fr;
-    }
-
-    .detail-grid{
-        grid-template-columns:1fr;
-    }
-
-    .actions{
-        flex-direction:column;
-    }
-
-}
-
-</style>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Telegram Scanner — Inspect Caller</title>
+
+    <meta
+        name="description"
+        content="Inspect Caller Telegram scam and security scanner."
+    >
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        .telegram-page {
+            min-height: 100vh;
+            padding: 65px 20px 100px;
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(0,150,255,.15),
+                    transparent 42%
+                ),
+                #050d18;
+        }
+
+        .telegram-container {
+            width: min(1050px,100%);
+            margin: auto;
+        }
+
+        .telegram-hero {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .telegram-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 16px;
+            border: 1px solid #285873;
+            border-radius: 999px;
+            background: #071b2c;
+            color: #8bdcff;
+            font-size: 10px;
+            font-weight: 850;
+            letter-spacing: .8px;
+        }
+
+        .telegram-hero h1 {
+            margin-top: 20px;
+            font-size: clamp(42px,7vw,68px);
+            line-height: 1;
+            letter-spacing: -3px;
+        }
+
+        .telegram-hero h1 span {
+            color: var(--blue);
+        }
+
+        .telegram-hero p {
+            max-width: 720px;
+            margin: 18px auto 0;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .telegram-card {
+            padding: 30px;
+            border: 1px solid var(--line);
+            border-radius: 25px;
+            background:
+                linear-gradient(
+                    145deg,
+                    #0a2034,
+                    #061522
+                );
+            box-shadow:
+                0 25px 80px
+                rgba(0,100,180,.08);
+        }
+
+        .scan-tabs {
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 9px;
+            margin-bottom: 22px;
+        }
+
+        .scan-tab {
+            position: relative;
+        }
+
+        .scan-tab input {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .scan-tab label {
+            min-height: 70px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            border: 1px solid #193c52;
+            border-radius: 13px;
+            background: #071827;
+            color: #7895a5;
+            font-size: 9px;
+            font-weight: 850;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .scan-tab label span {
+            font-size: 21px;
+        }
+
+        .scan-tab input:checked + label {
+            border-color: #25b5ff;
+            background: rgba(0,150,255,.08);
+            color: #a9e2ff;
+            box-shadow:
+                0 0 20px
+                rgba(0,150,255,.06);
+        }
+
+        .field-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #bfd5df;
+            font-size: 10px;
+            font-weight: 850;
+        }
+
+        .telegram-input {
+            width: 100%;
+            min-height: 53px;
+            padding: 0 15px;
+            border: 1px solid #28536b;
+            border-radius: 13px;
+            outline: none;
+            background: #061725;
+            color: white;
+            font-family: inherit;
+            font-size: 12px;
+        }
+
+        .telegram-input::placeholder {
+            color: #587384;
+        }
+
+        .telegram-input:focus {
+            border-color: #25b5ff;
+            box-shadow:
+                0 0 0 3px
+                rgba(0,150,255,.08);
+        }
+
+        .message-input {
+            width: 100%;
+            min-height: 130px;
+            padding: 15px;
+            border: 1px solid #28536b;
+            border-radius: 13px;
+            outline: none;
+            resize: vertical;
+            background: #061725;
+            color: white;
+            font-family: inherit;
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .message-input::placeholder {
+            color: #587384;
+        }
+
+        .message-input:focus {
+            border-color: #25b5ff;
+            box-shadow:
+                0 0 0 3px
+                rgba(0,150,255,.08);
+        }
+
+        .scan-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 15px;
+        }
+
+        .scan-btn {
+            min-height: 49px;
+            padding: 0 25px;
+            border: none;
+            border-radius: 13px;
+            background:
+                linear-gradient(
+                    135deg,
+                    #25b5ff,
+                    #087ddd
+                );
+            color: white;
+            font-size: 11px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: .25s;
+        }
+
+        .scan-btn:hover {
+            transform: translateY(-2px);
+            box-shadow:
+                0 15px 35px
+                rgba(0,140,255,.22);
+        }
+
+        .telegram-result {
+            display: none;
+            margin-top: 25px;
+        }
+
+        .telegram-result.show {
+            display: block;
+        }
+
+        .profile-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px;
+            border: 1px solid #285873;
+            border-radius: 18px;
+            background: #071a2a;
+        }
+
+        .profile-avatar {
+            width: 58px;
+            height: 58px;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            border-radius: 17px;
+            background:
+                linear-gradient(
+                    145deg,
+                    #0d4263,
+                    #092338
+                );
+            border: 1px solid #286282;
+            font-size: 25px;
+        }
+
+        .profile-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .profile-info small {
+            color: #718d9d;
+            font-size: 8px;
+        }
+
+        .profile-info h2 {
+            margin-top: 5px;
+            font-size: 16px;
+        }
+
+        .profile-info p {
+            margin-top: 4px;
+            color: #6f8997;
+            font-size: 9px;
+        }
+
+        .risk-score {
+            min-width: 110px;
+            padding: 12px;
+            text-align: center;
+            border-radius: 14px;
+            background: rgba(255,200,80,.06);
+            border: 1px solid rgba(255,200,80,.25);
+        }
+
+        .risk-score strong {
+            display: block;
+            color: #ffd267;
+            font-size: 27px;
+        }
+
+        .risk-score span {
+            color: #718b99;
+            font-size: 7px;
+        }
+
+        .verdict {
+            margin-top: 13px;
+            padding: 17px;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            border: 1px solid #193c52;
+            border-radius: 15px;
+            background: #071827;
+        }
+
+        .verdict-icon {
+            width: 43px;
+            height: 43px;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            border-radius: 12px;
+            background: rgba(255,200,80,.08);
+            font-size: 20px;
+        }
+
+        .verdict strong {
+            display: block;
+            color: #d4e6ed;
+            font-size: 12px;
+        }
+
+        .verdict span {
+            display: block;
+            margin-top: 4px;
+            color: #7894a2;
+            font-size: 9px;
+        }
+
+        .signals-title {
+            margin: 20px 0 11px;
+            color: #c7dbe4;
+            font-size: 13px;
+            font-weight: 850;
+        }
+
+        .signal-grid {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 11px;
+        }
+
+        .signal {
+            padding: 16px;
+            border: 1px solid #193c52;
+            border-radius: 13px;
+            background: #071827;
+        }
+
+        .signal-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .signal-icon {
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            border-radius: 9px;
+            background: #0b2941;
+        }
+
+        .signal-status {
+            padding: 5px 8px;
+            border-radius: 999px;
+            font-size: 7px;
+            font-weight: 900;
+        }
+
+        .safe {
+            color: #4ce7aa;
+            background: rgba(45,228,154,.08);
+            border: 1px solid rgba(45,228,154,.2);
+        }
+
+        .review {
+            color: #ffd267;
+            background: rgba(255,200,80,.08);
+            border: 1px solid rgba(255,200,80,.2);
+        }
+
+        .danger {
+            color: #ff8194;
+            background: rgba(255,70,95,.08);
+            border: 1px solid rgba(255,70,95,.2);
+        }
+
+        .signal h3 {
+            margin-top: 10px;
+            font-size: 11px;
+        }
+
+        .signal p {
+            margin-top: 5px;
+            color: #698492;
+            font-size: 8px;
+            line-height: 1.5;
+        }
+
+        .action-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 17px;
+        }
+
+        .action-btn {
+            min-height: 43px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 16px;
+            border: 1px solid #285873;
+            border-radius: 11px;
+            background: #071b2b;
+            color: #9fdcff;
+            font-size: 9px;
+            font-weight: 850;
+            cursor: pointer;
+        }
+
+        .action-btn.primary {
+            border: none;
+            background:
+                linear-gradient(
+                    135deg,
+                    #159ddd,
+                    #0873cf
+                );
+            color: white;
+        }
+
+        .notice {
+            margin-top: 15px;
+            padding: 14px 16px;
+            border-left: 4px solid #ffc857;
+            border-radius: 9px;
+            background: rgba(255,200,80,.06);
+            color: #bcae83;
+            font-size: 9px;
+            line-height: 1.7;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 15px;
+            margin-top: 22px;
+        }
+
+        .info-card {
+            padding: 20px;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            background: #081d2f;
+        }
+
+        .info-icon {
+            margin-bottom: 10px;
+            font-size: 23px;
+        }
+
+        .info-card h3 {
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+
+        .info-card p {
+            color: var(--muted);
+            font-size: 9px;
+            line-height: 1.7;
+        }
+
+        @media(max-width:800px) {
+
+            .scan-tabs {
+                grid-template-columns: repeat(2,1fr);
+            }
+
+            .signal-grid,
+            .info-grid {
+                grid-template-columns: repeat(2,1fr);
+            }
+
+        }
+
+        @media(max-width:600px) {
+
+            .telegram-page {
+                padding: 45px 12px 80px;
+            }
+
+            .telegram-card {
+                padding: 20px;
+            }
+
+            .profile-card {
+                align-items: flex-start;
+                flex-wrap: wrap;
+            }
+
+            .risk-score {
+                width: 100%;
+            }
+
+            .signal-grid,
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .scan-actions,
+            .action-row {
+                flex-direction: column;
+            }
+
+            .scan-btn,
+            .action-btn {
+                width: 100%;
+            }
+
+        }
+
+    </style>
 
 </head>
 
+
 <body>
+
+
+<!-- ================= NAVBAR ================= -->
 
 <header class="navbar">
 
-<div class="nav-container">
+    <div class="nav-container">
 
-<a
-href="index.html"
-class="brand">
+        <a
+            href="index.html"
+            class="brand">
 
-<img
-src="logo.png"
-alt="FraudGuard">
+            INSPECT<span>CALLER</span>
 
-<span>
-FraudGuard
-</span>
+        </a>
 
-</a>
 
-<nav class="nav-links">
+        <nav class="nav-links">
 
-<a href="index.html">
-Home
-</a>
+            <a href="dashboard.html">
+                Dashboard
+            </a>
 
-<a href="dashboard.html">
-Dashboard
-</a>
+            <a href="scanner.html">
+                Scanner
+            </a>
 
-<a href="scanner.html">
-URL Scanner
-</a>
+            <a href="phone-checker.html">
+                Caller
+            </a>
 
-<a href="phone-checker.html">
-Phone
-</a>
+            <a href="report.html">
+                Report
+            </a>
 
-<a href="email-checker.html">
-Email
-</a>
+        </nav>
 
-<a href="ai-chat.html">
-AI Chat
-</a>
 
-<a href="qr-scanner.html">
-QR
-</a>
+        <a
+            href="dashboard.html"
+            class="nav-login">
 
-<a href="facebook-scanner.html">
-Facebook
-</a>
+            Dashboard
 
-<a
-href="telegram-scanner.html"
-class="active">
+        </a>
 
-Telegram
-
-</a>
-
-<a href="whatsapp-scanner.html">
-WhatsApp
-</a>
-
-<a href="report.html">
-Report
-</a>
-
-<a href="features.html">
-Features
-</a>
-
-<a href="about.html">
-About
-</a>
-
-<a href="contact.html">
-Contact
-</a>
-
-<button
-id="logoutBtn"
-class="logout-btn">
-
-Logout
-
-</button>
-
-</nav>
-
-<button
-id="mobileMenuBtn"
-class="mobile-menu">
-
-☰
-
-</button>
-
-</div>
+    </div>
 
 </header>
 
 
-<main class="page">
 
-<section class="header">
+<!-- ================= MAIN ================= -->
 
-<div class="header-icon">
-✈️
+<main class="telegram-page">
+
+
+<div class="telegram-container">
+
+
+    <!-- HERO -->
+
+    <section class="telegram-hero">
+
+        <div class="telegram-badge">
+
+            ✈️ TELEGRAM SECURITY INTELLIGENCE
+
+        </div>
+
+
+        <h1>
+
+            Telegram
+            <span>Scanner</span>
+
+        </h1>
+
+
+        <p>
+
+            Check suspicious Telegram usernames,
+            channels, groups, messages and links for
+            potential scam and fraud indicators.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- SCANNER CARD -->
+
+    <section class="telegram-card">
+
+
+        <!-- TYPE -->
+
+        <div class="scan-tabs">
+
+
+            <div class="scan-tab">
+
+                <input
+                    type="radio"
+                    id="username"
+                    name="telegramType"
+                    value="Username"
+                    checked
+                >
+
+                <label for="username">
+
+                    <span>👤</span>
+
+                    Username
+
+                </label>
+
+            </div>
+
+
+            <div class="scan-tab">
+
+                <input
+                    type="radio"
+                    id="channel"
+                    name="telegramType"
+                    value="Channel"
+                >
+
+                <label for="channel">
+
+                    <span>📢</span>
+
+                    Channel
+
+                </label>
+
+            </div>
+
+
+            <div class="scan-tab">
+
+                <input
+                    type="radio"
+                    id="group"
+                    name="telegramType"
+                    value="Group"
+                >
+
+                <label for="group">
+
+                    <span>👥</span>
+
+                    Group
+
+                </label>
+
+            </div>
+
+
+            <div class="scan-tab">
+
+                <input
+                    type="radio"
+                    id="message"
+                    name="telegramType"
+                    value="Message"
+                >
+
+                <label for="message">
+
+                    <span>💬</span>
+
+                    Message
+
+                </label>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- TARGET -->
+
+        <label
+            class="field-label"
+            for="telegramTarget">
+
+            Telegram Username / Link
+
+        </label>
+
+
+        <input
+            type="text"
+            id="telegramTarget"
+            class="telegram-input"
+            placeholder="@username or https://t.me/example"
+        >
+
+
+
+        <!-- MESSAGE -->
+
+        <div
+            id="messageArea"
+            style="display:none;margin-top:17px;">
+
+            <label
+                class="field-label"
+                for="telegramMessage">
+
+                Message Content
+
+            </label>
+
+
+            <textarea
+                id="telegramMessage"
+                class="message-input"
+                placeholder="Paste the suspicious Telegram message here..."
+            ></textarea>
+
+        </div>
+
+
+
+        <!-- BUTTON -->
+
+        <div class="scan-actions">
+
+            <button
+                class="scan-btn"
+                id="scanButton">
+
+                🔍 Analyze Telegram Account
+
+            </button>
+
+        </div>
+
+
+
+        <!-- RESULT -->
+
+        <div
+            id="telegramResult"
+            class="telegram-result">
+
+
+            <!-- PROFILE -->
+
+            <div class="profile-card">
+
+
+                <div class="profile-avatar">
+
+                    ✈️
+
+                </div>
+
+
+                <div class="profile-info">
+
+                    <small>
+                        TELEGRAM TARGET
+                    </small>
+
+
+                    <h2 id="resultTarget">
+                        @example
+                    </h2>
+
+
+                    <p id="resultType">
+                        Username • Prototype Analysis
+                    </p>
+
+                </div>
+
+
+                <div class="risk-score">
+
+                    <strong id="riskScore">
+                        18
+                    </strong>
+
+                    <span>
+                        RISK SCORE / 100
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- VERDICT -->
+
+            <div class="verdict">
+
+
+                <div
+                    class="verdict-icon"
+                    id="verdictIcon">
+
+                    🟢
+
+                </div>
+
+
+                <div>
+
+                    <strong id="verdictTitle">
+
+                        Low Risk — No Major Signal
+
+                    </strong>
+
+
+                    <span id="verdictText">
+
+                        No major suspicious pattern was
+                        detected in this prototype analysis.
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- SIGNALS -->
+
+            <div class="signals-title">
+
+                Telegram Threat Signals
+
+            </div>
+
+
+            <div class="signal-grid">
+
+
+                <div class="signal">
+
+                    <div class="signal-top">
+
+                        <div class="signal-icon">
+                            🎣
+                        </div>
+
+                        <span
+                            id="phishing"
+                            class="signal-status safe">
+
+                            LOW
+
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Phishing
+                    </h3>
+
+
+                    <p>
+                        Checks suspicious login,
+                        verification and link patterns.
+                    </p>
+
+                </div>
+
+
+
+                <div class="signal">
+
+                    <div class="signal-top">
+
+                        <div class="signal-icon">
+                            💰
+                        </div>
+
+                        <span
+                            id="payment"
+                            class="signal-status safe">
+
+                            LOW
+
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Payment Scam
+                    </h3>
+
+
+                    <p>
+                        Looks for suspicious payment,
+                        transfer or investment requests.
+                    </p>
+
+                </div>
+
+
+
+                <div class="signal">
+
+                    <div class="signal-top">
+
+                        <div class="signal-icon">
+                            ⚡
+                        </div>
+
+                        <span
+                            id="urgency"
+                            class="signal-status safe">
+
+                            LOW
+
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Urgency
+                    </h3>
+
+
+                    <p>
+                        Detects pressure tactics and
+                        immediate-action requests.
+                    </p>
+
+                </div>
+
+
+
+                <div class="signal">
+
+                    <div class="signal-top">
+
+                        <div class="signal-icon">
+                            🎁
+                        </div>
+
+                        <span
+                            id="prize"
+                            class="signal-status safe">
+
+                            LOW
+
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Prize / Giveaway
+                    </h3>
+
+
+                    <p>
+                        Identifies suspicious prize,
+                        giveaway and reward patterns.
+                    </p>
+
+                </div>
+
+
+
+                <div class="signal">
+
+                    <div class="signal-top">
+
+                        <div class="signal-icon">
+                            📈
+                        </div>
+
+                        <span
+                            id="investment"
+                            class="signal-status safe">
+
+                            LOW
+
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Investment Risk
+                    </h3>
+
+
+                    <p>
+                        Flags suspicious crypto,
+                        trading and guaranteed-return claims.
+                    </p>
+
+                </div>
+
+
+
+                <div class="signal">
+
+                    <div class="signal-top">
+
+                        <div class="signal-icon">
+                            👤
+                        </div>
+
+                        <span
+                            id="identity"
+                            class="signal-status safe">
+
+                            LOW
+
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Identity Risk
+                    </h3>
+
+
+                    <p>
+                        Detects requests for OTP,
+                        passwords or sensitive information.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- NOTICE -->
+
+            <div class="notice">
+
+                ⚠️ <strong>Prototype Notice:</strong>
+                Inspect Caller does not currently have
+                direct access to Telegram's private
+                databases or private account information.
+                This page demonstrates the planned
+                security-analysis interface.
+
+            </div>
+
+
+
+            <!-- ACTIONS -->
+
+            <div class="action-row">
+
+
+                <a
+                    href="report.html"
+                    class="action-btn primary">
+
+                    🚨 Report This Account
+
+                </a>
+
+
+                <button
+                    class="action-btn"
+                    id="copyResult">
+
+                    📋 Copy Result
+
+                </button>
+
+
+                <a
+                    href="ai-chat.html"
+                    class="action-btn">
+
+                    🤖 AI Analysis
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- INFO -->
+
+    <section class="info-grid">
+
+
+        <div class="info-card">
+
+            <div class="info-icon">
+                🔎
+            </div>
+
+            <h3>
+                Username Intelligence
+            </h3>
+
+            <p>
+                Future versions can compare reported
+                usernames and public scam indicators
+                against verified intelligence sources.
+            </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <div class="info-icon">
+                🧠
+            </div>
+
+            <h3>
+                Message Analysis
+            </h3>
+
+            <p>
+                Planned AI analysis can identify common
+                scam language, urgency tactics and
+                suspicious financial requests.
+            </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <div class="info-icon">
+                🚨
+            </div>
+
+            <h3>
+                Community Reporting
+            </h3>
+
+            <p>
+                Users can submit suspicious Telegram
+                accounts and messages for review and
+                future threat-intelligence matching.
+            </p>
+
+        </div>
+
+
+    </section>
+
+
 </div>
-
-<h1>
-Telegram
-<span>Scanner</span>
-</h1>
-
-<p>
-Check a public Telegram link for suspicious
-URL patterns and FraudGuard community reports.
-</p>
-
-</section>
-
-
-<section class="scanner-card">
-
-<label
-class="input-label"
-for="telegramUrl">
-
-Public Telegram URL
-
-</label>
-
-
-<div class="input-row">
-
-<input
-id="telegramUrl"
-type="url"
-placeholder="https://t.me/example"
-autocomplete="off"
-spellcheck="false">
-
-
-<button
-id="scanBtn"
-class="scan-btn">
-
-Scan Telegram
-
-</button>
-
-</div>
-
-
-<div class="example">
-
-Examples:
-https://t.me/example
-&nbsp; • &nbsp;
-https://telegram.me/example
-
-</div>
-
-
-<div
-id="status"
-class="status">
-
-🔎 Preparing Telegram URL scan...
-
-</div>
-
-
-<div
-id="result"
-class="result">
-
-<div class="result-top">
-
-<div class="result-title">
-
-<h2 id="resultTitle">
-Scan Result
-</h2>
-
-<p id="resultUrl">
--
-</p>
-
-</div>
-
-<div
-id="resultBadge"
-class="badge">
-
--
-
-</div>
-
-</div>
-
-
-<div class="score-card">
-
-<div class="score">
-
-<div
-id="score"
-class="score-number">
-
-0
-
-</div>
-
-<div class="score-label">
-Risk Score / 100
-</div>
-
-</div>
-
-
-<div class="details">
-
-<h3>
-Telegram Check Details
-</h3>
-
-<div class="detail-grid">
-
-<div class="detail">
-
-<div class="detail-label">
-Platform
-</div>
-
-<div
-id="platform"
-class="detail-value">
-
-Telegram
-
-</div>
-
-</div>
-
-
-<div class="detail">
-
-<div class="detail-label">
-Domain
-</div>
-
-<div
-id="domain"
-class="detail-value">
-
--
-
-</div>
-
-</div>
-
-
-<div class="detail">
-
-<div class="detail-label">
-Link Type
-</div>
-
-<div
-id="urlType"
-class="detail-value">
-
--
-
-</div>
-
-</div>
-
-
-<div class="detail">
-
-<div class="detail-label">
-Community Reports
-</div>
-
-<div
-id="reportCount"
-class="detail-value">
-
-0
-
-</div>
-
-</div>
-
-
-<div class="detail">
-
-<div class="detail-label">
-Database Status
-</div>
-
-<div
-id="databaseStatus"
-class="detail-value">
-
-Checking...
-
-</div>
-
-</div>
-
-
-<div class="detail">
-
-<div class="detail-label">
-HTTPS
-</div>
-
-<div
-id="httpsStatus"
-class="detail-value">
-
--
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="reasons">
-
-<h3>
-Risk Indicators
-</h3>
-
-<ul id="reasonsList">
-
-<li>
-Waiting for scan...
-</li>
-
-</ul>
-
-</div>
-
-
-<div class="actions">
-
-<button
-id="checkAgainBtn"
-class="action-btn">
-
-Check Another
-
-</button>
-
-<a
-id="reportBtn"
-href="report.html"
-class="action-btn report">
-
-🚨 Report
-
-</a>
-
-</div>
-
-</div>
-
-
-<div class="notice">
-
-<strong>Important:</strong>
-FraudGuard checks the public Telegram URL,
-URL-level signals and its own community
-database. It does not access private Telegram
-accounts, private messages or login sessions.
-A low-risk result does not guarantee that a
-Telegram account or channel is legitimate.
-
-</div>
-
-</section>
 
 </main>
 
 
+
+<!-- ================= FOOTER ================= -->
+
 <footer>
 
-© 2026 FraudGuard —
-AI-Powered Global Fraud Detection Platform
+    <div class="footer-brand">
 
-  </footer>
-<script type="module">
+        INSPECT<span>CALLER</span>
 
-import {
-    auth,
-    db
-} from "./firebase.js";
-
-import {
-    onAuthStateChanged,
-    signOut
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import {
-    collection,
-    query,
-    where,
-    getDocs,
-    addDoc,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    </div>
 
 
-const telegramUrl =
-    document.getElementById("telegramUrl");
-
-const scanBtn =
-    document.getElementById("scanBtn");
-
-const statusBox =
-    document.getElementById("status");
-
-const result =
-    document.getElementById("result");
-
-const resultTitle =
-    document.getElementById("resultTitle");
-
-const resultUrl =
-    document.getElementById("resultUrl");
-
-const resultBadge =
-    document.getElementById("resultBadge");
-
-const scoreElement =
-    document.getElementById("score");
-
-const domainElement =
-    document.getElementById("domain");
-
-const urlTypeElement =
-    document.getElementById("urlType");
-
-const reportCountElement =
-    document.getElementById("reportCount");
-
-const databaseStatusElement =
-    document.getElementById("databaseStatus");
-
-const httpsStatusElement =
-    document.getElementById("httpsStatus");
-
-const reasonsList =
-    document.getElementById("reasonsList");
-
-const checkAgainBtn =
-    document.getElementById("checkAgainBtn");
-
-const reportBtn =
-    document.getElementById("reportBtn");
-
-const logoutBtn =
-    document.getElementById("logoutBtn");
-
-const mobileMenuBtn =
-    document.getElementById("mobileMenuBtn");
-
-const navLinks =
-    document.querySelector(".nav-links");
+    <p>
+        Global Caller Security & Anti-Fraud Technology
+    </p>
 
 
-let currentUser = null;
+    <div class="footer-links">
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="features.html">
+            Features
+        </a>
+
+        <a href="about.html">
+            About
+        </a>
+
+        <a href="contact.html">
+            Contact
+        </a>
+
+        <a href="privacy-policy.html">
+            Privacy
+        </a>
+
+        <a href="terms.html">
+            Terms
+        </a>
+
+    </div>
 
 
-onAuthStateChanged(
-    auth,
-    user => {
+    <p class="copyright">
 
-        if (!user) {
+        © 2026 Inspect Caller.
+        Idea / Pre-Launch Prototype.
 
-            window.location.replace(
-                "login.html"
+    </p>
+
+</footer>
+
+
+
+<script>
+
+
+/* =========================================================
+   TELEGRAM TYPE
+   ========================================================= */
+
+const typeInputs =
+    document.querySelectorAll(
+        'input[name="telegramType"]'
+    );
+
+
+const targetInput =
+    document.getElementById(
+        "telegramTarget"
+    );
+
+
+const messageArea =
+    document.getElementById(
+        "messageArea"
+    );
+
+
+const scanButton =
+    document.getElementById(
+        "scanButton"
+    );
+
+
+typeInputs.forEach(
+    input => {
+
+        input.addEventListener(
+            "change",
+            () => {
+
+                if (
+                    input.value ===
+                    "Message"
+                ) {
+
+                    messageArea.style.display =
+                        "block";
+
+                    targetInput.placeholder =
+                        "@username or https://t.me/example";
+
+                    scanButton.textContent =
+                        "🔍 Analyze Telegram Message";
+
+                }
+
+                else {
+
+                    messageArea.style.display =
+                        "none";
+
+                    scanButton.textContent =
+                        "🔍 Analyze Telegram Account";
+
+                }
+
+            }
+        );
+
+    }
+);
+
+
+
+/* =========================================================
+   SCAN
+   ========================================================= */
+
+scanButton.addEventListener(
+    "click",
+    () => {
+
+
+        const target =
+            targetInput.value.trim();
+
+
+        const message =
+            document.getElementById(
+                "telegramMessage"
+            ).value.trim();
+
+
+        const selected =
+            document.querySelector(
+                'input[name="telegramType"]:checked'
+            );
+
+
+        const type =
+            selected
+                ? selected.value
+                : "Username";
+
+
+        const content =
+            type === "Message"
+                ? message
+                : target;
+
+
+        if (!content) {
+
+            alert(
+                type === "Message"
+                    ? "Please paste the Telegram message."
+                    : "Please enter a Telegram username or link."
             );
 
             return;
 
         }
 
-        currentUser = user;
+
+        scanButton.disabled =
+            true;
+
+        scanButton.textContent =
+            "⏳ Analyzing...";
+
+
+        setTimeout(
+            () => {
+
+                analyzeTelegram(
+                    content,
+                    target,
+                    type
+                );
+
+
+                scanButton.disabled =
+                    false;
+
+                scanButton.textContent =
+                    type === "Message"
+                        ? "🔍 Analyze Telegram Message"
+                        : "🔍 Analyze Telegram Account";
+
+            },
+            1100
+        );
 
     }
 );
 
 
-function normalizeURL(value) {
 
-    value =
-        value.trim();
+/* =========================================================
+   ANALYSIS
+   ========================================================= */
 
-
-    if (
-        !/^https?:\/\//i.test(value)
-    ) {
-
-        value =
-            "https://" + value;
-
-    }
+function analyzeTelegram(
+    content,
+    target,
+    type
+) {
 
 
-    return value;
-
-}
-
-
-function parseTelegramURL(value) {
-
-    try {
-
-        const url =
-            new URL(
-                normalizeURL(value)
-            );
+    const text =
+        content.toLowerCase();
 
 
-        const hostname =
-            url.hostname
-                .toLowerCase()
-                .replace(/^www\./, "");
+    let score = 10;
 
 
-        const allowedDomains = [
-            "t.me",
-            "telegram.me",
-            "telegram.dog"
-        ];
+    const patterns = [
+
+        "urgent",
+        "immediately",
+        "verify",
+        "otp",
+        "password",
+        "login",
+        "send money",
+        "payment",
+        "deposit",
+        "investment",
+        "crypto",
+        "profit",
+        "guaranteed",
+        "winner",
+        "prize",
+        "giveaway",
+        "claim",
+        "refund",
+        "loan",
+        "double",
+        "100%",
+        "bonus",
+        "airdrop"
+
+    ];
 
 
-        if (
-            !allowedDomains.includes(
-                hostname
-            )
-        ) {
+    patterns.forEach(
+        word => {
 
-            return {
-                valid: false
-            };
+            if (
+                text.includes(word)
+            ) {
+
+                score += 5;
+
+            }
 
         }
-
-
-        return {
-            valid: true,
-            url: url,
-            hostname: hostname,
-            pathname: url.pathname,
-            search: url.search
-        };
-
-
-    } catch {
-
-        return {
-            valid: false
-        };
-
-    }
-
-}
-
-
-function detectLinkType(pathname) {
-
-    const path =
-        pathname.toLowerCase();
+    );
 
 
     if (
-        path === "/" ||
-        path === ""
+        text.includes("t.me/")
     ) {
 
-        return "Telegram Homepage";
+        score += 4;
 
     }
 
 
     if (
-        path.startsWith("/joinchat/")
-    ) {
-
-        return "Invite Link";
-
-    }
-
-
-    if (
-        path.startsWith("/+") 
-    ) {
-
-        return "Invite Link";
-
-    }
-
-
-    if (
-        path.startsWith("/s/")
-    ) {
-
-        return "Public Post";
-
-    }
-
-
-    if (
-        path.startsWith("/c/")
-    ) {
-
-        return "Channel / Post";
-
-    }
-
-
-    const parts =
-        path
-            .split("/")
-            .filter(Boolean);
-
-
-    if (
-        parts.length === 1
-    ) {
-
-        return "Public Username";
-
-    }
-
-
-    if (
-        parts.length >= 2 &&
-        /^\d+$/.test(
-            parts[1]
-        )
-    ) {
-
-        return "Public Post";
-
-    }
-
-
-    return "Telegram Link";
-
-}
-
-
-function analyzeTelegramURL(parsed) {
-
-    let score = 0;
-
-    const reasons = [];
-
-    const url =
-        parsed.url;
-
-    const fullURL =
-        url.href.toLowerCase();
-
-    const path =
-        parsed.pathname.toLowerCase();
-
-
-    if (
-        url.protocol !== "https:"
-    ) {
-
-        score += 25;
-
-        reasons.push(
-            "The URL does not use HTTPS."
-        );
-
-    } else {
-
-        reasons.push(
-            "The URL uses HTTPS."
-        );
-
-    }
-
-
-    if (
-        parsed.hostname === "telegram.dog"
-    ) {
-
-        score += 5;
-
-        reasons.push(
-            "This link uses an alternative Telegram domain."
-        );
-
-    }
-
-
-    const suspiciousWords = [
-
-        "login",
-        "verify",
-        "verification",
-        "password",
-        "secure",
-        "security",
-        "unlock",
-        "recover",
-        "claim",
-        "winner",
-        "bonus",
-        "gift",
-        "free",
-        "prize",
-        "payment",
-        "wallet",
-        "airdrop",
-        "support",
-        "appeal"
-
-    ];
-
-
-    const foundWords =
-        suspiciousWords.filter(
-            word =>
-                fullURL.includes(word)
-        );
-
-
-    if (
-        foundWords.length >= 3
-    ) {
-
-        score += 25;
-
-        reasons.push(
-            "The URL contains several words commonly associated with phishing or scam links."
-        );
-
-    } else if (
-        foundWords.length > 0
+        text.includes("http://")
     ) {
 
         score += 10;
 
-        reasons.push(
-            "The URL contains a security-sensitive or promotional keyword."
-        );
-
     }
 
 
     if (
-        url.username ||
-        url.password
+        text.includes("bit.ly") ||
+        text.includes("tinyurl")
     ) {
 
-        score += 30;
-
-        reasons.push(
-            "The URL contains embedded credentials."
-        );
-
-    }
-
-
-    if (
-        url.search.length > 500
-    ) {
-
-        score += 8;
-
-        reasons.push(
-            "The URL contains an unusually large query string."
-        );
-
-    }
-
-
-    const redirectTerms = [
-
-        "redirect=",
-        "url=",
-        "target=",
-        "next=",
-        "return="
-
-    ];
-
-
-    const redirectCount =
-        redirectTerms.filter(
-            term =>
-                fullURL.includes(term)
-        ).length;
-
-
-    if (
-        redirectCount >= 2
-    ) {
-
-        score += 15;
-
-        reasons.push(
-            "Multiple redirect-style parameters were detected."
-        );
-
-    }
-
-
-    if (
-        path.includes("//")
-    ) {
-
-        score += 10;
-
-        reasons.push(
-            "The path contains an unusual double-slash pattern."
-        );
+        score += 12;
 
     }
 
@@ -1418,706 +1520,313 @@ function analyzeTelegramURL(parsed) {
     score =
         Math.min(
             score,
-            100
+            95
         );
 
 
-    return {
-        score: score,
-        reasons: reasons
-    };
-
-}
+    /* RESULT */
 
 
-async function checkDatabase(url) {
-
-    try {
-
-        const reports =
-            collection(
-                db,
-                "fraud_telegram"
-            );
-
-
-        const q =
-            query(
-                reports,
-                where(
-                    "url",
-                    "==",
-                    url
-                )
-            );
-
-
-        const snapshot =
-            await getDocs(q);
-
-
-        return {
-
-            found:
-                !snapshot.empty,
-
-            count:
-                snapshot.size,
-
-            error:
-                false
-
-        };
-
-
-    } catch (error) {
-
-        console.warn(
-            "Telegram database error:",
-            error
+    const result =
+        document.getElementById(
+            "telegramResult"
         );
 
 
-        return {
-
-            found: false,
-            count: 0,
-            error: true
-
-        };
-
-    }
-
-}
-
-
-function getRiskStatus(
-    score,
-    database
-) {
-
-    if (
-        database.found
-    ) {
-
-        return "Dangerous";
-
-    }
-
-
-    if (
-        score >= 60
-    ) {
-
-        return "Dangerous";
-
-    }
-
-
-    if (
-        score >= 30
-    ) {
-
-        return "Suspicious";
-
-    }
-
-
-    return "Low Risk";
-
-}
-
-
-function displayResult(
-    parsed,
-    analysis,
-    database
-) {
-
-    const risk =
-        getRiskStatus(
-            analysis.score,
-            database
-        );
-
-
-    resultTitle.textContent =
-        risk === "Dangerous"
-            ? "Potentially Dangerous Telegram Link"
-            : risk === "Suspicious"
-                ? "Suspicious Telegram Link"
-                : "Telegram Link Looks Low Risk";
-
-
-    resultUrl.textContent =
-        parsed.url.href;
-
-
-    scoreElement.textContent =
-        analysis.score;
-
-
-    domainElement.textContent =
-        parsed.hostname;
-
-
-    urlTypeElement.textContent =
-        detectLinkType(
-            parsed.pathname
-        );
-
-
-    httpsStatusElement.textContent =
-        parsed.url.protocol === "https:"
-            ? "Secure HTTPS"
-            : "Not HTTPS";
-
-
-    if (
-        database.found
-    ) {
-
-        reportCountElement.textContent =
-            database.count;
-
-        databaseStatusElement.textContent =
-            "Reported";
-
-    } else if (
-        database.error
-    ) {
-
-        reportCountElement.textContent =
-            "Unavailable";
-
-        databaseStatusElement.textContent =
-            "Database unavailable";
-
-    } else {
-
-        reportCountElement.textContent =
-            "0";
-
-        databaseStatusElement.textContent =
-            "No matching report";
-
-    }
-
-
-    resultBadge.className =
-        "badge";
-
-
-    if (
-        risk === "Dangerous"
-    ) {
-
-        resultBadge.classList.add(
-            "dangerous"
-        );
-
-        resultBadge.textContent =
-            "🚨 Dangerous";
-
-        scoreElement.style.color =
-            "#ff6b81";
-
-    } else if (
-        risk === "Suspicious"
-    ) {
-
-        resultBadge.classList.add(
-            "suspicious"
-        );
-
-        resultBadge.textContent =
-            "⚠ Suspicious";
-
-        scoreElement.style.color =
-            "#ffd76b";
-
-    } else {
-
-        resultBadge.classList.add(
-            "safe"
-        );
-
-        resultBadge.textContent =
-            "✓ Low Risk";
-
-        scoreElement.style.color =
-            "#22c55e";
-
-    }
-
-
-    reasonsList.innerHTML =
-        "";
-
-
-    if (
-        database.found
-    ) {
-
-        const li =
-            document.createElement(
-                "li"
-            );
-
-
-        li.textContent =
-            "This Telegram URL has matching reports in the FraudGuard community database.";
-
-
-        reasonsList.appendChild(
-            li
-        );
-
-    }
-
-
-    analysis.reasons.forEach(
-        reason => {
-
-            const li =
-                document.createElement(
-                    "li"
-                );
-
-
-            li.textContent =
-                reason;
-
-
-            reasonsList.appendChild(
-                li
-            );
-
-        }
+    result.classList.add(
+        "show"
     );
 
 
+    document.getElementById(
+        "resultTarget"
+    ).textContent =
+        target ||
+        "@message-analysis";
+
+
+    document.getElementById(
+        "resultType"
+    ).textContent =
+        type +
+        " • Prototype Analysis";
+
+
+    document.getElementById(
+        "riskScore"
+    ).textContent =
+        score;
+
+
+
+    /* VERDICT */
+
+    const icon =
+        document.getElementById(
+            "verdictIcon"
+        );
+
+
+    const title =
+        document.getElementById(
+            "verdictTitle"
+        );
+
+
+    const textElement =
+        document.getElementById(
+            "verdictText"
+        );
+
+
+    const scoreElement =
+        document.getElementById(
+            "riskScore"
+        );
+
+
     if (
-        analysis.reasons.length === 0 &&
-        !database.found
+        score >= 70
     ) {
 
-        const li =
-            document.createElement(
-                "li"
-            );
+        icon.textContent =
+            "🔴";
 
+        title.textContent =
+            "High Risk — Review Immediately";
 
-        li.textContent =
-            "No major URL-level warning indicators were detected.";
+        textElement.textContent =
+            "Multiple suspicious indicators were detected in this prototype analysis.";
 
+        scoreElement.style.color =
+            "#ff7d91";
 
-        reasonsList.appendChild(
-            li
-        );
+    }
+
+    else if (
+        score >= 40
+    ) {
+
+        icon.textContent =
+            "🟡";
+
+        title.textContent =
+            "Medium Risk — Review Carefully";
+
+        textElement.textContent =
+            "Some suspicious patterns were detected. Verify the account before interacting.";
+
+        scoreElement.style.color =
+            "#ffd267";
+
+    }
+
+    else {
+
+        icon.textContent =
+            "🟢";
+
+        title.textContent =
+            "Low Risk — No Major Signal";
+
+        textElement.textContent =
+            "No major suspicious pattern was detected in this prototype analysis.";
+
+        scoreElement.style.color =
+            "#4ce7aa";
 
     }
 
 
-    reportBtn.href =
-        "report.html?url=" +
-        encodeURIComponent(
-            parsed.url.href
-        );
+
+    /* SIGNALS */
+
+    updateSignal(
+        "phishing",
+        /login|verify|password|otp|account|secure/i
+            .test(content)
+    );
 
 
-    result.style.display =
-        "block";
+    updateSignal(
+        "payment",
+        /money|payment|deposit|bank|card|crypto|send/i
+            .test(content)
+    );
+
+
+    updateSignal(
+        "urgency",
+        /urgent|immediately|now|last chance|suspended/i
+            .test(content)
+    );
+
+
+    updateSignal(
+        "prize",
+        /winner|prize|giveaway|bonus|reward|claim/i
+            .test(content)
+    );
+
+
+    updateSignal(
+        "investment",
+        /investment|crypto|profit|guaranteed|double|trading|airdrop/i
+            .test(content)
+    );
+
+
+    updateSignal(
+        "identity",
+        /otp|password|nid|identity|verify|login/i
+            .test(content)
+    );
+
+
+    result.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
 
 }
 
 
-async function saveScan(
-    url,
-    analysis,
-    database
+
+/* =========================================================
+   SIGNAL
+   ========================================================= */
+
+function updateSignal(
+    id,
+    suspicious
 ) {
 
-    if (!currentUser) {
+
+    const element =
+        document.getElementById(
+            id
+        );
+
+
+    if (!element) {
+
         return;
+
     }
 
 
-    try {
+    if (
+        suspicious
+    ) {
 
-        await addDoc(
-            collection(
-                db,
-                "scan_history"
-            ),
-            {
+        element.textContent =
+            "REVIEW";
 
-                uid:
-                    currentUser.uid,
+        element.className =
+            "signal-status review";
 
-                type:
-                    "telegram",
+    }
 
-                checkedURL:
-                    url,
+    else {
 
-                score:
-                    analysis.score,
+        element.textContent =
+            "LOW";
 
-                status:
-                    getRiskStatus(
-                        analysis.score,
-                        database
-                    ),
-
-                databaseMatch:
-                    database.found,
-
-                createdAt:
-                    serverTimestamp()
-
-            }
-        );
-
-    } catch (error) {
-
-        console.warn(
-            "Scan history error:",
-            error
-        );
+        element.className =
+            "signal-status safe";
 
     }
 
 }
 
 
-async function scanTelegram() {
 
-    const value =
-        telegramUrl.value.trim();
+/* =========================================================
+   COPY RESULT
+   ========================================================= */
 
+document
+    .getElementById(
+        "copyResult"
+    )
+    .addEventListener(
+        "click",
+        async () => {
 
-    if (!value) {
 
-        alert(
-            "Please enter a Telegram URL."
-        );
+            const target =
+                document.getElementById(
+                    "resultTarget"
+                ).textContent;
 
-        telegramUrl.focus();
 
-        return;
+            const type =
+                document.getElementById(
+                    "resultType"
+                ).textContent;
 
-    }
 
+            const score =
+                document.getElementById(
+                    "riskScore"
+                ).textContent;
 
-    const parsed =
-        parseTelegramURL(
-            value
-        );
 
+            const verdict =
+                document.getElementById(
+                    "verdictTitle"
+                ).textContent;
 
-    if (!parsed.valid) {
 
-        alert(
-            "Please enter a valid public Telegram URL such as https://t.me/example"
-        );
+            const result =
 
-        telegramUrl.focus();
+                "Inspect Caller — Telegram Security Report\n\n" +
 
-        return;
+                "Target: " +
+                target +
+                "\n" +
 
-    }
+                "Type: " +
+                type +
+                "\n" +
 
+                "Risk Score: " +
+                score +
+                "/100\n" +
 
-    scanBtn.disabled =
-        true;
+                "Verdict: " +
+                verdict +
+                "\n\n" +
 
-    scanBtn.textContent =
-        "Scanning...";
+                "Prototype analysis only.";
 
 
-    result.style.display =
-        "none";
+            try {
 
-
-    statusBox.style.display =
-        "block";
-
-    statusBox.textContent =
-        "🔎 Validating Telegram URL...";
-
-
-    try {
-
-        const analysis =
-            analyzeTelegramURL(
-                parsed
-            );
-
-
-        statusBox.textContent =
-            "🛡 Checking FraudGuard database...";
-
-
-        const database =
-            await checkDatabase(
-                parsed.url.href
-            );
-
-
-        statusBox.textContent =
-            "📊 Calculating risk score...";
-
-
-        await new Promise(
-            resolve =>
-                setTimeout(
-                    resolve,
-                    250
-                )
-        );
-
-
-        displayResult(
-            parsed,
-            analysis,
-            database
-        );
-
-
-        await saveScan(
-            parsed.url.href,
-            analysis,
-            database
-        );
-
-
-        statusBox.style.display =
-            "none";
-
-
-    } catch (error) {
-
-        console.error(
-            "Telegram scan error:",
-            error
-        );
-
-
-        statusBox.textContent =
-            "Unable to complete the scan.";
-
-    }
-
-
-    scanBtn.disabled =
-        false;
-
-    scanBtn.textContent =
-        "Scan Telegram";
-
-}
-
-
-scanBtn.addEventListener(
-    "click",
-    scanTelegram
-);
-
-
-telegramUrl.addEventListener(
-    "keydown",
-    event => {
-
-        if (
-            event.key === "Enter"
-        ) {
-
-            scanTelegram();
-
-        }
-
-    }
-);
-
-
-checkAgainBtn.addEventListener(
-    "click",
-    () => {
-
-        telegramUrl.value =
-            "";
-
-        result.style.display =
-            "none";
-
-        statusBox.style.display =
-            "none";
-
-        telegramUrl.focus();
-
-    }
-);
-
-
-logoutBtn.addEventListener(
-    "click",
-    async () => {
-
-        logoutBtn.disabled =
-            true;
-
-        logoutBtn.textContent =
-            "Logging out...";
-
-
-        try {
-
-            await signOut(
-                auth
-            );
-
-            window.location.replace(
-                "login.html"
-            );
-
-        } catch (error) {
-
-            console.error(
-                "Logout error:",
-                error
-            );
-
-            logoutBtn.disabled =
-                false;
-
-            logoutBtn.textContent =
-                "Logout";
-
-        }
-
-    }
-);
-
-
-mobileMenuBtn.addEventListener(
-    "click",
-    () => {
-
-        if (
-            navLinks.classList.contains(
-                "mobile-open"
-            )
-        ) {
-
-            navLinks.classList.remove(
-                "mobile-open"
-            );
-
-            navLinks.style.display =
-                "";
-
-            return;
-
-        }
-
-
-        navLinks.classList.add(
-            "mobile-open"
-        );
-
-
-        navLinks.style.display =
-            "flex";
-
-        navLinks.style.flexDirection =
-            "column";
-
-        navLinks.style.position =
-            "absolute";
-
-        navLinks.style.top =
-            "58px";
-
-        navLinks.style.right =
-            "12px";
-
-        navLinks.style.width =
-            "230px";
-
-        navLinks.style.padding =
-            "16px";
-
-        navLinks.style.background =
-            "#10182d";
-
-        navLinks.style.border =
-            "1px solid #26324b";
-
-        navLinks.style.borderRadius =
-            "10px";
-
-        navLinks.style.boxShadow =
-            "0 12px 30px rgba(0,0,0,.35)";
-
-    }
-);
-
-
-navLinks
-    .querySelectorAll("a")
-    .forEach(
-        link => {
-
-            link.addEventListener(
-                "click",
-                () => {
-
-                    navLinks.classList.remove(
-                        "mobile-open"
+                await navigator.clipboard
+                    .writeText(
+                        result
                     );
 
-                    if (
-                        window.innerWidth <= 750
-                    ) {
 
-                        navLinks.style.display =
-                            "none";
+                alert(
+                    "Telegram scan result copied."
+                );
 
-                    }
+            }
 
-                }
-            );
+            catch {
+
+                alert(
+                    "Unable to copy result."
+                );
+
+            }
 
         }
     );
 
 
-window.addEventListener(
-    "resize",
-    () => {
-
-        if (
-            window.innerWidth > 750
-        ) {
-
-            navLinks.style = "";
-
-            navLinks.classList.remove(
-                "mobile-open"
-            );
-
-        }
-
-    }
-);
-
-</script>
-
-
-<script
-type="module"
-src="script.js">
 </script>
 
 
