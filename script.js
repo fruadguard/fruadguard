@@ -1,157 +1,490 @@
-// ============================================================
-// FraudGuard - Global Authentication & Common Script
-// ============================================================
-
-import {
-    auth
-} from "./firebase.js";
-
-import {
-    onAuthStateChanged,
-    signOut
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+/* =========================================================
+   INSPECT CALLER
+   script.js
+   Global Frontend Controller
+   ========================================================= */
 
 
-// ============================================================
-// AUTHENTICATION PROTECTION
-// ============================================================
+/* =========================================================
+   APP CONFIG
+   ========================================================= */
 
-const currentPage =
-    window.location.pathname
-        .split("/")
-        .pop()
-        .toLowerCase();
+const INSPECT_CALLER = {
 
+    name: "Inspect Caller",
 
-// Pages that do NOT require login
-const publicPages = [
-    "",
-    "login.html",
-    "register.html"
-];
+    version: "1.0.0",
 
+    mode: "prototype",
 
-// ============================================================
-// CHECK LOGIN
-// ============================================================
+    storageKey: "inspectCallerData",
 
-onAuthStateChanged(
-    auth,
-    (user) => {
+    scanHistoryKey: "inspectCallerScanHistory",
 
-        if (!user) {
+    reportHistoryKey: "inspectCallerReports"
 
-            // User is not logged in
-
-            if (!publicPages.includes(currentPage)) {
-
-                window.location.replace(
-                    "login.html"
-                );
-
-            }
-
-            return;
-        }
+};
 
 
-        // ====================================================
-        // USER IS LOGGED IN
-        // ====================================================
 
-        /*
-         * If logged-in user opens login/register page,
-         * send them directly to the main Home page.
-         */
+/* =========================================================
+   DOM READY
+   ========================================================= */
 
-        if (
-            currentPage === "login.html" ||
-            currentPage === "register.html"
-        ) {
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-            window.location.replace(
-                "index.html"
-            );
+        initNavigation();
 
-            return;
-        }
+        initMobileMenu();
 
+        initPasswordToggles();
 
-        // User is allowed to continue
-        document.documentElement
-            .classList.add("authenticated");
+        initGlobalForms();
 
+        initCounters();
 
-        // Update user information if elements exist
-        updateUserInformation(user);
+        initScrollAnimations();
+
+        loadUserData();
+
+        updateYear();
 
     }
 );
 
 
-// ============================================================
-// UPDATE USER INFORMATION
-// ============================================================
 
-function updateUserInformation(user) {
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
 
-    const userNameElements =
+function initNavigation() {
+
+    const currentPage =
+        window.location.pathname
+            .split("/")
+            .pop()
+            .toLowerCase();
+
+
+    document
+        .querySelectorAll(
+            ".nav-links a"
+        )
+        .forEach(
+            link => {
+
+                const href =
+                    link
+                        .getAttribute("href")
+                        ?.split("/")
+                        .pop()
+                        .toLowerCase();
+
+
+                if (
+                    href &&
+                    href === currentPage
+                ) {
+
+                    link.classList.add(
+                        "active"
+                    );
+
+                }
+
+            }
+        );
+
+}
+
+
+
+/* =========================================================
+   MOBILE MENU
+   ========================================================= */
+
+function initMobileMenu() {
+
+    const menuButton =
+        document.querySelector(
+            ".mobile-menu-btn"
+        );
+
+
+    const nav =
+        document.querySelector(
+            ".nav-links"
+        );
+
+
+    if (
+        !menuButton ||
+        !nav
+    ) {
+
+        return;
+
+    }
+
+
+    menuButton.addEventListener(
+        "click",
+        () => {
+
+            nav.classList.toggle(
+                "mobile-open"
+            );
+
+            menuButton.classList.toggle(
+                "open"
+            );
+
+        }
+    );
+
+
+    nav
+        .querySelectorAll("a")
+        .forEach(
+            link => {
+
+                link.addEventListener(
+                    "click",
+                    () => {
+
+                        nav.classList.remove(
+                            "mobile-open"
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+
+/* =========================================================
+   PASSWORD VISIBILITY
+   ========================================================= */
+
+function initPasswordToggles() {
+
+    document
+        .querySelectorAll(
+            "[data-password-toggle]"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        const targetId =
+                            button.getAttribute(
+                                "data-password-toggle"
+                            );
+
+
+                        const input =
+                            document.getElementById(
+                                targetId
+                            );
+
+
+                        if (!input) {
+
+                            return;
+
+                        }
+
+
+                        const isPassword =
+                            input.type ===
+                            "password";
+
+
+                        input.type =
+                            isPassword
+                                ? "text"
+                                : "password";
+
+
+                        button.textContent =
+                            isPassword
+                                ? "🙈"
+                                : "👁️";
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+
+/* =========================================================
+   GLOBAL FORM HANDLER
+   ========================================================= */
+
+function initGlobalForms() {
+
+    document
+        .querySelectorAll(
+            "form[data-demo-form]"
+        )
+        .forEach(
+            form => {
+
+                form.addEventListener(
+                    "submit",
+                    event => {
+
+                        event.preventDefault();
+
+                        showToast(
+                            "Demo submission received.",
+                            "success"
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+
+/* =========================================================
+   TOAST SYSTEM
+   ========================================================= */
+
+function showToast(
+    message,
+    type = "info"
+) {
+
+    let container =
+        document.getElementById(
+            "inspectToastContainer"
+        );
+
+
+    if (!container) {
+
+        container =
+            document.createElement(
+                "div"
+            );
+
+        container.id =
+            "inspectToastContainer";
+
+
+        container.style.position =
+            "fixed";
+
+        container.style.right =
+            "20px";
+
+        container.style.bottom =
+            "20px";
+
+        container.style.zIndex =
+            "99999";
+
+        container.style.display =
+            "flex";
+
+        container.style.flexDirection =
+            "column";
+
+        container.style.gap =
+            "10px";
+
+
+        document.body.appendChild(
+            container
+        );
+
+    }
+
+
+    const toast =
+        document.createElement(
+            "div"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.style.padding =
+        "12px 16px";
+
+    toast.style.borderRadius =
+        "12px";
+
+    toast.style.border =
+        "1px solid #285873";
+
+    toast.style.background =
+        "#071b2b";
+
+    toast.style.color =
+        "#d7edf5";
+
+    toast.style.fontSize =
+        "10px";
+
+    toast.style.fontWeight =
+        "800";
+
+    toast.style.boxShadow =
+        "0 15px 40px rgba(0,0,0,.35)";
+
+
+    if (
+        type === "success"
+    ) {
+
+        toast.style.borderColor =
+            "#287a61";
+
+    }
+
+
+    if (
+        type === "danger"
+    ) {
+
+        toast.style.borderColor =
+            "#874252";
+
+    }
+
+
+    container.appendChild(
+        toast
+    );
+
+
+    setTimeout(
+        () => {
+
+            toast.style.opacity =
+                "0";
+
+            toast.style.transform =
+                "translateY(10px)";
+
+            toast.style.transition =
+                ".25s";
+
+
+            setTimeout(
+                () => {
+
+                    toast.remove();
+
+                },
+                250
+            );
+
+        },
+        2800
+    );
+
+}
+
+
+
+/* =========================================================
+   LOCAL USER DATA
+   ========================================================= */
+
+function getLocalData() {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem(
+                INSPECT_CALLER.storageKey
+            )
+        ) || {};
+
+    } catch {
+
+        return {};
+
+    }
+
+}
+
+
+function saveLocalData(
+    data
+) {
+
+    localStorage.setItem(
+        INSPECT_CALLER.storageKey,
+        JSON.stringify(data)
+    );
+
+}
+
+
+
+/* =========================================================
+   USER DATA
+   ========================================================= */
+
+function loadUserData() {
+
+    const data =
+        getLocalData();
+
+
+    const nameElements =
         document.querySelectorAll(
             "[data-user-name]"
         );
 
 
-    const userEmailElements =
+    nameElements.forEach(
+        element => {
+
+            element.textContent =
+                data.name ||
+                "Inspect Caller User";
+
+        }
+    );
+
+
+    const emailElements =
         document.querySelectorAll(
             "[data-user-email]"
         );
 
 
-    const userPhotoElements =
-        document.querySelectorAll(
-            "[data-user-photo]"
-        );
-
-
-    const displayName =
-        user.displayName ||
-        user.email?.split("@")[0] ||
-        "User";
-
-
-    const email =
-        user.email || "";
-
-
-    userNameElements.forEach(
-        (element) => {
+    emailElements.forEach(
+        element => {
 
             element.textContent =
-                displayName;
-
-        }
-    );
-
-
-    userEmailElements.forEach(
-        (element) => {
-
-            element.textContent =
-                email;
-
-        }
-    );
-
-
-    userPhotoElements.forEach(
-        (element) => {
-
-            if (user.photoURL) {
-
-                element.src =
-                    user.photoURL;
-
-            }
+                data.email ||
+                "user@example.com";
 
         }
     );
@@ -159,32 +492,621 @@ function updateUserInformation(user) {
 }
 
 
-// ============================================================
-// LOGOUT FUNCTION
-// ============================================================
 
-async function logoutUser() {
+/* =========================================================
+   SAVE DEMO USER
+   ========================================================= */
+
+function saveDemoUser(
+    name,
+    email
+) {
+
+    const data = {
+
+        ...getLocalData(),
+
+        name,
+
+        email,
+
+        loggedIn: true,
+
+        updatedAt:
+            new Date().toISOString()
+
+    };
+
+
+    saveLocalData(
+        data
+    );
+
+}
+
+
+
+/* =========================================================
+   LOGOUT
+   ========================================================= */
+
+function logoutUser() {
+
+    const data =
+        getLocalData();
+
+
+    saveLocalData({
+
+        ...data,
+
+        loggedIn: false
+
+    });
+
+
+    showToast(
+        "Logged out successfully.",
+        "success"
+    );
+
+
+    setTimeout(
+        () => {
+
+            window.location.href =
+                "login.html";
+
+        },
+        600
+    );
+
+}
+
+
+
+/* =========================================================
+   SCAN HISTORY
+   ========================================================= */
+
+function getScanHistory() {
 
     try {
 
-        await signOut(auth);
+        return JSON.parse(
+            localStorage.getItem(
+                INSPECT_CALLER.scanHistoryKey
+            )
+        ) || [];
+
+    } catch {
+
+        return [];
+
+    }
+
+}
 
 
-        window.location.replace(
-            "login.html"
+function saveScanResult(
+    result
+) {
+
+    const history =
+        getScanHistory();
+
+
+    history.unshift({
+
+        ...result,
+
+        timestamp:
+            new Date().toISOString()
+
+    });
+
+
+    /*
+       Keep latest 50 scans
+    */
+
+    const limited =
+        history.slice(
+            0,
+            50
         );
 
 
-    } catch (error) {
+    localStorage.setItem(
+        INSPECT_CALLER.scanHistoryKey,
+        JSON.stringify(
+            limited
+        )
+    );
 
-        console.error(
-            "Logout error:",
-            error
+}
+
+
+
+/* =========================================================
+   CLEAR SCAN HISTORY
+   ========================================================= */
+
+function clearScanHistory() {
+
+    localStorage.removeItem(
+        INSPECT_CALLER.scanHistoryKey
+    );
+
+
+    showToast(
+        "Scan history cleared.",
+        "success"
+    );
+
+
+    setTimeout(
+        () => {
+
+            location.reload();
+
+        },
+        500
+    );
+
+}
+
+
+
+/* =========================================================
+   REPORT HISTORY
+   ========================================================= */
+
+function saveReport(
+    report
+) {
+
+    let reports = [];
+
+
+    try {
+
+        reports =
+            JSON.parse(
+                localStorage.getItem(
+                    INSPECT_CALLER.reportHistoryKey
+                )
+            ) || [];
+
+    } catch {
+
+        reports = [];
+
+    }
+
+
+    reports.unshift({
+
+        ...report,
+
+        reportId:
+            generateReportId(),
+
+        timestamp:
+            new Date().toISOString(),
+
+        status:
+            "submitted"
+
+    });
+
+
+    localStorage.setItem(
+        INSPECT_CALLER.reportHistoryKey,
+        JSON.stringify(
+            reports.slice(
+                0,
+                100
+            )
+        )
+    );
+
+}
+
+
+
+/* =========================================================
+   REPORT ID
+   ========================================================= */
+
+function generateReportId() {
+
+    const random =
+        Math.floor(
+            100000 +
+            Math.random() *
+            900000
         );
 
 
-        alert(
-            "Unable to logout. Please try again."
+    return (
+        "IC-" +
+        random
+    );
+
+}
+
+
+
+/* =========================================================
+   COPY TEXT
+   ========================================================= */
+
+async function copyText(
+    text
+) {
+
+    try {
+
+        await navigator.clipboard
+            .writeText(
+                text
+            );
+
+
+        showToast(
+            "Copied to clipboard.",
+            "success"
+        );
+
+
+        return true;
+
+    } catch {
+
+        showToast(
+            "Unable to copy.",
+            "danger"
+        );
+
+
+        return false;
+
+    }
+
+}
+
+
+
+/* =========================================================
+   COPY ELEMENT
+   ========================================================= */
+
+function copyElementText(
+    elementId
+) {
+
+    const element =
+        document.getElementById(
+            elementId
+        );
+
+
+    if (!element) {
+
+        return;
+
+    }
+
+
+    copyText(
+        element.textContent.trim()
+    );
+
+}
+
+
+
+/* =========================================================
+   SHARE RESULT
+   ========================================================= */
+
+async function shareResult(
+    title,
+    text
+) {
+
+    if (
+        navigator.share
+    ) {
+
+        try {
+
+            await navigator.share({
+
+                title,
+
+                text,
+
+                url:
+                    window.location.href
+
+            });
+
+        } catch {
+
+            /* User cancelled */
+
+        }
+
+        return;
+
+    }
+
+
+    copyText(
+        text
+    );
+
+}
+
+
+
+/* =========================================================
+   COUNTERS
+   ========================================================= */
+
+function initCounters() {
+
+    const counters =
+        document.querySelectorAll(
+            "[data-counter]"
+        );
+
+
+    counters.forEach(
+        counter => {
+
+            const target =
+                Number(
+                    counter.dataset.counter
+                );
+
+
+            if (
+                Number.isNaN(target)
+            ) {
+
+                return;
+
+            }
+
+
+            animateCounter(
+                counter,
+                target
+            );
+
+        }
+    );
+
+}
+
+
+function animateCounter(
+    element,
+    target
+) {
+
+    let current = 0;
+
+
+    const duration =
+        1200;
+
+
+    const start =
+        performance.now();
+
+
+    function update(
+        now
+    ) {
+
+        const progress =
+            Math.min(
+                (now - start) /
+                duration,
+                1
+            );
+
+
+        const eased =
+            1 -
+            Math.pow(
+                1 - progress,
+                3
+            );
+
+
+        current =
+            Math.floor(
+                target * eased
+            );
+
+
+        element.textContent =
+            current.toLocaleString();
+
+
+        if (
+            progress < 1
+        ) {
+
+            requestAnimationFrame(
+                update
+            );
+
+        }
+
+    }
+
+
+    requestAnimationFrame(
+        update
+    );
+
+}
+
+
+
+/* =========================================================
+   SCROLL ANIMATION
+   ========================================================= */
+
+function initScrollAnimations() {
+
+    const elements =
+        document.querySelectorAll(
+            "[data-reveal]"
+        );
+
+
+    if (
+        !elements.length
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        !("IntersectionObserver" in window)
+    ) {
+
+        elements.forEach(
+            element => {
+
+                element.classList.add(
+                    "revealed"
+                );
+
+            }
+        );
+
+        return;
+
+    }
+
+
+    const observer =
+        new IntersectionObserver(
+            entries => {
+
+                entries.forEach(
+                    entry => {
+
+                        if (
+                            entry.isIntersecting
+                        ) {
+
+                            entry.target.classList.add(
+                                "revealed"
+                            );
+
+
+                            observer.unobserve(
+                                entry.target
+                            );
+
+                        }
+
+                    }
+                );
+
+            },
+            {
+                threshold: .12
+            }
+        );
+
+
+    elements.forEach(
+        element => {
+
+            observer.observe(
+                element
+            );
+
+        }
+    );
+
+}
+
+
+
+/* =========================================================
+   YEAR
+   ========================================================= */
+
+function updateYear() {
+
+    const year =
+        new Date()
+            .getFullYear();
+
+
+    document
+        .querySelectorAll(
+            "[data-year]"
+        )
+        .forEach(
+            element => {
+
+                element.textContent =
+                    year;
+
+            }
+        );
+
+}
+
+
+
+/* =========================================================
+   ACTIVE LINK
+   ========================================================= */
+
+function setActiveLink(
+    selector
+) {
+
+    document
+        .querySelectorAll(
+            selector
+        )
+        .forEach(
+            link => {
+
+                link.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    const element =
+        document.querySelector(
+            selector
+        );
+
+
+    if (element) {
+
+        element.classList.add(
+            "active"
         );
 
     }
@@ -192,58 +1114,218 @@ async function logoutUser() {
 }
 
 
-// ============================================================
-// MAKE LOGOUT AVAILABLE
-// ============================================================
 
-window.logoutUser =
-    logoutUser;
+/* =========================================================
+   SAFE TEXT ESCAPE
+   ========================================================= */
+
+function escapeHTML(
+    text
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
 
 
-// ============================================================
-// AUTOMATIC LOGOUT BUTTON SUPPORT
-// ============================================================
-//
-// Any button/link with:
-//
-// id="logoutBtn"
-//
-// or
-//
-// data-logout
-//
-// will automatically logout the user.
-// ============================================================
+    div.textContent =
+        String(text);
+
+
+    return div.innerHTML;
+
+}
+
+
+
+/* =========================================================
+   FORMAT DATE
+   ========================================================= */
+
+function formatDate(
+    date
+) {
+
+    const value =
+        new Date(date);
+
+
+    if (
+        Number.isNaN(
+            value.getTime()
+        )
+    ) {
+
+        return "Unknown";
+
+    }
+
+
+    return value.toLocaleString(
+        undefined,
+        {
+
+            year: "numeric",
+
+            month: "short",
+
+            day: "numeric",
+
+            hour: "2-digit",
+
+            minute: "2-digit"
+
+        }
+    );
+
+}
+
+
+
+/* =========================================================
+   RISK LEVEL
+   ========================================================= */
+
+function getRiskLevel(
+    score
+) {
+
+    const value =
+        Number(score);
+
+
+    if (
+        value >= 70
+    ) {
+
+        return "high";
+
+    }
+
+
+    if (
+        value >= 40
+    ) {
+
+        return "medium";
+
+    }
+
+
+    return "low";
+
+}
+
+
+
+/* =========================================================
+   RISK LABEL
+   ========================================================= */
+
+function getRiskLabel(
+    score
+) {
+
+    const level =
+        getRiskLevel(
+            score
+        );
+
+
+    switch(level) {
+
+        case "high":
+
+            return "High Risk";
+
+
+        case "medium":
+
+            return "Medium Risk";
+
+
+        default:
+
+            return "Low Risk";
+
+    }
+
+}
+
+
+
+/* =========================================================
+   GLOBAL ESCAPE KEY
+   ========================================================= */
 
 document.addEventListener(
-    "click",
-    (event) => {
+    "keydown",
+    event => {
 
-        const logoutElement =
-            event.target.closest(
-                "#logoutBtn, [data-logout]"
-            );
+        if (
+            event.key === "Escape"
+        ) {
 
+            document
+                .querySelectorAll(
+                    ".mobile-open"
+                )
+                .forEach(
+                    element => {
 
-        if (!logoutElement) {
-            return;
+                        element.classList.remove(
+                            "mobile-open"
+                        );
+
+                    }
+                );
+
         }
-
-
-        event.preventDefault();
-
-        logoutUser();
 
     }
 );
 
 
-// ============================================================
-// AUTHENTICATED USER READY EVENT
-// ============================================================
 
-document.dispatchEvent(
-    new CustomEvent(
-        "fraudguard-auth-ready"
-    )
-);
+/* =========================================================
+   GLOBAL EXPORTS
+   ========================================================= */
+
+window.InspectCaller = {
+
+    showToast,
+
+    getLocalData,
+
+    saveLocalData,
+
+    saveDemoUser,
+
+    logoutUser,
+
+    getScanHistory,
+
+    saveScanResult,
+
+    clearScanHistory,
+
+    saveReport,
+
+    generateReportId,
+
+    copyText,
+
+    copyElementText,
+
+    shareResult,
+
+    escapeHTML,
+
+    formatDate,
+
+    getRiskLevel,
+
+    getRiskLabel
+
+};
