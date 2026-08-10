@@ -3,1443 +3,1824 @@
 
 <head>
 
-<meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>WhatsApp Scanner | FraudGuard</title>
-
-<meta
-name="description"
-content="Check public WhatsApp links for suspicious patterns and FraudGuard community reports.">
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    min-height:100vh;
-    background:#0b1328;
-    color:#fff;
-    font-family:Arial,Helvetica,sans-serif;
-}
-
-a{
-    color:inherit;
-    text-decoration:none;
-}
-
-.navbar{
-    width:100%;
-    background:#10182d;
-    border-bottom:1px solid #26324b;
-    position:sticky;
-    top:0;
-    z-index:1000;
-}
-
-.nav-container{
-    max-width:1250px;
-    min-height:64px;
-    margin:auto;
-    padding:0 18px;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.brand{
-    display:flex;
-    align-items:center;
-    gap:9px;
-
-    color:#22c55e;
-    font-size:20px;
-    font-weight:700;
-}
-
-.brand img{
-    width:36px;
-    height:36px;
-    object-fit:contain;
-}
-
-.nav-links{
-    display:flex;
-    align-items:center;
-    gap:11px;
-
-    font-size:10px;
-    font-weight:600;
-}
-
-.nav-links a:hover{
-    color:#22c55e;
-}
-
-.nav-links a.active{
-    color:#22c55e;
-}
-
-.logout-btn{
-    border:0;
-    border-radius:6px;
-
-    padding:8px 13px;
-
-    background:#22c55e;
-    color:#fff;
-
-    cursor:pointer;
-    font-weight:700;
-}
-
-.logout-btn:hover{
-    background:#16a34a;
-}
-
-.mobile-menu{
-    display:none;
+    <meta charset="UTF-8">
 
-    border:0;
-    background:transparent;
-    color:#fff;
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    font-size:24px;
-    cursor:pointer;
-}
+    <title>WhatsApp Scanner — Inspect Caller</title>
 
-.page{
-    max-width:950px;
-    margin:auto;
-    padding:38px 16px 55px;
-}
+    <meta
+        name="description"
+        content="Inspect Caller WhatsApp scam and security scanner."
+    >
 
-.header{
-    text-align:center;
-    margin-bottom:28px;
-}
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
-.header-icon{
-    font-size:48px;
-    margin-bottom:9px;
-}
+    <style>
 
-.header h1{
-    font-size:32px;
-    margin-bottom:8px;
-}
+        .whatsapp-page {
+            min-height: 100vh;
+            padding: 65px 20px 100px;
 
-.header h1 span{
-    color:#22c55e;
-}
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(0,190,120,.13),
+                    transparent 42%
+                ),
+                #050d18;
+        }
 
-.header p{
-    max-width:700px;
-    margin:auto;
 
-    color:#9da8bb;
-    font-size:12px;
-    line-height:1.7;
-}
+        .whatsapp-container {
+            width: min(1050px,100%);
+            margin: auto;
+        }
 
-.scanner-card{
-    background:#1c263b;
-    border:1px solid #2d3953;
-    border-radius:13px;
-    padding:28px;
-}
 
-.input-label{
-    display:block;
+        .whatsapp-hero {
+            text-align: center;
+            margin-bottom: 40px;
+        }
 
-    color:#dce1e9;
 
-    font-size:12px;
-    font-weight:600;
+        .whatsapp-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
 
-    margin-bottom:8px;
-}
+            padding: 9px 16px;
 
-.input-row{
-    display:flex;
-    gap:9px;
-}
+            border: 1px solid #286452;
+            border-radius: 999px;
 
-#whatsappUrl{
-    flex:1;
-    min-width:0;
+            background: #071e1b;
 
-    padding:14px;
+            color: #72efbd;
 
-    border-radius:7px;
-    border:1px solid #3b4760;
+            font-size: 9px;
+            font-weight: 850;
 
-    background:#111a2f;
-    color:#fff;
+            letter-spacing: .7px;
+        }
 
-    outline:none;
-    font-size:13px;
-}
 
-#whatsappUrl:focus{
-    border-color:#22c55e;
+        .whatsapp-hero h1 {
+            margin-top: 20px;
 
-    box-shadow:
-    0 0 0 2px
-    rgba(34,197,94,.10);
-}
+            font-size:
+                clamp(42px,7vw,68px);
 
-#whatsappUrl::placeholder{
-    color:#69758a;
-}
+            line-height: 1;
+            letter-spacing: -3px;
+        }
 
-.scan-btn{
-    min-width:125px;
 
-    padding:12px 17px;
+        .whatsapp-hero h1 span {
+            color: #25d366;
+        }
 
-    border:0;
-    border-radius:7px;
 
-    background:#22c55e;
-    color:#fff;
+        .whatsapp-hero p {
+            max-width: 720px;
 
-    cursor:pointer;
+            margin: 18px auto 0;
 
-    font-weight:700;
-    font-size:12px;
-}
+            color: var(--muted);
 
-.scan-btn:hover{
-    background:#16a34a;
-}
+            font-size: 13px;
+            line-height: 1.7;
+        }
 
-.scan-btn:disabled{
-    opacity:.6;
-    cursor:not-allowed;
-}
 
-.example{
-    margin-top:9px;
+        /* CARD */
 
-    color:#69758a;
-    font-size:10px;
-    line-height:1.6;
-}
+        .whatsapp-card {
+            padding: 30px;
 
-.status{
-    display:none;
+            border: 1px solid var(--line);
+            border-radius: 25px;
 
-    margin-top:18px;
+            background:
+                linear-gradient(
+                    145deg,
+                    #09251f,
+                    #061522
+                );
 
-    padding:11px;
+            box-shadow:
+                0 25px 80px
+                rgba(0,170,110,.07);
+        }
 
-    border-radius:7px;
 
-    background:#111a2f;
-    border:1px solid #2d3953;
+        /* TYPES */
 
-    color:#aeb7c7;
-    font-size:11px;
-}
+        .scan-tabs {
+            display: grid;
 
-.result{
-    display:none;
-    margin-top:20px;
-}
+            grid-template-columns:
+                repeat(3,1fr);
 
-.result-top{
-    display:flex;
+            gap: 9px;
 
-    align-items:center;
-    justify-content:space-between;
+            margin-bottom: 22px;
+        }
 
-    gap:15px;
 
-    padding:20px;
+        .scan-tab {
+            position: relative;
+        }
 
-    background:#111a2f;
-    border:1px solid #2d3953;
 
-    border-radius:10px;
-}
+        .scan-tab input {
+            position: absolute;
+            opacity: 0;
+        }
 
-.result-title{
-    min-width:0;
-}
 
-.result-title h2{
-    color:#fff;
-    font-size:18px;
-    margin-bottom:5px;
-}
+        .scan-tab label {
+            min-height: 72px;
 
-.result-title p{
-    color:#7f8b9f;
-    font-size:10px;
-    word-break:break-all;
-}
+            display: flex;
 
-.badge{
-    flex:none;
+            flex-direction: column;
 
-    padding:8px 12px;
+            align-items: center;
 
-    border-radius:20px;
+            justify-content: center;
 
-    font-size:10px;
-    font-weight:700;
-}
+            gap: 5px;
 
-.badge.safe{
-    background:#123521;
-    color:#62e993;
-    border:1px solid #236b3b;
-}
+            border: 1px solid #19493d;
 
-.badge.suspicious{
-    background:#423719;
-    color:#ffd76b;
-    border:1px solid #725f24;
-}
+            border-radius: 13px;
 
-.badge.dangerous{
-    background:#401c28;
-    color:#ff91a6;
-    border:1px solid #7f3046;
-}
+            background: #071a18;
 
-.score-card{
-    display:grid;
+            color: #72958a;
 
-    grid-template-columns:180px 1fr;
+            font-size: 9px;
+            font-weight: 850;
 
-    gap:18px;
+            cursor: pointer;
 
-    margin-top:15px;
-}
+            transition: .2s;
+        }
 
-.score{
-    background:#111a2f;
 
-    border:1px solid #2d3953;
-    border-radius:10px;
+        .scan-tab label span {
+            font-size: 21px;
+        }
 
-    padding:20px;
 
-    text-align:center;
-}
+        .scan-tab input:checked + label {
+            border-color: #25d366;
 
-.score-number{
-    color:#22c55e;
+            background:
+                rgba(37,211,102,.07);
 
-    font-size:42px;
-    font-weight:700;
+            color: #9af0bd;
 
-    line-height:1;
+            box-shadow:
+                0 0 20px
+                rgba(37,211,102,.06);
+        }
 
-    margin-bottom:8px;
-}
 
-.score-label{
-    color:#8f9bad;
-    font-size:10px;
-}
+        /* INPUT */
 
-.details{
-    background:#111a2f;
+        .field-label {
+            display: block;
 
-    border:1px solid #2d3953;
-    border-radius:10px;
+            margin-bottom: 8px;
 
-    padding:20px;
-}
+            color: #bfd5df;
 
-.details h3{
-    color:#22c55e;
+            font-size: 10px;
+            font-weight: 850;
+        }
 
-    font-size:14px;
-    margin-bottom:13px;
-}
 
-.detail-grid{
-    display:grid;
+        .whatsapp-input {
+            width: 100%;
 
-    grid-template-columns:
-    repeat(2,1fr);
+            min-height: 53px;
 
-    gap:12px;
-}
+            padding: 0 15px;
 
-.detail{
-    background:#1c263b;
+            border: 1px solid #285a4c;
+            border-radius: 13px;
 
-    border-radius:7px;
-    padding:12px;
-}
+            outline: none;
 
-.detail-label{
-    color:#69758a;
+            background: #061a17;
 
-    font-size:9px;
-    margin-bottom:4px;
-}
+            color: white;
 
-.detail-value{
-    color:#dce1e9;
+            font-family: inherit;
+            font-size: 12px;
+        }
 
-    font-size:11px;
-    word-break:break-word;
-}
 
-.reasons{
-    margin-top:15px;
+        .whatsapp-input::placeholder {
+            color: #587b70;
+        }
 
-    background:#111a2f;
 
-    border:1px solid #2d3953;
-    border-radius:10px;
+        .whatsapp-input:focus {
+            border-color: #25d366;
 
-    padding:20px;
-}
+            box-shadow:
+                0 0 0 3px
+                rgba(37,211,102,.08);
+        }
 
-.reasons h3{
-    color:#22c55e;
 
-    font-size:14px;
-    margin-bottom:10px;
-}
+        .message-area {
+            display: none;
 
-.reasons ul{
-    padding-left:18px;
-}
+            margin-top: 17px;
+        }
 
-.reasons li{
-    color:#aeb7c7;
 
-    font-size:11px;
-    line-height:1.7;
+        .message-input {
+            width: 100%;
 
-    margin-bottom:4px;
-}
+            min-height: 135px;
 
-.actions{
-    display:flex;
-    gap:9px;
+            padding: 15px;
 
-    margin-top:15px;
-}
+            border: 1px solid #285a4c;
+            border-radius: 13px;
 
-.action-btn{
-    flex:1;
+            outline: none;
 
-    padding:11px;
+            resize: vertical;
 
-    border-radius:7px;
+            background: #061a17;
 
-    text-align:center;
+            color: white;
 
-    font-size:11px;
-    font-weight:600;
+            font-family: inherit;
 
-    background:#344158;
-    color:#fff;
+            font-size: 11px;
 
-    border:0;
-    cursor:pointer;
-}
+            line-height: 1.6;
+        }
 
-.action-btn:hover{
-    background:#22c55e;
-}
 
-.action-btn.report{
-    background:#7f3046;
-}
+        .message-input::placeholder {
+            color: #587b70;
+        }
 
-.action-btn.report:hover{
-    background:#a83d58;
-}
 
-.notice{
-    margin-top:18px;
+        .message-input:focus {
+            border-color: #25d366;
 
-    padding:14px;
+            box-shadow:
+                0 0 0 3px
+                rgba(37,211,102,.08);
+        }
 
-    border-radius:8px;
 
-    background:#111a2f;
+        /* BUTTON */
 
-    border:1px solid #2d3953;
+        .scan-actions {
+            display: flex;
 
-    color:#7f8b9f;
+            justify-content: flex-end;
 
-    font-size:10px;
+            margin-top: 15px;
+        }
 
-    line-height:1.6;
-}
 
-footer{
-    text-align:center;
+        .scan-btn {
+            min-height: 49px;
 
-    padding:23px 15px;
+            padding: 0 25px;
 
-    color:#69758a;
+            border: none;
+            border-radius: 13px;
 
-    font-size:10px;
+            background:
+                linear-gradient(
+                    135deg,
+                    #25d366,
+                    #079447
+                );
 
-    border-top:1px solid #202b42;
-}
+            color: white;
 
-@media(max-width:1050px){
+            font-size: 11px;
+            font-weight: 900;
 
-    .nav-links{
-        gap:7px;
-        font-size:8px;
-    }
+            cursor: pointer;
 
-}
+            transition: .25s;
+        }
 
-@media(max-width:750px){
 
-    .nav-links{
-        display:none;
-    }
+        .scan-btn:hover {
+            transform: translateY(-2px);
 
-    .mobile-menu{
-        display:block;
-    }
+            box-shadow:
+                0 15px 35px
+                rgba(37,211,102,.18);
+        }
 
-    .nav-container{
-        min-height:58px;
-    }
 
-    .brand{
-        font-size:16px;
-    }
+        /* RESULT */
 
-    .brand img{
-        width:30px;
-        height:30px;
-    }
+        .whatsapp-result {
+            display: none;
 
-    .page{
-        padding:
-        25px 11px 40px;
-    }
+            margin-top: 25px;
+        }
 
-    .scanner-card{
-        padding:18px;
-    }
 
-    .input-row{
-        flex-direction:column;
-    }
+        .whatsapp-result.show {
+            display: block;
+        }
 
-    .scan-btn{
-        width:100%;
-    }
 
-    .result-top{
-        align-items:flex-start;
-        flex-direction:column;
-    }
+        .profile-card {
+            display: flex;
 
-    .score-card{
-        grid-template-columns:1fr;
-    }
+            align-items: center;
 
-    .detail-grid{
-        grid-template-columns:1fr;
-    }
+            gap: 16px;
 
-    .actions{
-        flex-direction:column;
-    }
+            padding: 20px;
 
-}
+            border: 1px solid #285a4c;
 
-</style>
+            border-radius: 18px;
+
+            background: #071a18;
+        }
+
+
+        .profile-avatar {
+            width: 58px;
+            height: 58px;
+
+            display: grid;
+            place-items: center;
+
+            flex-shrink: 0;
+
+            border-radius: 17px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #116b48,
+                    #092e27
+                );
+
+            border: 1px solid #318565;
+
+            font-size: 25px;
+        }
+
+
+        .profile-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+
+        .profile-info small {
+            color: #718d9d;
+            font-size: 8px;
+        }
+
+
+        .profile-info h2 {
+            margin-top: 5px;
+            font-size: 16px;
+
+            word-break: break-word;
+        }
+
+
+        .profile-info p {
+            margin-top: 4px;
+
+            color: #6f8997;
+
+            font-size: 9px;
+        }
+
+
+        .risk-score {
+            min-width: 110px;
+
+            padding: 12px;
+
+            text-align: center;
+
+            border-radius: 14px;
+
+            background:
+                rgba(255,200,80,.06);
+
+            border:
+                1px solid
+                rgba(255,200,80,.25);
+        }
+
+
+        .risk-score strong {
+            display: block;
+
+            color: #ffd267;
+
+            font-size: 27px;
+        }
+
+
+        .risk-score span {
+            color: #718b99;
+            font-size: 7px;
+        }
+
+
+        /* VERDICT */
+
+        .verdict {
+            margin-top: 13px;
+
+            padding: 17px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            border: 1px solid #193c52;
+
+            border-radius: 15px;
+
+            background: #071827;
+        }
+
+
+        .verdict-icon {
+            width: 43px;
+            height: 43px;
+
+            display: grid;
+            place-items: center;
+
+            flex-shrink: 0;
+
+            border-radius: 12px;
+
+            background:
+                rgba(255,200,80,.08);
+
+            font-size: 20px;
+        }
+
+
+        .verdict strong {
+            display: block;
+
+            color: #d4e6ed;
+
+            font-size: 12px;
+        }
+
+
+        .verdict span {
+            display: block;
+
+            margin-top: 4px;
+
+            color: #7894a2;
+
+            font-size: 9px;
+        }
+
+
+        /* SIGNALS */
+
+        .signals-title {
+            margin:
+                20px 0 11px;
+
+            color: #c7dbe4;
+
+            font-size: 13px;
+            font-weight: 850;
+        }
+
+
+        .signal-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3,1fr);
+
+            gap: 11px;
+        }
+
+
+        .signal {
+            padding: 16px;
+
+            border: 1px solid #193c52;
+
+            border-radius: 13px;
+
+            background: #071827;
+        }
+
+
+        .signal-top {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+        }
+
+
+        .signal-icon {
+            width: 34px;
+            height: 34px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 9px;
+
+            background: #0b2941;
+        }
+
+
+        .signal-status {
+            padding:
+                5px 8px;
+
+            border-radius: 999px;
+
+            font-size: 7px;
+            font-weight: 900;
+        }
+
+
+        .safe {
+            color: #4ce7aa;
+
+            background:
+                rgba(45,228,154,.08);
+
+            border:
+                1px solid
+                rgba(45,228,154,.2);
+        }
+
+
+        .review {
+            color: #ffd267;
+
+            background:
+                rgba(255,200,80,.08);
+
+            border:
+                1px solid
+                rgba(255,200,80,.2);
+        }
+
+
+        .signal h3 {
+            margin-top: 10px;
+            font-size: 11px;
+        }
+
+
+        .signal p {
+            margin-top: 5px;
+
+            color: #698492;
+
+            font-size: 8px;
+
+            line-height: 1.5;
+        }
+
+
+        /* NOTICE */
+
+        .notice {
+            margin-top: 15px;
+
+            padding:
+                14px 16px;
+
+            border-left:
+                4px solid #ffc857;
+
+            border-radius: 9px;
+
+            background:
+                rgba(255,200,80,.06);
+
+            color: #bcae83;
+
+            font-size: 9px;
+
+            line-height: 1.7;
+        }
+
+
+        /* ACTIONS */
+
+        .action-row {
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 17px;
+        }
+
+
+        .action-btn {
+            min-height: 43px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding:
+                0 16px;
+
+            border:
+                1px solid #285873;
+
+            border-radius: 11px;
+
+            background: #071b2b;
+
+            color: #9fdcff;
+
+            font-size: 9px;
+
+            font-weight: 850;
+
+            cursor: pointer;
+        }
+
+
+        .action-btn.primary {
+            border: none;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #25d366,
+                    #079447
+                );
+
+            color: white;
+        }
+
+
+        /* INFO */
+
+        .info-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3,1fr);
+
+            gap: 15px;
+
+            margin-top: 22px;
+        }
+
+
+        .info-card {
+            padding: 20px;
+
+            border: 1px solid var(--line);
+
+            border-radius: 18px;
+
+            background: #081d2f;
+        }
+
+
+        .info-icon {
+            margin-bottom: 10px;
+            font-size: 23px;
+        }
+
+
+        .info-card h3 {
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+
+
+        .info-card p {
+            color: var(--muted);
+
+            font-size: 9px;
+
+            line-height: 1.7;
+        }
+
+
+        @media(max-width:800px) {
+
+            .scan-tabs {
+                grid-template-columns:
+                    repeat(3,1fr);
+            }
+
+            .signal-grid,
+            .info-grid {
+                grid-template-columns:
+                    repeat(2,1fr);
+            }
+
+        }
+
+
+        @media(max-width:600px) {
+
+            .whatsapp-page {
+                padding:
+                    45px 12px 80px;
+            }
+
+            .whatsapp-card {
+                padding: 20px;
+            }
+
+            .profile-card {
+                align-items: flex-start;
+                flex-wrap: wrap;
+            }
+
+            .risk-score {
+                width: 100%;
+            }
+
+            .signal-grid,
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .scan-actions,
+            .action-row {
+                flex-direction: column;
+            }
+
+            .scan-btn,
+            .action-btn {
+                width: 100%;
+            }
+
+        }
+
+    </style>
 
 </head>
 
+
 <body>
+
+
+<!-- ================= NAVBAR ================= -->
 
 <header class="navbar">
 
-<div class="nav-container">
+    <div class="nav-container">
 
-<a
-href="index.html"
-class="brand">
 
-<img
-src="logo.png"
-alt="FraudGuard">
+        <a
+            href="index.html"
+            class="brand">
 
-<span>
-FraudGuard
-</span>
+            INSPECT<span>CALLER</span>
 
-</a>
+        </a>
 
-<nav class="nav-links">
 
-<a href="index.html">
-Home
-</a>
+        <nav class="nav-links">
 
-<a href="dashboard.html">
-Dashboard
-</a>
+            <a href="dashboard.html">
+                Dashboard
+            </a>
 
-<a href="scanner.html">
-URL Scanner
-</a>
+            <a href="scanner.html">
+                Scanner
+            </a>
 
-<a href="phone-checker.html">
-Phone
-</a>
+            <a href="phone-checker.html">
+                Caller
+            </a>
 
-<a href="email-checker.html">
-Email
-</a>
+            <a href="report.html">
+                Report
+            </a>
 
-<a href="ai-chat.html">
-AI Chat
-</a>
+        </nav>
 
-<a href="qr-scanner.html">
-QR
-</a>
 
-<a href="facebook-scanner.html">
-Facebook
-</a>
+        <a
+            href="dashboard.html"
+            class="nav-login">
 
-<a href="telegram-scanner.html">
-Telegram
-</a>
+            Dashboard
 
-<a
-href="whatsapp-scanner.html"
-class="active">
+        </a>
 
-WhatsApp
-
-</a>
-
-<a href="report.html">
-Report
-</a>
-
-<a href="features.html">
-Features
-</a>
-
-<a href="about.html">
-About
-</a>
-
-<a href="contact.html">
-Contact
-</a>
-
-<button
-id="logoutBtn"
-class="logout-btn">
-
-Logout
-
-</button>
-
-</nav>
-
-<button
-id="mobileMenuBtn"
-class="mobile-menu">
-
-☰
-
-</button>
-
-</div>
+    </div>
 
 </header>
 
 
-<main class="page">
 
-<section class="header">
+<!-- ================= MAIN ================= -->
 
-<div class="header-icon">
-💬
+<main class="whatsapp-page">
+
+
+<div class="whatsapp-container">
+
+
+    <!-- HERO -->
+
+    <section class="whatsapp-hero">
+
+
+        <div class="whatsapp-badge">
+
+            🟢 WHATSAPP SECURITY INTELLIGENCE
+
+        </div>
+
+
+        <h1>
+
+            WhatsApp
+            <span>Scanner</span>
+
+        </h1>
+
+
+        <p>
+
+            Check suspicious WhatsApp numbers,
+            links and messages for potential scam,
+            phishing and fraud indicators.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- CARD -->
+
+    <section class="whatsapp-card">
+
+
+        <!-- TYPES -->
+
+        <div class="scan-tabs">
+
+
+            <div class="scan-tab">
+
+                <input
+                    type="radio"
+                    id="numberType"
+                    name="whatsappType"
+                    value="Phone Number"
+                    checked
+                >
+
+                <label for="numberType">
+
+                    <span>📞</span>
+
+                    Phone Number
+
+                </label>
+
+            </div>
+
+
+            <div class="scan-tab">
+
+                <input
+                    type="radio"
+                    id="linkType"
+                    name="whatsappType"
+                    value="WhatsApp Link"
+                >
+
+                <label for="linkType">
+
+                    <span>🔗</span>
+
+                    WhatsApp Link
+
+                </label>
+
+            </div>
+
+
+            <div class="scan-tab">
+
+                <input
+                    type="radio"
+                    id="messageType"
+                    name="whatsappType"
+                    value="Message"
+                >
+
+                <label for="messageType">
+
+                    <span>💬</span>
+
+                    Message
+
+                </label>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- TARGET -->
+
+        <label
+            class="field-label"
+            for="whatsappTarget">
+
+            WhatsApp Number / Link
+
+        </label>
+
+
+        <input
+            type="text"
+            id="whatsappTarget"
+            class="whatsapp-input"
+            placeholder="+8801XXXXXXXXX"
+        >
+
+
+
+        <!-- MESSAGE -->
+
+        <div
+            class="message-area"
+            id="messageArea">
+
+
+            <label
+                class="field-label"
+                for="whatsappMessage">
+
+                Suspicious Message
+
+            </label>
+
+
+            <textarea
+                id="whatsappMessage"
+                class="message-input"
+                placeholder="Paste the suspicious WhatsApp message here..."
+            ></textarea>
+
+
+        </div>
+
+
+
+        <!-- BUTTON -->
+
+        <div class="scan-actions">
+
+
+            <button
+                class="scan-btn"
+                id="scanButton">
+
+                🔍 Analyze WhatsApp Number
+
+            </button>
+
+
+        </div>
+
+
+
+        <!-- RESULT -->
+
+        <div
+            class="whatsapp-result"
+            id="whatsappResult">
+
+
+            <!-- PROFILE -->
+
+            <div class="profile-card">
+
+
+                <div class="profile-avatar">
+
+                    🟢
+
+                </div>
+
+
+                <div class="profile-info">
+
+                    <small>
+                        WHATSAPP TARGET
+                    </small>
+
+
+                    <h2 id="resultTarget">
+                        —
+                    </h2>
+
+
+                    <p id="resultType">
+                        Phone Number • Prototype Analysis
+                    </p>
+
+                </div>
+
+
+                <div class="risk-score">
+
+                    <strong id="riskScore">
+                        15
+                    </strong>
+
+                    <span>
+                        RISK SCORE / 100
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- VERDICT -->
+
+            <div class="verdict">
+
+
+                <div
+                    class="verdict-icon"
+                    id="verdictIcon">
+
+                    🟢
+
+                </div>
+
+
+                <div>
+
+                    <strong id="verdictTitle">
+
+                        Low Risk — No Major Signal
+
+                    </strong>
+
+
+                    <span id="verdictText">
+
+                        No major suspicious pattern was
+                        detected in this prototype analysis.
+
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- SIGNALS -->
+
+            <div class="signals-title">
+
+                WhatsApp Threat Signals
+
+            </div>
+
+
+            <div class="signal-grid">
+
+
+                <div class="signal">
+
+
+                    <div class="signal-top">
+
+                        <div class="signal-icon">
+                            🎣
+                        </div>
+
+
+                        <span
+                            id="phishing"
+                            class="signal-status safe">
+
+                            LOW
+
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Phishing
+                    </h3>
+
+
+                    <p>
+                        Checks suspicious login,
+                        verification and fake-link patterns.
+                    </p>
+
+                </div>
+
+
+
+                <div class="signal">
+
+
+                    <div class="signal-top">
+
+                        <div class="signal-icon">
+                            💰
+                        </div>
+
+
+                        <span
+                            id="payment"
+                            class="signal-status safe">
+
+                            LOW
+
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Payment Scam
+                    </h3>
+
+
+                    <p>
+                        Detects suspicious payment,
+                        transfer and financial requests.
+                    </p>
+
+                </div>
+
+
+
+                <div class="signal">
+
+
+                    <div class="signal-top">
+
+                        <div class="signal-icon">
+                            ⚡
+                        </div>
+
+
+                        <span
+                            id="urgency"
+                            class="signal-status safe">
+
+                            LOW
+
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Urgency
+                    </h3>
+
+
+                    <p>
+                        Looks for pressure tactics and
+                        immediate-action requests.
+                    </p>
+
+                </div>
+
+
+
+                <div class="signal">
+
+
+                    <div class="signal-top">
+
+                        <div class="signal-icon">
+                            🎁
+                        </div>
+
+
+                        <span
+                            id="prize"
+                            class="signal-status safe">
+
+                            LOW
+
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Prize / Giveaway
+                    </h3>
+
+
+                    <p>
+                        Identifies suspicious prizes,
+                        rewards and giveaway claims.
+                    </p>
+
+                </div>
+
+
+
+                <div class="signal">
+
+
+                    <div class="signal-top">
+
+                        <div class="signal-icon">
+                            📈
+                        </div>
+
+
+                        <span
+                            id="investment"
+                            class="signal-status safe">
+
+                            LOW
+
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Investment Risk
+                    </h3>
+
+
+                    <p>
+                        Flags crypto, trading and
+                        guaranteed-profit patterns.
+                    </p>
+
+                </div>
+
+
+
+                <div class="signal">
+
+
+                    <div class="signal-top">
+
+                        <div class="signal-icon">
+                            👤
+                        </div>
+
+
+                        <span
+                            id="identity"
+                            class="signal-status safe">
+
+                            LOW
+
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Identity Risk
+                    </h3>
+
+
+                    <p>
+                        Detects requests for OTP,
+                        passwords and sensitive data.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- NOTICE -->
+
+            <div class="notice">
+
+                ⚠️ <strong>Prototype Notice:</strong>
+                Inspect Caller does not currently have
+                direct access to WhatsApp's private
+                databases, private chats or account
+                information. This interface demonstrates
+                the planned security-analysis experience.
+
+            </div>
+
+
+
+            <!-- ACTIONS -->
+
+            <div class="action-row">
+
+
+                <a
+                    href="report.html"
+                    class="action-btn primary">
+
+                    🚨 Report This Number
+
+                </a>
+
+
+                <button
+                    class="action-btn"
+                    id="copyResult">
+
+                    📋 Copy Result
+
+                </button>
+
+
+                <a
+                    href="ai-chat.html"
+                    class="action-btn">
+
+                    🤖 AI Analysis
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- INFO -->
+
+    <section class="info-grid">
+
+
+        <div class="info-card">
+
+            <div class="info-icon">
+                📞
+            </div>
+
+            <h3>
+                Caller Intelligence
+            </h3>
+
+            <p>
+                Future versions can compare reported
+                WhatsApp numbers against verified
+                community and threat-intelligence data.
+            </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <div class="info-icon">
+                🧠
+            </div>
+
+            <h3>
+                Message Analysis
+            </h3>
+
+            <p>
+                Planned AI analysis can identify scam
+                language, payment requests, urgency
+                tactics and suspicious links.
+            </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <div class="info-icon">
+                🚨
+            </div>
+
+            <h3>
+                Fraud Reporting
+            </h3>
+
+            <p>
+                Users can submit suspicious numbers and
+                messages for review and future threat
+                intelligence matching.
+            </p>
+
+        </div>
+
+
+    </section>
+
+
 </div>
-
-<h1>
-WhatsApp
-<span>Scanner</span>
-</h1>
-
-<p>
-Check a public WhatsApp link for suspicious
-URL patterns, phone-link indicators and
-FraudGuard community reports.
-</p>
-
-</section>
-
-
-<section class="scanner-card">
-
-<label
-class="input-label"
-for="whatsappUrl">
-
-Public WhatsApp URL
-
-</label>
-
-
-<div class="input-row">
-
-<input
-id="whatsappUrl"
-type="url"
-placeholder="https://wa.me/1234567890"
-autocomplete="off"
-spellcheck="false">
-
-
-<button
-id="scanBtn"
-class="scan-btn">
-
-Scan WhatsApp
-
-</button>
-
-</div>
-
-
-<div class="example">
-
-Examples:
-https://wa.me/1234567890
-&nbsp; • &nbsp;
-https://api.whatsapp.com/send?phone=1234567890
-
-</div>
-
-
-<div
-id="status"
-class="status">
-
-🔎 Preparing WhatsApp URL scan...
-
-</div>
-
-
-<div
-id="result"
-class="result">
-
-<div class="result-top">
-
-<div class="result-title">
-
-<h2 id="resultTitle">
-Scan Result
-</h2>
-
-<p id="resultUrl">
--
-</p>
-
-</div>
-
-<div
-id="resultBadge"
-class="badge">
-
--
-
-</div>
-
-</div>
-
-
-<div class="score-card">
-
-<div class="score">
-
-<div
-id="score"
-class="score-number">
-
-0
-
-</div>
-
-<div class="score-label">
-Risk Score / 100
-</div>
-
-</div>
-
-
-<div class="details">
-
-<h3>
-WhatsApp Check Details
-</h3>
-
-<div class="detail-grid">
-
-<div class="detail">
-
-<div class="detail-label">
-Platform
-</div>
-
-<div
-id="platform"
-class="detail-value">
-
-WhatsApp
-
-</div>
-
-</div>
-
-
-<div class="detail">
-
-<div class="detail-label">
-Domain
-</div>
-
-<div
-id="domain"
-class="detail-value">
-
--
-
-</div>
-
-</div>
-
-
-<div class="detail">
-
-<div class="detail-label">
-Link Type
-</div>
-
-<div
-id="urlType"
-class="detail-value">
-
--
-
-</div>
-
-</div>
-
-
-<div class="detail">
-
-<div class="detail-label">
-Phone Parameter
-</div>
-
-<div
-id="phoneStatus"
-class="detail-value">
-
--
-
-</div>
-
-</div>
-
-
-<div class="detail">
-
-<div class="detail-label">
-Community Reports
-</div>
-
-<div
-id="reportCount"
-class="detail-value">
-
-0
-
-</div>
-
-</div>
-
-
-<div class="detail">
-
-<div class="detail-label">
-HTTPS
-</div>
-
-<div
-id="httpsStatus"
-class="detail-value">
-
--
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="reasons">
-
-<h3>
-Risk Indicators
-</h3>
-
-<ul id="reasonsList">
-
-<li>
-Waiting for scan...
-</li>
-
-</ul>
-
-</div>
-
-
-<div class="actions">
-
-<button
-id="checkAgainBtn"
-class="action-btn">
-
-Check Another
-
-</button>
-
-<a
-id="reportBtn"
-href="report.html"
-class="action-btn report">
-
-🚨 Report
-
-</a>
-
-</div>
-
-</div>
-
-
-<div class="notice">
-
-<strong>Important:</strong>
-FraudGuard checks public WhatsApp URLs,
-URL-level signals and its own community
-database. It does not access private WhatsApp
-messages, contacts or account sessions.
-A low-risk result does not guarantee that a
-WhatsApp contact or link is legitimate.
-
-</div>
-
-</section>
 
 </main>
 
 
+
+<!-- ================= FOOTER ================= -->
+
 <footer>
 
-© 2026 FraudGuard —
-AI-Powered Global Fraud Detection Platform
+    <div class="footer-brand">
 
-  </footer>
-<script type="module">
+        INSPECT<span>CALLER</span>
 
-import {
-    auth,
-    db
-} from "./firebase.js";
-
-import {
-    onAuthStateChanged,
-    signOut
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import {
-    collection,
-    query,
-    where,
-    getDocs,
-    addDoc,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    </div>
 
 
-const whatsappUrl =
-    document.getElementById("whatsappUrl");
-
-const scanBtn =
-    document.getElementById("scanBtn");
-
-const statusBox =
-    document.getElementById("status");
-
-const result =
-    document.getElementById("result");
-
-const resultTitle =
-    document.getElementById("resultTitle");
-
-const resultUrl =
-    document.getElementById("resultUrl");
-
-const resultBadge =
-    document.getElementById("resultBadge");
-
-const scoreElement =
-    document.getElementById("score");
-
-const domainElement =
-    document.getElementById("domain");
-
-const urlTypeElement =
-    document.getElementById("urlType");
-
-const phoneStatusElement =
-    document.getElementById("phoneStatus");
-
-const reportCountElement =
-    document.getElementById("reportCount");
-
-const httpsStatusElement =
-    document.getElementById("httpsStatus");
-
-const reasonsList =
-    document.getElementById("reasonsList");
-
-const checkAgainBtn =
-    document.getElementById("checkAgainBtn");
-
-const reportBtn =
-    document.getElementById("reportBtn");
-
-const logoutBtn =
-    document.getElementById("logoutBtn");
-
-const mobileMenuBtn =
-    document.getElementById("mobileMenuBtn");
-
-const navLinks =
-    document.querySelector(".nav-links");
+    <p>
+        Global Caller Security & Anti-Fraud Technology
+    </p>
 
 
-let currentUser = null;
+    <div class="footer-links">
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="features.html">
+            Features
+        </a>
+
+        <a href="about.html">
+            About
+        </a>
+
+        <a href="contact.html">
+            Contact
+        </a>
+
+        <a href="privacy-policy.html">
+            Privacy
+        </a>
+
+        <a href="terms.html">
+            Terms
+        </a>
+
+    </div>
 
 
-onAuthStateChanged(
-    auth,
-    user => {
+    <p class="copyright">
 
-        if (!user) {
+        © 2026 Inspect Caller.
+        Idea / Pre-Launch Prototype.
 
-            window.location.replace(
-                "login.html"
+    </p>
+
+</footer>
+
+
+
+<script>
+
+/* =========================================================
+   WHATSAPP TYPE SWITCH
+   ========================================================= */
+
+const whatsappTypes =
+    document.querySelectorAll(
+        'input[name="whatsappType"]'
+    );
+
+
+const targetInput =
+    document.getElementById(
+        "whatsappTarget"
+    );
+
+
+const messageArea =
+    document.getElementById(
+        "messageArea"
+    );
+
+
+const messageInput =
+    document.getElementById(
+        "whatsappMessage"
+    );
+
+
+const scanButton =
+    document.getElementById(
+        "scanButton"
+    );
+
+
+whatsappTypes.forEach(
+    input => {
+
+        input.addEventListener(
+            "change",
+            () => {
+
+                if (
+                    input.value ===
+                    "Message"
+                ) {
+
+                    messageArea.style.display =
+                        "block";
+
+                    targetInput.placeholder =
+                        "WhatsApp number or contact";
+
+                    scanButton.textContent =
+                        "🔍 Analyze WhatsApp Message";
+
+                }
+
+                else if (
+                    input.value ===
+                    "WhatsApp Link"
+                ) {
+
+                    messageArea.style.display =
+                        "none";
+
+                    targetInput.placeholder =
+                        "https://wa.me/8801XXXXXXXXX";
+
+                    scanButton.textContent =
+                        "🔍 Analyze WhatsApp Link";
+
+                }
+
+                else {
+
+                    messageArea.style.display =
+                        "none";
+
+                    targetInput.placeholder =
+                        "+8801XXXXXXXXX";
+
+                    scanButton.textContent =
+                        "🔍 Analyze WhatsApp Number";
+
+                }
+
+            }
+        );
+
+    }
+);
+
+
+
+/* =========================================================
+   START SCAN
+   ========================================================= */
+
+scanButton.addEventListener(
+    "click",
+    () => {
+
+
+        const selected =
+            document.querySelector(
+                'input[name="whatsappType"]:checked'
+            );
+
+
+        const type =
+            selected
+                ? selected.value
+                : "Phone Number";
+
+
+        const target =
+            targetInput.value.trim();
+
+
+        const message =
+            messageInput.value.trim();
+
+
+        const content =
+            type === "Message"
+                ? message
+                : target;
+
+
+        if (!content) {
+
+            alert(
+                type === "Message"
+                    ? "Please paste the WhatsApp message."
+                    : "Please enter a WhatsApp number or link."
             );
 
             return;
 
         }
 
-        currentUser = user;
+
+        scanButton.disabled =
+            true;
+
+
+        scanButton.textContent =
+            "⏳ Analyzing...";
+
+
+        setTimeout(
+            () => {
+
+                analyzeWhatsApp(
+                    content,
+                    target,
+                    type
+                );
+
+
+                scanButton.disabled =
+                    false;
+
+
+                if (
+                    type === "Message"
+                ) {
+
+                    scanButton.textContent =
+                        "🔍 Analyze WhatsApp Message";
+
+                }
+
+                else if (
+                    type === "WhatsApp Link"
+                ) {
+
+                    scanButton.textContent =
+                        "🔍 Analyze WhatsApp Link";
+
+                }
+
+                else {
+
+                    scanButton.textContent =
+                        "🔍 Analyze WhatsApp Number";
+
+                }
+
+            },
+            1100
+        );
 
     }
 );
 
 
-function normalizeURL(value) {
 
-    value =
-        value.trim();
-
-
-    if (
-        !/^https?:\/\//i.test(value)
-    ) {
-
-        value =
-            "https://" + value;
-
-    }
-
-
-    return value;
-
-}
-
-
-function parseWhatsAppURL(value) {
-
-    try {
-
-        const url =
-            new URL(
-                normalizeURL(value)
-            );
-
-
-        const hostname =
-            url.hostname
-                .toLowerCase()
-                .replace(/^www\./, "");
-
-
-        const allowedDomains = [
-
-            "wa.me",
-            "whatsapp.com",
-            "api.whatsapp.com",
-            "web.whatsapp.com"
-
-        ];
-
-
-        const isAllowed =
-            allowedDomains.includes(
-                hostname
-            );
-
-
-        if (!isAllowed) {
-
-            return {
-                valid: false
-            };
-
-        }
-
-
-        return {
-
-            valid: true,
-
-            url: url,
-
-            hostname: hostname,
-
-            pathname: url.pathname,
-
-            searchParams:
-                url.searchParams
-
-        };
-
-
-    } catch {
-
-        return {
-            valid: false
-        };
-
-    }
-
-}
-
-
-function getPhoneNumber(parsed) {
-
-    const url =
-        parsed.url;
-
-
-    if (
-        parsed.hostname === "wa.me"
-    ) {
-
-        const number =
-            parsed.pathname
-                .replace(
-                    /^\/+/,
-                    ""
-                )
-                .split("/")[0];
-
-
-        return number || null;
-
-    }
-
-
-    const phone =
-        url.searchParams.get(
-            "phone"
-        );
-
-
-    return phone || null;
-
-}
-
-
-function detectLinkType(parsed) {
-
-    const hostname =
-        parsed.hostname;
-
-    const path =
-        parsed.pathname
-            .toLowerCase();
-
-
-    if (
-        hostname === "wa.me"
-    ) {
-
-        return "Direct Chat Link";
-
-    }
-
-
-    if (
-        path.includes("/send")
-    ) {
-
-        return "Send Message Link";
-
-    }
-
-
-    if (
-        hostname === "web.whatsapp.com"
-    ) {
-
-        return "WhatsApp Web";
-
-    }
-
-
-    return "WhatsApp Link";
-
-}
-
-
-function analyzeWhatsAppURL(
-    parsed
+/* =========================================================
+   ANALYSIS
+   ========================================================= */
+
+function analyzeWhatsApp(
+    content,
+    target,
+    type
 ) {
 
-    let score = 0;
 
-    const reasons = [];
-
-    const url =
-        parsed.url;
-
-    const fullURL =
-        url.href.toLowerCase();
-
-    const phone =
-        getPhoneNumber(
-            parsed
-        );
+    const text =
+        content.toLowerCase();
 
 
-    if (
-        url.protocol !== "https:"
-    ) {
-
-        score += 25;
-
-        reasons.push(
-            "The URL does not use HTTPS."
-        );
-
-    } else {
-
-        reasons.push(
-            "The URL uses HTTPS."
-        );
-
-    }
-
-
-    if (
-        phone
-    ) {
-
-        const cleanPhone =
-            phone.replace(
-                /[^\d+]/g,
-                ""
-            );
-
-
-        if (
-            cleanPhone.length < 7 ||
-            cleanPhone.length > 15
-        ) {
-
-            score += 20;
-
-            reasons.push(
-                "The phone parameter has an unusual length."
-            );
-
-        } else {
-
-            reasons.push(
-                "A WhatsApp phone parameter was detected."
-            );
-
-        }
-
-    } else {
-
-        if (
-            parsed.hostname === "wa.me"
-        ) {
-
-            score += 15;
-
-            reasons.push(
-                "The direct WhatsApp link does not contain a recognizable phone number."
-            );
-
-        }
-
-    }
+    let score = 10;
 
 
     const suspiciousWords = [
 
-        "login",
+        "urgent",
+        "immediately",
         "verify",
-        "verification",
+        "otp",
         "password",
-        "secure",
-        "security",
-        "unlock",
-        "recover",
-        "claim",
-        "winner",
-        "bonus",
-        "gift",
-        "free",
-        "prize",
+        "login",
         "payment",
-        "wallet",
+        "send money",
+        "deposit",
+        "investment",
+        "crypto",
+        "profit",
+        "guaranteed",
+        "winner",
+        "prize",
+        "giveaway",
+        "claim",
+        "refund",
+        "loan",
+        "bonus",
         "airdrop",
-        "support",
-        "appeal"
+        "account suspended"
 
     ];
 
 
-    const foundWords =
-        suspiciousWords.filter(
-            word =>
-                fullURL.includes(word)
-        );
+    suspiciousWords.forEach(
+        word => {
+
+            if (
+                text.includes(word)
+            ) {
+
+                score += 5;
+
+            }
+
+        }
+    );
 
 
     if (
-        foundWords.length >= 3
-    ) {
-
-        score += 25;
-
-        reasons.push(
-            "The URL contains several words commonly associated with phishing or scam links."
-        );
-
-    } else if (
-        foundWords.length > 0
+        text.includes("http://")
     ) {
 
         score += 10;
 
-        reasons.push(
-            "The URL contains a security-sensitive or promotional keyword."
-        );
+    }
+
+
+    if (
+        text.includes("bit.ly") ||
+        text.includes("tinyurl")
+    ) {
+
+        score += 12;
 
     }
 
 
     if (
-        url.username ||
-        url.password
+        text.includes("wa.me/")
     ) {
 
-        score += 30;
-
-        reasons.push(
-            "The URL contains embedded credentials."
-        );
-
-    }
-
-
-    if (
-        url.search.length > 500
-    ) {
-
-        score += 8;
-
-        reasons.push(
-            "The URL contains an unusually large query string."
-        );
-
-    }
-
-
-    const redirectTerms = [
-
-        "redirect=",
-        "url=",
-        "target=",
-        "next=",
-        "return="
-
-    ];
-
-
-    const redirectCount =
-        redirectTerms.filter(
-            term =>
-                fullURL.includes(term)
-        ).length;
-
-
-    if (
-        redirectCount >= 2
-    ) {
-
-        score += 15;
-
-        reasons.push(
-            "Multiple redirect-style parameters were detected."
-        );
+        score += 3;
 
     }
 
@@ -1447,735 +1828,325 @@ function analyzeWhatsAppURL(
     score =
         Math.min(
             score,
-            100
+            95
         );
 
 
-    return {
+    /* RESULT */
 
-        score: score,
-
-        reasons: reasons,
-
-        phone: phone
-
-    };
-
-}
-
-
-async function checkDatabase(url) {
-
-    try {
-
-        const reports =
-            collection(
-                db,
-                "fraud_whatsapp"
-            );
-
-
-        const q =
-            query(
-                reports,
-                where(
-                    "url",
-                    "==",
-                    url
-                )
-            );
-
-
-        const snapshot =
-            await getDocs(q);
-
-
-        return {
-
-            found:
-                !snapshot.empty,
-
-            count:
-                snapshot.size,
-
-            error:
-                false
-
-        };
-
-
-    } catch (error) {
-
-        console.warn(
-            "WhatsApp database error:",
-            error
+    const result =
+        document.getElementById(
+            "whatsappResult"
         );
 
 
-        return {
-
-            found: false,
-
-            count: 0,
-
-            error: true
-
-        };
-
-    }
-
-}
-
-
-function getRiskStatus(
-    score,
-    database
-) {
-
-    if (
-        database.found
-    ) {
-
-        return "Dangerous";
-
-    }
-
-
-    if (
-        score >= 60
-    ) {
-
-        return "Dangerous";
-
-    }
-
-
-    if (
-        score >= 30
-    ) {
-
-        return "Suspicious";
-
-    }
-
-
-    return "Low Risk";
-
-}
-
-
-function displayResult(
-    parsed,
-    analysis,
-    database
-) {
-
-    const risk =
-        getRiskStatus(
-            analysis.score,
-            database
-        );
-
-
-    resultTitle.textContent =
-        risk === "Dangerous"
-            ? "Potentially Dangerous WhatsApp Link"
-            : risk === "Suspicious"
-                ? "Suspicious WhatsApp Link"
-                : "WhatsApp Link Looks Low Risk";
-
-
-    resultUrl.textContent =
-        parsed.url.href;
-
-
-    scoreElement.textContent =
-        analysis.score;
-
-
-    domainElement.textContent =
-        parsed.hostname;
-
-
-    urlTypeElement.textContent =
-        detectLinkType(
-            parsed
-        );
-
-
-    phoneStatusElement.textContent =
-        analysis.phone
-            ? "Detected"
-            : "Not detected";
-
-
-    httpsStatusElement.textContent =
-        parsed.url.protocol === "https:"
-            ? "Secure HTTPS"
-            : "Not HTTPS";
-
-
-    if (
-        database.found
-    ) {
-
-        reportCountElement.textContent =
-            database.count;
-
-    } else if (
-        database.error
-    ) {
-
-        reportCountElement.textContent =
-            "Unavailable";
-
-    } else {
-
-        reportCountElement.textContent =
-            "0";
-
-    }
-
-
-    resultBadge.className =
-        "badge";
-
-
-    if (
-        risk === "Dangerous"
-    ) {
-
-        resultBadge.classList.add(
-            "dangerous"
-        );
-
-        resultBadge.textContent =
-            "🚨 Dangerous";
-
-        scoreElement.style.color =
-            "#ff6b81";
-
-    } else if (
-        risk === "Suspicious"
-    ) {
-
-        resultBadge.classList.add(
-            "suspicious"
-        );
-
-        resultBadge.textContent =
-            "⚠ Suspicious";
-
-        scoreElement.style.color =
-            "#ffd76b";
-
-    } else {
-
-        resultBadge.classList.add(
-            "safe"
-        );
-
-        resultBadge.textContent =
-            "✓ Low Risk";
-
-        scoreElement.style.color =
-            "#22c55e";
-
-    }
-
-
-    if (
-        database.found
-    ) {
-
-        databaseStatusElement.textContent =
-            "Reported";
-
-    } else if (
-        database.error
-    ) {
-
-        databaseStatusElement.textContent =
-            "Database unavailable";
-
-    } else {
-
-        databaseStatusElement.textContent =
-            "No matching report";
-
-    }
-
-
-    reasonsList.innerHTML =
-        "";
-
-
-    if (
-        database.found
-    ) {
-
-        const li =
-            document.createElement(
-                "li"
-            );
-
-
-        li.textContent =
-            "This WhatsApp URL has matching reports in the FraudGuard community database.";
-
-
-        reasonsList.appendChild(
-            li
-        );
-
-    }
-
-
-    analysis.reasons.forEach(
-        reason => {
-
-            const li =
-                document.createElement(
-                    "li"
-                );
-
-
-            li.textContent =
-                reason;
-
-
-            reasonsList.appendChild(
-                li
-            );
-
-        }
+    result.classList.add(
+        "show"
     );
 
 
+    document.getElementById(
+        "resultTarget"
+    ).textContent =
+        target ||
+        "WhatsApp Message";
+
+
+    document.getElementById(
+        "resultType"
+    ).textContent =
+        type +
+        " • Prototype Analysis";
+
+
+    document.getElementById(
+        "riskScore"
+    ).textContent =
+        score;
+
+
+
+    /* VERDICT */
+
+    const icon =
+        document.getElementById(
+            "verdictIcon"
+        );
+
+
+    const title =
+        document.getElementById(
+            "verdictTitle"
+        );
+
+
+    const verdictText =
+        document.getElementById(
+            "verdictText"
+        );
+
+
+    const scoreElement =
+        document.getElementById(
+            "riskScore"
+        );
+
+
     if (
-        analysis.reasons.length === 0 &&
-        !database.found
+        score >= 70
     ) {
 
-        const li =
-            document.createElement(
-                "li"
-            );
+        icon.textContent =
+            "🔴";
 
 
-        li.textContent =
-            "No major URL-level warning indicators were detected.";
+        title.textContent =
+            "High Risk — Review Immediately";
 
 
-        reasonsList.appendChild(
-            li
-        );
+        verdictText.textContent =
+            "Multiple suspicious indicators were detected in this prototype analysis.";
+
+
+        scoreElement.style.color =
+            "#ff7d91";
+
+    }
+
+    else if (
+        score >= 40
+    ) {
+
+        icon.textContent =
+            "🟡";
+
+
+        title.textContent =
+            "Medium Risk — Review Carefully";
+
+
+        verdictText.textContent =
+            "Some suspicious patterns were detected. Verify the source before taking action.";
+
+
+        scoreElement.style.color =
+            "#ffd267";
+
+    }
+
+    else {
+
+        icon.textContent =
+            "🟢";
+
+
+        title.textContent =
+            "Low Risk — No Major Signal";
+
+
+        verdictText.textContent =
+            "No major suspicious pattern was detected in this prototype analysis.";
+
+
+        scoreElement.style.color =
+            "#4ce7aa";
 
     }
 
 
-    reportBtn.href =
-        "report.html?url=" +
-        encodeURIComponent(
-            parsed.url.href
-        );
+
+    /* SIGNALS */
+
+    updateSignal(
+        "phishing",
+        /login|verify|password|otp|account|secure/i
+            .test(content)
+    );
 
 
-    result.style.display =
-        "block";
+    updateSignal(
+        "payment",
+        /money|payment|deposit|bank|card|crypto|send/i
+            .test(content)
+    );
+
+
+    updateSignal(
+        "urgency",
+        /urgent|immediately|now|last chance|suspended/i
+            .test(content)
+    );
+
+
+    updateSignal(
+        "prize",
+        /winner|prize|giveaway|bonus|reward|claim/i
+            .test(content)
+    );
+
+
+    updateSignal(
+        "investment",
+        /investment|crypto|profit|guaranteed|double|trading|airdrop/i
+            .test(content)
+    );
+
+
+    updateSignal(
+        "identity",
+        /otp|password|nid|identity|verify|login/i
+            .test(content)
+    );
+
+
+    result.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
 
 }
 
 
-async function saveScan(
-    url,
-    analysis,
-    database
+
+/* =========================================================
+   SIGNAL UPDATE
+   ========================================================= */
+
+function updateSignal(
+    id,
+    suspicious
 ) {
 
-    if (!currentUser) {
+
+    const element =
+        document.getElementById(
+            id
+        );
+
+
+    if (!element) {
+
         return;
+
     }
 
 
-    try {
+    if (
+        suspicious
+    ) {
 
-        await addDoc(
-            collection(
-                db,
-                "scan_history"
-            ),
-            {
+        element.textContent =
+            "REVIEW";
 
-                uid:
-                    currentUser.uid,
 
-                type:
-                    "whatsapp",
+        element.className =
+            "signal-status review";
 
-                checkedURL:
-                    url,
+    }
 
-                score:
-                    analysis.score,
+    else {
 
-                status:
-                    getRiskStatus(
-                        analysis.score,
-                        database
-                    ),
+        element.textContent =
+            "LOW";
 
-                databaseMatch:
-                    database.found,
 
-                createdAt:
-                    serverTimestamp()
-
-            }
-        );
-
-    } catch (error) {
-
-        console.warn(
-            "Scan history error:",
-            error
-        );
+        element.className =
+            "signal-status safe";
 
     }
 
 }
 
 
-async function scanWhatsApp() {
 
-    const value =
-        whatsappUrl.value.trim();
+/* =========================================================
+   COPY RESULT
+   ========================================================= */
 
+document
+    .getElementById(
+        "copyResult"
+    )
+    .addEventListener(
+        "click",
+        async () => {
 
-    if (!value) {
 
-        alert(
-            "Please enter a WhatsApp URL."
-        );
+            const target =
+                document.getElementById(
+                    "resultTarget"
+                ).textContent;
 
-        whatsappUrl.focus();
 
-        return;
+            const type =
+                document.getElementById(
+                    "resultType"
+                ).textContent;
 
-    }
 
+            const score =
+                document.getElementById(
+                    "riskScore"
+                ).textContent;
 
-    const parsed =
-        parseWhatsAppURL(
-            value
-        );
 
+            const verdict =
+                document.getElementById(
+                    "verdictTitle"
+                ).textContent;
 
-    if (!parsed.valid) {
 
-        alert(
-            "Please enter a valid public WhatsApp URL."
-        );
+            const report =
 
-        whatsappUrl.focus();
+                "Inspect Caller — WhatsApp Security Report\n\n" +
 
-        return;
+                "Target: " +
+                target +
+                "\n" +
 
-    }
+                "Type: " +
+                type +
+                "\n" +
 
+                "Risk Score: " +
+                score +
+                "/100\n" +
 
-    scanBtn.disabled =
-        true;
+                "Verdict: " +
+                verdict +
+                "\n\n" +
 
-    scanBtn.textContent =
-        "Scanning...";
+                "Prototype analysis only.";
 
 
-    result.style.display =
-        "none";
+            try {
 
-
-    statusBox.style.display =
-        "block";
-
-    statusBox.textContent =
-        "🔎 Validating WhatsApp URL...";
-
-
-    try {
-
-        const analysis =
-            analyzeWhatsAppURL(
-                parsed
-            );
-
-
-        statusBox.textContent =
-            "🛡 Checking FraudGuard database...";
-
-
-        const database =
-            await checkDatabase(
-                parsed.url.href
-            );
-
-
-        statusBox.textContent =
-            "📊 Calculating risk score...";
-
-
-        await new Promise(
-            resolve =>
-                setTimeout(
-                    resolve,
-                    250
-                )
-        );
-
-
-        displayResult(
-            parsed,
-            analysis,
-            database
-        );
-
-
-        await saveScan(
-            parsed.url.href,
-            analysis,
-            database
-        );
-
-
-        statusBox.style.display =
-            "none";
-
-
-    } catch (error) {
-
-        console.error(
-            "WhatsApp scan error:",
-            error
-        );
-
-
-        statusBox.textContent =
-            "Unable to complete the scan.";
-
-    }
-
-
-    scanBtn.disabled =
-        false;
-
-    scanBtn.textContent =
-        "Scan WhatsApp";
-
-}
-
-
-scanBtn.addEventListener(
-    "click",
-    scanWhatsApp
-);
-
-
-whatsappUrl.addEventListener(
-    "keydown",
-    event => {
-
-        if (
-            event.key === "Enter"
-        ) {
-
-            scanWhatsApp();
-
-        }
-
-    }
-);
-
-
-checkAgainBtn.addEventListener(
-    "click",
-    () => {
-
-        whatsappUrl.value =
-            "";
-
-        result.style.display =
-            "none";
-
-        statusBox.style.display =
-            "none";
-
-        whatsappUrl.focus();
-
-    }
-);
-
-
-logoutBtn.addEventListener(
-    "click",
-    async () => {
-
-        logoutBtn.disabled =
-            true;
-
-        logoutBtn.textContent =
-            "Logging out...";
-
-
-        try {
-
-            await signOut(
-                auth
-            );
-
-            window.location.replace(
-                "login.html"
-            );
-
-        } catch (error) {
-
-            console.error(
-                "Logout error:",
-                error
-            );
-
-            logoutBtn.disabled =
-                false;
-
-            logoutBtn.textContent =
-                "Logout";
-
-        }
-
-    }
-);
-
-
-mobileMenuBtn.addEventListener(
-    "click",
-    () => {
-
-        if (
-            navLinks.classList.contains(
-                "mobile-open"
-            )
-        ) {
-
-            navLinks.classList.remove(
-                "mobile-open"
-            );
-
-            navLinks.style.display =
-                "";
-
-            return;
-
-        }
-
-
-        navLinks.classList.add(
-            "mobile-open"
-        );
-
-
-        navLinks.style.display =
-            "flex";
-
-        navLinks.style.flexDirection =
-            "column";
-
-        navLinks.style.position =
-            "absolute";
-
-        navLinks.style.top =
-            "58px";
-
-        navLinks.style.right =
-            "12px";
-
-        navLinks.style.width =
-            "230px";
-
-        navLinks.style.padding =
-            "16px";
-
-        navLinks.style.background =
-            "#10182d";
-
-        navLinks.style.border =
-            "1px solid #26324b";
-
-        navLinks.style.borderRadius =
-            "10px";
-
-        navLinks.style.boxShadow =
-            "0 12px 30px rgba(0,0,0,.35)";
-
-    }
-);
-
-
-navLinks
-    .querySelectorAll("a")
-    .forEach(
-        link => {
-
-            link.addEventListener(
-                "click",
-                () => {
-
-                    navLinks.classList.remove(
-                        "mobile-open"
+                await navigator.clipboard
+                    .writeText(
+                        report
                     );
 
-                    if (
-                        window.innerWidth <= 750
-                    ) {
 
-                        navLinks.style.display =
-                            "none";
+                alert(
+                    "WhatsApp scan result copied."
+                );
 
-                    }
+            }
 
-                }
-            );
+            catch {
+
+                alert(
+                    "Unable to copy result."
+                );
+
+            }
 
         }
     );
 
-
-window.addEventListener(
-    "resize",
-    () => {
-
-        if (
-            window.innerWidth > 750
-        ) {
-
-            navLinks.style = "";
-
-            navLinks.classList.remove(
-                "mobile-open"
-            );
-
-        }
-
-    }
-);
-
-</script>
-
-
-<script
-type="module"
-src="script.js">
 </script>
 
 
 </body>
 
-  </html>
+</html>
