@@ -7,1132 +7,57 @@
     <title>Inspect Caller | Global Digital Fraud Intelligence</title>
 
     <meta name="description"
-        content="Inspect Caller — Global Digital Fraud Intelligence & Response Platform. Detect, verify, investigate, report and protect.">
+          content="Inspect Caller is a global digital fraud intelligence and protection platform designed to help detect, analyze, report and respond to online scams.">
 
     <link rel="stylesheet" href="style.css">
-
-    <style>
-        /* ==================================================
-           PROJECT 533 — INDEX PAGE
-        ================================================== */
-
-        :root {
-            --bg: #030a12;
-            --bg2: #061521;
-            --card: #071927;
-            --line: #17394d;
-            --text: #eaf8ff;
-            --muted: #7c98a6;
-            --blue: #24bdff;
-            --green: #39e6a0;
-            --yellow: #ffd166;
-            --red: #ff667d;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background:
-                radial-gradient(
-                    circle at 85% 5%,
-                    rgba(0, 160, 255, .12),
-                    transparent 30%
-                ),
-                radial-gradient(
-                    circle at 10% 35%,
-                    rgba(0, 210, 180, .05),
-                    transparent 30%
-                ),
-                var(--bg);
-            color: var(--text);
-            font-family: Inter, Arial, sans-serif;
-            line-height: 1.5;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        .container {
-            width: min(1180px, 92%);
-            margin: auto;
-        }
-
-        /* ==================================================
-           NAVBAR
-        ================================================== */
-
-        .navbar {
-            position: sticky;
-            top: 0;
-            z-index: 999;
-            background: rgba(3, 10, 18, .86);
-            backdrop-filter: blur(18px);
-            border-bottom: 1px solid rgba(50, 110, 140, .25);
-        }
-
-        .nav-inner {
-            min-height: 72px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .brand {
-            font-size: 17px;
-            font-weight: 950;
-            letter-spacing: 1px;
-        }
-
-        .brand span {
-            color: var(--blue);
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 22px;
-        }
-
-        .nav-links a {
-            color: #8da8b5;
-            font-size: 10px;
-            font-weight: 750;
-        }
-
-        .nav-links a:hover {
-            color: white;
-        }
-
-        .nav-button {
-            padding: 10px 16px;
-            border: 1px solid #245671;
-            border-radius: 10px;
-            background: #071a29;
-            color: #aee7ff !important;
-        }
-
-        /* ==================================================
-           BUTTONS
-        ================================================== */
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 45px;
-            padding: 0 18px;
-            border-radius: 10px;
-            border: 1px solid #285973;
-            background: #071a29;
-            color: #aee7ff;
-            font-size: 10px;
-            font-weight: 900;
-            cursor: pointer;
-            transition: .2s;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .btn-primary {
-            border: 0;
-            color: white;
-            background: linear-gradient(135deg, #18b9ff, #0877d2);
-            box-shadow: 0 12px 35px rgba(0, 150, 255, .16);
-        }
-
-        /* ==================================================
-           HERO
-        ================================================== */
-
-        .hero {
-            min-height: 700px;
-            display: grid;
-            grid-template-columns: 1.08fr .92fr;
-            align-items: center;
-            gap: 55px;
-            padding: 85px 0 70px;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 13px;
-            border: 1px solid #22516a;
-            border-radius: 50px;
-            background: rgba(10, 35, 50, .7);
-            color: #6edbff;
-            font-size: 9px;
-            font-weight: 900;
-            letter-spacing: 1px;
-        }
-
-        .live-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: var(--green);
-            box-shadow: 0 0 12px var(--green);
-        }
-
-        .hero h1 {
-            margin-top: 22px;
-            font-size: clamp(46px, 6vw, 80px);
-            line-height: .96;
-            letter-spacing: -4px;
-        }
-
-        .hero h1 span {
-            color: var(--blue);
-        }
-
-        .hero-description {
-            max-width: 650px;
-            margin-top: 22px;
-            color: var(--muted);
-            font-size: 14px;
-            line-height: 1.8;
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 11px;
-            margin-top: 29px;
-            flex-wrap: wrap;
-        }
-
-        .hero-note {
-            margin-top: 16px;
-            color: #536f7d;
-            font-size: 8px;
-        }
-
-        /* ==================================================
-           DEMO SCANNER
-        ================================================== */
-
-        .demo-card {
-            padding: 22px;
-            border: 1px solid #194a63;
-            border-radius: 24px;
-            background: linear-gradient(145deg, #092236, #06131e);
-            box-shadow: 0 30px 100px rgba(0, 130, 220, .08);
-        }
-
-        .demo-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 18px;
-        }
-
-        .demo-title {
-            font-size: 12px;
-            font-weight: 900;
-        }
-
-        .demo-status {
-            color: var(--green);
-            font-size: 8px;
-            font-weight: 900;
-        }
-
-        .scan-box {
-            display: flex;
-            gap: 8px;
-        }
-
-        .scan-box input {
-            flex: 1;
-            min-width: 0;
-            height: 46px;
-            padding: 0 13px;
-            border: 1px solid #24536b;
-            border-radius: 10px;
-            background: #04111b;
-            color: white;
-            outline: none;
-        }
-
-        .scan-box button {
-            height: 46px;
-            padding: 0 16px;
-            border: 0;
-            border-radius: 10px;
-            background: #129fe0;
-            color: white;
-            font-size: 9px;
-            font-weight: 900;
-            cursor: pointer;
-        }
-
-        .scan-result {
-            margin-top: 14px;
-            padding: 17px;
-            border: 1px solid #173d52;
-            border-radius: 16px;
-            background: #061724;
-        }
-
-        .result-top {
-            display: flex;
-            align-items: center;
-            gap: 11px;
-        }
-
-        .result-icon {
-            width: 45px;
-            height: 45px;
-            display: grid;
-            place-items: center;
-            border-radius: 13px;
-            background: #0a2d43;
-            font-size: 20px;
-        }
-
-        .result-info strong {
-            display: block;
-            font-size: 12px;
-        }
-
-        .result-info small {
-            color: #688592;
-            font-size: 8px;
-        }
-
-        .risk-score {
-            margin-left: auto;
-            text-align: right;
-        }
-
-        .risk-score strong {
-            display: block;
-            color: var(--green);
-            font-size: 27px;
-        }
-
-        .risk-score small {
-            color: #66818e;
-            font-size: 7px;
-        }
-
-        .risk-line {
-            height: 7px;
-            margin-top: 16px;
-            border-radius: 20px;
-            background: #102b3a;
-            overflow: hidden;
-        }
-
-        .risk-line span {
-            display: block;
-            width: 18%;
-            height: 100%;
-            background: var(--green);
-            transition: .4s;
-        }
-
-        .scan-message {
-            margin-top: 13px;
-            padding: 10px;
-            border: 1px solid rgba(57, 230, 160, .15);
-            border-radius: 9px;
-            background: rgba(57, 230, 160, .05);
-            color: var(--green);
-            font-size: 8px;
-            font-weight: 800;
-        }
-
-        .demo-label {
-            margin-top: 12px;
-            color: #496875;
-            font-size: 7px;
-            text-align: center;
-        }
-
-        /* ==================================================
-           STATS
-        ================================================== */
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            overflow: hidden;
-            border: 1px solid var(--line);
-            border-radius: 19px;
-            background: #061521;
-        }
-
-        .stat {
-            padding: 24px;
-            text-align: center;
-            border-right: 1px solid var(--line);
-        }
-
-        .stat:last-child {
-            border-right: 0;
-        }
-
-        .stat strong {
-            display: block;
-            font-size: 28px;
-        }
-
-        .stat span {
-            color: var(--muted);
-            font-size: 8px;
-        }
-
-        .source-note {
-            margin-top: 8px;
-            color: #4f6976;
-            font-size: 7px;
-        }
-
-        /* ==================================================
-           SECTIONS
-        ================================================== */
-
-        .section {
-            padding: 90px 0;
-        }
-
-        .section-label {
-            color: var(--blue);
-            font-size: 9px;
-            font-weight: 950;
-            letter-spacing: 1.5px;
-        }
-
-        .section-title {
-            margin-top: 10px;
-            font-size: clamp(31px, 4vw, 48px);
-            line-height: 1.05;
-            letter-spacing: -2px;
-        }
-
-        .section-text {
-            max-width: 650px;
-            margin-top: 13px;
-            color: var(--muted);
-            font-size: 11px;
-        }
-
-        /* ==================================================
-           CARDS
-        ================================================== */
-
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 14px;
-            margin-top: 34px;
-        }
-
-        .card {
-            padding: 23px;
-            border: 1px solid var(--line);
-            border-radius: 18px;
-            background: linear-gradient(145deg, #081d2d, #061521);
-            transition: .22s;
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            border-color: #28627e;
-        }
-
-        .card-icon {
-            font-size: 23px;
-        }
-
-        .card h3 {
-            margin-top: 14px;
-            font-size: 13px;
-        }
-
-        .card p {
-            margin-top: 7px;
-            color: #708b98;
-            font-size: 9px;
-            line-height: 1.7;
-        }
-
-        /* ==================================================
-           WORKFLOW
-        ================================================== */
-
-        .workflow {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 9px;
-            margin-top: 33px;
-        }
-
-        .workflow-card {
-            padding: 19px 12px;
-            border: 1px solid var(--line);
-            border-radius: 14px;
-            background: #071927;
-            text-align: center;
-        }
-
-        .workflow-card strong {
-            color: var(--blue);
-            font-size: 9px;
-        }
-
-        .workflow-card span {
-            display: block;
-            margin-top: 7px;
-            color: #91aab5;
-            font-size: 8px;
-        }
-
-        /* ==================================================
-           INTELLIGENCE
-        ================================================== */
-
-        .two-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 17px;
-            margin-top: 34px;
-        }
-
-        .panel {
-            padding: 24px;
-            border: 1px solid var(--line);
-            border-radius: 19px;
-            background: #071927;
-        }
-
-        .panel h3 {
-            font-size: 13px;
-        }
-
-        .list {
-            display: grid;
-            gap: 8px;
-            margin-top: 17px;
-        }
-
-        .list-item {
-            padding: 11px;
-            border: 1px solid #14364a;
-            border-radius: 9px;
-            color: #96afb9;
-            font-size: 9px;
-        }
-
-        .demo-api {
-            margin-top: 12px;
-            color: #506b78;
-            font-size: 7px;
-        }
-
-        /* ==================================================
-           THREAT CENTER
-        ================================================== */
-
-        .threat-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid #112e40;
-            color: #91aab5;
-            font-size: 9px;
-        }
-
-        .threat-row:last-child {
-            border-bottom: 0;
-        }
-
-        .high {
-            color: var(--red);
-        }
-
-        .medium {
-            color: var(--yellow);
-        }
-
-        /* ==================================================
-           STARTUP
-        ================================================== */
-
-        .startup-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-top: 34px;
-        }
-
-        .startup-card {
-            padding: 27px;
-            border: 1px solid var(--line);
-            border-radius: 19px;
-            background: #071927;
-        }
-
-        .startup-number {
-            font-size: 42px;
-            font-weight: 950;
-            letter-spacing: -2px;
-            color: #c2f0ff;
-        }
-
-        .startup-card h3 {
-            margin-top: 8px;
-            font-size: 12px;
-        }
-
-        .startup-card p {
-            margin-top: 5px;
-            color: #718c98;
-            font-size: 9px;
-        }
-
-        /* ==================================================
-           ROADMAP
-        ================================================== */
-
-        .roadmap {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 9px;
-            margin-top: 33px;
-        }
-
-        .phase {
-            padding: 19px 13px;
-            border: 1px solid var(--line);
-            border-radius: 14px;
-            background: #071927;
-        }
-
-        .phase small {
-            color: var(--blue);
-            font-size: 7px;
-            font-weight: 900;
-        }
-
-        .phase h3 {
-            margin-top: 8px;
-            font-size: 10px;
-        }
-
-        .phase p {
-            margin-top: 5px;
-            color: #6f8995;
-            font-size: 8px;
-        }
-
-        /* ==================================================
-           TEAM
-        ================================================== */
-
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 14px;
-            margin-top: 34px;
-        }
-
-        .team-card {
-            padding: 25px;
-            border: 1px solid var(--line);
-            border-radius: 18px;
-            background: #071927;
-        }
-
-        .team-avatar {
-            width: 54px;
-            height: 54px;
-            display: grid;
-            place-items: center;
-            border-radius: 15px;
-            background: #0a3046;
-            font-size: 22px;
-        }
-
-        .team-card h3 {
-            margin-top: 14px;
-            font-size: 12px;
-        }
-
-        .team-role {
-            color: var(--blue);
-            font-size: 8px;
-            font-weight: 900;
-        }
-
-        .team-card p {
-            margin-top: 8px;
-            color: #718c98;
-            font-size: 9px;
-        }
-
-        .founder-vision {
-            margin-top: 13px;
-            padding: 12px;
-            border-left: 2px solid var(--blue);
-            background: rgba(36, 189, 255, .04);
-            color: #a6c3cf;
-            font-size: 9px;
-            font-style: italic;
-        }
-
-        .founder-email {
-            display: inline-block;
-            margin-top: 12px;
-            color: #62d8ff;
-            font-size: 8px;
-        }
-
-        /* ==================================================
-           CTA
-        ================================================== */
-
-        .cta {
-            padding: 65px 25px;
-            text-align: center;
-            border: 1px solid #1b5875;
-            border-radius: 24px;
-            background:
-                radial-gradient(
-                    circle at center,
-                    rgba(20, 170, 255, .12),
-                    transparent 60%
-                ),
-                #071927;
-        }
-
-        .cta p {
-            max-width: 600px;
-            margin: 13px auto;
-            color: #718c98;
-            font-size: 10px;
-        }
-
-        /* ==================================================
-           CUSTOMER CARE FLOATING BUTTON
-        ================================================== */
-
-        .support-button {
-            position: fixed;
-            right: 22px;
-            bottom: 22px;
-            z-index: 5000;
-
-            width: 58px;
-            height: 58px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            border: 1px solid rgba(255,255,255,.15);
-            border-radius: 50%;
-
-            background: linear-gradient(
-                135deg,
-                #18b9ff,
-                #0877d2
-            );
-
-            color: white;
-            font-size: 23px;
-            cursor: pointer;
-
-            box-shadow:
-                0 10px 35px rgba(0, 150, 255, .35);
-
-            transition: .25s;
-        }
-
-        .support-button:hover {
-            transform: scale(1.08);
-        }
-
-        .support-pulse {
-            position: absolute;
-            inset: -5px;
-            border: 1px solid rgba(36,189,255,.4);
-            border-radius: 50%;
-            animation: supportPulse 2s infinite;
-        }
-
-        @keyframes supportPulse {
-
-            0% {
-                transform: scale(.9);
-                opacity: .8;
-            }
-
-            100% {
-                transform: scale(1.25);
-                opacity: 0;
-            }
-
-        }
-
-        /* ==================================================
-           CUSTOMER CARE CHAT
-        ================================================== */
-
-        .support-chat {
-            position: fixed;
-            right: 22px;
-            bottom: 92px;
-            z-index: 5001;
-
-            width: 350px;
-            max-width: calc(100vw - 30px);
-
-            overflow: hidden;
-
-            border: 1px solid #245671;
-            border-radius: 20px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #092236,
-                    #04111b
-                );
-
-            box-shadow:
-                0 25px 80px rgba(0,0,0,.55);
-
-            display: none;
-        }
-
-        .support-chat.active {
-            display: block;
-            animation: chatOpen .22s ease;
-        }
-
-        @keyframes chatOpen {
-
-            from {
-                opacity: 0;
-                transform: translateY(12px) scale(.97);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-
-        }
-
-        .support-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-
-            padding: 15px;
-
-            border-bottom: 1px solid #17394d;
-            background: rgba(5,25,40,.8);
-        }
-
-        .support-avatar {
-            width: 40px;
-            height: 40px;
-
-            display: grid;
-            place-items: center;
-
-            border-radius: 12px;
-            background: #0b3650;
-
-            font-size: 19px;
-        }
-
-        .support-title {
-            flex: 1;
-        }
-
-        .support-title strong {
-            display: block;
-            font-size: 11px;
-        }
-
-        .support-title small {
-            color: var(--green);
-            font-size: 7px;
-            font-weight: 800;
-        }
-
-        .support-close {
-            width: 30px;
-            height: 30px;
-
-            border: 0;
-            border-radius: 8px;
-
-            background: #102d3d;
-            color: #9bb5c0;
-
-            cursor: pointer;
-        }
-
-        .support-body {
-            height: 320px;
-            padding: 15px;
-            overflow-y: auto;
-        }
-
-        .support-welcome {
-            max-width: 88%;
-            padding: 12px;
-
-            border: 1px solid #183e52;
-            border-radius: 12px 12px 12px 3px;
-
-            background: #071927;
-            color: #9db7c2;
-
-            font-size: 9px;
-            line-height: 1.6;
-        }
-
-        .support-time {
-            margin-top: 5px;
-            color: #536f7b;
-            font-size: 7px;
-        }
-
-        .quick-help {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 7px;
-            margin-top: 13px;
-        }
-
-        .quick-help button {
-            min-height: 38px;
-
-            border: 1px solid #1b455a;
-            border-radius: 9px;
-
-            background: #071a29;
-            color: #91b4c2;
-
-            font-size: 8px;
-            cursor: pointer;
-        }
-
-        .quick-help button:hover {
-            border-color: var(--blue);
-            color: white;
-        }
-
-        .support-footer {
-            padding: 11px;
-            border-top: 1px solid #17394d;
-            background: #04111b;
-        }
-
-        .support-input {
-            display: flex;
-            gap: 7px;
-        }
-
-        .support-input input {
-            flex: 1;
-            min-width: 0;
-
-            height: 40px;
-            padding: 0 11px;
-
-            border: 1px solid #214c62;
-            border-radius: 9px;
-
-            background: #071927;
-            color: white;
-
-            outline: none;
-
-            font-size: 9px;
-        }
-
-        .support-input button {
-            width: 42px;
-            height: 40px;
-
-            border: 0;
-            border-radius: 9px;
-
-            background: #129fe0;
-            color: white;
-
-            cursor: pointer;
-        }
-
-        .support-note {
-            margin-top: 7px;
-            color: #4f6976;
-            font-size: 6.5px;
-            text-align: center;
-        }
-
-        /* ==================================================
-           FOOTER
-        ================================================== */
-
-        footer {
-            border-top: 1px solid var(--line);
-            padding: 35px 0;
-        }
-
-        .footer-inner {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .footer-text {
-            margin-top: 7px;
-            color: #5d7885;
-            font-size: 8px;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .footer-links a {
-            color: #708b98;
-            font-size: 8px;
-        }
-
-        /* ==================================================
-           RESPONSIVE
-        ================================================== */
-
-        @media (max-width: 900px) {
-
-            .nav-links a:not(.nav-button) {
-                display: none;
-            }
-
-            .hero {
-                grid-template-columns: 1fr;
-                padding-top: 60px;
-            }
-
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .stat:nth-child(2) {
-                border-right: 0;
-            }
-
-            .stat:nth-child(3),
-            .stat:nth-child(4) {
-                border-top: 1px solid var(--line);
-            }
-
-            .grid-3,
-            .two-grid,
-            .startup-grid,
-            .team-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .workflow,
-            .roadmap {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 550px) {
-
-            .hero h1 {
-                letter-spacing: -2.5px;
-            }
-
-            .hero-actions {
-                flex-direction: column;
-            }
-
-            .hero-actions .btn {
-                width: 100%;
-            }
-
-            .scan-box {
-                flex-direction: column;
-            }
-
-            .scan-box button {
-                width: 100%;
-            }
-
-            .workflow,
-            .roadmap {
-                grid-template-columns: 1fr;
-            }
-
-            .support-chat {
-                right: 12px;
-                bottom: 84px;
-                width: calc(100vw - 24px);
-            }
-
-            .support-button {
-                right: 15px;
-                bottom: 15px;
-            }
-
-            .footer-inner {
-                flex-direction: column;
-            }
-        }
-    </style>
 </head>
 
 <body>
 
-<!-- ==================================================
+<!-- =====================================================
      NAVBAR
-================================================== -->
+===================================================== -->
 
 <header class="navbar">
 
     <div class="container nav-inner">
 
         <a href="index.html" class="brand">
-            INSPECT<span>CALLER</span>
+            <span class="brand-logo">🛡️</span>
+            <span class="brand-name">
+                INSPECT<span>CALLER</span>
+            </span>
         </a>
 
         <nav class="nav-links">
 
-            <a href="#platform">Platform</a>
-            <a href="#intelligence">Intelligence</a>
-            <a href="#threat-center">Threat Center</a>
-            <a href="#startup">Startup</a>
-            <a href="#team">Team</a>
+            <a href="index.html" class="active">
+                Home
+            </a>
+
+            <a href="about.html">
+                About
+            </a>
+
+            <a href="features.html">
+                Features
+            </a>
+
+            <a href="scanner.html">
+                URL Scanner
+            </a>
+
+            <a href="phone-checker.html">
+                Phone Checker
+            </a>
+
+            <a href="report.html">
+                Report Scam
+            </a>
+
+            <a href="contact.html">
+                Contact
+            </a>
 
             <a href="login.html" class="nav-button">
                 Login
@@ -1145,127 +70,429 @@
 </header>
 
 
-<!-- ==================================================
+<!-- =====================================================
      HERO
-================================================== -->
+===================================================== -->
 
 <main>
 
-<section class="hero container">
+<section class="hero">
 
-    <div>
+    <div class="container hero-content">
+
+        <!-- Logo -->
+
+        <div class="hero-logo-box">
+
+            <!--
+                Replace logo.png with your actual logo file
+                when you add it to the project.
+            -->
+
+            <div class="hero-logo-placeholder">
+                🛡️
+            </div>
+
+        </div>
+
 
         <div class="hero-badge">
-            <span class="live-dot"></span>
-            GLOBAL DIGITAL FRAUD INTELLIGENCE
+            ● GLOBAL DIGITAL FRAUD INTELLIGENCE
         </div>
+
 
         <h1>
-            Detect scams.<br>
-            <span>Protect people.</span>
+            Protect Yourself<br>
+            <span>From Digital Scams</span>
         </h1>
 
+
         <p class="hero-description">
-            Inspect Caller is building a unified digital-fraud
-            intelligence and response platform designed to
-            detect, analyze, document and report threats across
-            phones, websites, social platforms and messaging
-            services.
+
+            Inspect Caller is building a global digital fraud
+            intelligence platform designed to help people detect,
+            analyze, report and respond to scams across online
+            platforms.
+
         </p>
 
-        <div class="hero-actions">
 
-            <a href="login.html" class="btn btn-primary">
-                Launch Platform →
+        <div class="hero-buttons">
+
+            <a href="scanner.html" class="btn btn-primary">
+                🔎 Scan Website
             </a>
 
-            <a href="#platform" class="btn">
-                Explore Platform
+            <a href="report.html" class="btn btn-secondary">
+                🚨 Report Scam
             </a>
 
         </div>
 
+
         <p class="hero-note">
-            🇧🇩 Bangladesh • Idea / Pre-Launch • Global Vision
+            Bangladesh 🇧🇩 • Global Vision • Pre-Launch Startup
         </p>
 
     </div>
 
+</section>
 
-    <!-- DEMO SCANNER -->
 
-    <div class="demo-card">
+<!-- =====================================================
+     QUICK STATS
+===================================================== -->
 
-        <div class="demo-header">
+<section class="quick-stats">
 
-            <div class="demo-title">
-                🔎 Threat Intelligence Scanner
-            </div>
+    <div class="container stats-grid">
 
-            <div class="demo-status">
-                ● DEMO
-            </div>
+        <div class="stat-card">
 
-        </div>
+            <strong>24/7</strong>
 
-        <div class="scan-box">
-
-            <input
-                id="phoneInput"
-                type="text"
-                placeholder="+880 1XXXXXXXXX"
-            >
-
-            <button onclick="demoScan()">
-                SCAN
-            </button>
+            <span>
+                Digital Protection
+            </span>
 
         </div>
 
-        <div class="scan-result">
 
-            <div class="result-top">
+        <div class="stat-card">
 
-                <div class="result-icon">
+            <strong>AI</strong>
+
+            <span>
+                Fraud Intelligence
+            </span>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <strong>Global</strong>
+
+            <span>
+                Scam Reporting
+            </span>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <strong>Secure</strong>
+
+            <span>
+                Privacy First
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     ABOUT
+===================================================== -->
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <div class="section-label">
+                ABOUT THE PLATFORM
+            </div>
+
+            <h2>
+                Building a safer<br>
+                digital world.
+            </h2>
+
+            <p>
+                Inspect Caller is a startup vision focused on
+                creating a unified digital fraud intelligence
+                and response ecosystem.
+            </p>
+
+        </div>
+
+
+        <div class="about-box">
+
+            <p>
+
+                Digital fraud is becoming increasingly complex.
+                People encounter phishing links, fake profiles,
+                fraudulent phone numbers, fake marketplaces,
+                investment scams and other online threats every day.
+
+                Inspect Caller aims to bring detection,
+                intelligence, evidence and reporting together
+                in one platform.
+
+            </p>
+
+
+            <a href="about.html" class="btn btn-primary">
+                Learn More →
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FEATURES
+===================================================== -->
+
+<section class="section" id="features">
+
+    <div class="container">
+
+        <div class="section-heading center">
+
+            <div class="section-label">
+                CORE FEATURES
+            </div>
+
+            <h2>
+                Everything in one<br>
+                security ecosystem.
+            </h2>
+
+            <p>
+                The platform is designed around multiple
+                digital fraud detection and reporting tools.
+            </p>
+
+        </div>
+
+
+        <div class="feature-grid">
+
+
+            <!-- CARD 01 -->
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🤖
+                </div>
+
+                <h3>
+                    AI Scam Checker
+                </h3>
+
+                <p>
+                    Analyze suspicious messages, text and
+                    submitted content for potential scam signals.
+                </p>
+
+                <a href="ai-chat.html" class="card-button">
+                    Open →
+                </a>
+
+            </div>
+
+
+            <!-- CARD 02 -->
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🌐
+                </div>
+
+                <h3>
+                    URL Scanner
+                </h3>
+
+                <p>
+                    Check suspicious websites and identify
+                    potential phishing or threat indicators.
+                </p>
+
+                <a href="scanner.html" class="card-button">
+                    Open →
+                </a>
+
+            </div>
+
+
+            <!-- CARD 03 -->
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
                     📞
                 </div>
 
-                <div class="result-info">
+                <h3>
+                    Phone Checker
+                </h3>
 
-                    <strong id="resultNumber">
-                        +880 1XXXXXXXXX
-                    </strong>
+                <p>
+                    Analyze phone numbers using available
+                    authorized intelligence and community reports.
+                </p>
 
-                    <small>
-                        Phone Intelligence
-                    </small>
+                <a href="phone-checker.html" class="card-button">
+                    Open →
+                </a>
 
+            </div>
+
+
+            <!-- CARD 04 -->
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    📧
                 </div>
 
-                <div class="risk-score">
+                <h3>
+                    Email Checker
+                </h3>
 
-                    <strong id="riskScore">
-                        18
-                    </strong>
+                <p>
+                    Inspect suspicious email addresses and
+                    identify potential risk indicators.
+                </p>
 
-                    <small>
-                        RISK / 100
-                    </small>
+                <a href="email-checker.html" class="card-button">
+                    Open →
+                </a>
 
+            </div>
+
+
+            <!-- CARD 05 -->
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    📷
                 </div>
 
+                <h3>
+                    QR Scanner
+                </h3>
+
+                <p>
+                    Analyze QR destinations before users
+                    continue to potentially suspicious websites.
+                </p>
+
+                <a href="qr-scanner.html" class="card-button">
+                    Open →
+                </a>
+
             </div>
 
-            <div class="risk-line">
-                <span id="riskBar"></span>
+
+            <!-- CARD 06 -->
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🚨
+                </div>
+
+                <h3>
+                    Report a Scam
+                </h3>
+
+                <p>
+                    Submit fraud reports and evidence to help
+                    build a stronger community intelligence network.
+                </p>
+
+                <a href="report.html" class="card-button">
+                    Open →
+                </a>
+
             </div>
 
-            <div class="scan-message" id="scanMessage">
-                ✓ LOW RISK — No major threat signals detected
+
+            <!-- CARD 07 -->
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    📘
+                </div>
+
+                <h3>
+                    Facebook Intelligence
+                </h3>
+
+                <p>
+                    Designed for authorized public-profile and
+                    fraud-report intelligence integrations.
+                </p>
+
+                <a href="facebook-scanner.html" class="card-button">
+                    Open →
+                </a>
+
             </div>
 
-            <div class="demo-label">
-                SIMULATED INTELLIGENCE RESPONSE
+
+            <!-- CARD 08 -->
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    ✈️
+                </div>
+
+                <h3>
+                    Telegram Intelligence
+                </h3>
+
+                <p>
+                    Designed for authorized Telegram security
+                    and reporting integrations.
+                </p>
+
+                <a href="telegram-scanner.html" class="card-button">
+                    Open →
+                </a>
+
+            </div>
+
+
+            <!-- CARD 09 -->
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    💬
+                </div>
+
+                <h3>
+                    WhatsApp Intelligence
+                </h3>
+
+                <p>
+                    Designed for authorized messaging-security
+                    integrations and fraud reporting.
+                </p>
+
+                <a href="whatsapp-scanner.html" class="card-button">
+                    Open →
+                </a>
+
             </div>
 
         </div>
@@ -1275,95 +502,185 @@
 </section>
 
 
-<!-- ==================================================
-     GLOBAL STATS
-================================================== -->
+<!-- =====================================================
+     PLATFORM
+===================================================== -->
 
-<section style="padding:0 0 20px;">
+<section class="section platform-section">
 
-    <div class="container stats">
+    <div class="container">
 
-        <div class="stat">
-            <strong>57%</strong>
-            <span>Adults encountering scams*</span>
+        <div class="section-heading center">
+
+            <div class="section-label">
+                INSPECT CALLER PLATFORM
+            </div>
+
+            <h2>
+                A unified approach<br>
+                to digital fraud.
+            </h2>
+
         </div>
 
-        <div class="stat">
-            <strong>23%</strong>
-            <span>Adults reporting financial loss*</span>
-        </div>
 
-        <div class="stat">
-            <strong>$1T+</strong>
-            <span>Estimated global scam losses*</span>
-        </div>
+        <div class="platform-grid">
 
-        <div class="stat">
-            <strong>5B+</strong>
-            <span>Internet users</span>
+
+            <div class="platform-card">
+
+                <div class="platform-icon">
+                    🌍
+                </div>
+
+                <h3>
+                    Global Protection
+                </h3>
+
+                <p>
+                    Designed to support a global network
+                    of users and fraud intelligence.
+                </p>
+
+            </div>
+
+
+            <div class="platform-card">
+
+                <div class="platform-icon">
+                    📊
+                </div>
+
+                <h3>
+                    Scam Reports
+                </h3>
+
+                <p>
+                    Community-driven reporting can help
+                    identify emerging fraud patterns.
+                </p>
+
+            </div>
+
+
+            <div class="platform-card">
+
+                <div class="platform-icon">
+                    🧠
+                </div>
+
+                <h3>
+                    AI Analysis
+                </h3>
+
+                <p>
+                    AI-assisted analysis can help users
+                    understand suspicious digital signals.
+                </p>
+
+            </div>
+
+
         </div>
 
     </div>
 
-    <p class="container source-note">
-        *Statistics are presented as referenced estimates and should
-        be verified against original sources before formal submission.
-    </p>
-
 </section>
 
 
-<!-- ==================================================
-     PROBLEM
-================================================== -->
+<!-- =====================================================
+     HOW IT WORKS
+===================================================== -->
 
 <section class="section">
 
     <div class="container">
 
-        <div class="section-label">
-            THE PROBLEM
+        <div class="section-heading center">
+
+            <div class="section-label">
+                HOW IT WORKS
+            </div>
+
+            <h2>
+                Detect. Understand. Report.
+            </h2>
+
         </div>
 
-        <h2 class="section-title">
-            Fraud is global.<br>
-            Intelligence is fragmented.
-        </h2>
 
-        <p class="section-text">
-            Victims may encounter suspicious calls, messages,
-            websites, profiles or payment requests, but the
-            available information is often scattered across
-            different platforms.
-        </p>
+        <div class="steps-grid">
 
-        <div class="grid-3">
 
-            <div class="card">
-                <div class="card-icon">🎣</div>
-                <h3>Phishing & Fake Links</h3>
+            <div class="step-card">
+
+                <div class="step-number">
+                    01
+                </div>
+
+                <h3>
+                    Submit
+                </h3>
+
                 <p>
-                    Fake websites, messages and links designed
-                    to steal credentials, money or sensitive data.
+                    Submit a suspicious number, URL,
+                    email, message or evidence.
                 </p>
+
             </div>
 
-            <div class="card">
-                <div class="card-icon">💰</div>
-                <h3>Financial Fraud</h3>
+
+            <div class="step-card">
+
+                <div class="step-number">
+                    02
+                </div>
+
+                <h3>
+                    Analyze
+                </h3>
+
                 <p>
-                    Investment, marketplace, payment, loan
-                    and financial-service scams.
+                    The platform evaluates available
+                    threat and community signals.
                 </p>
+
             </div>
 
-            <div class="card">
-                <div class="card-icon">👤</div>
-                <h3>Identity & Impersonation</h3>
+
+            <div class="step-card">
+
+                <div class="step-number">
+                    03
+                </div>
+
+                <h3>
+                    Understand
+                </h3>
+
                 <p>
-                    Fake accounts, impersonation and
-                    identity-related digital threats.
+                    Users receive a structured risk
+                    result and relevant information.
                 </p>
+
+            </div>
+
+
+            <div class="step-card">
+
+                <div class="step-number">
+                    04
+                </div>
+
+                <h3>
+                    Report
+                </h3>
+
+                <p>
+                    Confirmed or suspicious incidents
+                    can be submitted through the reporting system.
+                </p>
+
             </div>
 
         </div>
@@ -1373,84 +690,35 @@
 </section>
 
 
-<!-- ==================================================
-     SOLUTION
-================================================== -->
+<!-- =====================================================
+     STARTUP VISION
+===================================================== -->
 
-<section class="section" id="platform">
+<section class="section vision-section">
 
     <div class="container">
 
-        <div class="section-label">
-            THE SOLUTION
-        </div>
+        <div class="vision-box">
 
-        <h2 class="section-title">
-            One platform.<br>
-            One intelligence layer.
-        </h2>
-
-        <p class="section-text">
-            Inspect Caller connects multiple security signals
-            into one investigation, evidence and reporting
-            experience.
-        </p>
-
-        <div class="grid-3">
-
-            <div class="card">
-                <div class="card-icon">📞</div>
-                <h3>Phone Intelligence</h3>
-                <p>
-                    Phone reputation, country, carrier,
-                    reports and risk indicators.
-                </p>
+            <div class="section-label">
+                OUR VISION
             </div>
 
-            <div class="card">
-                <div class="card-icon">📱</div>
-                <h3>Social Intelligence</h3>
-                <p>
-                    Interfaces for authorized social-platform
-                    intelligence.
-                </p>
-            </div>
+            <h2>
+                Make the digital world<br>
+                safer for everyone.
+            </h2>
 
-            <div class="card">
-                <div class="card-icon">💬</div>
-                <h3>Messaging Intelligence</h3>
-                <p>
-                    Designed for authorized messaging
-                    security integrations.
-                </p>
-            </div>
+            <p>
+                Our long-term vision is to create a trusted
+                global security layer connecting people,
+                technology, intelligence and responsible
+                fraud-response systems.
+            </p>
 
-            <div class="card">
-                <div class="card-icon">🔗</div>
-                <h3>URL Intelligence</h3>
-                <p>
-                    Analyze domains, phishing indicators,
-                    redirects and threat signals.
-                </p>
-            </div>
-
-            <div class="card">
-                <div class="card-icon">📧</div>
-                <h3>Email Security</h3>
-                <p>
-                    Analyze suspicious emails and identify
-                    potential fraud indicators.
-                </p>
-            </div>
-
-            <div class="card">
-                <div class="card-icon">🤖</div>
-                <h3>AI Scam Analysis</h3>
-                <p>
-                    Analyze text, images and submitted evidence
-                    for potential scam patterns.
-                </p>
-            </div>
+            <a href="about.html" class="btn btn-primary">
+                Discover Our Vision →
+            </a>
 
         </div>
 
@@ -1459,153 +727,38 @@
 </section>
 
 
-<!-- ==================================================
-     WORKFLOW
-================================================== -->
+<!-- =====================================================
+     READY CTA
+===================================================== -->
 
 <section class="section">
 
     <div class="container">
 
-        <div class="section-label">
-            INTELLIGENCE WORKFLOW
-        </div>
+        <div class="cta-box">
 
-        <h2 class="section-title">
-            Detect → Analyze → Respond
-        </h2>
-
-        <div class="workflow">
-
-            <div class="workflow-card">
-                <strong>01</strong>
-                <span>Scan</span>
+            <div class="section-label">
+                GET STARTED
             </div>
 
-            <div class="workflow-card">
-                <strong>02</strong>
-                <span>Analyze</span>
-            </div>
+            <h2>
+                Ready to stay safer online?
+            </h2>
 
-            <div class="workflow-card">
-                <strong>03</strong>
-                <span>Risk Score</span>
-            </div>
+            <p>
+                Explore the platform, check a suspicious
+                website or report a potential scam.
+            </p>
 
-            <div class="workflow-card">
-                <strong>04</strong>
-                <span>Evidence</span>
-            </div>
+            <div class="hero-buttons">
 
-            <div class="workflow-card">
-                <strong>05</strong>
-                <span>Report</span>
-            </div>
+                <a href="register.html" class="btn btn-primary">
+                    Create Account
+                </a>
 
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ==================================================
-     INTELLIGENCE
-================================================== -->
-
-<section class="section" id="intelligence">
-
-    <div class="container">
-
-        <div class="section-label">
-            THREAT INTELLIGENCE ENGINE
-        </div>
-
-        <h2 class="section-title">
-            From one signal<br>
-            to a complete risk profile.
-        </h2>
-
-        <div class="two-grid">
-
-            <div class="panel">
-
-                <h3>
-                    🌐 Intelligence Sources
-                </h3>
-
-                <div class="list">
-
-                    <div class="list-item">
-                        📞 Phone Intelligence API
-                    </div>
-
-                    <div class="list-item">
-                        📱 Social Platform Intelligence
-                    </div>
-
-                    <div class="list-item">
-                        💬 Messaging Intelligence
-                    </div>
-
-                    <div class="list-item">
-                        🔗 URL / Threat Intelligence
-                    </div>
-
-                    <div class="list-item">
-                        🤖 AI Analysis Engine
-                    </div>
-
-                    <div class="list-item">
-                        👥 Community Reports
-                    </div>
-
-                    <div class="list-item">
-                        📍 Location / Jurisdiction Signals
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="panel">
-
-                <h3>
-                    🧠 Unified Risk Result
-                </h3>
-
-                <div class="list">
-
-                    <div class="list-item">
-                        Risk Score — 91 / 100
-                    </div>
-
-                    <div class="list-item">
-                        Threat Level — HIGH
-                    </div>
-
-                    <div class="list-item">
-                        Scam Category — Financial Fraud
-                    </div>
-
-                    <div class="list-item">
-                        Community Reports — 17
-                    </div>
-
-                    <div class="list-item">
-                        Evidence Signals — 8
-                    </div>
-
-                    <div class="list-item">
-                        Confidence — 94%
-                    </div>
-
-                </div>
-
-                <div class="demo-api">
-                    DEMO / SIMULATED API RESPONSE
-                </div>
+                <a href="report.html" class="btn btn-secondary">
+                    Report Scam
+                </a>
 
             </div>
 
@@ -1616,482 +769,29 @@
 </section>
 
 
-<!-- ==================================================
-     API INTELLIGENCE
-================================================== -->
+<!-- =====================================================
+     LEADERSHIP TEAM
+===================================================== -->
 
-<section class="section">
-
-    <div class="container">
-
-        <div class="section-label">
-            MULTI-SOURCE API INTELLIGENCE
-        </div>
-
-        <h2 class="section-title">
-            Connected intelligence,<br>
-            one investigation.
-        </h2>
-
-        <div class="grid-3">
-
-            <div class="card">
-                <div class="card-icon">🪪</div>
-                <h3>Identity API</h3>
-                <p>
-                    Demo identity-verification interface showing
-                    how authorized identity data could contribute
-                    to a case.
-                </p>
-                <div class="demo-api">
-                    SIMULATED RESPONSE
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-icon">📘</div>
-                <h3>Social API</h3>
-                <p>
-                    Demo public-profile and community-report
-                    intelligence interface.
-                </p>
-                <div class="demo-api">
-                    SIMULATED RESPONSE
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-icon">🌐</div>
-                <h3>Threat API</h3>
-                <p>
-                    Demo domain, URL, IP and phishing
-                    intelligence response.
-                </p>
-                <div class="demo-api">
-                    SIMULATED RESPONSE
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ==================================================
-     EVIDENCE CENTER
-================================================== -->
-
-<section class="section">
+<section class="section team-section">
 
     <div class="container">
 
-        <div class="section-label">
-            EVIDENCE & CASE MANAGEMENT
-        </div>
+        <div class="section-heading center">
 
-        <h2 class="section-title">
-            Turn a report into<br>
-            structured evidence.
-        </h2>
-
-        <p class="section-text">
-            A reported incident can be organized into a structured
-            case containing available digital evidence, transaction
-            information, technical indicators and timeline data.
-        </p>
-
-        <div class="grid-3">
-
-            <div class="card">
-                <div class="card-icon">🆔</div>
-                <h3>Unique Case ID</h3>
-                <p>
-                    Every incident receives a structured case reference.
-                </p>
+            <div class="section-label">
+                LEADERSHIP
             </div>
 
-            <div class="card">
-                <div class="card-icon">📂</div>
-                <h3>Evidence Center</h3>
-                <p>
-                    Screenshots, URLs, messages, transaction
-                    details and supporting files.
-                </p>
-            </div>
-
-            <div class="card">
-                <div class="card-icon">📍</div>
-                <h3>Jurisdiction</h3>
-                <p>
-                    Available location and jurisdiction information
-                    can support responsible authority routing.
-                </p>
-            </div>
+            <h2>
+                Leadership Team
+            </h2>
 
         </div>
 
-    </div>
-
-</section>
-
-
-<!-- ==================================================
-     CASE WORKFLOW
-================================================== -->
-
-<section class="section">
-
-    <div class="container">
-
-        <div class="section-label">
-            CASE RESPONSE
-        </div>
-
-        <h2 class="section-title">
-            From report to<br>
-            responsible response.
-        </h2>
-
-        <div class="workflow">
-
-            <div class="workflow-card">
-                <strong>01</strong>
-                <span>Report</span>
-            </div>
-
-            <div class="workflow-card">
-                <strong>02</strong>
-                <span>Validation</span>
-            </div>
-
-            <div class="workflow-card">
-                <strong>03</strong>
-                <span>Risk Assessment</span>
-            </div>
-
-            <div class="workflow-card">
-                <strong>04</strong>
-                <span>Case Package</span>
-            </div>
-
-            <div class="workflow-card">
-                <strong>05</strong>
-                <span>Authority Referral</span>
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ==================================================
-     GLOBAL THREAT CENTER
-================================================== -->
-
-<section class="section" id="threat-center">
-
-    <div class="container">
-
-        <div class="section-label">
-            GLOBAL THREAT CENTER
-        </div>
-
-        <h2 class="section-title">
-            A global view<br>
-            of digital threats.
-        </h2>
-
-        <div class="two-grid">
-
-            <div class="panel">
-
-                <h3>
-                    🌍 Threat Activity
-                </h3>
-
-                <div class="list">
-
-                    <div class="threat-row">
-                        <span>🇧🇩 Bangladesh</span>
-                        <b class="high">HIGH</b>
-                    </div>
-
-                    <div class="threat-row">
-                        <span>🇮🇳 India</span>
-                        <b class="high">HIGH</b>
-                    </div>
-
-                    <div class="threat-row">
-                        <span>🇺🇸 United States</span>
-                        <b class="medium">MEDIUM</b>
-                    </div>
-
-                    <div class="threat-row">
-                        <span>🇸🇬 Singapore</span>
-                        <b class="medium">MEDIUM</b>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="panel">
-
-                <h3>
-                    ⚠️ Trending Threats
-                </h3>
-
-                <div class="list">
-
-                    <div class="threat-row">
-                        <span>Phishing</span>
-                        <b class="high">32%</b>
-                    </div>
-
-                    <div class="threat-row">
-                        <span>Financial Fraud</span>
-                        <b class="high">27%</b>
-                    </div>
-
-                    <div class="threat-row">
-                        <span>Fake Profiles</span>
-                        <b class="medium">21%</b>
-                    </div>
-
-                    <div class="threat-row">
-                        <span>Marketplace Fraud</span>
-                        <b class="medium">14%</b>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ==================================================
-     STARTUP
-================================================== -->
-
-<section class="section" id="startup">
-
-    <div class="container">
-
-        <div class="section-label">
-            STARTUP OPPORTUNITY
-        </div>
-
-        <h2 class="section-title">
-            Building the security layer<br>
-            for the digital economy.
-        </h2>
-
-        <div class="startup-grid">
-
-            <div class="startup-card">
-
-                <div class="startup-number">
-                    5B+
-                </div>
-
-                <h3>
-                    Internet Users
-                </h3>
-
-                <p>
-                    A massive global ecosystem for digital security.
-                </p>
-
-            </div>
-
-            <div class="startup-card">
-
-                <div class="startup-number">
-                    B2C
-                </div>
-
-                <h3>
-                    Consumer Security
-                </h3>
-
-                <p>
-                    Premium subscriptions and individual security services.
-                </p>
-
-            </div>
-
-            <div class="startup-card">
-
-                <div class="startup-number">
-                    B2B
-                </div>
-
-                <h3>
-                    Enterprise Security
-                </h3>
-
-                <p>
-                    APIs, threat intelligence and security integrations.
-                </p>
-
-            </div>
-
-            <div class="startup-card">
-
-                <div class="startup-number">
-                    B2G
-                </div>
-
-                <h3>
-                    Institutional Partnerships
-                </h3>
-
-                <p>
-                    Authorized government and institutional security partnerships.
-                </p>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ==================================================
-     COMPETITIVE ADVANTAGE
-================================================== -->
-
-<section class="section">
-
-    <div class="container">
-
-        <div class="section-label">
-            WHY INSPECT CALLER
-        </div>
-
-        <h2 class="section-title">
-            More than a caller checker.
-        </h2>
-
-        <div class="grid-3">
-
-            <div class="card">
-                <div class="card-icon">🌐</div>
-                <h3>Unified Intelligence</h3>
-                <p>
-                    Connect multiple threat signals into one investigation.
-                </p>
-            </div>
-
-            <div class="card">
-                <div class="card-icon">🧠</div>
-                <h3>AI-Powered Analysis</h3>
-                <p>
-                    Designed to classify suspicious signals and support risk assessment.
-                </p>
-            </div>
-
-            <div class="card">
-                <div class="card-icon">📂</div>
-                <h3>Evidence First</h3>
-                <p>
-                    Convert reports into structured and traceable case information.
-                </p>
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ==================================================
-     ROADMAP
-================================================== -->
-
-<section class="section">
-
-    <div class="container">
-
-        <div class="section-label">
-            ROADMAP
-        </div>
-
-        <h2 class="section-title">
-            From prototype<br>
-            to global infrastructure.
-        </h2>
-
-        <div class="roadmap">
-
-            <div class="phase">
-                <small>PHASE 01</small>
-                <h3>Prototype</h3>
-                <p>Validate concept and user experience.</p>
-            </div>
-
-            <div class="phase">
-                <small>PHASE 02</small>
-                <h3>MVP</h3>
-                <p>Launch core intelligence and reporting.</p>
-            </div>
-
-            <div class="phase">
-                <small>PHASE 03</small>
-                <h3>Bangladesh</h3>
-                <p>Build local user and threat intelligence.</p>
-            </div>
-
-            <div class="phase">
-                <small>PHASE 04</small>
-                <h3>South Asia</h3>
-                <p>Expand regional security coverage.</p>
-            </div>
-
-            <div class="phase">
-                <small>PHASE 05</small>
-                <h3>Global</h3>
-                <p>Build a worldwide anti-fraud ecosystem.</p>
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ==================================================
-     TEAM
-================================================== -->
-
-<section class="section" id="team">
-
-    <div class="container">
-
-        <div class="section-label">
-            FOUNDING TEAM
-        </div>
-
-        <h2 class="section-title">
-            Built from Bangladesh.<br>
-            Designed for the world.
-        </h2>
 
         <div class="team-grid">
+
 
             <!-- FOUNDER -->
 
@@ -2106,22 +806,20 @@
                 </h3>
 
                 <div class="team-role">
-                    FOUNDER & CEO
+                    Founder & CEO
                 </div>
+
+                <p>
+                    Leading Inspect Caller's vision to build
+                    a global AI-powered digital fraud intelligence
+                    and protection platform.
+                </p>
 
                 <div class="founder-vision">
-                    “Our vision is to make the digital world safer
-                    by connecting fraud detection, intelligence,
-                    evidence and responsible response into one
-                    global security ecosystem.”
+                    “Building technology that helps people
+                    recognize digital threats before they
+                    become victims.”
                 </div>
-
-                <a
-                    class="founder-email"
-                    href="mailto:rbiplob1005@gmail.com"
-                >
-                    ✉ rbiplob1005@gmail.com
-                </a>
 
             </div>
 
@@ -2139,36 +837,13 @@
                 </h3>
 
                 <div class="team-role">
-                    CO-FOUNDER & TEAM LEADER
+                    Co-Founder & Team Leader
                 </div>
 
                 <p>
-                    Operations, coordination, team leadership
-                    and partnership development.
-                </p>
-
-            </div>
-
-
-            <!-- TECHNOLOGY -->
-
-            <div class="team-card">
-
-                <div class="team-avatar">
-                    💻
-                </div>
-
-                <h3>
-                    Technology Team
-                </h3>
-
-                <div class="team-role">
-                    CTO • AI • CYBERSECURITY
-                </div>
-
-                <p>
-                    Product engineering, artificial intelligence,
-                    cloud infrastructure and cybersecurity.
+                    Supporting operations, team coordination,
+                    growth and the development of Inspect Caller's
+                    global vision.
                 </p>
 
             </div>
@@ -2180,47 +855,87 @@
 </section>
 
 
-<!-- ==================================================
-     FINAL VISION
-================================================== -->
+<!-- =====================================================
+     LATEST UPDATE
+===================================================== -->
 
 <section class="section">
 
     <div class="container">
 
-        <div class="cta">
+        <div class="section-heading center">
 
             <div class="section-label">
-                INSPECT CALLER VISION
+                LATEST UPDATE
             </div>
 
-            <h2 class="section-title">
-                Fraud should not be invisible.
+            <h2>
+                Latest News & Updates
             </h2>
 
-            <p>
-                Every suspicious number, link, account and digital
-                fraud report should have a path toward better
-                intelligence, stronger evidence and responsible action.
-            </p>
+        </div>
 
-            <div class="hero-actions" style="justify-content:center;">
 
-                <a
-                    href="login.html"
-                    class="btn btn-primary"
-                >
-                    Launch Inspect Caller →
-                </a>
+        <div class="news-card">
 
-                <a
-                    href="contact.html"
-                    class="btn"
-                >
-                    Contact Founder
-                </a>
+            <div class="news-icon">
+                🚀
+            </div>
+
+            <div>
+
+                <h3>
+                    Inspect Caller Development
+                </h3>
+
+                <p>
+                    Inspect Caller is currently in its
+                    prototype and pre-launch stage. The platform
+                    is being developed with a focus on AI,
+                    fraud intelligence, reporting and global
+                    digital safety.
+                </p>
 
             </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CUSTOMER CARE
+===================================================== -->
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="support-home-box">
+
+            <div>
+
+                <div class="section-label">
+                    CUSTOMER CARE
+                </div>
+
+                <h2>
+                    Need help?
+                </h2>
+
+                <p>
+                    Our Customer Care system is designed to
+                    help users with reports, account issues,
+                    suspicious activity and platform support.
+                </p>
+
+            </div>
+
+            <a href="contact.html" class="btn btn-primary">
+                Contact Support →
+            </a>
 
         </div>
 
@@ -2231,34 +946,114 @@
 </main>
 
 
-<!-- ==================================================
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <div class="container footer-inner">
+
+        <div>
+
+            <a href="index.html" class="brand">
+                <span class="brand-logo">🛡️</span>
+                <span class="brand-name">
+                    INSPECT<span>CALLER</span>
+                </span>
+            </a>
+
+            <p class="footer-text">
+                Global Digital Fraud Intelligence & Protection
+            </p>
+
+            <p class="footer-text">
+                Founder & CEO:
+                Mohammad Sajedur Rahman Biplob
+            </p>
+
+            <p class="footer-text">
+                Co-Founder & Team Leader:
+                Nila Akter
+            </p>
+
+            <p class="footer-text">
+                🇧🇩 Bangladesh • Global Vision
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <a href="about.html">
+                About
+            </a>
+
+            <a href="features.html">
+                Features
+            </a>
+
+            <a href="contact.html">
+                Contact
+            </a>
+
+            <a href="privacy-policy.html">
+                Privacy
+            </a>
+
+            <a href="terms.html">
+                Terms
+            </a>
+
+            <a href="cookie-policy.html">
+                Cookies
+            </a>
+
+            <a href="disclaimer.html">
+                Disclaimer
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="container footer-bottom">
+
+        © 2026 Inspect Caller. All rights reserved.
+
+    </div>
+
+</footer>
+
+
+<!-- =====================================================
      CUSTOMER CARE FLOATING BUTTON
-================================================== -->
+===================================================== -->
 
 <button
     class="support-button"
     id="supportButton"
+    aria-label="Customer Care"
     onclick="toggleSupport()"
-    aria-label="Open Customer Care"
 >
 
-    <span class="support-pulse"></span>
-
     💬
+
+    <span class="support-pulse"></span>
 
 </button>
 
 
-<!-- ==================================================
+<!-- =====================================================
      CUSTOMER CARE CHAT
-================================================== -->
+===================================================== -->
 
 <div
     class="support-chat"
     id="supportChat"
 >
-
-    <!-- HEADER -->
 
     <div class="support-header">
 
@@ -2273,7 +1068,7 @@
             </strong>
 
             <small>
-                ● Customer Care Online
+                ● Customer Care
             </small>
 
         </div>
@@ -2282,13 +1077,11 @@
             class="support-close"
             onclick="toggleSupport()"
         >
-            ✕
+            ×
         </button>
 
     </div>
 
-
-    <!-- CHAT BODY -->
 
     <div
         class="support-body"
@@ -2304,45 +1097,34 @@
 
         </div>
 
+
         <div class="support-time">
-            Customer Care • Now
+            Customer Care • Online
         </div>
 
 
-        <!-- QUICK OPTIONS -->
-
         <div class="quick-help">
 
-            <button
-                onclick="quickMessage('I was scammed and need help.')"
-            >
+            <button onclick="quickMessage('I was scammed and need help.')">
                 🚨 I Was Scammed
             </button>
 
-            <button
-                onclick="quickMessage('I want to check a phone number.')"
-            >
+            <button onclick="quickMessage('I want to check a phone number.')">
                 📞 Check Number
             </button>
 
-            <button
-                onclick="quickMessage('I want to report a fraud.')"
-            >
+            <button onclick="quickMessage('I want to report a fraud.')">
                 📢 Report Fraud
             </button>
 
-            <button
-                onclick="quickMessage('I need help with my case.')"
-            >
-                📂 My Case
+            <button onclick="quickMessage('I need help with my account.')">
+                👤 Account Help
             </button>
 
         </div>
 
     </div>
 
-
-    <!-- INPUT -->
 
     <div class="support-footer">
 
@@ -2355,17 +1137,14 @@
                 onkeydown="supportEnter(event)"
             >
 
-            <button
-                onclick="sendSupportMessage()"
-                aria-label="Send message"
-            >
+            <button onclick="sendSupportMessage()">
                 ➤
             </button>
 
         </div>
 
         <div class="support-note">
-            Demo support chat • Firebase integration can be connected later
+            Customer support • Demo mode
         </div>
 
     </div>
@@ -2373,173 +1152,11 @@
 </div>
 
 
-<!-- ==================================================
-     FOOTER
-================================================== -->
-
-<footer>
-
-    <div class="container footer-inner">
-
-        <div>
-
-            <a href="index.html" class="brand">
-                INSPECT<span>CALLER</span>
-            </a>
-
-            <p class="footer-text">
-                Global Digital Fraud Intelligence & Response Platform
-            </p>
-
-            <p class="footer-text">
-                Founder & CEO:
-                Mohammad Sajedur Rahman Biplob
-            </p>
-
-            <p class="footer-text">
-                Co-Founder & Team Leader:
-                Nila Akter
-            </p>
-
-            <p class="footer-text">
-                Bangladesh 🇧🇩
-            </p>
-
-        </div>
-
-
-        <div class="footer-links">
-
-            <a href="features.html">
-                Features
-            </a>
-
-            <a href="about.html">
-                About
-            </a>
-
-            <a href="contact.html">
-                Contact
-            </a>
-
-            <a href="privacy-policy.html">
-                Privacy
-            </a>
-
-            <a href="terms.html">
-                Terms
-            </a>
-
-        </div>
-
-    </div>
-
-</footer>
-
-
-<!-- ==================================================
-     JAVASCRIPT
-================================================== -->
+<!-- =====================================================
+     INDEX JAVASCRIPT
+===================================================== -->
 
 <script>
-
-/* ==================================================
-   DEMO PHONE SCANNER
-================================================== */
-
-function demoScan() {
-
-    const input =
-        document.getElementById("phoneInput");
-
-    const number =
-        input.value.trim() ||
-        "+880 1XXXXXXXXX";
-
-    document.getElementById(
-        "resultNumber"
-    ).textContent = number;
-
-
-    /*
-        PROJECT 533
-        Prototype-only simulated intelligence.
-
-        This demo does not query private,
-        government or social-platform databases.
-    */
-
-    const score =
-        Math.floor(Math.random() * 70) + 10;
-
-
-    document.getElementById(
-        "riskScore"
-    ).textContent = score;
-
-
-    document.getElementById(
-        "riskBar"
-    ).style.width = score + "%";
-
-
-    const message =
-        document.getElementById("scanMessage");
-
-
-    if (score >= 70) {
-
-        message.textContent =
-            "⚠ HIGH RISK — Multiple threat signals detected";
-
-        message.style.color =
-            "#ff667d";
-
-        message.style.borderColor =
-            "rgba(255,102,125,.18)";
-
-        message.style.background =
-            "rgba(255,102,125,.05)";
-
-    }
-
-    else if (score >= 45) {
-
-        message.textContent =
-            "⚠ SUSPICIOUS — Further investigation recommended";
-
-        message.style.color =
-            "#ffd166";
-
-        message.style.borderColor =
-            "rgba(255,209,102,.18)";
-
-        message.style.background =
-            "rgba(255,209,102,.05)";
-
-    }
-
-    else {
-
-        message.textContent =
-            "✓ LOW RISK — No major threat signals detected";
-
-        message.style.color =
-            "#39e6a0";
-
-        message.style.borderColor =
-            "rgba(57,230,160,.15)";
-
-        message.style.background =
-            "rgba(57,230,160,.05)";
-    }
-
-}
-
-
-/* ==================================================
-   CUSTOMER CARE
-================================================== */
 
 function toggleSupport() {
 
@@ -2550,10 +1167,6 @@ function toggleSupport() {
 
 }
 
-
-/* ==================================================
-   QUICK HELP
-================================================== */
 
 function quickMessage(message) {
 
@@ -2567,9 +1180,18 @@ function quickMessage(message) {
 }
 
 
-/* ==================================================
-   SEND SUPPORT MESSAGE
-================================================== */
+function supportEnter(event) {
+
+    if (event.key === "Enter") {
+
+        event.preventDefault();
+
+        sendSupportMessage();
+
+    }
+
+}
+
 
 function sendSupportMessage() {
 
@@ -2588,75 +1210,56 @@ function sendSupportMessage() {
     }
 
 
-    /* Customer message */
-
     const userMessage =
         document.createElement("div");
 
-    userMessage.style.cssText = `
-        max-width:88%;
-        margin:14px 0 0 auto;
-        padding:11px;
-        border-radius:12px 12px 3px 12px;
-        background:#0b4770;
-        color:#eaf8ff;
-        font-size:9px;
-        line-height:1.6;
-    `;
+    userMessage.className =
+        "support-user-message";
 
     userMessage.textContent =
         message;
 
-
     body.appendChild(userMessage);
-
-
-    /* Time */
-
-    const time =
-        document.createElement("div");
-
-    time.style.cssText = `
-        margin-top:5px;
-        text-align:right;
-        color:#536f7b;
-        font-size:7px;
-    `;
-
-    time.textContent =
-        "You • Now";
-
-
-    body.appendChild(time);
 
 
     input.value = "";
 
 
-    /* Demo support response */
+    const time =
+        document.createElement("div");
+
+    time.className =
+        "support-user-time";
+
+    time.textContent =
+        "You • Now";
+
+    body.appendChild(time);
+
+
+    body.scrollTop =
+        body.scrollHeight;
+
+
+    /*
+       Prototype response.
+
+       Real-time support will later be connected
+       with Firebase / Firestore.
+    */
 
     setTimeout(() => {
 
         const response =
             document.createElement("div");
 
-        response.style.cssText = `
-            max-width:88%;
-            margin-top:14px;
-            padding:11px;
-            border:1px solid #183e52;
-            border-radius:12px 12px 12px 3px;
-            background:#071927;
-            color:#9db7c2;
-            font-size:9px;
-            line-height:1.6;
-        `;
+        response.className =
+            "support-agent-message";
 
         response.textContent =
-            "Thanks for contacting Inspect Caller Support. " +
-            "Your message has been received in this demo. " +
-            "In the full system, your request will be connected " +
-            "to the Customer Care / Support Center.";
+            "Thanks for contacting Inspect Caller. " +
+            "Your message has been received. " +
+            "Customer Care will assist you through the support system.";
 
         body.appendChild(response);
 
@@ -2664,27 +1267,6 @@ function sendSupportMessage() {
             body.scrollHeight;
 
     }, 700);
-
-
-    body.scrollTop =
-        body.scrollHeight;
-
-}
-
-
-/* ==================================================
-   ENTER TO SEND
-================================================== */
-
-function supportEnter(event) {
-
-    if (event.key === "Enter") {
-
-        event.preventDefault();
-
-        sendSupportMessage();
-
-    }
 
 }
 
