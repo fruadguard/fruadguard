@@ -1,581 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Contact — Inspect Caller</title>
+    <title>Contact Us | Inspect Caller</title>
 
-    <meta
-        name="description"
-        content="Contact Inspect Caller for startup, partnership, support and business inquiries."
-    >
+    <meta name="description"
+        content="Contact Inspect Caller for customer support, scam reporting assistance, partnerships and general inquiries.">
 
     <link rel="stylesheet" href="style.css">
-
-    <style>
-
-        /* ================= CONTACT PAGE ================= */
-
-        .contact-page {
-            min-height: 100vh;
-
-            background:
-                radial-gradient(
-                    circle at 50% 0%,
-                    rgba(0,150,255,.13),
-                    transparent 38%
-                ),
-                #050d18;
-        }
-
-        .contact-container {
-            width: min(1150px, calc(100% - 30px));
-
-            margin: auto;
-
-            padding: 90px 0 110px;
-        }
-
-
-        /* ================= HEADER ================= */
-
-        .contact-header {
-            max-width: 800px;
-
-            margin: 0 auto 60px;
-
-            text-align: center;
-        }
-
-        .contact-badge {
-            display: inline-flex;
-
-            padding: 9px 17px;
-
-            border:
-                1px solid #285a76;
-
-            border-radius: 999px;
-
-            background: #071b2c;
-
-            color: #8bdcff;
-
-            font-size: 12px;
-
-            font-weight: 850;
-
-            letter-spacing: 1px;
-        }
-
-        .contact-header h1 {
-            margin-top: 22px;
-
-            font-size:
-                clamp(42px, 7vw, 72px);
-
-            line-height: 1;
-
-            letter-spacing: -3px;
-
-            font-weight: 950;
-        }
-
-        .contact-header h1 span {
-            color: var(--blue);
-        }
-
-        .contact-header p {
-            max-width: 700px;
-
-            margin: 22px auto 0;
-
-            color: var(--muted);
-
-            font-size: 17px;
-
-            line-height: 1.75;
-        }
-
-
-        /* ================= CONTACT GRID ================= */
-
-        .contact-grid {
-            display: grid;
-
-            grid-template-columns:
-                .9fr 1.4fr;
-
-            gap: 22px;
-
-            align-items: stretch;
-        }
-
-
-        /* ================= INFO CARD ================= */
-
-        .contact-info {
-            padding: 32px;
-
-            border:
-                1px solid var(--line);
-
-            border-radius: 25px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #0b2942,
-                    #071827
-                );
-
-            box-shadow:
-                0 25px 70px
-                rgba(0,100,180,.08);
-        }
-
-        .contact-info h2 {
-            margin-bottom: 10px;
-
-            font-size: 25px;
-        }
-
-        .contact-info > p {
-            margin-bottom: 28px;
-
-            color: var(--muted);
-
-            font-size: 14px;
-
-            line-height: 1.7;
-        }
-
-
-        /* ================= CONTACT ITEM ================= */
-
-        .contact-item {
-            display: flex;
-
-            align-items: flex-start;
-
-            gap: 14px;
-
-            padding: 17px 0;
-
-            border-bottom:
-                1px solid #17384d;
-        }
-
-        .contact-item:last-child {
-            border-bottom: none;
-        }
-
-        .contact-icon {
-            width: 46px;
-            height: 46px;
-
-            flex-shrink: 0;
-
-            display: grid;
-            place-items: center;
-
-            border:
-                1px solid #285873;
-
-            border-radius: 14px;
-
-            background: #071b2c;
-
-            font-size: 20px;
-        }
-
-        .contact-item strong {
-            display: block;
-
-            margin-bottom: 3px;
-
-            font-size: 14px;
-        }
-
-        .contact-item span,
-        .contact-item a {
-            color: var(--muted);
-
-            font-size: 13px;
-
-            word-break: break-word;
-        }
-
-        .contact-item a:hover {
-            color: var(--cyan);
-        }
-
-
-        /* ================= FORM CARD ================= */
-
-        .contact-form-card {
-            padding: 32px;
-
-            border:
-                1px solid var(--line);
-
-            border-radius: 25px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #0a2034,
-                    #061522
-                );
-        }
-
-        .contact-form-card h2 {
-            margin-bottom: 8px;
-
-            font-size: 25px;
-        }
-
-        .contact-form-card > p {
-            margin-bottom: 27px;
-
-            color: var(--muted);
-
-            font-size: 14px;
-        }
-
-
-        /* ================= FORM ================= */
-
-        .contact-form {
-            display: grid;
-
-            gap: 17px;
-        }
-
-        .form-row {
-            display: grid;
-
-            grid-template-columns:
-                repeat(2, 1fr);
-
-            gap: 15px;
-        }
-
-        .form-group {
-            display: flex;
-
-            flex-direction: column;
-
-            gap: 7px;
-        }
-
-        .form-group label {
-            color: #bdd0dc;
-
-            font-size: 12px;
-
-            font-weight: 750;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-
-            padding:
-                13px
-                14px;
-
-            border:
-                1px solid #28536b;
-
-            border-radius: 13px;
-
-            outline: none;
-
-            background: #061725;
-
-            color: #ffffff;
-
-            font-size: 13px;
-
-            transition: .2s;
-        }
-
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color: #5f7a8b;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            border-color: var(--blue);
-
-            box-shadow:
-                0 0 0 3px
-                rgba(0,150,255,.08);
-        }
-
-        .form-group textarea {
-            min-height: 145px;
-
-            resize: vertical;
-        }
-
-
-        /* ================= SEND BUTTON ================= */
-
-        .send-message {
-            min-height: 54px;
-
-            border: none;
-
-            border-radius: 15px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #25b5ff,
-                    #087ddd
-                );
-
-            color: #ffffff;
-
-            cursor: pointer;
-
-            font-size: 14px;
-
-            font-weight: 850;
-
-            box-shadow:
-                0 14px 35px
-                rgba(0,130,255,.18);
-
-            transition: .25s;
-        }
-
-        .send-message:hover {
-            transform: translateY(-2px);
-
-            box-shadow:
-                0 20px 45px
-                rgba(0,150,255,.28);
-        }
-
-
-        /* ================= SUPPORT SECTION ================= */
-
-        .support-section {
-            margin-top: 25px;
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 18px;
-        }
-
-        .support-card {
-            padding: 25px;
-
-            border:
-                1px solid var(--line);
-
-            border-radius: 20px;
-
-            background: #081c2d;
-
-            transition: .25s;
-        }
-
-        .support-card:hover {
-            transform: translateY(-5px);
-
-            border-color:
-                var(--blue);
-
-            box-shadow:
-                var(--shadow);
-        }
-
-        .support-icon {
-            font-size: 27px;
-
-            margin-bottom: 12px;
-        }
-
-        .support-card h3 {
-            margin-bottom: 7px;
-
-            font-size: 18px;
-        }
-
-        .support-card p {
-            color: var(--muted);
-
-            font-size: 13px;
-
-            line-height: 1.65;
-        }
-
-        .support-card a {
-            display: inline-block;
-
-            margin-top: 13px;
-
-            color: var(--cyan);
-
-            font-size: 12px;
-
-            font-weight: 800;
-        }
-
-
-        /* ================= FOUNDER CTA ================= */
-
-        .founder-contact {
-            margin-top: 25px;
-
-            padding: 45px 25px;
-
-            text-align: center;
-
-            border:
-                1px solid #1e4c67;
-
-            border-radius: 25px;
-
-            background:
-                radial-gradient(
-                    circle at 50% 0,
-                    rgba(0,150,255,.13),
-                    transparent 65%
-                ),
-                #071827;
-        }
-
-        .founder-contact h2 {
-            margin-bottom: 10px;
-
-            font-size: 30px;
-        }
-
-        .founder-contact h2 span {
-            color: var(--blue);
-        }
-
-        .founder-contact p {
-            margin-bottom: 22px;
-
-            color: var(--muted);
-
-            font-size: 14px;
-        }
-
-
-        /* ================= FORM MESSAGE ================= */
-
-        .form-message {
-            display: none;
-
-            padding: 12px 15px;
-
-            border-radius: 12px;
-
-            font-size: 12px;
-
-            font-weight: 700;
-        }
-
-        .form-message.success {
-            display: block;
-
-            border:
-                1px solid rgba(45,228,154,.35);
-
-            background:
-                rgba(45,228,154,.08);
-
-            color: #69efb7;
-        }
-
-
-        /* ================= MOBILE ================= */
-
-        @media(max-width: 850px) {
-
-            .contact-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .support-section {
-                grid-template-columns:
-                    repeat(3, 1fr);
-            }
-
-        }
-
-        @media(max-width: 620px) {
-
-            .contact-container {
-                padding:
-                    60px
-                    0
-                    80px;
-            }
-
-            .contact-header h1 {
-                font-size: 45px;
-
-                letter-spacing: -2px;
-            }
-
-            .contact-header p {
-                font-size: 14px;
-            }
-
-            .contact-info,
-            .contact-form-card {
-                padding: 22px;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .support-section {
-                grid-template-columns: 1fr;
-            }
-
-            .founder-contact {
-                padding:
-                    38px
-                    18px;
-            }
-
-        }
-
-    </style>
 </head>
-
 
 <body>
 
 
-<!-- ================= NAVBAR ================= -->
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
 
 <header class="navbar">
 
-    <div class="nav-container">
+    <div class="container nav-inner">
 
-        <a
-            href="index.html"
-            class="brand">
+        <a href="index.html" class="brand">
 
-            INSPECT<span>CALLER</span>
+            <span class="brand-logo">🛡️</span>
+
+            <span class="brand-name">
+                INSPECT<span>CALLER</span>
+            </span>
 
         </a>
 
@@ -586,621 +41,1204 @@
                 Home
             </a>
 
-            <a href="features.html">
-                Features
-            </a>
-
             <a href="about.html">
                 About
             </a>
 
-            <a href="contact.html">
+            <a href="features.html">
+                Features
+            </a>
+
+            <a href="scanner.html">
+                Scanner
+            </a>
+
+            <a href="report.html">
+                Report
+            </a>
+
+            <a href="contact.html" class="active">
                 Contact
             </a>
 
+            <a href="login.html" class="nav-button">
+                Login
+            </a>
+
         </nav>
-
-
-        <a
-            href="login.html"
-            class="nav-login">
-
-            Login
-
-        </a>
 
     </div>
 
 </header>
 
 
+<!-- =====================================================
+     HERO
+===================================================== -->
 
-<!-- ================= CONTACT PAGE ================= -->
+<section class="hero">
 
-<main class="contact-page">
+    <div class="container hero-content">
 
-<div class="contact-container">
+        <div class="hero-logo-box">
+
+            <div class="hero-logo-placeholder">
+                💬
+            </div>
+
+        </div>
 
 
-    <!-- HEADER -->
-
-    <section class="contact-header">
-
-        <div class="contact-badge">
-
-            📩 CONTACT INSPECT CALLER
-
+        <div class="hero-badge">
+            INSPECT CALLER SUPPORT
         </div>
 
 
         <h1>
-
-            Let's Build A
-            <span>Safer Future</span>
-
+            Contact <span>Our Team</span>
         </h1>
 
 
-        <p>
+        <p class="hero-description">
 
-            Have a startup, partnership, business,
-            technical or support inquiry?
+            Need help with a scam report, account issue,
+            platform feature or partnership inquiry?
             Contact the Inspect Caller team.
 
         </p>
 
-    </section>
+    </div>
+
+</section>
 
 
+<!-- =====================================================
+     CONTACT OPTIONS
+===================================================== -->
 
-    <!-- ================= MAIN CONTACT ================= -->
+<section class="section">
 
-    <section class="contact-grid">
+    <div class="container">
 
 
-        <!-- ================= CONTACT INFORMATION ================= -->
+        <div class="section-heading center">
 
-        <div class="contact-info">
+            <div class="section-label">
+                GET IN TOUCH
+            </div>
 
             <h2>
-                Contact Information
+                How can we help?
             </h2>
 
             <p>
-
-                Reach out to us for startup
-                collaboration, partnerships,
-                product feedback and general
-                inquiries.
-
+                Choose the option that best matches your request.
             </p>
-
-
-            <!-- EMAIL -->
-
-            <div class="contact-item">
-
-                <div class="contact-icon">
-                    ✉️
-                </div>
-
-                <div>
-
-                    <strong>
-                        Founder Email
-                    </strong>
-
-                    <a
-                        href="mailto:rbiplob1005@gmail.com">
-
-                        rbiplob1005@gmail.com
-
-                    </a>
-
-                </div>
-
-            </div>
-
-
-            <!-- FOUNDER -->
-
-            <div class="contact-item">
-
-                <div class="contact-icon">
-                    👨‍💼
-                </div>
-
-                <div>
-
-                    <strong>
-                        Founder & CEO
-                    </strong>
-
-                    <span>
-                        Mohammad Sajedur Rahman Biplob
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <!-- TEAM LEADER -->
-
-            <div class="contact-item">
-
-                <div class="contact-icon">
-                    👩‍💼
-                </div>
-
-                <div>
-
-                    <strong>
-                        Team Leader
-                    </strong>
-
-                    <span>
-                        Nila Akter
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <!-- COUNTRY -->
-
-            <div class="contact-item">
-
-                <div class="contact-icon">
-                    🌍
-                </div>
-
-                <div>
-
-                    <strong>
-                        Country of Origin
-                    </strong>
-
-                    <span>
-                        Bangladesh
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <!-- STATUS -->
-
-            <div class="contact-item">
-
-                <div class="contact-icon">
-                    🚀
-                </div>
-
-                <div>
-
-                    <strong>
-                        Startup Status
-                    </strong>
-
-                    <span>
-                        Idea / Pre-Launch
-                    </span>
-
-                </div>
-
-            </div>
 
         </div>
 
 
-
-        <!-- ================= CONTACT FORM ================= -->
-
-        <div class="contact-form-card">
-
-            <h2>
-                Send Us A Message
-            </h2>
-
-            <p>
-
-                Tell us how we can help.
-
-            </p>
+        <div class="feature-grid">
 
 
-            <form
-                class="contact-form"
-                id="contactForm">
+            <!-- CUSTOMER CARE -->
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    💬
+                </div>
+
+                <h3>
+                    Customer Care
+                </h3>
+
+                <p>
+                    Get assistance with accounts, reports,
+                    scanners and other platform-related issues.
+                </p>
+
+                <button
+                    class="card-button"
+                    onclick="openSupportChat()"
+                >
+                    Start Support →
+                </button>
+
+            </div>
 
 
-                <div class="form-row">
+            <!-- SCAM REPORT -->
 
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🚨
+                </div>
+
+                <h3>
+                    Report a Scam
+                </h3>
+
+                <p>
+                    Submit information about a suspected
+                    scam or suspicious online activity.
+                </p>
+
+                <a
+                    href="report.html"
+                    class="card-button"
+                >
+                    Submit Report →
+                </a>
+
+            </div>
+
+
+            <!-- BUSINESS -->
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🤝
+                </div>
+
+                <h3>
+                    Partnership
+                </h3>
+
+                <p>
+                    Contact us regarding technology,
+                    security, B2B or future platform integrations.
+                </p>
+
+                <a
+                    href="#contact-form"
+                    class="card-button"
+                    onclick="setSubject('Partnership Inquiry')"
+                >
+                    Contact Team →
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CONTACT INFORMATION + FORM
+===================================================== -->
+
+<section class="section platform-section">
+
+    <div class="container">
+
+        <div class="contact-layout">
+
+
+            <!-- CONTACT INFORMATION -->
+
+            <div>
+
+                <div class="section-label">
+                    CONTACT INFORMATION
+                </div>
+
+                <h2 style="
+                    margin-top:8px;
+                    font-size:30px;
+                    line-height:1.15;
+                ">
+                    Let's talk.
+                </h2>
+
+                <p style="
+                    margin-top:10px;
+                    color:#96a6b2;
+                    font-size:9px;
+                    line-height:1.8;
+                ">
+
+                    For general inquiries, startup communication,
+                    customer support and partnership discussions,
+                    you can contact our team using the information
+                    below.
+
+                </p>
+
+
+                <!-- EMAIL -->
+
+                <div class="contact-info-card">
+
+                    <div class="contact-info-icon">
+                        📧
+                    </div>
+
+                    <div>
+
+                        <span>
+                            EMAIL
+                        </span>
+
+                        <strong>
+                            rbiplob1005@gmail.com
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FOUNDER -->
+
+                <div class="contact-info-card">
+
+                    <div class="contact-info-icon">
+                        👨‍💼
+                    </div>
+
+                    <div>
+
+                        <span>
+                            FOUNDER & CEO
+                        </span>
+
+                        <strong>
+                            Mohammad Sajedur Rahman Biplob
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CO-FOUNDER -->
+
+                <div class="contact-info-card">
+
+                    <div class="contact-info-icon">
+                        👩‍💼
+                    </div>
+
+                    <div>
+
+                        <span>
+                            CO-FOUNDER & TEAM LEADER
+                        </span>
+
+                        <strong>
+                            Nila Akter
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LOCATION -->
+
+                <div class="contact-info-card">
+
+                    <div class="contact-info-icon">
+                        🇧🇩
+                    </div>
+
+                    <div>
+
+                        <span>
+                            COUNTRY OF ORIGIN
+                        </span>
+
+                        <strong>
+                            Bangladesh
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- FORM -->
+
+            <div
+                class="form-container"
+                id="contact-form"
+                style="width:100%; margin:0;"
+            >
+
+                <div class="section-label">
+                    SEND A MESSAGE
+                </div>
+
+                <h2 class="form-title">
+                    Contact Us
+                </h2>
+
+                <p class="form-subtitle">
+                    Fill out the form and our team can review
+                    your message.
+                </p>
+
+
+                <form
+                    id="contactForm"
+                    onsubmit="submitContactForm(event)"
+                >
+
+
+                    <!-- NAME -->
 
                     <div class="form-group">
 
-                        <label>
-                            Your Name
+                        <label for="name">
+                            Full Name
                         </label>
 
                         <input
                             type="text"
-                            id="contactName"
+                            id="name"
+                            name="name"
                             placeholder="Enter your name"
-                            required>
+                            required
+                        >
 
                     </div>
 
 
+                    <!-- EMAIL -->
+
                     <div class="form-group">
 
-                        <label>
+                        <label for="email">
                             Email Address
                         </label>
 
                         <input
                             type="email"
-                            id="contactEmail"
+                            id="email"
+                            name="email"
                             placeholder="you@example.com"
-                            required>
+                            required
+                        >
 
                     </div>
 
+
+                    <!-- SUBJECT -->
+
+                    <div class="form-group">
+
+                        <label for="subject">
+                            Subject
+                        </label>
+
+                        <select
+                            id="subject"
+                            name="subject"
+                            required
+                        >
+
+                            <option value="">
+                                Select a subject
+                            </option>
+
+                            <option value="Customer Support">
+                                Customer Support
+                            </option>
+
+                            <option value="Scam Report Assistance">
+                                Scam Report Assistance
+                            </option>
+
+                            <option value="Partnership Inquiry">
+                                Partnership Inquiry
+                            </option>
+
+                            <option value="Business Inquiry">
+                                Business Inquiry
+                            </option>
+
+                            <option value="Technical Issue">
+                                Technical Issue
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- MESSAGE -->
+
+                    <div class="form-group">
+
+                        <label for="message">
+                            Message
+                        </label>
+
+                        <textarea
+                            id="message"
+                            name="message"
+                            placeholder="Describe your request..."
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- SUBMIT -->
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary form-submit"
+                    >
+                        Send Message →
+                    </button>
+
+
+                    <div
+                        id="formStatus"
+                        style="
+                            display:none;
+                            margin-top:12px;
+                            padding:10px;
+                            border-radius:8px;
+                            font-size:8px;
+                            line-height:1.6;
+                        "
+                    ></div>
+
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SUPPORT NOTICE
+===================================================== -->
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="about-box">
+
+            <div class="section-label">
+                SECURITY NOTICE
+            </div>
+
+            <h2 style="
+                margin-top:8px;
+                font-size:25px;
+            ">
+                Never share sensitive credentials.
+            </h2>
+
+            <p>
+
+                Inspect Caller support will never need your
+                password, one-time password (OTP), private key,
+                recovery phrase or full payment credentials.
+
+                Do not send these details through the contact form.
+
+            </p>
+
+            <a
+                href="privacy-policy.html"
+                class="btn btn-secondary"
+            >
+                Read Privacy Policy
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CUSTOMER CARE
+===================================================== -->
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="support-home-box">
+
+            <div>
+
+                <div class="section-label">
+                    CUSTOMER CARE
                 </div>
 
+                <h2>
+                    Need immediate guidance?
+                </h2>
+
+                <p>
+
+                    Use the customer-care interface for
+                    general platform assistance or go directly
+                    to the scam reporting page.
+
+                </p>
+
+            </div>
 
 
-                <div class="form-group">
-
-                    <label>
-                        Inquiry Type
-                    </label>
-
-                    <select
-                        id="contactType"
-                        required>
-
-                        <option value="">
-                            Select inquiry type
-                        </option>
-
-                        <option>
-                            General Inquiry
-                        </option>
-
-                        <option>
-                            Startup Partnership
-                        </option>
-
-                        <option>
-                            Business / B2B
-                        </option>
-
-                        <option>
-                            Government / B2G
-                        </option>
-
-                        <option>
-                            Technical Support
-                        </option>
-
-                        <option>
-                            Investor Inquiry
-                        </option>
-
-                        <option>
-                            Product Feedback
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-
-                <div class="form-group">
-
-                    <label>
-                        Message
-                    </label>
-
-                    <textarea
-                        id="contactMessage"
-                        placeholder="Write your message..."
-                        required></textarea>
-
-                </div>
-
-
-                <div
-                    id="formMessage"
-                    class="form-message">
-
-                </div>
-
+            <div class="hero-buttons">
 
                 <button
-                    type="submit"
-                    class="send-message">
-
-                    ✈️ Send Message
-
+                    class="btn btn-primary"
+                    onclick="openSupportChat()"
+                >
+                    💬 Open Support
                 </button>
 
-            </form>
+                <a
+                    href="report.html"
+                    class="btn btn-secondary"
+                >
+                    🚨 Report Scam
+                </a>
 
-        </div>
-
-    </section>
-
-
-
-    <!-- ================= SUPPORT ================= -->
-
-    <section class="support-section">
-
-
-        <div class="support-card">
-
-            <div class="support-icon">
-                💬
             </div>
 
-            <h3>
-                Live Chat
-            </h3>
-
-            <p>
-
-                Need help using Inspect Caller?
-                Get assistance through the
-                planned support system.
-
-            </p>
-
-            <a href="ai-chat.html">
-
-                Open Assistant →
-
-            </a>
-
         </div>
 
+    </div>
 
-        <div class="support-card">
-
-            <div class="support-icon">
-                🚨
-            </div>
-
-            <h3>
-                Report Fraud
-            </h3>
-
-            <p>
-
-                If you encounter suspicious
-                activity, submit a structured
-                fraud report.
-
-            </p>
-
-            <a href="report.html">
-
-                Report An Issue →
-
-            </a>
-
-        </div>
+</section>
 
 
-        <div class="support-card">
-
-            <div class="support-icon">
-                🔐
-            </div>
-
-            <h3>
-                Security
-            </h3>
-
-            <p>
-
-                For security-related questions,
-                use the official contact channel
-                before sharing sensitive data.
-
-            </p>
-
-            <a href="privacy-policy.html">
-
-                Privacy & Security →
-
-            </a>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- ================= FOUNDER CTA ================= -->
-
-    <section class="founder-contact">
-
-        <h2>
-
-            Have A Big
-            <span>Idea?</span>
-
-        </h2>
-
-        <p>
-
-            We are building Inspect Caller
-            with a long-term vision for
-            global digital safety.
-
-        </p>
-
-
-        <a
-            href="mailto:rbiplob1005@gmail.com"
-            class="primary-btn">
-
-            ✉️ Contact Founder
-
-        </a>
-
-    </section>
-
-
-</div>
-
-</main>
-
-
-
-<!-- ================= FOOTER ================= -->
+<!-- =====================================================
+     FOOTER
+===================================================== -->
 
 <footer>
 
-    <div class="footer-brand">
+    <div class="container footer-inner">
 
-        INSPECT<span>CALLER</span>
+        <div>
+
+            <a href="index.html" class="brand">
+
+                <span class="brand-logo">
+                    🛡️
+                </span>
+
+                <span class="brand-name">
+                    INSPECT<span>CALLER</span>
+                </span>
+
+            </a>
+
+            <p class="footer-text">
+                Global Digital Fraud Intelligence & Protection
+            </p>
+
+            <p class="footer-text">
+                Founder & CEO:
+                Mohammad Sajedur Rahman Biplob
+            </p>
+
+            <p class="footer-text">
+                Co-Founder & Team Leader:
+                Nila Akter
+            </p>
+
+            <p class="footer-text">
+                🇧🇩 Bangladesh • Global Vision
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="about.html">
+                About
+            </a>
+
+            <a href="features.html">
+                Features
+            </a>
+
+            <a href="report.html">
+                Report
+            </a>
+
+            <a href="privacy-policy.html">
+                Privacy
+            </a>
+
+            <a href="terms.html">
+                Terms
+            </a>
+
+        </div>
 
     </div>
 
-    <p>
-        Global Caller Security & Anti-Fraud Technology
-    </p>
 
+    <div class="container footer-bottom">
 
-    <div class="footer-links">
-
-        <a href="index.html">
-            Home
-        </a>
-
-        <a href="features.html">
-            Features
-        </a>
-
-        <a href="about.html">
-            About
-        </a>
-
-        <a href="contact.html">
-            Contact
-        </a>
-
-        <a href="privacy-policy.html">
-            Privacy
-        </a>
-
-        <a href="terms.html">
-            Terms
-        </a>
-
-        <a href="disclaimer.html">
-            Disclaimer
-        </a>
+        © 2026 Inspect Caller. All rights reserved.
 
     </div>
-
-
-    <p class="copyright">
-
-        © 2026 Inspect Caller.
-        Idea / Pre-Launch Prototype.
-
-    </p>
 
 </footer>
 
 
+<!-- =====================================================
+     FLOATING CUSTOMER CARE
+===================================================== -->
 
-<!-- ================= CONTACT FORM DEMO ================= -->
+<button
+    class="support-button"
+    onclick="openSupportChat()"
+    aria-label="Customer Care"
+>
+
+    💬
+
+    <span class="support-pulse"></span>
+
+</button>
+
+
+<!-- =====================================================
+     SUPPORT CHAT
+===================================================== -->
+
+<div
+    class="support-chat"
+    id="supportChat"
+>
+
+
+    <div class="support-header">
+
+        <div class="support-avatar">
+            🛡️
+        </div>
+
+
+        <div class="support-title">
+
+            <strong>
+                Inspect Caller Support
+            </strong>
+
+            <small>
+                ● Customer Care
+            </small>
+
+        </div>
+
+
+        <button
+            class="support-close"
+            onclick="closeSupportChat()"
+        >
+            ×
+        </button>
+
+    </div>
+
+
+    <div
+        class="support-body"
+        id="supportBody"
+    >
+
+        <div class="support-welcome">
+
+            Hello! 👋<br><br>
+
+            Welcome to Inspect Caller Customer Care.
+
+            How can we help you today?
+
+        </div>
+
+
+        <div class="support-time">
+            Customer Care • Demo Mode
+        </div>
+
+
+        <div class="quick-help">
+
+            <button
+                onclick="supportQuick('I need help with a scam report.')"
+            >
+                🚨 Scam Report
+            </button>
+
+            <button
+                onclick="supportQuick('I have an account problem.')"
+            >
+                👤 Account Help
+            </button>
+
+            <button
+                onclick="supportQuick('I found a suspicious website.')"
+            >
+                🌐 Website Issue
+            </button>
+
+            <button
+                onclick="supportQuick('I want to contact the team.')"
+            >
+                💬 Contact Team
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="support-footer">
+
+        <div class="support-input">
+
+            <input
+                type="text"
+                id="supportInput"
+                placeholder="Type your message..."
+                onkeydown="supportEnter(event)"
+            >
+
+            <button
+                onclick="sendSupportMessage()"
+            >
+                ➤
+            </button>
+
+        </div>
+
+        <div class="support-note">
+            Customer support • Demo mode
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     PAGE-SPECIFIC STYLE
+===================================================== -->
+
+<style>
+
+.contact-layout {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 35px;
+
+    align-items: start;
+
+}
+
+
+.contact-info-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-top: 12px;
+
+    padding: 13px;
+
+    border:
+        1px solid rgba(90,125,155,.2);
+
+    border-radius: 10px;
+
+    background:
+        #1a283c;
+
+}
+
+
+.contact-info-icon {
+
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 9px;
+
+    background:
+        #243852;
+
+    font-size: 17px;
+
+}
+
+
+.contact-info-card span {
+
+    display: block;
+
+    color:
+        #647b89;
+
+    font-size: 6.5px;
+
+    font-weight: 900;
+
+    letter-spacing: .7px;
+
+}
+
+
+.contact-info-card strong {
+
+    display: block;
+
+    margin-top: 3px;
+
+    color:
+        #dbe6ed;
+
+    font-size: 9px;
+
+    word-break: break-word;
+
+}
+
+
+@media (max-width: 750px) {
+
+    .contact-layout {
+
+        grid-template-columns: 1fr;
+
+        gap: 30px;
+
+    }
+
+}
+
+</style>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script src="script.js"></script>
 
 <script>
 
-document
-    .getElementById("contactForm")
-    .addEventListener(
-        "submit",
-        function(event) {
 
-            event.preventDefault();
+/* =====================================================
+   CONTACT FORM — DEMO
+===================================================== */
 
+function submitContactForm(event) {
 
-            const name =
-                document.getElementById(
-                    "contactName"
-                ).value.trim();
-
-            const email =
-                document.getElementById(
-                    "contactEmail"
-                ).value.trim();
-
-            const message =
-                document.getElementById(
-                    "contactMessage"
-                ).value.trim();
+    event.preventDefault();
 
 
-            const result =
-                document.getElementById(
-                    "formMessage"
-                );
+    const name =
+        document.getElementById("name").value.trim();
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const subject =
+        document.getElementById("subject").value;
+
+    const message =
+        document.getElementById("message").value.trim();
+
+    const status =
+        document.getElementById("formStatus");
 
 
-            if (
-                !name ||
-                !email ||
-                !message
-            ) {
+    if (
+        !name ||
+        !email ||
+        !subject ||
+        !message
+    ) {
 
-                result.className =
-                    "form-message success";
+        showFormStatus(
+            "Please complete all required fields.",
+            "error"
+        );
 
-                result.style.color =
-                    "#ff8b9b";
+        return;
 
-                result.style.borderColor =
-                    "rgba(255,70,95,.35)";
-
-                result.style.background =
-                    "rgba(255,70,95,.08)";
-
-                result.textContent =
-                    "Please complete all required fields.";
-
-                return;
-
-            }
+    }
 
 
-            result.className =
-                "form-message success";
+    /*
+       Current version = DEMO.
 
-            result.textContent =
-                "Message received in demo mode. Backend email delivery will be connected later.";
+       Later this form can be connected to:
 
-            document
-                .getElementById(
-                    "contactForm"
-                )
-                .reset();
+       Firebase Firestore
+       +
+       Customer Care dashboard
 
-        }
+       Do not send private credentials
+       through this form.
+    */
+
+
+    console.log({
+        name,
+        email,
+        subject,
+        message
+    });
+
+
+    showFormStatus(
+        "Your message has been received in demo mode. " +
+        "Firebase Customer Care integration can be connected next.",
+        "success"
     );
+
+
+    document
+        .getElementById("contactForm")
+        .reset();
+
+}
+
+
+function showFormStatus(
+    message,
+    type
+) {
+
+    const status =
+        document.getElementById("formStatus");
+
+
+    status.style.display =
+        "block";
+
+
+    status.textContent =
+        message;
+
+
+    if (type === "success") {
+
+        status.style.color =
+            "#27df78";
+
+        status.style.background =
+            "rgba(39,223,120,.06)";
+
+        status.style.border =
+            "1px solid rgba(39,223,120,.15)";
+
+    } else {
+
+        status.style.color =
+            "#ff7b87";
+
+        status.style.background =
+            "rgba(255,93,108,.06)";
+
+        status.style.border =
+            "1px solid rgba(255,93,108,.15)";
+
+    }
+
+}
+
+
+/* =====================================================
+   SUBJECT SELECTOR
+===================================================== */
+
+function setSubject(subject) {
+
+    const select =
+        document.getElementById("subject");
+
+    if (!select) return;
+
+
+    select.value =
+        subject;
+
+
+    document
+        .getElementById("contact-form")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+/* =====================================================
+   SUPPORT CHAT
+===================================================== */
+
+function openSupportChat() {
+
+    const chat =
+        document.getElementById("supportChat");
+
+    if (!chat) return;
+
+    chat.classList.add("active");
+
+}
+
+
+function closeSupportChat() {
+
+    const chat =
+        document.getElementById("supportChat");
+
+    if (!chat) return;
+
+    chat.classList.remove("active");
+
+}
+
+
+function supportQuick(message) {
+
+    const input =
+        document.getElementById("supportInput");
+
+    if (!input) return;
+
+    input.value =
+        message;
+
+    input.focus();
+
+}
+
+
+function supportEnter(event) {
+
+    if (event.key === "Enter") {
+
+        event.preventDefault();
+
+        sendSupportMessage();
+
+    }
+
+}
+
+
+function sendSupportMessage() {
+
+    const input =
+        document.getElementById("supportInput");
+
+    const body =
+        document.getElementById("supportBody");
+
+
+    if (!input || !body) return;
+
+
+    const message =
+        input.value.trim();
+
+
+    if (!message) return;
+
+
+    const userMessage =
+        document.createElement("div");
+
+    userMessage.className =
+        "support-user-message";
+
+    userMessage.textContent =
+        message;
+
+    body.appendChild(userMessage);
+
+
+    input.value = "";
+
+
+    body.scrollTop =
+        body.scrollHeight;
+
+
+    setTimeout(() => {
+
+        const response =
+            document.createElement("div");
+
+        response.className =
+            "support-agent-message";
+
+        response.textContent =
+            "Thanks for contacting Inspect Caller. " +
+            "Your message has been received. " +
+            "This is currently the demo support system.";
+
+        body.appendChild(response);
+
+
+        body.scrollTop =
+            body.scrollHeight;
+
+    }, 700);
+
+}
 
 </script>
 
 
 </body>
+
 </html>
