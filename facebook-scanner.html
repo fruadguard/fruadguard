@@ -1,1673 +1,1273 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Facebook Scanner — Inspect Caller</title>
+    <title>Facebook Scanner | Inspect Caller</title>
 
-    <meta
-        name="description"
-        content="Inspect Caller Facebook Scanner — analyze suspicious Facebook profiles and pages for potential scam indicators."
-    >
+    <meta name="description"
+        content="Inspect Caller Facebook profile and page safety scanner.">
 
     <link rel="stylesheet" href="style.css">
-
-    <style>
-
-        /* ================= PAGE ================= */
-
-        .scanner-page {
-            min-height: 100vh;
-
-            padding: 65px 20px 100px;
-
-            background:
-                radial-gradient(
-                    circle at 50% 0%,
-                    rgba(0,150,255,.13),
-                    transparent 40%
-                ),
-                #050d18;
-        }
-
-        .scanner-container {
-            width: min(1050px, 100%);
-
-            margin: auto;
-        }
-
-
-        /* ================= HEADER ================= */
-
-        .scanner-header {
-            text-align: center;
-
-            margin-bottom: 40px;
-        }
-
-        .scanner-badge {
-            display: inline-flex;
-
-            align-items: center;
-
-            gap: 7px;
-
-            padding: 9px 16px;
-
-            border:
-                1px solid #285873;
-
-            border-radius: 999px;
-
-            background: #071b2c;
-
-            color: #8bdcff;
-
-            font-size: 11px;
-
-            font-weight: 850;
-
-            letter-spacing: .8px;
-        }
-
-        .scanner-header h1 {
-            margin-top: 20px;
-
-            font-size:
-                clamp(40px, 7vw, 65px);
-
-            line-height: 1;
-
-            letter-spacing: -3px;
-        }
-
-        .scanner-header h1 span {
-            color: var(--blue);
-        }
-
-        .scanner-header p {
-            max-width: 700px;
-
-            margin: 18px auto 0;
-
-            color: var(--muted);
-
-            font-size: 14px;
-
-            line-height: 1.7;
-        }
-
-
-        /* ================= MAIN CARD ================= */
-
-        .scanner-card {
-            padding: 30px;
-
-            border:
-                1px solid var(--line);
-
-            border-radius: 25px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #0a2034,
-                    #061522
-                );
-
-            box-shadow:
-                0 25px 80px
-                rgba(0,100,180,.08);
-        }
-
-        .input-title {
-            margin-bottom: 10px;
-
-            color: #cce1ec;
-
-            font-size: 13px;
-
-            font-weight: 800;
-        }
-
-        .url-input-wrap {
-            display: flex;
-
-            gap: 10px;
-        }
-
-        .url-input {
-            flex: 1;
-
-            width: 100%;
-
-            padding: 15px 16px;
-
-            border:
-                1px solid #28536b;
-
-            border-radius: 14px;
-
-            outline: none;
-
-            background: #061725;
-
-            color: #ffffff;
-
-            font-size: 14px;
-
-            transition: .2s;
-        }
-
-        .url-input::placeholder {
-            color: #5e7889;
-        }
-
-        .url-input:focus {
-            border-color: var(--blue);
-
-            box-shadow:
-                0 0 0 3px
-                rgba(0,150,255,.08);
-        }
-
-        .scan-btn {
-            min-width: 150px;
-
-            border: none;
-
-            border-radius: 14px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #25b5ff,
-                    #087ddd
-                );
-
-            color: #ffffff;
-
-            font-weight: 850;
-
-            cursor: pointer;
-
-            transition: .25s;
-        }
-
-        .scan-btn:hover {
-            transform: translateY(-2px);
-
-            box-shadow:
-                0 15px 35px
-                rgba(0,140,255,.25);
-        }
-
-        .demo-note {
-            margin-top: 13px;
-
-            color: #718d9d;
-
-            font-size: 11px;
-        }
-
-
-        /* ================= LOADING ================= */
-
-        .loading {
-            display: none;
-
-            margin-top: 25px;
-
-            text-align: center;
-
-            color: #82d9ff;
-
-            font-size: 12px;
-        }
-
-        .loading.show {
-            display: block;
-        }
-
-        .spinner {
-            width: 25px;
-            height: 25px;
-
-            margin:
-                0 auto 9px;
-
-            border:
-                2px solid #1a425a;
-
-            border-top-color:
-                #23b8ff;
-
-            border-radius: 50%;
-
-            animation:
-                spin .8s linear infinite;
-        }
-
-        @keyframes spin {
-
-            to {
-                transform: rotate(360deg);
-            }
-
-        }
-
-
-        /* ================= RESULT ================= */
-
-        .result {
-            display: none;
-
-            margin-top: 25px;
-        }
-
-        .result.show {
-            display: block;
-        }
-
-
-        /* ================= PROFILE SUMMARY ================= */
-
-        .profile-summary {
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            gap: 20px;
-
-            padding: 22px;
-
-            border:
-                1px solid #285873;
-
-            border-radius: 20px;
-
-            background: #071a2a;
-        }
-
-        .profile-left {
-            display: flex;
-
-            align-items: center;
-
-            gap: 14px;
-
-            min-width: 0;
-        }
-
-        .profile-avatar {
-            width: 58px;
-            height: 58px;
-
-            flex-shrink: 0;
-
-            display: grid;
-
-            place-items: center;
-
-            border-radius: 50%;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #1877f2,
-                    #0d4f9c
-                );
-
-            color: #ffffff;
-
-            font-size: 27px;
-
-            box-shadow:
-                0 8px 25px
-                rgba(24,119,242,.22);
-        }
-
-        .profile-info {
-            min-width: 0;
-        }
-
-        .profile-info strong {
-            display: block;
-
-            font-size: 16px;
-
-            white-space: nowrap;
-
-            overflow: hidden;
-
-            text-overflow: ellipsis;
-        }
-
-        .profile-info span {
-            display: block;
-
-            margin-top: 4px;
-
-            color: var(--muted);
-
-            font-size: 11px;
-
-            white-space: nowrap;
-
-            overflow: hidden;
-
-            text-overflow: ellipsis;
-        }
-
-        .risk-score {
-            min-width: 105px;
-
-            padding: 10px 13px;
-
-            text-align: center;
-
-            border-radius: 13px;
-
-            background:
-                rgba(255,200,80,.07);
-
-            border:
-                1px solid rgba(255,200,80,.25);
-        }
-
-        .risk-score strong {
-            display: block;
-
-            color: #ffd267;
-
-            font-size: 23px;
-        }
-
-        .risk-score span {
-            color: #7693a3;
-
-            font-size: 9px;
-        }
-
-
-        /* ================= SIGNAL GRID ================= */
-
-        .signal-grid {
-            display: grid;
-
-            grid-template-columns:
-                repeat(2, 1fr);
-
-            gap: 13px;
-
-            margin-top: 15px;
-        }
-
-        .signal-item {
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            gap: 10px;
-
-            padding: 15px;
-
-            border:
-                1px solid #193c52;
-
-            border-radius: 14px;
-
-            background: #071827;
-        }
-
-        .signal-left {
-            display: flex;
-
-            align-items: center;
-
-            gap: 10px;
-        }
-
-        .signal-icon {
-            width: 35px;
-            height: 35px;
-
-            display: grid;
-
-            place-items: center;
-
-            border-radius: 10px;
-
-            background: #0b2941;
-
-            font-size: 16px;
-        }
-
-        .signal-left strong {
-            display: block;
-
-            font-size: 12px;
-        }
-
-        .signal-left span {
-            display: block;
-
-            margin-top: 3px;
-
-            color: var(--muted);
-
-            font-size: 9px;
-        }
-
-        .signal-status {
-            padding: 5px 8px;
-
-            border-radius: 999px;
-
-            font-size: 9px;
-
-            font-weight: 900;
-        }
-
-        .status-good {
-            color: #4ce7aa;
-
-            background:
-                rgba(45,228,154,.08);
-
-            border:
-                1px solid rgba(45,228,154,.22);
-        }
-
-        .status-review {
-            color: #ffd267;
-
-            background:
-                rgba(255,200,80,.08);
-
-            border:
-                1px solid rgba(255,200,80,.22);
-        }
-
-        .status-risk {
-            color: #ff8798;
-
-            background:
-                rgba(255,70,95,.08);
-
-            border:
-                1px solid rgba(255,70,95,.22);
-        }
-
-
-        /* ================= INTELLIGENCE ================= */
-
-        .intelligence {
-            margin-top: 15px;
-
-            padding: 20px;
-
-            border:
-                1px solid #193c52;
-
-            border-radius: 17px;
-
-            background: #071827;
-        }
-
-        .intelligence h3 {
-            margin-bottom: 14px;
-
-            font-size: 15px;
-        }
-
-        .intel-grid {
-            display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 10px;
-        }
-
-        .intel-item {
-            padding: 13px;
-
-            border-radius: 11px;
-
-            background: #081d2f;
-        }
-
-        .intel-item span {
-            display: block;
-
-            color: var(--muted);
-
-            font-size: 9px;
-        }
-
-        .intel-item strong {
-            display: block;
-
-            margin-top: 5px;
-
-            color: #b9d4df;
-
-            font-size: 12px;
-        }
-
-
-        /* ================= WARNING ================= */
-
-        .warning {
-            margin-top: 15px;
-
-            padding: 16px 18px;
-
-            border-left:
-                4px solid #ffc857;
-
-            border-radius: 10px;
-
-            background:
-                rgba(255,200,80,.06);
-
-            color: #bcae83;
-
-            font-size: 11px;
-
-            line-height: 1.7;
-        }
-
-
-        /* ================= ACTIONS ================= */
-
-        .result-actions {
-            display: flex;
-
-            gap: 10px;
-
-            margin-top: 18px;
-        }
-
-        .action-btn {
-            display: inline-flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            min-height: 44px;
-
-            padding:
-                0 17px;
-
-            border:
-                1px solid #285873;
-
-            border-radius: 12px;
-
-            background: #071b2b;
-
-            color: #9fdcff;
-
-            font-size: 11px;
-
-            font-weight: 800;
-
-            cursor: pointer;
-        }
-
-        .action-btn:hover {
-            border-color: var(--blue);
-        }
-
-        .action-btn.primary {
-            border: none;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #159ddd,
-                    #0873cf
-                );
-
-            color: #ffffff;
-        }
-
-
-        /* ================= INFO ================= */
-
-        .info-grid {
-            display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 15px;
-
-            margin-top: 22px;
-        }
-
-        .info-card {
-            padding: 20px;
-
-            border:
-                1px solid var(--line);
-
-            border-radius: 18px;
-
-            background: #081d2f;
-        }
-
-        .info-icon {
-            margin-bottom: 10px;
-
-            font-size: 23px;
-        }
-
-        .info-card h3 {
-            margin-bottom: 6px;
-
-            font-size: 14px;
-        }
-
-        .info-card p {
-            color: var(--muted);
-
-            font-size: 11px;
-
-            line-height: 1.6;
-        }
-
-
-        /* ================= MOBILE ================= */
-
-        @media(max-width: 700px) {
-
-            .scanner-page {
-                padding:
-                    45px 12px 80px;
-            }
-
-            .scanner-card {
-                padding: 20px;
-            }
-
-            .url-input-wrap {
-                flex-direction: column;
-            }
-
-            .scan-btn {
-                min-height: 50px;
-            }
-
-            .profile-summary {
-                align-items: flex-start;
-
-                flex-direction: column;
-            }
-
-            .signal-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .intel-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .result-actions {
-                flex-direction: column;
-            }
-
-        }
-
-    </style>
 </head>
-
 
 <body>
 
 
-<!-- ================= NAVBAR ================= -->
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
 
 <header class="navbar">
 
-    <div class="nav-container">
+    <div class="container nav-inner">
 
-        <a
-            href="index.html"
-            class="brand">
+        <a href="index.html" class="brand">
 
-            INSPECT<span>CALLER</span>
+            <span class="brand-logo">🛡️</span>
+
+            <span class="brand-name">
+                INSPECT<span>CALLER</span>
+            </span>
 
         </a>
 
 
         <nav class="nav-links">
 
-            <a href="dashboard.html">
-                Dashboard
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="about.html">
+                About
+            </a>
+
+            <a href="features.html">
+                Features
             </a>
 
             <a href="scanner.html">
-                Scanner
+                URL Scanner
             </a>
 
             <a href="phone-checker.html">
-                Caller
+                Phone Checker
+            </a>
+
+            <a href="facebook-scanner.html" class="active">
+                Facebook Scanner
             </a>
 
             <a href="report.html">
                 Report
             </a>
 
+            <a href="login.html" class="nav-button">
+                Login
+            </a>
+
         </nav>
-
-
-        <a
-            href="dashboard.html"
-            class="nav-login">
-
-            Dashboard
-
-        </a>
 
     </div>
 
 </header>
 
 
+<!-- =====================================================
+     HERO
+===================================================== -->
 
-<!-- ================= PAGE ================= -->
+<section class="hero">
 
-<main class="scanner-page">
+    <div class="container hero-content">
 
-<div class="scanner-container">
+        <div class="hero-logo-box">
+
+            <div class="hero-logo-placeholder">
+                f
+            </div>
+
+        </div>
 
 
-    <!-- HEADER -->
-
-    <section class="scanner-header">
-
-        <div class="scanner-badge">
-
-            📘 FACEBOOK SECURITY
-
+        <div class="hero-badge">
+            SOCIAL FRAUD INTELLIGENCE
         </div>
 
 
         <h1>
-
-            Facebook
+            Facebook<br>
             <span>Scanner</span>
-
         </h1>
 
 
-        <p>
+        <p class="hero-description">
 
-            Analyze suspicious Facebook profiles
-            and pages for potential scam indicators,
-            impersonation signals and suspicious
-            activity patterns.
+            Analyze a publicly accessible Facebook profile or
+            page URL for available safety indicators and
+            potential scam signals.
 
         </p>
 
-    </section>
+    </div>
+
+</section>
 
 
+<!-- =====================================================
+     SCANNER
+===================================================== -->
 
-    <!-- SCANNER -->
+<section class="section">
 
-    <section class="scanner-card">
+    <div class="container">
 
 
-        <div class="input-title">
-            Enter Facebook profile or page URL
+        <div class="section-heading center">
+
+            <div class="section-label">
+                FACEBOOK ANALYSIS
+            </div>
+
+            <h2>
+                Check a Facebook profile or page
+            </h2>
+
+            <p>
+                Paste a public Facebook URL below to start
+                the prototype analysis.
+            </p>
+
         </div>
 
 
-        <div class="url-input-wrap">
+        <div
+            class="form-container"
+            style="max-width:700px;"
+        >
 
-            <input
-                type="text"
-                id="facebookInput"
-                class="url-input"
-                placeholder="https://facebook.com/example"
-                autocomplete="off"
-            >
+            <div class="form-group">
+
+                <label for="facebookUrl">
+                    Facebook Profile / Page URL
+                </label>
+
+                <input
+                    type="url"
+                    id="facebookUrl"
+                    placeholder="https://www.facebook.com/example"
+                    autocomplete="off"
+                >
+
+            </div>
 
 
             <button
-                class="scan-btn"
-                onclick="scanFacebook()">
-
-                🔍 Scan Profile
-
+                class="btn btn-primary form-submit"
+                type="button"
+                onclick="scanFacebook()"
+            >
+                🔎 Analyze Facebook
             </button>
 
-        </div>
 
-
-        <div class="demo-note">
-
-            Prototype mode: the current interface
-            displays demonstration intelligence.
-            Live Facebook/API verification will be
-            connected in the production version.
-
-        </div>
-
-
-
-        <!-- LOADING -->
-
-        <div
-            id="loading"
-            class="loading">
-
-            <div class="spinner"></div>
-
-            Analyzing Facebook security signals...
+            <div
+                id="scanStatus"
+                style="
+                    display:none;
+                    margin-top:14px;
+                    padding:12px;
+                    border-radius:9px;
+                    font-size:8px;
+                    line-height:1.6;
+                "
+            ></div>
 
         </div>
 
+    </div>
+
+</section>
 
 
-        <!-- RESULT -->
+<!-- =====================================================
+     RESULT
+===================================================== -->
 
-        <div
-            id="result"
-            class="result">
+<section
+    class="section"
+    id="resultSection"
+    style="display:none;"
+>
 
-
-            <!-- PROFILE -->
-
-            <div class="profile-summary">
-
-
-                <div class="profile-left">
-
-                    <div class="profile-avatar">
-                        f
-                    </div>
+    <div class="container">
 
 
-                    <div class="profile-info">
+        <div class="section-heading center">
 
-                        <strong id="profileName">
-                            Facebook Profile
-                        </strong>
+            <div class="section-label">
+                SCAN RESULT
+            </div>
 
-                        <span id="profileUrl">
-                            facebook.com/example
-                        </span>
+            <h2>
+                Facebook Risk Assessment
+            </h2>
 
-                    </div>
-
-                </div>
+        </div>
 
 
-                <div class="risk-score">
+        <div class="about-box">
 
-                    <strong id="riskScore">
-                        32
-                    </strong>
 
-                    <span>
-                        RISK SCORE / 100
-                    </span>
-
-                </div>
-
+            <div
+                id="resultIcon"
+                style="font-size:45px;"
+            >
+                🔎
             </div>
 
 
+            <h2
+                id="resultTitle"
+                style="
+                    margin-top:10px;
+                    font-size:27px;
+                "
+            >
+                Analysis Complete
+            </h2>
 
-            <!-- SIGNALS -->
 
-            <div class="signal-grid">
+            <div
+                id="riskBadge"
+                style="margin-top:12px;"
+            ></div>
 
 
-                <div class="signal-item">
+            <p
+                id="resultText"
+                style="margin-top:14px;"
+            ></p>
 
-                    <div class="signal-left">
 
-                        <div class="signal-icon">
-                            👤
-                        </div>
+            <div
+                id="profileInfo"
+                style="margin-top:20px;"
+            ></div>
 
-                        <div>
 
-                            <strong>
-                                Profile Identity
-                            </strong>
+            <div
+                id="signals"
+                style="margin-top:12px;"
+            ></div>
 
-                            <span>
-                                Basic profile signals
-                            </span>
 
-                        </div>
+            <div class="hero-buttons">
 
-                    </div>
-
-                    <span class="signal-status status-good">
-                        CHECKED
-                    </span>
-
-                </div>
-
-
-
-                <div class="signal-item">
-
-                    <div class="signal-left">
-
-                        <div class="signal-icon">
-                            📅
-                        </div>
-
-                        <div>
-
-                            <strong>
-                                Account Activity
-                            </strong>
-
-                            <span>
-                                Activity pattern
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                    <span class="signal-status status-review">
-                        REVIEW
-                    </span>
-
-                </div>
-
-
-
-                <div class="signal-item">
-
-                    <div class="signal-left">
-
-                        <div class="signal-icon">
-                            🪪
-                        </div>
-
-                        <div>
-
-                            <strong>
-                                Impersonation
-                            </strong>
-
-                            <span>
-                                Identity similarity
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                    <span class="signal-status status-good">
-                        LOW
-                    </span>
-
-                </div>
-
-
-
-                <div class="signal-item">
-
-                    <div class="signal-left">
-
-                        <div class="signal-icon">
-                            💰
-                        </div>
-
-                        <div>
-
-                            <strong>
-                                Payment Requests
-                            </strong>
-
-                            <span>
-                                Scam-related indicators
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                    <span class="signal-status status-review">
-                        REVIEW
-                    </span>
-
-                </div>
-
-
-
-                <div class="signal-item">
-
-                    <div class="signal-left">
-
-                        <div class="signal-icon">
-                            🔗
-                        </div>
-
-                        <div>
-
-                            <strong>
-                                External Links
-                            </strong>
-
-                            <span>
-                                Suspicious destinations
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                    <span class="signal-status status-good">
-                        CHECKED
-                    </span>
-
-                </div>
-
-
-
-                <div class="signal-item">
-
-                    <div class="signal-left">
-
-                        <div class="signal-icon">
-                            🚨
-                        </div>
-
-                        <div>
-
-                            <strong>
-                                Scam Signals
-                            </strong>
-
-                            <span>
-                                Known warning patterns
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                    <span class="signal-status status-review">
-                        MEDIUM
-                    </span>
-
-                </div>
-
-
-            </div>
-
-
-
-            <!-- INTELLIGENCE -->
-
-            <div class="intelligence">
-
-                <h3>
-                    🔎 Profile Intelligence
-                </h3>
-
-
-                <div class="intel-grid">
-
-
-                    <div class="intel-item">
-
-                        <span>
-                            ACCOUNT TYPE
-                        </span>
-
-                        <strong id="accountType">
-                            Profile / Page
-                        </strong>
-
-                    </div>
-
-
-                    <div class="intel-item">
-
-                        <span>
-                            REPUTATION
-                        </span>
-
-                        <strong>
-                            Needs Review
-                        </strong>
-
-                    </div>
-
-
-                    <div class="intel-item">
-
-                        <span>
-                            RISK LEVEL
-                        </span>
-
-                        <strong>
-                            Medium
-                        </strong>
-
-                    </div>
-
-
-                    <div class="intel-item">
-
-                        <span>
-                            REPORT STATUS
-                        </span>
-
-                        <strong>
-                            No Verified Report
-                        </strong>
-
-                    </div>
-
-
-                    <div class="intel-item">
-
-                        <span>
-                            TRUST SIGNAL
-                        </span>
-
-                        <strong>
-                            68 / 100
-                        </strong>
-
-                    </div>
-
-
-                    <div class="intel-item">
-
-                        <span>
-                            ANALYSIS MODE
-                        </span>
-
-                        <strong>
-                            Prototype AI
-                        </strong>
-
-                    </div>
-
-
-                </div>
-
-            </div>
-
-
-
-            <!-- WARNING -->
-
-            <div class="warning">
-
-                ⚠️ <strong>Important:</strong>
-                Inspect Caller cannot currently confirm
-                that a Facebook profile or page is
-                fraudulent. A risk score is only a
-                demonstration signal and must not be
-                treated as a definitive accusation.
-
-            </div>
-
-
-
-            <!-- ACTIONS -->
-
-            <div class="result-actions">
+                <button
+                    class="btn btn-secondary"
+                    onclick="resetScanner()"
+                >
+                    Scan Another
+                </button>
 
                 <a
                     href="report.html"
-                    class="action-btn primary">
-
-                    🚨 Report Suspicious Profile
-
-                </a>
-
-
-                <button
-                    class="action-btn"
-                    onclick="copyResult()">
-
-                    📋 Copy Result
-
-                </button>
-
-
-                <a
-                    href="ai-chat.html"
-                    class="action-btn">
-
-                    🤖 Ask AI
-
+                    class="btn btn-primary"
+                >
+                    🚨 Report Scam
                 </a>
 
             </div>
 
-
         </div>
 
-    </section>
+    </div>
+
+</section>
 
 
+<!-- =====================================================
+     AVAILABLE CHECKS
+===================================================== -->
 
-    <!-- ================= INFO ================= -->
+<section class="section platform-section">
 
-    <section class="info-grid">
+    <div class="container">
 
 
-        <div class="info-card">
+        <div class="section-heading center">
 
-            <div class="info-icon">
-                🕵️
+            <div class="section-label">
+                SAFETY SIGNALS
             </div>
 
-            <h3>
-                Fake Profile Signals
-            </h3>
+            <h2>
+                What can be analyzed?
+            </h2>
 
             <p>
-
-                Future versions can analyze available
-                profile signals to identify potential
-                impersonation and suspicious behavior.
-
+                Production checks will depend on authorized
+                data and platform API access.
             </p>
 
         </div>
 
 
+        <div class="feature-grid">
 
-        <div class="info-card">
 
-            <div class="info-icon">
-                💳
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🔗
+                </div>
+
+                <h3>
+                    Profile URL
+                </h3>
+
+                <p>
+                    Check whether the submitted URL has a
+                    recognizable Facebook structure.
+                </p>
+
             </div>
 
-            <h3>
-                Scam Activity
-            </h3>
 
-            <p>
+            <div class="feature-card">
 
-                The platform can be designed to identify
-                common scam patterns involving payments,
-                prizes, jobs, investments and fake offers.
+                <div class="feature-icon">
+                    📄
+                </div>
 
-            </p>
+                <h3>
+                    Public Page Signals
+                </h3>
+
+                <p>
+                    Future authorized integrations can analyze
+                    permitted public page information.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🚨
+                </div>
+
+                <h3>
+                    Scam Reports
+                </h3>
+
+                <p>
+                    Compare submitted information against
+                    Inspect Caller reports when available.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🧠
+                </div>
+
+                <h3>
+                    AI Analysis
+                </h3>
+
+                <p>
+                    Analyze user-provided public content for
+                    common scam patterns.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    ⭐
+                </div>
+
+                <h3>
+                    Trust Signals
+                </h3>
+
+                <p>
+                    Build a safety score from verified,
+                    authorized signals.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🔐
+                </div>
+
+                <h3>
+                    Privacy Protection
+                </h3>
+
+                <p>
+                    No private Facebook data should be accessed
+                    without proper authorization.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     HOW IT WORKS
+===================================================== -->
+
+<section class="section">
+
+    <div class="container">
+
+
+        <div class="section-heading center">
+
+            <div class="section-label">
+                HOW IT WORKS
+            </div>
+
+            <h2>
+                Three simple steps.
+            </h2>
 
         </div>
 
 
+        <div class="steps-grid">
 
-        <div class="info-card">
 
-            <div class="info-icon">
-                🤖
+            <div class="step-card">
+
+                <div class="step-number">
+                    01
+                </div>
+
+                <h3>
+                    Submit URL
+                </h3>
+
+                <p>
+                    Paste a publicly accessible Facebook
+                    profile or page URL.
+                </p>
+
             </div>
 
-            <h3>
-                AI Analysis
-            </h3>
 
-            <p>
+            <div class="step-card">
 
-                Future AI capabilities may analyze
-                publicly available signals and user
-                reports to generate additional warnings.
+                <div class="step-number">
+                    02
+                </div>
 
-            </p>
+                <h3>
+                    Analyze
+                </h3>
+
+                <p>
+                    Inspect Caller checks available
+                    safety indicators.
+                </p>
+
+            </div>
+
+
+            <div class="step-card">
+
+                <div class="step-number">
+                    03
+                </div>
+
+                <h3>
+                    Review
+                </h3>
+
+                <p>
+                    Review the risk signals before deciding
+                    whether to interact with the account.
+                </p>
+
+            </div>
+
+
+            <div class="step-card">
+
+                <div class="step-number">
+                    04
+                </div>
+
+                <h3>
+                    Report
+                </h3>
+
+                <p>
+                    If you suspect fraud, preserve evidence
+                    and submit a report.
+                </p>
+
+            </div>
+
 
         </div>
 
+    </div>
 
-    </section>
-
-
-</div>
-
-</main>
+</section>
 
 
+<!-- =====================================================
+     IMPORTANT NOTICE
+===================================================== -->
 
-<!-- ================= FOOTER ================= -->
+<section class="section">
+
+    <div class="container">
+
+        <div
+            class="about-box"
+            style="border-color:rgba(255,209,102,.18);"
+        >
+
+            <div
+                class="section-label"
+                style="color:#ffd166;"
+            >
+                IMPORTANT
+            </div>
+
+
+            <h2
+                style="
+                    margin-top:8px;
+                    font-size:24px;
+                "
+            >
+                A Facebook profile cannot be declared fraudulent
+                from a URL alone.
+            </h2>
+
+
+            <p>
+
+                This scanner is designed to identify potential
+                risk signals. It does not provide private
+                Facebook information, passwords, private
+                messages, NID information, phone-owner identity
+                or exact physical location.
+
+                Any production integration must use authorized
+                APIs and applicable privacy and legal requirements.
+
+            </p>
+
+
+            <a
+                href="report.html"
+                class="btn btn-primary"
+            >
+                Report Suspicious Account →
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
 
 <footer>
 
-    <div class="footer-brand">
+    <div class="container footer-inner">
 
-        INSPECT<span>CALLER</span>
+
+        <div>
+
+            <a
+                href="index.html"
+                class="brand"
+            >
+
+                <span class="brand-logo">
+                    🛡️
+                </span>
+
+                <span class="brand-name">
+                    INSPECT<span>CALLER</span>
+                </span>
+
+            </a>
+
+
+            <p class="footer-text">
+                Global Digital Fraud Intelligence & Protection
+            </p>
+
+
+            <p class="footer-text">
+                Founder & CEO:
+                Mohammad Sajedur Rahman Biplob
+            </p>
+
+
+            <p class="footer-text">
+                Co-Founder & Team Leader:
+                Nila Akter
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="about.html">
+                About
+            </a>
+
+            <a href="features.html">
+                Features
+            </a>
+
+            <a href="report.html">
+                Report
+            </a>
+
+            <a href="contact.html">
+                Contact
+            </a>
+
+            <a href="privacy-policy.html">
+                Privacy
+            </a>
+
+            <a href="terms.html">
+                Terms
+            </a>
+
+        </div>
 
     </div>
 
-    <p>
-        Global Caller Security & Anti-Fraud Technology
-    </p>
 
+    <div class="container footer-bottom">
 
-    <div class="footer-links">
-
-        <a href="index.html">
-            Home
-        </a>
-
-        <a href="features.html">
-            Features
-        </a>
-
-        <a href="about.html">
-            About
-        </a>
-
-        <a href="contact.html">
-            Contact
-        </a>
-
-        <a href="privacy-policy.html">
-            Privacy
-        </a>
-
-        <a href="terms.html">
-            Terms
-        </a>
-
-        <a href="cookie-policy.html">
-            Cookies
-        </a>
-
-        <a href="disclaimer.html">
-            Disclaimer
-        </a>
+        © 2026 Inspect Caller. All rights reserved.
 
     </div>
-
-
-    <p class="copyright">
-
-        © 2026 Inspect Caller.
-        Idea / Pre-Launch Prototype.
-
-    </p>
 
 </footer>
 
 
+<!-- =====================================================
+     CUSTOMER CARE
+===================================================== -->
 
-<!-- ================= SCRIPT ================= -->
+<button
+    class="support-button"
+    onclick="toggleSupport()"
+    aria-label="Customer Care"
+>
+
+    💬
+
+    <span class="support-pulse"></span>
+
+</button>
+
+
+<div
+    class="support-chat"
+    id="supportChat"
+>
+
+    <div class="support-header">
+
+        <div class="support-avatar">
+            🛡️
+        </div>
+
+        <div class="support-title">
+
+            <strong>
+                Inspect Caller Support
+            </strong>
+
+            <small>
+                ● Customer Care
+            </small>
+
+        </div>
+
+        <button
+            class="support-close"
+            onclick="toggleSupport()"
+        >
+            ×
+        </button>
+
+    </div>
+
+
+    <div class="support-body">
+
+        <div class="support-welcome">
+
+            Hello! 👋<br><br>
+
+            Need help with a suspicious Facebook
+            account or report?
+
+        </div>
+
+
+        <div class="quick-help">
+
+            <button
+                onclick="window.location.href='report.html'"
+            >
+                🚨 Report Scam
+            </button>
+
+            <button
+                onclick="window.location.href='contact.html'"
+            >
+                💬 Contact Team
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
 
 <script>
+
 
 function scanFacebook() {
 
     const input =
-        document.getElementById(
-            "facebookInput"
-        );
+        document.getElementById("facebookUrl");
 
-    const value =
+    const status =
+        document.getElementById("scanStatus");
+
+    const resultSection =
+        document.getElementById("resultSection");
+
+    const url =
         input.value.trim();
 
-    const loading =
-        document.getElementById(
-            "loading"
+
+    resultSection.style.display =
+        "none";
+
+    status.style.display =
+        "none";
+
+
+    if (!url) {
+
+        showStatus(
+            "Please enter a Facebook URL.",
+            "error"
         );
-
-    const result =
-        document.getElementById(
-            "result"
-        );
-
-
-    if (!value) {
-
-        alert(
-            "Please enter a Facebook profile or page URL."
-        );
-
-        input.focus();
 
         return;
 
     }
 
 
-    loading.classList.add("show");
+    let parsedURL;
 
-    result.classList.remove("show");
+
+    try {
+
+        parsedURL =
+            new URL(url);
+
+    } catch {
+
+        showStatus(
+            "Please enter a valid URL.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const hostname =
+        parsedURL.hostname.toLowerCase();
 
 
     /*
-        Prototype simulation.
-
-        Production version can connect this
-        interface to authorized APIs/backend
-        services for real threat intelligence.
+       Only recognize official Facebook domains.
     */
 
-    setTimeout(function() {
-
-        loading.classList.remove("show");
-
-        result.classList.add("show");
-
-
-        let cleanUrl =
-            value;
+    const validFacebook =
+        hostname === "facebook.com" ||
+        hostname === "www.facebook.com" ||
+        hostname === "m.facebook.com" ||
+        hostname === "fb.com" ||
+        hostname === "www.fb.com";
 
 
-        try {
+    if (!validFacebook) {
 
-            if (
-                !value.startsWith("http://") &&
-                !value.startsWith("https://")
-            ) {
-
-                cleanUrl =
-                    "https://" + value;
-
-            }
-
-            const url =
-                new URL(cleanUrl);
-
-
-            document.getElementById(
-                "profileUrl"
-            ).textContent =
-                url.hostname +
-                url.pathname;
-
-
-        } catch (error) {
-
-            document.getElementById(
-                "profileUrl"
-            ).textContent =
-                value;
-
-        }
-
-
-        document.getElementById(
-            "profileName"
-        ).textContent =
-            "Facebook Profile / Page";
-
-
-        /*
-            Demo risk score.
-            NOT real Facebook intelligence.
-        */
-
-        let score = 32;
-
-
-        const suspiciousWords = [
-
-            "crypto",
-            "investment",
-            "loan",
-            "prize",
-            "winner",
-            "giveaway",
-            "support",
-            "official",
-            "help",
-            "money"
-
-        ];
-
-
-        const lower =
-            value.toLowerCase();
-
-
-        suspiciousWords.forEach(
-            function(word) {
-
-                if (
-                    lower.includes(word)
-                ) {
-
-                    score += 7;
-
-                }
-
-            }
+        showStatus(
+            "This does not appear to be an official Facebook URL.",
+            "error"
         );
 
+        return;
 
-        score =
-            Math.min(score, 92);
-
-
-        document.getElementById(
-            "riskScore"
-        ).textContent =
-            score;
+    }
 
 
-        if (score >= 70) {
-
-            document.getElementById(
-                "riskScore"
-            ).style.color =
-                "#ff7d91";
-
-        } else if (score >= 45) {
-
-            document.getElementById(
-                "riskScore"
-            ).style.color =
-                "#ffd267";
-
-        } else {
-
-            document.getElementById(
-                "riskScore"
-            ).style.color =
-                "#4ce7aa";
-
-        }
+    showStatus(
+        "Analyzing public URL signals...",
+        "loading"
+    );
 
 
-    }, 1200);
+    /*
+       Demo analysis.
+
+       This does NOT access Facebook,
+       private profiles or private data.
+    */
+
+    const path =
+        parsedURL.pathname.toLowerCase();
+
+
+    let type =
+        "Facebook Profile / Page";
+
+    let risk =
+        "NO BASIC RISK SIGNAL";
+
+    let badge =
+        "badge-success";
+
+    let icon =
+        "✅";
+
+    let title =
+        "Basic URL Check Passed";
+
+    let text =
+        "The submitted address uses a recognized Facebook domain. " +
+        "This does not prove that the account or its content is trustworthy.";
+
+
+    if (
+        path.includes("/groups/")
+    ) {
+
+        type =
+            "Facebook Group";
+
+    }
+
+
+    if (
+        path.includes("/marketplace/")
+    ) {
+
+        type =
+            "Facebook Marketplace";
+
+    }
+
+
+    if (
+        path.includes("/share/")
+    ) {
+
+        risk =
+            "REVIEW";
+
+        badge =
+            "badge-warning";
+
+        icon =
+            "🔎";
+
+        title =
+            "Review Recommended";
+
+        text =
+            "This is a Facebook sharing URL. Verify the original " +
+            "destination and sender before interacting.";
+
+    }
+
+
+    setTimeout(() => {
+
+        showResult(
+            url,
+            type,
+            risk,
+            badge,
+            icon,
+            title,
+            text
+        );
+
+    }, 650);
 
 }
 
 
-function copyResult() {
+/* =====================================================
+   SHOW STATUS
+===================================================== */
 
-    const url =
-        document.getElementById(
-            "profileUrl"
-        ).textContent;
+function showStatus(
+    message,
+    type
+) {
 
-    const score =
-        document.getElementById(
-            "riskScore"
-        ).textContent;
+    const status =
+        document.getElementById("scanStatus");
 
 
-    const text =
+    status.style.display =
+        "block";
 
-        "Inspect Caller Facebook Scan\n" +
-        "Profile: " + url + "\n" +
-        "Demo Risk Score: " +
-        score +
-        "/100\n" +
-        "Prototype result — not a verified fraud determination.";
+
+    status.textContent =
+        message;
 
 
     if (
-        navigator.clipboard
+        type === "error"
     ) {
 
-        navigator.clipboard.writeText(text)
-            .then(function() {
+        status.style.color =
+            "#ff7b87";
 
-                alert(
-                    "Scan result copied."
-                );
+        status.style.background =
+            "rgba(255,93,108,.06)";
 
-            })
-            .catch(function() {
+        status.style.border =
+            "1px solid rgba(255,93,108,.15)";
 
-                alert(
-                    "Unable to copy result."
-                );
+    } else {
 
-            });
+        status.style.color =
+            "#27df78";
+
+        status.style.background =
+            "rgba(39,223,120,.06)";
+
+        status.style.border =
+            "1px solid rgba(39,223,120,.15)";
 
     }
 
 }
 
 
-/* ENTER KEY */
+/* =====================================================
+   SHOW RESULT
+===================================================== */
 
-document
-    .getElementById(
-        "facebookInput"
-    )
-    .addEventListener(
-        "keydown",
-        function(event) {
+function showResult(
+    url,
+    type,
+    risk,
+    badge,
+    icon,
+    title,
+    text
+) {
 
-            if (
-                event.key === "Enter"
-            ) {
+    const section =
+        document.getElementById(
+            "resultSection"
+        );
 
-                scanFacebook();
 
-            }
+    document.getElementById(
+        "resultIcon"
+    ).textContent =
+        icon;
 
-        }
+
+    document.getElementById(
+        "resultTitle"
+    ).textContent =
+        title;
+
+
+    document.getElementById(
+        "resultText"
+    ).textContent =
+        text;
+
+
+    document.getElementById(
+        "riskBadge"
+    ).innerHTML = `
+
+        <span class="badge ${badge}">
+            ${risk}
+        </span>
+
+    `;
+
+
+    document.getElementById(
+        "profileInfo"
+    ).innerHTML = `
+
+        <div
+            style="
+                padding:12px;
+                border-radius:9px;
+                background:#172438;
+                text-align:left;
+            "
+        >
+
+            <small
+                style="
+                    display:block;
+                    color:#637784;
+                    font-size:6px;
+                "
+            >
+                SUBMITTED URL
+            </small>
+
+            <strong
+                style="
+                    display:block;
+                    margin-top:4px;
+                    color:#dce7ed;
+                    font-size:8px;
+                    word-break:break-all;
+                "
+            >
+                ${escapeHTML(url)}
+            </strong>
+
+        </div>
+
+
+        <div
+            style="
+                margin-top:8px;
+                padding:12px;
+                border-radius:9px;
+                background:#172438;
+                text-align:left;
+            "
+        >
+
+            <small
+                style="
+                    display:block;
+                    color:#637784;
+                    font-size:6px;
+                "
+            >
+                DETECTED TYPE
+            </small>
+
+            <strong
+                style="
+                    display:block;
+                    margin-top:4px;
+                    color:#27df78;
+                    font-size:9px;
+                "
+            >
+                ${escapeHTML(type)}
+            </strong>
+
+        </div>
+
+    `;
+
+
+    document.getElementById(
+        "signals"
+    ).innerHTML = `
+
+        <div
+            style="
+                padding:12px;
+                border:1px solid rgba(90,125,155,.15);
+                border-radius:9px;
+                background:rgba(90,125,155,.035);
+                text-align:left;
+            "
+        >
+
+            <strong
+                style="
+                    color:#b8c7d0;
+                    font-size:8px;
+                "
+            >
+                Prototype Signal Analysis
+            </strong>
+
+            <ul
+                style="
+                    margin-top:8px;
+                    padding-left:18px;
+                    color:#879aa6;
+                    font-size:8px;
+                    line-height:1.8;
+                "
+            >
+
+                <li>
+                    Official Facebook domain recognized
+                </li>
+
+                <li>
+                    URL structure checked
+                </li>
+
+                <li>
+                    Private account information not accessed
+                </li>
+
+                <li>
+                    No identity or location claim made
+                </li>
+
+            </ul>
+
+        </div>
+
+    `;
+
+
+    section.style.display =
+        "block";
+
+
+    section.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+function resetScanner() {
+
+    document.getElementById(
+        "facebookUrl"
+    ).value = "";
+
+
+    document.getElementById(
+        "resultSection"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "scanStatus"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "facebookUrl"
+    ).focus();
+
+}
+
+
+/* =====================================================
+   HTML ESCAPE
+===================================================== */
+
+function escapeHTML(value) {
+
+    return value
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+
+/* =====================================================
+   CUSTOMER CARE
+===================================================== */
+
+function toggleSupport() {
+
+    const chat =
+        document.getElementById(
+            "supportChat"
+        );
+
+    if (!chat) return;
+
+    chat.classList.toggle(
+        "active"
     );
+
+}
 
 </script>
 
 
 </body>
+
 </html>
