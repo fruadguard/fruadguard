@@ -1,173 +1,151 @@
 /* =========================================================
-   INSPECT CALLER
-   AUTHENTICATION SYSTEM
-   auth.js
-   ========================================================= */
+   INSPECT CALLER — AUTH.JS
+   PROJECT 533
+   Firebase Authentication
+========================================================= */
+
+
+/*
+   IMPORTANT
+   ---------
+   Firebase configuration should be loaded from firebase.js.
+
+   firebase.js should provide:
+
+   auth
+   db
+
+   Example:
+
+   import { auth, db } from "./firebase.js";
+*/
+
+
+import {
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged,
+    updateProfile
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+import {
+    doc,
+    setDoc,
+    getDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+import {
+    auth,
+    db
+} from "./firebase.js";
+
 
 
 /* =========================================================
-   GLOBAL AUTH STATE
-   ========================================================= */
+   LOGIN
+========================================================= */
 
-let currentUser = null;
-
-
-/* =========================================================
-   CHECK FIREBASE AUTH
-   ========================================================= */
-
-function getFirebaseAuth() {
+export async function loginUser(email, password) {
 
     try {
 
-        if (typeof firebase !== "undefined") {
+        email = email.trim().toLowerCase();
 
-            return firebase.auth();
+        if (!email || !password) {
+
+            throw new Error(
+                "Email and password are required."
+            );
 
         }
+
+
+        const result =
+            await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+
+        return {
+            success: true,
+            user: result.user
+        };
+
 
     } catch (error) {
 
-        console.warn(
-            "Firebase Authentication is not available.",
+        console.error(
+            "Login Error:",
             error
         );
 
-    }
 
-    return null;
-}
-
-
-/* =========================================================
-   AUTH STATE LISTENER
-   ========================================================= */
-
-function initAuth() {
-
-    const auth = getFirebaseAuth();
-
-    if (!auth) {
-
-        console.warn(
-            "Inspect Caller is running in demo authentication mode."
-        );
-
-        return;
+        return {
+            success: false,
+            code: error.code,
+            message: getAuthErrorMessage(error.code)
+        };
 
     }
-
-
-    auth.onAuthStateChanged(function(user) {
-
-        currentUser = user || null;
-
-        if (user) {
-
-            console.log(
-                "Logged in:",
-                user.email || user.displayName
-            );
-
-            updateUserInterface(user);
-
-        } else {
-
-            console.log(
-                "No authenticated user."
-            );
-
-        }
-
-    });
 
 }
 
 
-/* =========================================================
-   EMAIL / PASSWORD REGISTER
-   ========================================================= */
 
-async function registerUser(
+/* =========================================================
+   REGISTER
+========================================================= */
+
+export async function registerUser(
     name,
     email,
     password
 ) {
 
-    name = name.trim();
-    email = email.trim();
-
-
-    if (!name) {
-
-        showAuthMessage(
-            "Please enter your full name.",
-            "error"
-        );
-
-        return false;
-    }
-
-
-    if (!email) {
-
-        showAuthMessage(
-            "Please enter your email.",
-            "error"
-        );
-
-        return false;
-    }
-
-
-    if (!password || password.length < 6) {
-
-        showAuthMessage(
-            "Password must contain at least 6 characters.",
-            "error"
-        );
-
-        return false;
-    }
-
-
-    const auth = getFirebaseAuth();
-
-
-    /* ================= DEMO MODE ================= */
-
-    if (!auth) {
-
-        localStorage.setItem(
-            "inspectCallerDemoUser",
-            JSON.stringify({
-                name: name,
-                email: email
-            })
-        );
-
-        showAuthMessage(
-            "Demo account created successfully.",
-            "success"
-        );
-
-        setTimeout(function() {
-
-            window.location.href =
-                "dashboard.html";
-
-        }, 900);
-
-        return true;
-    }
-
-
-    /* ================= FIREBASE ================= */
-
     try {
 
+        name = name.trim();
+
+        email =
+            email.trim().toLowerCase();
+
+
+        if (!name) {
+
+            throw new Error(
+                "Name is required."
+            );
+
+        }
+
+
+        if (!email || !password) {
+
+            throw new Error(
+                "Email and password are required."
+            );
+
+        }
+
+
+        if (password.length < 6) {
+
+            throw new Error(
+                "Password must contain at least 6 characters."
+            );
+
+        }
+
+
+        /* Create Firebase account */
+
         const result =
-            await auth.createUserWithEmailAndPassword(
+            await createUserWithEmailAndPassword(
+                auth,
                 email,
                 password
             );
@@ -177,824 +155,386 @@ async function registerUser(
             result.user;
 
 
-        if (user) {
+        /* Update Firebase display name */
 
-            await user.updateProfile({
-
+        await updateProfile(
+            user,
+            {
                 displayName: name
-
-            });
-
-        }
-
-
-        showAuthMessage(
-            "Account created successfully.",
-            "success"
+            }
         );
 
 
-        setTimeout(function() {
+        /* Save user profile */
 
-            window.location.href =
-                "dashboard.html";
+        await setDoc(
+            doc(
+                db,
+                "users",
+                user.uid
+            ),
+            {
 
-        }, 700);
+                uid: user.uid,
 
+                name: name,
 
-        return true;
+                email: email,
 
-    } catch (error) {
+                role: "user",
 
-        console.error(error);
+                createdAt:
+                    serverTimestamp(),
 
-        showAuthMessage(
-            getFirebaseError(error),
-            "error"
-        );
+                status: "active"
 
-        return false;
-    }
-
-}
-
-
-/* =========================================================
-   EMAIL / PASSWORD LOGIN
-   ========================================================= */
-
-async function loginUser(
-    email,
-    password
-) {
-
-    email = email.trim();
-
-
-    if (!email || !password) {
-
-        showAuthMessage(
-            "Please enter your email and password.",
-            "error"
-        );
-
-        return false;
-    }
-
-
-    const auth = getFirebaseAuth();
-
-
-    /* ================= DEMO MODE ================= */
-
-    if (!auth) {
-
-        const demoUser =
-            JSON.parse(
-                localStorage.getItem(
-                    "inspectCallerDemoUser"
-                ) || "null"
-            );
-
-
-        if (
-            demoUser &&
-            demoUser.email.toLowerCase() ===
-            email.toLowerCase()
-        ) {
-
-            currentUser = demoUser;
-
-        } else {
-
-            currentUser = {
-
-                name: "Demo User",
-                email: email
-
-            };
-
-        }
-
-
-        localStorage.setItem(
-            "inspectCallerLoggedIn",
-            "true"
+            }
         );
 
 
-        showAuthMessage(
-            "Login successful.",
-            "success"
-        );
+        return {
 
+            success: true,
 
-        setTimeout(function() {
+            user: user
 
-            window.location.href =
-                "dashboard.html";
-
-        }, 700);
-
-
-        return true;
-    }
-
-
-    /* ================= FIREBASE ================= */
-
-    try {
-
-        await auth.signInWithEmailAndPassword(
-            email,
-            password
-        );
-
-
-        showAuthMessage(
-            "Login successful.",
-            "success"
-        );
-
-
-        setTimeout(function() {
-
-            window.location.href =
-                "dashboard.html";
-
-        }, 700);
-
-
-        return true;
-
-    } catch (error) {
-
-        console.error(error);
-
-        showAuthMessage(
-            getFirebaseError(error),
-            "error"
-        );
-
-        return false;
-    }
-
-}
-
-
-/* =========================================================
-   GOOGLE LOGIN
-   ========================================================= */
-
-async function loginWithGoogle() {
-
-    const auth = getFirebaseAuth();
-
-
-    if (!auth) {
-
-        demoSocialLogin(
-            "Google User",
-            "google-demo@inspectcaller.local"
-        );
-
-        return;
-
-    }
-
-
-    try {
-
-        const provider =
-            new firebase.auth.GoogleAuthProvider();
-
-
-        provider.setCustomParameters({
-
-            prompt: "select_account"
-
-        });
-
-
-        await auth.signInWithPopup(
-            provider
-        );
-
-
-        showAuthMessage(
-            "Google login successful.",
-            "success"
-        );
-
-
-        setTimeout(function() {
-
-            window.location.href =
-                "dashboard.html";
-
-        }, 700);
+        };
 
 
     } catch (error) {
 
-        console.error(error);
-
-        showAuthMessage(
-            getFirebaseError(error),
-            "error"
+        console.error(
+            "Registration Error:",
+            error
         );
+
+
+        return {
+
+            success: false,
+
+            code: error.code,
+
+            message:
+                error.message ||
+                getAuthErrorMessage(error.code)
+
+        };
 
     }
 
 }
 
-
-/* =========================================================
-   FACEBOOK LOGIN
-   ========================================================= */
-
-async function loginWithFacebook() {
-
-    const auth = getFirebaseAuth();
-
-
-    if (!auth) {
-
-        demoSocialLogin(
-            "Facebook User",
-            "facebook-demo@inspectcaller.local"
-        );
-
-        return;
-
-    }
-
-
-    try {
-
-        const provider =
-            new firebase.auth.FacebookAuthProvider();
-
-
-        await auth.signInWithPopup(
-            provider
-        );
-
-
-        showAuthMessage(
-            "Facebook login successful.",
-            "success"
-        );
-
-
-        setTimeout(function() {
-
-            window.location.href =
-                "dashboard.html";
-
-        }, 700);
-
-
-    } catch (error) {
-
-        console.error(error);
-
-        showAuthMessage(
-            getFirebaseError(error),
-            "error"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   DEMO SOCIAL LOGIN
-   ========================================================= */
-
-function demoSocialLogin(
-    name,
-    email
-) {
-
-    const demoUser = {
-
-        name: name,
-        email: email,
-        provider: "demo"
-
-    };
-
-
-    currentUser =
-        demoUser;
-
-
-    localStorage.setItem(
-        "inspectCallerDemoUser",
-        JSON.stringify(demoUser)
-    );
-
-
-    localStorage.setItem(
-        "inspectCallerLoggedIn",
-        "true"
-    );
-
-
-    showAuthMessage(
-        "Demo login successful.",
-        "success"
-    );
-
-
-    setTimeout(function() {
-
-        window.location.href =
-            "dashboard.html";
-
-    }, 700);
-
-}
-
-
-/* =========================================================
-   PASSWORD RESET
-   ========================================================= */
-
-async function resetPassword(email) {
-
-    email = email.trim();
-
-
-    if (!email) {
-
-        showAuthMessage(
-            "Enter your email address first.",
-            "error"
-        );
-
-        return false;
-    }
-
-
-    const auth =
-        getFirebaseAuth();
-
-
-    if (!auth) {
-
-        showAuthMessage(
-            "Demo mode: password reset email is not connected.",
-            "info"
-        );
-
-        return false;
-    }
-
-
-    try {
-
-        await auth.sendPasswordResetEmail(
-            email
-        );
-
-
-        showAuthMessage(
-            "Password reset email sent.",
-            "success"
-        );
-
-
-        return true;
-
-    } catch (error) {
-
-        console.error(error);
-
-        showAuthMessage(
-            getFirebaseError(error),
-            "error"
-        );
-
-        return false;
-    }
-
-}
 
 
 /* =========================================================
    LOGOUT
-   ========================================================= */
+========================================================= */
 
-async function logoutUser() {
+export async function logoutUser() {
 
-    const auth =
-        getFirebaseAuth();
+    try {
+
+        await signOut(auth);
+
+        window.location.href =
+            "login.html";
 
 
-    if (auth) {
+    } catch (error) {
 
-        try {
-
-            await auth.signOut();
-
-        } catch (error) {
-
-            console.error(
-                "Logout error:",
-                error
-            );
-
-        }
+        console.error(
+            "Logout Error:",
+            error
+        );
 
     }
-
-
-    currentUser = null;
-
-
-    localStorage.removeItem(
-        "inspectCallerLoggedIn"
-    );
-
-    localStorage.removeItem(
-        "inspectCallerDemoUser"
-    );
-
-
-    window.location.href =
-        "index.html";
 
 }
 
 
+
 /* =========================================================
-   PROTECT PRIVATE PAGES
-   ========================================================= */
+   CURRENT USER
+========================================================= */
 
-function requireLogin() {
+export function getCurrentUser() {
 
-    const auth =
-        getFirebaseAuth();
+    return auth.currentUser;
+
+}
 
 
-    /* Firebase mode */
 
-    if (auth) {
+/* =========================================================
+   AUTH STATE LISTENER
+========================================================= */
 
-        auth.onAuthStateChanged(function(user) {
+export function watchAuthState(callback) {
+
+    return onAuthStateChanged(
+        auth,
+        callback
+    );
+
+}
+
+
+
+/* =========================================================
+   REQUIRE LOGIN
+========================================================= */
+
+export function requireLogin() {
+
+    onAuthStateChanged(
+        auth,
+        function(user) {
 
             if (!user) {
 
                 window.location.href =
                     "login.html";
 
-            } else {
-
-                currentUser =
-                    user;
-
-                updateUserInterface(
-                    user
-                );
-
             }
 
-        });
-
-        return;
-
-    }
-
-
-    /* Demo mode */
-
-    const loggedIn =
-        localStorage.getItem(
-            "inspectCallerLoggedIn"
-        );
-
-
-    if (loggedIn !== "true") {
-
-        window.location.href =
-            "login.html";
-
-    }
+        }
+    );
 
 }
 
 
+
 /* =========================================================
-   GET CURRENT USER
-   ========================================================= */
+   REDIRECT IF ALREADY LOGGED IN
+========================================================= */
 
-function getCurrentUser() {
+export function redirectIfLoggedIn() {
 
-    const auth =
-        getFirebaseAuth();
+    onAuthStateChanged(
+        auth,
+        function(user) {
+
+            if (user) {
+
+                window.location.href =
+                    "dashboard.html";
+
+            }
+
+        }
+    );
+
+}
 
 
-    if (auth && auth.currentUser) {
 
-        return auth.currentUser;
+/* =========================================================
+   GET USER PROFILE
+========================================================= */
 
-    }
+export async function getUserProfile(uid) {
 
+    try {
 
-    const demoUser =
-        localStorage.getItem(
-            "inspectCallerDemoUser"
-        );
-
-
-    if (demoUser) {
-
-        try {
-
-            return JSON.parse(
-                demoUser
-            );
-
-        } catch (error) {
+        if (!uid) {
 
             return null;
 
         }
 
+
+        const snapshot =
+            await getDoc(
+                doc(
+                    db,
+                    "users",
+                    uid
+                )
+            );
+
+
+        if (!snapshot.exists()) {
+
+            return null;
+
+        }
+
+
+        return snapshot.data();
+
+
+    } catch (error) {
+
+        console.error(
+            "Profile Error:",
+            error
+        );
+
+
+        return null;
+
     }
-
-
-    return null;
 
 }
 
 
+
 /* =========================================================
-   UPDATE USER UI
-   ========================================================= */
+   ADMIN CHECK
+========================================================= */
 
-function updateUserInterface(user) {
+export async function isAdmin(uid) {
 
-    if (!user) return;
+    try {
 
+        if (!uid) {
 
-    const name =
-        user.displayName ||
-        user.name ||
-        "User";
+            return false;
 
-
-    const email =
-        user.email ||
-        "";
+        }
 
 
-    document
-        .querySelectorAll(
-            "[data-user-name]"
-        )
-        .forEach(function(element) {
-
-            element.textContent =
-                name;
-
-        });
+        const profile =
+            await getUserProfile(uid);
 
 
-    document
-        .querySelectorAll(
-            "[data-user-email]"
-        )
-        .forEach(function(element) {
+        if (!profile) {
 
-            element.textContent =
-                email;
+            return false;
 
-        });
+        }
 
 
-    document
-        .querySelectorAll(
-            "[data-user-avatar]"
-        )
-        .forEach(function(element) {
+        return profile.role === "admin";
 
-            const photo =
-                user.photoURL;
 
-            if (photo) {
+    } catch (error) {
 
-                element.src =
-                    photo;
+        console.error(
+            "Admin Check Error:",
+            error
+        );
+
+
+        return false;
+
+    }
+
+}
+
+
+
+/* =========================================================
+   REQUIRE ADMIN
+========================================================= */
+
+export function requireAdmin() {
+
+    onAuthStateChanged(
+        auth,
+        async function(user) {
+
+            if (!user) {
+
+                window.location.href =
+                    "login.html";
+
+                return;
 
             }
 
-        });
 
-}
+            const admin =
+                await isAdmin(user.uid);
 
 
-/* =========================================================
-   AUTH MESSAGE
-   ========================================================= */
+            if (!admin) {
 
-function showAuthMessage(
-    message,
-    type = "info"
-) {
+                alert(
+                    "Access denied. Admin authorization required."
+                );
 
-    let box =
-        document.getElementById(
-            "authMessage"
-        );
 
+                window.location.href =
+                    "dashboard.html";
 
-    if (!box) {
+            }
 
-        box =
-            document.createElement(
-                "div"
-            );
-
-        box.id =
-            "authMessage";
-
-
-        box.style.position =
-            "fixed";
-
-        box.style.top =
-            "25px";
-
-        box.style.left =
-            "50%";
-
-        box.style.transform =
-            "translateX(-50%)";
-
-        box.style.zIndex =
-            "99999";
-
-        box.style.maxWidth =
-            "90%";
-
-        box.style.padding =
-            "13px 20px";
-
-        box.style.borderRadius =
-            "14px";
-
-        box.style.fontSize =
-            "13px";
-
-        box.style.fontWeight =
-            "700";
-
-        box.style.backdropFilter =
-            "blur(15px)";
-
-
-        document.body.appendChild(
-            box
-        );
-
-    }
-
-
-    box.textContent =
-        message;
-
-
-    if (type === "success") {
-
-        box.style.background =
-            "rgba(20,130,90,.92)";
-
-        box.style.border =
-            "1px solid #2de49a";
-
-        box.style.color =
-            "#ffffff";
-
-    } else if (type === "error") {
-
-        box.style.background =
-            "rgba(130,25,45,.95)";
-
-        box.style.border =
-            "1px solid #ff7185";
-
-        box.style.color =
-            "#ffffff";
-
-    } else {
-
-        box.style.background =
-            "rgba(8,40,65,.96)";
-
-        box.style.border =
-            "1px solid #23adff";
-
-        box.style.color =
-            "#ffffff";
-
-    }
-
-
-    clearTimeout(
-        window.authMessageTimer
-    );
-
-
-    window.authMessageTimer =
-        setTimeout(function() {
-
-            box.remove();
-
-        }, 3500);
-
-}
-
-
-/* =========================================================
-   FIREBASE ERROR TRANSLATOR
-   ========================================================= */
-
-function getFirebaseError(error) {
-
-    if (!error) {
-
-        return "Something went wrong.";
-
-    }
-
-
-    const code =
-        error.code || "";
-
-
-    const errors = {
-
-        "auth/invalid-email":
-            "Please enter a valid email address.",
-
-        "auth/user-disabled":
-            "This account has been disabled.",
-
-        "auth/user-not-found":
-            "No account was found with this email.",
-
-        "auth/wrong-password":
-            "Incorrect password.",
-
-        "auth/invalid-credential":
-            "Incorrect email or password.",
-
-        "auth/email-already-in-use":
-            "This email is already registered.",
-
-        "auth/weak-password":
-            "Password is too weak.",
-
-        "auth/popup-closed-by-user":
-            "Login window was closed.",
-
-        "auth/popup-blocked":
-            "Your browser blocked the login popup.",
-
-        "auth/account-exists-with-different-credential":
-            "An account already exists with a different login method.",
-
-        "auth/network-request-failed":
-            "Network error. Please try again.",
-
-        "auth/too-many-requests":
-            "Too many attempts. Please try again later."
-
-    };
-
-
-    return (
-        errors[code] ||
-        error.message ||
-        "Authentication failed."
+        }
     );
 
 }
 
 
+
 /* =========================================================
-   AUTO INITIALIZATION
-   ========================================================= */
+   AUTH ERROR TRANSLATOR
+========================================================= */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function() {
+function getAuthErrorMessage(code) {
 
-        initAuth();
+    switch (code) {
+
+        case "auth/invalid-email":
+
+            return "Please enter a valid email address.";
+
+
+        case "auth/user-disabled":
+
+            return "This account has been disabled.";
+
+
+        case "auth/user-not-found":
+
+            return "No account was found with this email.";
+
+
+        case "auth/wrong-password":
+
+            return "Incorrect password.";
+
+
+        case "auth/invalid-credential":
+
+            return "Email or password is incorrect.";
+
+
+        case "auth/email-already-in-use":
+
+            return "An account already exists with this email.";
+
+
+        case "auth/weak-password":
+
+            return "Password is too weak.";
+
+
+        case "auth/network-request-failed":
+
+            return "Network error. Please check your connection.";
+
+
+        case "auth/too-many-requests":
+
+            return "Too many attempts. Please try again later.";
+
+
+        default:
+
+            return "Authentication failed. Please try again.";
 
     }
-);
+
+}
+
+
+
+/* =========================================================
+   EXPORT AUTH
+========================================================= */
+
+export {
+    auth
+};
