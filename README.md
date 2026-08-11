@@ -1,132 +1,265 @@
 # 🛡️ Inspect Caller
 
-### A Bold Vision to Stop Digital Scams Globally
+### Global Digital Fraud Intelligence & Protection Platform
 
-Inspect Caller is a proposed global anti-fraud security platform designed to help users **inspect, detect, report and prevent digital scams** across phone calls, messages, websites and online platforms.
+Inspect Caller is a Bangladesh-origin startup vision focused on building a global digital fraud intelligence and protection ecosystem.
 
----
-
-## 🚀 Project Overview
-
-**Founder & CEO:** Mohammad Sajedur Rahman Biplob  
-**Team Leader:** Nila Akter  
-**Country of Origin:** Bangladesh  
-**Startup Type:** Global Anti-Fraud Security Tech  
-**Current Stage:** Idea / Pre-Launch
+Our goal is to help people identify suspicious digital activity, understand potential risks, report scams, and access responsible fraud-response tools from one platform.
 
 ---
 
-## 🎯 Vision
+## 🚀 Vision
 
-> **Make the Digital World Safe for Everyone.**
+> **“Building technology that helps people recognize digital threats before they become victims.”**
 
-Inspect Caller aims to build a unified security layer that can connect users, businesses, platforms and authorized security organizations to help identify and respond to digital fraud.
+Our long-term vision is to make the digital world safer by connecting users, AI-assisted analysis, fraud intelligence, reporting systems, and responsible security partnerships.
 
 ---
 
-## ⚠️ Problem
+## 🎯 The Problem
 
-Digital fraud affects individuals, families, businesses and governments around the world.
+Digital fraud is growing across:
 
-The platform focuses on major threats including:
+- Phishing & fake websites
+- Scam phone numbers
+- Fake social-media profiles
+- Investment & financial scams
+- Fake online stores
+- Job scams
+- Romance scams
+- QR scams
+- Fake emails and messages
+- Identity-related fraud
+- Online extortion and other digital threats
 
-- 💰 Financial Fraud
-- 🔗 Phishing & Fake Links
-- 📈 Investment & Crypto Scams
-- ❤️ Romance & Friendship Scams
-- 🪪 Identity Theft
-- 💼 Fake Job Scams
-- 🎁 Lottery & Prize Scams
-- 🏦 Loan & Financial Scams
-- ❤️‍🩹 Charity Fraud
-- 🔐 Ransomware & Data Hijacking
-- ⚠️ Extortion & Blackmail
-- 🛍️ Product & Service Fraud
+Victims often do not have a simple way to analyze suspicious information or report incidents in an organized manner.
 
 ---
 
 ## 💡 Our Solution
 
-Inspect Caller is designed as a multi-layer anti-fraud ecosystem.
+Inspect Caller aims to provide a unified platform for:
 
-### Core Features
+- 🔎 Suspicious URL analysis
+- 📞 Phone-number checking
+- 📧 Email checking
+- 🤖 AI-assisted scam analysis
+- 📷 QR scanning
+- 🚨 Scam reporting
+- 📊 Fraud intelligence
+- 🌐 Global scam awareness
+- 💬 Customer support
+- 🔐 Secure user accounts
 
-### 📞 Caller Inspection
-Inspect suspicious phone numbers and view available risk signals and reports.
+---
 
-### 🔗 URL Scanner
-Analyze suspicious websites and links for potential phishing indicators.
+## 🧩 Core Platform
 
-### 📧 Email Checker
-Analyze suspicious emails and identify possible scam indicators.
+| Feature | Purpose |
+|---|---|
+| URL Scanner | Analyze suspicious websites |
+| Phone Checker | Check available fraud intelligence |
+| Email Checker | Analyze suspicious email information |
+| AI Chat | AI-assisted scam analysis |
+| QR Scanner | Inspect QR destinations |
+| Facebook Scanner | Authorized public-data intelligence |
+| Telegram Scanner | Authorized security/reporting integrations |
+| WhatsApp Scanner | Authorized security/reporting integrations |
+| Scam Report | Submit suspected fraud incidents |
+| Dashboard | Manage user activity |
+| Admin Panel | Platform administration |
 
-### 🤖 AI Scam Detection
-Future AI-powered analysis of suspicious:
+---
 
-- Text
-- Voice
-- Images
-- Messages
-- Scam patterns
+## 🧠 Technology
 
-### 🚨 Scam Reporting
-Users can report:
+The prototype is designed around:
 
+- HTML5
+- CSS3
+- JavaScript
+- Firebase
+- Firebase Authentication
+- Firestore
+- AI/API integrations
+- Secure API architecture
+- Responsive web design
+
+---
+
+## 🔐 Privacy & Security
+
+Inspect Caller is designed with privacy and responsible data handling in mind.
+
+The platform will only use data that is:
+
+- Publicly available
+- User-provided
+- Authorized through official APIs
+- Legally accessible
+- Required for the specific security function
+
+Private government databases, National ID records, SIM-registration records, private account information, or other restricted information will not be exposed without appropriate authorization and legal access.
+
+---
+
+## 🚨 Scam Reporting
+
+Users can submit information related to suspected scams, including:
+
+- Suspicious URLs
 - Phone numbers
-- Websites
-- Social media pages
-- Messages
-- Fraud attempts
+- Email addresses
+- Social-media pages
+- Transaction information
+- Screenshots
+- Other supporting evidence
 
-### ⭐ Trust Score
-A planned reputation and safety scoring system for digital interactions.
+Reports are intended to support investigation, awareness and responsible reporting.
 
-### 📷 QR Scanner
-Scan suspicious QR codes and inspect their destination.
-
-### 📱 Social & Messaging Scanners
-
-Planned modules for:
-
-- Facebook
-- Telegram
-- WhatsApp
+**Inspect Caller does not independently determine criminal guilt or guarantee legal action.**
 
 ---
 
-# 🌍 Global Security Layer
+## 🌍 Global Vision
 
-The long-term vision includes integrations with:
+Inspect Caller is being developed with a global vision.
 
-- Social media platforms
-- Messaging platforms
+The long-term platform may support integrations with authorized:
+
+- Security services
+- Fraud databases
+- Financial institutions
 - E-commerce platforms
-- Banking systems
-- Payment gateways
-- Financial regulators
-- Cybersecurity intelligence
-- Authorized government datasets
-- Authorized law-enforcement systems
+- Social platforms
+- Messaging platforms
+- Government or law-enforcement systems
+- Cybersecurity organizations
 
-> Government, identity, SIM, location and law-enforcement data would require appropriate legal authorization, partnerships and technical access.
+Any such integration will depend on official API access, agreements, applicable laws and technical feasibility.
 
 ---
 
-# 🚨 Fraud Reporting Workflow
+## 👥 Leadership
 
-The planned workflow:
+### Mohammad Sajedur Rahman Biplob
+**Founder & CEO**
 
-```text
-User Report
-     ↓
-Evidence Collection
-     ↓
-Risk Analysis
-     ↓
-Verification
-     ↓
-Structured Report
-     ↓
-Authorized Authority
-     ↓
-Investigation
+Leading Inspect Caller's vision, product direction and global anti-fraud technology strategy.
+
+### Nila Akter
+**Co-Founder & Team Leader**
+
+Supporting operations, team coordination, growth and platform development.
+
+---
+
+## 🇧🇩 Country of Origin
+
+**Bangladesh**
+
+Inspect Caller is being developed from Bangladesh with a global technology vision.
+
+---
+
+## 📈 Current Stage
+
+**Pre-Launch / Prototype**
+
+Current focus:
+
+- Product validation
+- Prototype development
+- Core platform architecture
+- Security research
+- AI integration
+- User experience
+- Fraud reporting workflow
+- Future partnership preparation
+
+---
+
+## 💼 Business Model
+
+Potential future revenue streams include:
+
+- Freemium user plans
+- Premium subscriptions
+- B2B security services
+- API services
+- Enterprise integrations
+- B2G partnerships
+- Security intelligence services
+
+---
+
+## 🗺️ Roadmap
+
+### Phase 1 — Prototype
+- Core website
+- Authentication
+- Scanner interfaces
+- Reporting system
+- Customer support
+
+### Phase 2 — MVP
+- AI integration
+- Database intelligence
+- Real user accounts
+- Improved reporting
+- Security monitoring
+
+### Phase 3 — Growth
+- B2B integrations
+- Enterprise services
+- Global expansion
+- Authorized data partnerships
+
+### Phase 4 — Global Platform
+- International fraud intelligence
+- Large-scale security partnerships
+- Advanced AI systems
+- Global reporting ecosystem
+
+---
+
+## ⚠️ Prototype Notice
+
+This repository represents an early-stage startup prototype.
+
+Some scanners, intelligence results, API integrations and security features may currently operate in **demo/simulated mode** until the required authorized APIs, databases and infrastructure are connected.
+
+The prototype must not be interpreted as having access to private government, banking, social-media or telecommunications databases.
+
+---
+
+## 📄 Legal
+
+Please review:
+
+- [Privacy Policy](privacy-policy.html)
+- [Terms & Conditions](terms.html)
+- [Cookie Policy](cookie-policy.html)
+- [Disclaimer](disclaimer.html)
+
+---
+
+## 📧 Contact
+
+**Founder & CEO:**  
+Mohammad Sajedur Rahman Biplob
+
+**Email:**  
+rbiplob1005@gmail.com
+
+---
+
+## 🛡️ Our Mission
+
+**Detect. Understand. Report. Protect.**
+
+### Make the digital world safer for everyone.
+
+---
+
+© 2026 Inspect Caller. All rights reserved.
