@@ -1,602 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>AI Security Assistant — Inspect Caller</title>
+    <title>AI Scam Assistant | Inspect Caller</title>
 
-    <meta
-        name="description"
-        content="Inspect Caller AI Security Assistant for scam detection and digital safety guidance."
-    >
+    <meta name="description"
+        content="Inspect Caller AI-assisted digital scam analysis and safety assistant.">
 
     <link rel="stylesheet" href="style.css">
-
-    <style>
-
-        /* ================= AI CHAT PAGE ================= */
-
-        .ai-page {
-            min-height: calc(100vh - 88px);
-            padding: 55px 20px 90px;
-
-            background:
-                radial-gradient(
-                    circle at 50% 0%,
-                    rgba(0,150,255,.13),
-                    transparent 38%
-                ),
-                #050d18;
-        }
-
-        .ai-container {
-            width: min(1100px, 100%);
-            margin: auto;
-        }
-
-
-        /* ================= HEADER ================= */
-
-        .ai-header {
-            text-align: center;
-            margin-bottom: 35px;
-        }
-
-        .ai-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-
-            padding: 9px 17px;
-
-            border: 1px solid #2b607d;
-            border-radius: 999px;
-
-            background: #071c2d;
-
-            color: #8bdcff;
-
-            font-size: 12px;
-            font-weight: 800;
-
-            letter-spacing: .7px;
-        }
-
-        .ai-header h1 {
-            margin-top: 20px;
-
-            font-size:
-                clamp(38px, 6vw, 65px);
-
-            line-height: 1;
-
-            letter-spacing: -3px;
-
-            font-weight: 950;
-        }
-
-        .ai-header h1 span {
-            color: var(--blue);
-        }
-
-        .ai-header p {
-            max-width: 720px;
-
-            margin: 20px auto 0;
-
-            color: var(--muted);
-
-            font-size: 16px;
-
-            line-height: 1.7;
-        }
-
-
-        /* ================= CHAT BOX ================= */
-
-        .chat-card {
-            overflow: hidden;
-
-            border:
-                1px solid #214b66;
-
-            border-radius: 27px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #091e31,
-                    #050f1b
-                );
-
-            box-shadow:
-                0 30px 100px rgba(0,90,160,.14);
-        }
-
-
-        /* ================= CHAT TOPBAR ================= */
-
-        .chat-topbar {
-            min-height: 72px;
-
-            padding: 14px 20px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            border-bottom:
-                1px solid #193c54;
-
-            background:
-                rgba(7,24,39,.85);
-        }
-
-        .assistant-profile {
-            display: flex;
-
-            align-items: center;
-
-            gap: 13px;
-        }
-
-        .assistant-avatar {
-            width: 45px;
-            height: 45px;
-
-            display: grid;
-            place-items: center;
-
-            border-radius: 14px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #19b7ff,
-                    #087ddd
-                );
-
-            font-size: 21px;
-
-            box-shadow:
-                0 0 25px rgba(0,150,255,.2);
-        }
-
-        .assistant-profile strong {
-            display: block;
-
-            font-size: 15px;
-        }
-
-        .assistant-profile span {
-            display: flex;
-
-            align-items: center;
-
-            gap: 6px;
-
-            margin-top: 2px;
-
-            color: var(--muted);
-
-            font-size: 11px;
-        }
-
-        .status-dot {
-            width: 7px;
-            height: 7px;
-
-            border-radius: 50%;
-
-            background: var(--green);
-
-            box-shadow:
-                0 0 10px var(--green);
-        }
-
-        .chat-security {
-            color: #6dd8ff;
-
-            font-size: 12px;
-
-            font-weight: 700;
-        }
-
-
-        /* ================= MESSAGES ================= */
-
-        .chat-messages {
-            height: 560px;
-
-            overflow-y: auto;
-
-            padding: 30px 25px;
-
-            display: flex;
-
-            flex-direction: column;
-
-            gap: 18px;
-
-            scrollbar-width: thin;
-
-            scrollbar-color:
-                #1e5876
-                transparent;
-        }
-
-        .message {
-            display: flex;
-
-            max-width: 78%;
-        }
-
-        .message.bot {
-            align-self: flex-start;
-        }
-
-        .message.user {
-            align-self: flex-end;
-        }
-
-        .message-content {
-            padding:
-                15px 17px;
-
-            border-radius: 18px;
-
-            font-size: 14px;
-
-            line-height: 1.65;
-        }
-
-        .bot .message-content {
-            border:
-                1px solid #1d4862;
-
-            border-top-left-radius: 5px;
-
-            background: #0a2034;
-
-            color: #c8d9e4;
-        }
-
-        .user .message-content {
-            border:
-                1px solid #0787d1;
-
-            border-top-right-radius: 5px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #0c91dc,
-                    #086db5
-                );
-
-            color: #ffffff;
-        }
-
-        .message-label {
-            display: block;
-
-            margin-bottom: 5px;
-
-            color: #6dd8ff;
-
-            font-size: 10px;
-
-            font-weight: 900;
-
-            text-transform: uppercase;
-
-            letter-spacing: .8px;
-        }
-
-        .user .message-label {
-            color: #bceaff;
-        }
-
-
-        /* ================= RISK CARD ================= */
-
-        .risk-result {
-            margin-top: 14px;
-
-            padding: 15px;
-
-            border:
-                1px solid #24526c;
-
-            border-radius: 14px;
-
-            background: #071a2a;
-        }
-
-        .risk-header {
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            margin-bottom: 10px;
-        }
-
-        .risk-title {
-            color: #ffffff;
-
-            font-weight: 850;
-        }
-
-        .risk-level {
-            padding: 5px 9px;
-
-            border-radius: 999px;
-
-            color: #ffd878;
-
-            background:
-                rgba(255,200,80,.09);
-
-            border:
-                1px solid rgba(255,200,80,.25);
-
-            font-size: 10px;
-
-            font-weight: 900;
-        }
-
-        .risk-result p {
-            margin: 0;
-
-            color: var(--muted);
-
-            font-size: 12px;
-        }
-
-
-        /* ================= QUICK PROMPTS ================= */
-
-        .quick-prompts {
-            display: flex;
-
-            flex-wrap: wrap;
-
-            gap: 9px;
-
-            padding:
-                0
-                25px
-                20px;
-        }
-
-        .quick-btn {
-            padding:
-                9px
-                13px;
-
-            border:
-                1px solid #285873;
-
-            border-radius: 999px;
-
-            background: #071a2a;
-
-            color: #9fc4d6;
-
-            cursor: pointer;
-
-            font-size: 11px;
-
-            transition: .2s;
-        }
-
-        .quick-btn:hover {
-            border-color: var(--blue);
-
-            color: #ffffff;
-
-            background: #0a253b;
-        }
-
-
-        /* ================= INPUT ================= */
-
-        .chat-input-area {
-            padding: 18px 20px;
-
-            border-top:
-                1px solid #193c54;
-
-            background: #061522;
-        }
-
-        .chat-input {
-            display: flex;
-
-            align-items: center;
-
-            gap: 10px;
-
-            padding: 8px;
-
-            border:
-                1px solid #28546d;
-
-            border-radius: 18px;
-
-            background: #071b2c;
-
-            transition: .2s;
-        }
-
-        .chat-input:focus-within {
-            border-color: var(--blue);
-
-            box-shadow:
-                0 0 0 3px
-                rgba(0,150,255,.08);
-        }
-
-        .chat-input textarea {
-            flex: 1;
-
-            min-height: 42px;
-            max-height: 110px;
-
-            padding:
-                10px
-                12px;
-
-            resize: none;
-
-            border: none;
-
-            outline: none;
-
-            background: transparent;
-
-            color: #ffffff;
-
-            font-size: 14px;
-        }
-
-        .chat-input textarea::placeholder {
-            color: #617d90;
-        }
-
-        .send-btn {
-            width: 45px;
-            height: 45px;
-
-            flex-shrink: 0;
-
-            display: grid;
-            place-items: center;
-
-            border: none;
-
-            border-radius: 14px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #25b5ff,
-                    #087ddd
-                );
-
-            color: #ffffff;
-
-            cursor: pointer;
-
-            font-size: 18px;
-
-            transition: .2s;
-        }
-
-        .send-btn:hover {
-            transform: translateY(-2px);
-
-            box-shadow:
-                0 10px 25px
-                rgba(0,145,255,.25);
-        }
-
-
-        /* ================= DISCLAIMER ================= */
-
-        .ai-disclaimer {
-            margin-top: 15px;
-
-            text-align: center;
-
-            color: #5e788a;
-
-            font-size: 10px;
-
-            line-height: 1.5;
-        }
-
-
-        /* ================= MOBILE ================= */
-
-        @media(max-width: 650px) {
-
-            .ai-page {
-                padding:
-                    35px
-                    12px
-                    60px;
-            }
-
-            .ai-header h1 {
-                font-size: 43px;
-
-                letter-spacing: -2px;
-            }
-
-            .ai-header p {
-                font-size: 14px;
-            }
-
-            .chat-topbar {
-                padding:
-                    12px
-                    14px;
-            }
-
-            .chat-security {
-                display: none;
-            }
-
-            .chat-messages {
-                height: 520px;
-
-                padding:
-                    20px
-                    15px;
-            }
-
-            .message {
-                max-width: 90%;
-            }
-
-            .quick-prompts {
-                padding:
-                    0
-                    15px
-                    15px;
-            }
-
-            .chat-input-area {
-                padding:
-                    13px;
-            }
-
-        }
-
-    </style>
 </head>
-
 
 <body>
 
 
-<!-- ================= NAVBAR ================= -->
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
 
 <header class="navbar">
 
-    <div class="nav-container">
+    <div class="container nav-inner">
 
-        <a
-            href="index.html"
-            class="brand">
+        <a href="index.html" class="brand">
 
-            INSPECT<span>CALLER</span>
+            <span class="brand-logo">
+                🛡️
+            </span>
+
+            <span class="brand-name">
+                INSPECT<span>CALLER</span>
+            </span>
 
         </a>
 
@@ -612,98 +48,132 @@
             </a>
 
             <a href="scanner.html">
-                Scanner
+                URL Scanner
+            </a>
+
+            <a href="ai-chat.html" class="active">
+                AI Assistant
             </a>
 
             <a href="report.html">
-                Report
+                Report Scam
             </a>
 
-            <a href="about.html">
-                About
+            <a href="contact.html">
+                Contact
+            </a>
+
+            <a href="login.html" class="nav-button">
+                Login
             </a>
 
         </nav>
-
-
-        <a
-            href="dashboard.html"
-            class="nav-login">
-
-            Dashboard
-
-        </a>
 
     </div>
 
 </header>
 
 
-<!-- ================= AI PAGE ================= -->
+<!-- =====================================================
+     PAGE HERO
+===================================================== -->
 
-<main class="ai-page">
+<section class="hero">
 
-<div class="ai-container">
+    <div class="container hero-content">
 
+        <div class="hero-logo-box">
 
-    <!-- HEADER -->
-
-    <div class="ai-header">
-
-        <div class="ai-badge">
-
-            🤖 AI SECURITY ASSISTANT
+            <div class="hero-logo-placeholder">
+                🤖
+            </div>
 
         </div>
 
 
+        <div class="hero-badge">
+            AI-ASSISTED FRAUD INTELLIGENCE
+        </div>
+
+
         <h1>
-
-            Your Digital
-            <span>Safety Assistant</span>
-
+            AI Scam<br>
+            <span>Assistant</span>
         </h1>
 
 
-        <p>
+        <p class="hero-description">
 
-            Ask Inspect Caller AI about suspicious
-            phone numbers, messages, links, payment
-            requests and other potential scam signals.
+            Submit a suspicious message, offer, link description
+            or online interaction. Inspect Caller AI can help
+            identify common scam indicators and explain what
+            you should do next.
 
         </p>
 
     </div>
 
+</section>
 
 
-    <!-- ================= CHAT ================= -->
+<!-- =====================================================
+     AI CHAT AREA
+===================================================== -->
 
-    <div class="chat-card">
+<section class="section">
+
+    <div class="container">
 
 
-        <!-- TOP BAR -->
+        <div class="section-heading center">
 
-        <div class="chat-topbar">
+            <div class="section-label">
+                ANALYSIS ASSISTANT
+            </div>
 
-            <div class="assistant-profile">
+            <h2>
+                What looks suspicious?
+            </h2>
 
-                <div class="assistant-avatar">
+            <p>
+                Describe what happened or paste suspicious text
+                below for a safety-oriented analysis.
+            </p>
+
+        </div>
+
+
+        <!-- CHAT PANEL -->
+
+        <div class="ai-chat-panel">
+
+
+            <!-- CHAT HEADER -->
+
+            <div class="ai-chat-header">
+
+                <div class="ai-avatar">
                     🤖
                 </div>
 
-                <div>
+
+                <div class="ai-title">
 
                     <strong>
                         Inspect Caller AI
                     </strong>
 
-                    <span>
+                    <small>
+                        ● Demo Analysis Mode
+                    </small>
 
-                        <i class="status-dot"></i>
+                </div>
 
-                        Security Assistant Online
 
+                <div class="ai-status">
+
+                    <span class="badge badge-success">
+                        ONLINE
                     </span>
 
                 </div>
@@ -711,207 +181,561 @@
             </div>
 
 
-            <div class="chat-security">
-
-                🔐 Privacy-first prototype
-
-            </div>
-
-        </div>
-
-
-
-        <!-- MESSAGES -->
-
-        <div
-            class="chat-messages"
-            id="chatMessages">
-
-
-            <!-- BOT MESSAGE -->
-
-            <div class="message bot">
-
-                <div class="message-content">
-
-                    <span class="message-label">
-                        AI Assistant
-                    </span>
-
-                    Hello! I'm the Inspect Caller
-                    Security Assistant. 👋
-
-                    <br><br>
-
-                    You can tell me about a suspicious
-                    call, message, website, payment
-                    request or online interaction.
-
-                    <br><br>
-
-                    I can help you identify potential
-                    scam indicators and explain what
-                    information you should verify.
-
-                </div>
-
-            </div>
-
-
-            <!-- DEMO USER MESSAGE -->
+            <!-- CHAT BODY -->
 
             <div
-                class="message user"
-                style="display:none;"
-                id="demoUserMessage">
-
-                <div
-                    class="message-content">
-
-                    <span class="message-label">
-                        You
-                    </span>
-
-                    <span id="userText"></span>
-
-                </div>
-
-            </div>
+                class="ai-chat-body"
+                id="aiChatBody"
+            >
 
 
-            <!-- DEMO AI RESPONSE -->
+                <!-- AI MESSAGE -->
 
-            <div
-                class="message bot"
-                style="display:none;"
-                id="demoBotMessage">
+                <div class="ai-message ai-message-bot">
 
-                <div class="message-content">
+                    <div class="message-avatar">
+                        🤖
+                    </div>
 
-                    <span class="message-label">
-                        AI Analysis
-                    </span>
+                    <div class="message-content">
 
-                    Based on the information provided,
-                    I found some potential warning
-                    indicators.
-
-                    <div class="risk-result">
-
-                        <div class="risk-header">
-
-                            <span class="risk-title">
-                                Risk Assessment
-                            </span>
-
-                            <span class="risk-level">
-                                REVIEW REQUIRED
-                            </span>
-
-                        </div>
+                        <strong>
+                            Inspect Caller AI
+                        </strong>
 
                         <p>
-                            This is a prototype analysis.
-                            Do not send money, passwords,
-                            OTPs or sensitive information
-                            until the source is independently
-                            verified.
+
+                            Hello! 👋
+
+                            I'm the Inspect Caller AI
+                            safety assistant.
+
+                            You can send me a suspicious message,
+                            website description, payment request,
+                            job offer, investment offer or other
+                            digital interaction.
+
+                            I'll look for common warning signs
+                            and explain them.
+
                         </p>
 
                     </div>
 
                 </div>
 
+
+                <!-- QUICK QUESTIONS -->
+
+                <div class="ai-quick-actions">
+
+                    <button
+                        onclick="sendQuickPrompt('Is this message a scam?')"
+                    >
+                        🚨 Is this a scam?
+                    </button>
+
+
+                    <button
+                        onclick="sendQuickPrompt('Analyze this payment request.')"
+                    >
+                        💳 Payment Request
+                    </button>
+
+
+                    <button
+                        onclick="sendQuickPrompt('Analyze this investment offer.')"
+                    >
+                        📈 Investment Offer
+                    </button>
+
+
+                    <button
+                        onclick="sendQuickPrompt('Analyze this job offer.')"
+                    >
+                        💼 Job Offer
+                    </button>
+
+
+                </div>
+
+
             </div>
+
+
+            <!-- CHAT INPUT -->
+
+            <div class="ai-chat-footer">
+
+
+                <div class="ai-input-area">
+
+                    <textarea
+                        id="aiInput"
+                        placeholder="Paste a suspicious message or describe what happened..."
+                        rows="3"
+                    ></textarea>
+
+
+                    <button
+                        class="ai-send-button"
+                        onclick="sendAIMessage()"
+                        aria-label="Send"
+                    >
+                        ➤
+                    </button>
+
+                </div>
+
+
+                <div class="ai-input-note">
+
+                    Do not submit passwords, OTP codes,
+                    private keys or other highly sensitive
+                    information.
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     ANALYSIS TYPES
+===================================================== -->
+
+<section class="section platform-section">
+
+    <div class="container">
+
+
+        <div class="section-heading center">
+
+            <div class="section-label">
+                ANALYSIS CATEGORIES
+            </div>
+
+            <h2>
+                What AI can help analyze
+            </h2>
 
         </div>
 
 
-
-        <!-- QUICK QUESTIONS -->
-
-        <div class="quick-prompts">
-
-            <button
-                class="quick-btn"
-                onclick="askAI('Is this phone number suspicious?')">
-
-                📞 Check a phone number
-
-            </button>
+        <div class="feature-grid">
 
 
-            <button
-                class="quick-btn"
-                onclick="askAI('I received a suspicious link.')">
+            <div class="feature-card">
 
-                🔗 Check a suspicious link
+                <div class="feature-icon">
+                    🎣
+                </div>
 
-            </button>
+                <h3>
+                    Phishing
+                </h3>
 
+                <p>
+                    Identify common phishing language,
+                    urgency tactics and suspicious requests.
+                </p>
 
-            <button
-                class="quick-btn"
-                onclick="askAI('Someone asked me for money online.')">
-
-                💰 Payment scam
-
-            </button>
-
-
-            <button
-                class="quick-btn"
-                onclick="askAI('I received a suspicious job offer.')">
-
-                💼 Job scam
-
-            </button>
+            </div>
 
 
-            <button
-                class="quick-btn"
-                onclick="askAI('Someone is asking for my OTP.')">
+            <div class="feature-card">
 
-                🔐 OTP warning
+                <div class="feature-icon">
+                    💰
+                </div>
 
-            </button>
+                <h3>
+                    Financial Scam
+                </h3>
+
+                <p>
+                    Review suspicious payment requests,
+                    advance-fee demands and money promises.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    📈
+                </div>
+
+                <h3>
+                    Investment Scam
+                </h3>
+
+                <p>
+                    Identify common warning signs in
+                    unrealistic investment opportunities.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    💼
+                </div>
+
+                <h3>
+                    Job Scam
+                </h3>
+
+                <p>
+                    Analyze suspicious job offers,
+                    registration fees and deposit requests.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    ❤️
+                </div>
+
+                <h3>
+                    Romance Scam
+                </h3>
+
+                <p>
+                    Identify common manipulation and
+                    suspicious financial-request patterns.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🛒
+                </div>
+
+                <h3>
+                    Shopping Scam
+                </h3>
+
+                <p>
+                    Review suspicious online-store messages,
+                    offers and payment demands.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SAFETY WARNING
+===================================================== -->
+
+<section class="section">
+
+    <div class="container">
+
+
+        <div class="about-box"
+            style="border-color:rgba(255,209,102,.18);">
+
+
+            <div class="section-label"
+                style="color:#ffd166;">
+
+                IMPORTANT
+
+            </div>
+
+
+            <h2 style="
+                margin-top:8px;
+                font-size:24px;
+            ">
+
+                AI analysis is not a final verdict.
+
+            </h2>
+
+
+            <p style="margin-top:12px;">
+
+                AI results are designed to provide guidance
+                and identify potential warning signs.
+
+                A result should not be treated as proof that
+                a person, account, website or organization
+                committed a crime.
+
+                Always verify important information through
+                trusted and official sources.
+
+            </p>
+
+
+            <a
+                href="report.html"
+                class="btn btn-primary"
+            >
+                Report Suspicious Activity →
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CUSTOMER CARE
+===================================================== -->
+
+<section class="section">
+
+    <div class="container">
+
+
+        <div class="support-home-box">
+
+            <div>
+
+                <div class="section-label">
+                    NEED HUMAN HELP?
+                </div>
+
+                <h2>
+                    Contact Customer Care
+                </h2>
+
+                <p>
+
+                    If you believe you've been scammed or
+                    need help understanding a suspicious
+                    situation, you can submit a report or
+                    contact our support team.
+
+                </p>
+
+            </div>
+
+
+            <div class="hero-buttons">
+
+                <a
+                    href="report.html"
+                    class="btn btn-primary"
+                >
+                    Report Scam
+                </a>
+
+
+                <a
+                    href="contact.html"
+                    class="btn btn-secondary"
+                >
+                    Contact Support
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <div class="container footer-inner">
+
+
+        <div>
+
+            <a href="index.html" class="brand">
+
+                <span class="brand-logo">
+                    🛡️
+                </span>
+
+                <span class="brand-name">
+                    INSPECT<span>CALLER</span>
+                </span>
+
+            </a>
+
+
+            <p class="footer-text">
+                Global Digital Fraud Intelligence & Protection
+            </p>
+
+
+            <p class="footer-text">
+                Founder & CEO:
+                Mohammad Sajedur Rahman Biplob
+            </p>
+
+
+            <p class="footer-text">
+                Co-Founder & Team Leader:
+                Nila Akter
+            </p>
 
         </div>
 
 
+        <div class="footer-links">
 
-        <!-- INPUT -->
+            <a href="index.html">
+                Home
+            </a>
 
-        <div class="chat-input-area">
+            <a href="about.html">
+                About
+            </a>
 
-            <div class="chat-input">
+            <a href="features.html">
+                Features
+            </a>
 
-                <textarea
-                    id="chatInput"
-                    placeholder="Describe the suspicious activity..."
-                    rows="1"></textarea>
+            <a href="report.html">
+                Report
+            </a>
+
+            <a href="contact.html">
+                Contact
+            </a>
+
+            <a href="privacy-policy.html">
+                Privacy
+            </a>
+
+            <a href="terms.html">
+                Terms
+            </a>
+
+        </div>
+
+    </div>
 
 
-                <button
-                    class="send-btn"
-                    onclick="sendMessage()"
-                    aria-label="Send">
+    <div class="container footer-bottom">
 
-                    ➤
+        © 2026 Inspect Caller. All rights reserved.
 
-                </button>
+    </div>
 
-            </div>
+</footer>
 
 
-            <div class="ai-disclaimer">
+<!-- =====================================================
+     CUSTOMER CARE BUTTON
+===================================================== -->
 
-                Inspect Caller AI is a prototype.
-                AI results are informational and should
-                not replace official investigation,
-                professional advice or emergency services.
+<button
+    class="support-button"
+    onclick="toggleSupport()"
+    aria-label="Customer Care"
+>
 
-            </div>
+    💬
+
+    <span class="support-pulse"></span>
+
+</button>
+
+
+<!-- =====================================================
+     CUSTOMER CARE CHAT
+===================================================== -->
+
+<div
+    class="support-chat"
+    id="supportChat"
+>
+
+
+    <div class="support-header">
+
+        <div class="support-avatar">
+            🛡️
+        </div>
+
+
+        <div class="support-title">
+
+            <strong>
+                Inspect Caller Support
+            </strong>
+
+            <small>
+                ● Customer Care
+            </small>
+
+        </div>
+
+
+        <button
+            class="support-close"
+            onclick="toggleSupport()"
+        >
+            ×
+        </button>
+
+    </div>
+
+
+    <div class="support-body">
+
+        <div class="support-welcome">
+
+            Hello! 👋
+
+            Need help with a scam report,
+            account or security feature?
+
+        </div>
+
+
+        <div class="quick-help">
+
+            <button
+                onclick="window.location.href='report.html'"
+            >
+                🚨 Report Scam
+            </button>
+
+
+            <button
+                onclick="window.location.href='contact.html'"
+            >
+                💬 Contact Us
+            </button>
 
         </div>
 
@@ -919,92 +743,469 @@
 
 </div>
 
-</main>
 
+<!-- =====================================================
+     AI CHAT STYLE
+===================================================== -->
 
-<!-- ================= FOOTER ================= -->
+<style>
 
-<footer>
+.ai-chat-panel {
 
-    <div class="footer-brand">
+    width: min(850px, 100%);
 
-        INSPECT<span>CALLER</span>
+    margin: 35px auto 0;
 
-    </div>
+    overflow: hidden;
 
-    <p>
-        Global Caller Security & Anti-Fraud Technology
-    </p>
+    border:
+        1px solid rgba(90,125,155,.28);
 
+    border-radius: 16px;
 
-    <div class="footer-links">
+    background: #101d30;
 
-        <a href="index.html">
-            Home
-        </a>
-
-        <a href="features.html">
-            Features
-        </a>
-
-        <a href="about.html">
-            About
-        </a>
-
-        <a href="contact.html">
-            Contact
-        </a>
-
-        <a href="privacy-policy.html">
-            Privacy
-        </a>
-
-        <a href="terms.html">
-            Terms
-        </a>
-
-    </div>
-
-
-    <p class="copyright">
-
-        © 2026 Inspect Caller.
-        Idea / Pre-Launch Prototype.
-
-    </p>
-
-</footer>
-
-
-<!-- ================= DEMO CHAT SCRIPT ================= -->
-
-<script>
-
-function askAI(text) {
-
-    const input =
-        document.getElementById("chatInput");
-
-    input.value = text;
-
-    sendMessage();
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.28);
 
 }
 
 
-function sendMessage() {
+.ai-chat-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 15px;
+
+    border-bottom:
+        1px solid rgba(90,125,155,.18);
+
+    background: #172438;
+
+}
+
+
+.ai-avatar {
+
+    width: 42px;
+    height: 42px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 11px;
+
+    background: #243852;
+
+    font-size: 20px;
+
+}
+
+
+.ai-title {
+
+    flex: 1;
+
+}
+
+
+.ai-title strong {
+
+    display: block;
+
+    color: white;
+
+    font-size: 11px;
+
+}
+
+
+.ai-title small {
+
+    display: block;
+
+    margin-top: 2px;
+
+    color: #27df78;
+
+    font-size: 7px;
+
+}
+
+
+.ai-chat-body {
+
+    min-height: 390px;
+
+    max-height: 520px;
+
+    padding: 20px;
+
+    overflow-y: auto;
+
+}
+
+
+.ai-message {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 10px;
+
+    max-width: 90%;
+
+}
+
+
+.ai-message-user {
+
+    margin-left: auto;
+
+    flex-direction: row-reverse;
+
+}
+
+
+.message-avatar {
+
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 9px;
+
+    background: #243852;
+
+    font-size: 15px;
+
+}
+
+
+.message-content {
+
+    padding: 12px;
+
+    border:
+        1px solid rgba(90,125,155,.18);
+
+    border-radius:
+        11px 11px 11px 3px;
+
+    background: #1b293d;
+
+}
+
+
+.ai-message-user .message-content {
+
+    border-radius:
+        11px 11px 3px 11px;
+
+    background: #155a78;
+
+}
+
+
+.message-content strong {
+
+    display: block;
+
+    color: #27df78;
+
+    font-size: 8px;
+
+}
+
+
+.message-content p {
+
+    margin-top: 6px;
+
+    color: #b1bec8;
+
+    font-size: 9px;
+
+    line-height: 1.75;
+
+}
+
+
+.ai-quick-actions {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 8px;
+
+    margin:
+        20px 0 0 44px;
+
+}
+
+
+.ai-quick-actions button {
+
+    min-height: 39px;
+
+    padding: 8px;
+
+    border:
+        1px solid rgba(90,125,155,.23);
+
+    border-radius: 8px;
+
+    background: #172438;
+
+    color: #aebdc8;
+
+    font-size: 8px;
+
+    text-align: left;
+
+    transition: .2s;
+
+}
+
+
+.ai-quick-actions button:hover {
+
+    border-color: #27df78;
+
+    color: #27df78;
+
+    transform: translateY(-1px);
+
+}
+
+
+.ai-chat-footer {
+
+    padding: 13px;
+
+    border-top:
+        1px solid rgba(90,125,155,.18);
+
+    background: #0d1829;
+
+}
+
+
+.ai-input-area {
+
+    display: flex;
+
+    gap: 8px;
+
+}
+
+
+.ai-input-area textarea {
+
+    flex: 1;
+
+    min-width: 0;
+
+    min-height: 54px;
+
+    max-height: 130px;
+
+    padding: 11px;
+
+    resize: vertical;
+
+    outline: none;
+
+    border:
+        1px solid rgba(90,125,155,.28);
+
+    border-radius: 9px;
+
+    background: #172438;
+
+    color: white;
+
+    font-size: 9px;
+
+}
+
+
+.ai-input-area textarea:focus {
+
+    border-color: #27df78;
+
+    box-shadow:
+        0 0 0 3px rgba(39,223,120,.05);
+
+}
+
+
+.ai-send-button {
+
+    width: 48px;
+
+    min-height: 54px;
+
+    align-self: stretch;
+
+    border: 0;
+
+    border-radius: 9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #27df78,
+            #18c969
+        );
+
+    color: #06160c;
+
+    font-size: 18px;
+
+    font-weight: 900;
+
+}
+
+
+.ai-input-note {
+
+    margin-top: 7px;
+
+    color: #596e7b;
+
+    font-size: 6.5px;
+
+    text-align: center;
+
+}
+
+
+.ai-loading {
+
+    color: #27df78 !important;
+
+}
+
+
+@media (max-width: 600px) {
+
+    .ai-chat-body {
+
+        min-height: 350px;
+
+        padding: 14px;
+
+    }
+
+    .ai-quick-actions {
+
+        grid-template-columns: 1fr;
+
+        margin-left: 0;
+
+    }
+
+    .ai-message {
+
+        max-width: 96%;
+
+    }
+
+    .ai-chat-header {
+
+        padding: 12px;
+
+    }
+
+}
+
+</style>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script src="script.js"></script>
+
+
+<script>
+
+
+/* -------------------------------------------------------
+   CUSTOMER CARE
+------------------------------------------------------- */
+
+function toggleSupport() {
+
+    const chat =
+        document.getElementById("supportChat");
+
+    if (!chat) return;
+
+    chat.classList.toggle("active");
+
+}
+
+
+/* -------------------------------------------------------
+   AI QUICK PROMPTS
+------------------------------------------------------- */
+
+function sendQuickPrompt(prompt) {
 
     const input =
-        document.getElementById("chatInput");
+        document.getElementById("aiInput");
+
+    if (!input) return;
+
+    input.value = prompt;
+
+    input.focus();
+
+}
+
+
+/* -------------------------------------------------------
+   AI MESSAGE
+------------------------------------------------------- */
+
+function sendAIMessage() {
+
+    const input =
+        document.getElementById("aiInput");
+
+    const body =
+        document.getElementById("aiChatBody");
+
+    if (!input || !body) return;
+
 
     const text =
         input.value.trim();
 
-    if (!text) return;
 
+    if (!text) {
 
-    const messages =
-        document.getElementById("chatMessages");
+        input.focus();
+
+        return;
+
+    }
 
 
     /* USER MESSAGE */
@@ -1013,106 +1214,174 @@ function sendMessage() {
         document.createElement("div");
 
     userMessage.className =
-        "message user";
+        "ai-message ai-message-user";
+
 
     userMessage.innerHTML = `
+
+        <div class="message-avatar">
+            👤
+        </div>
+
         <div class="message-content">
 
-            <span class="message-label">
+            <strong>
                 You
-            </span>
+            </strong>
 
-            ${escapeHTML(text)}
+            <p></p>
 
         </div>
+
     `;
 
-    messages.appendChild(userMessage);
+
+    userMessage
+        .querySelector("p")
+        .textContent = text;
+
+
+    body.appendChild(userMessage);
 
 
     input.value = "";
 
-    messages.scrollTop =
-        messages.scrollHeight;
+
+    body.scrollTop =
+        body.scrollHeight;
 
 
-    /* DEMO AI RESPONSE */
+    /* AI LOADING */
+
+    const loading =
+        document.createElement("div");
+
+    loading.className =
+        "ai-message ai-message-bot";
+
+    loading.innerHTML = `
+
+        <div class="message-avatar">
+            🤖
+        </div>
+
+        <div class="message-content">
+
+            <strong>
+                Inspect Caller AI
+            </strong>
+
+            <p class="ai-loading">
+                Analyzing potential risk indicators...
+            </p>
+
+        </div>
+
+    `;
+
+
+    body.appendChild(loading);
+
+
+    body.scrollTop =
+        body.scrollHeight;
+
+
+    /*
+
+       DEMO RESPONSE
+
+       Real AI API will be connected later.
+       Do not treat this result as a definitive
+       determination that something is fraudulent.
+
+    */
 
     setTimeout(() => {
 
-        const botMessage =
+        loading.remove();
+
+
+        const response =
             document.createElement("div");
 
-        botMessage.className =
-            "message bot";
+        response.className =
+            "ai-message ai-message-bot";
 
-        botMessage.innerHTML = `
+
+        response.innerHTML = `
+
+            <div class="message-avatar">
+                🤖
+            </div>
 
             <div class="message-content">
 
-                <span class="message-label">
-                    AI Analysis
-                </span>
+                <strong>
+                    Inspect Caller AI
+                </strong>
 
-                I can help assess the information
-                you provided.
-
-                <div class="risk-result">
-
-                    <div class="risk-header">
-
-                        <span class="risk-title">
-                            Initial Assessment
-                        </span>
-
-                        <span class="risk-level">
-                            VERIFY
-                        </span>
-
-                    </div>
-
-                    <p>
-
-                        This prototype cannot independently
-                        confirm whether a person or account
-                        is fraudulent. Avoid sending money,
-                        OTPs, passwords or sensitive documents
-                        until you verify the source through
-                        a trusted channel.
-
-                    </p>
-
-                </div>
+                <p>
+                    Based on the information provided,
+                    I can help identify common warning signs,
+                    but this prototype cannot confirm whether
+                    a person, account or organization is
+                    fraudulent.
+                    <br><br>
+                    ⚠️ Avoid sending money, passwords, OTPs
+                    or sensitive information until the claim
+                    has been independently verified.
+                    <br><br>
+                    If you believe this is an actual scam,
+                    save the evidence and use the
+                    <b>Report Scam</b> page.
+                </p>
 
             </div>
 
         `;
 
-        messages.appendChild(botMessage);
 
-        messages.scrollTop =
-            messages.scrollHeight;
-
-    }, 800);
-
-}
+        body.appendChild(response);
 
 
-/* BASIC HTML ESCAPING */
+        body.scrollTop =
+            body.scrollHeight;
 
-function escapeHTML(text) {
 
-    const div =
-        document.createElement("div");
-
-    div.textContent = text;
-
-    return div.innerHTML;
+    }, 900);
 
 }
+
+
+/* -------------------------------------------------------
+   ENTER TO SEND
+------------------------------------------------------- */
+
+document
+    .getElementById("aiInput")
+    ?.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Enter" &&
+                !event.shiftKey
+            ) {
+
+                event.preventDefault();
+
+                sendAIMessage();
+
+            }
+
+        }
+    );
+
 
 </script>
 
 
 </body>
+
 </html>
