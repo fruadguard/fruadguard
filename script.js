@@ -1,1331 +1,356 @@
-/* =========================================================
-   INSPECT CALLER
-   script.js
-   Global Frontend Controller
-   ========================================================= */
+let scanner = null;
+let lastScan = "";
 
 
-/* =========================================================
-   APP CONFIG
-   ========================================================= */
+/* =========================
+   CAMERA SCANNER
+========================= */
 
-const INSPECT_CALLER = {
+function startScanner() {
 
-    name: "Inspect Caller",
+  if (scanner) {
+    scanner.clear().catch(() => {});
+  }
 
-    version: "1.0.0",
+  scanner = new Html5Qrcode("reader");
 
-    mode: "prototype",
+  document.getElementById("status").textContent =
+    "📷 Starting camera...";
 
-    storageKey: "inspectCallerData",
+  scanner.start(
+    { facingMode: "environment" },
 
-    scanHistoryKey: "inspectCallerScanHistory",
+    {
+      fps: 10,
+      qrbox: {
+        width: 250,
+        height: 250
+      }
+    },
 
-    reportHistoryKey: "inspectCallerReports"
+    function (decodedText) {
 
-};
-
-
-
-/* =========================================================
-   DOM READY
-   ========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
-
-        initNavigation();
-
-        initMobileMenu();
-
-        initPasswordToggles();
-
-        initGlobalForms();
-
-        initCounters();
-
-        initScrollAnimations();
-
-        loadUserData();
-
-        updateYear();
-
-    }
-);
-
-
-
-/* =========================================================
-   NAVIGATION
-   ========================================================= */
-
-function initNavigation() {
-
-    const currentPage =
-        window.location.pathname
-            .split("/")
-            .pop()
-            .toLowerCase();
-
-
-    document
-        .querySelectorAll(
-            ".nav-links a"
-        )
-        .forEach(
-            link => {
-
-                const href =
-                    link
-                        .getAttribute("href")
-                        ?.split("/")
-                        .pop()
-                        .toLowerCase();
-
-
-                if (
-                    href &&
-                    href === currentPage
-                ) {
-
-                    link.classList.add(
-                        "active"
-                    );
-
-                }
-
-            }
-        );
-
-}
-
-
-
-/* =========================================================
-   MOBILE MENU
-   ========================================================= */
-
-function initMobileMenu() {
-
-    const menuButton =
-        document.querySelector(
-            ".mobile-menu-btn"
-        );
-
-
-    const nav =
-        document.querySelector(
-            ".nav-links"
-        );
-
-
-    if (
-        !menuButton ||
-        !nav
-    ) {
-
+      if (decodedText === lastScan) {
         return;
+      }
 
+      lastScan = decodedText;
+
+      stopScanner();
+
+      analyzeQR(decodedText);
+    },
+
+    function () {
+      // Continuous scan errors ignored.
     }
 
+  ).then(() => {
 
-    menuButton.addEventListener(
-        "click",
-        () => {
+    document.getElementById("status").textContent =
+      "Point the camera at a QR code.";
 
-            nav.classList.toggle(
-                "mobile-open"
-            );
+  }).catch(() => {
 
-            menuButton.classList.toggle(
-                "open"
-            );
+    document.getElementById("status").textContent =
+      "Camera permission is required.";
 
-        }
-    );
-
-
-    nav
-        .querySelectorAll("a")
-        .forEach(
-            link => {
-
-                link.addEventListener(
-                    "click",
-                    () => {
-
-                        nav.classList.remove(
-                            "mobile-open"
-                        );
-
-                    }
-                );
-
-            }
-        );
-
+  });
 }
 
 
+/* =========================
+   STOP CAMERA
+========================= */
 
-/* =========================================================
-   PASSWORD VISIBILITY
-   ========================================================= */
+function stopScanner() {
 
-function initPasswordToggles() {
+  if (!scanner) {
+    return;
+  }
 
-    document
-        .querySelectorAll(
-            "[data-password-toggle]"
-        )
-        .forEach(
-            button => {
-
-                button.addEventListener(
-                    "click",
-                    () => {
-
-                        const targetId =
-                            button.getAttribute(
-                                "data-password-toggle"
-                            );
-
-
-                        const input =
-                            document.getElementById(
-                                targetId
-                            );
-
-
-                        if (!input) {
-
-                            return;
-
-                        }
-
-
-                        const isPassword =
-                            input.type ===
-                            "password";
-
-
-                        input.type =
-                            isPassword
-                                ? "text"
-                                : "password";
-
-
-                        button.textContent =
-                            isPassword
-                                ? "🙈"
-                                : "👁️";
-
-                    }
-                );
-
-            }
-        );
-
+  scanner.stop().catch(() => {});
 }
 
 
+/* =========================
+   IMAGE QR SCANNER
+========================= */
 
-/* =========================================================
-   GLOBAL FORM HANDLER
-   ========================================================= */
+document
+  .getElementById("file")
+  .addEventListener("change", async function (event) {
 
-function initGlobalForms() {
+    const file = event.target.files[0];
 
-    document
-        .querySelectorAll(
-            "form[data-demo-form]"
-        )
-        .forEach(
-            form => {
-
-                form.addEventListener(
-                    "submit",
-                    event => {
-
-                        event.preventDefault();
-
-                        showToast(
-                            "Demo submission received.",
-                            "success"
-                        );
-
-                    }
-                );
-
-            }
-        );
-
-}
-
-
-
-/* =========================================================
-   TOAST SYSTEM
-   ========================================================= */
-
-function showToast(
-    message,
-    type = "info"
-) {
-
-    let container =
-        document.getElementById(
-            "inspectToastContainer"
-        );
-
-
-    if (!container) {
-
-        container =
-            document.createElement(
-                "div"
-            );
-
-        container.id =
-            "inspectToastContainer";
-
-
-        container.style.position =
-            "fixed";
-
-        container.style.right =
-            "20px";
-
-        container.style.bottom =
-            "20px";
-
-        container.style.zIndex =
-            "99999";
-
-        container.style.display =
-            "flex";
-
-        container.style.flexDirection =
-            "column";
-
-        container.style.gap =
-            "10px";
-
-
-        document.body.appendChild(
-            container
-        );
-
+    if (!file) {
+      return;
     }
-
-
-    const toast =
-        document.createElement(
-            "div"
-        );
-
-
-    toast.textContent =
-        message;
-
-
-    toast.style.padding =
-        "12px 16px";
-
-    toast.style.borderRadius =
-        "12px";
-
-    toast.style.border =
-        "1px solid #285873";
-
-    toast.style.background =
-        "#071b2b";
-
-    toast.style.color =
-        "#d7edf5";
-
-    toast.style.fontSize =
-        "10px";
-
-    toast.style.fontWeight =
-        "800";
-
-    toast.style.boxShadow =
-        "0 15px 40px rgba(0,0,0,.35)";
-
-
-    if (
-        type === "success"
-    ) {
-
-        toast.style.borderColor =
-            "#287a61";
-
-    }
-
-
-    if (
-        type === "danger"
-    ) {
-
-        toast.style.borderColor =
-            "#874252";
-
-    }
-
-
-    container.appendChild(
-        toast
-    );
-
-
-    setTimeout(
-        () => {
-
-            toast.style.opacity =
-                "0";
-
-            toast.style.transform =
-                "translateY(10px)";
-
-            toast.style.transition =
-                ".25s";
-
-
-            setTimeout(
-                () => {
-
-                    toast.remove();
-
-                },
-                250
-            );
-
-        },
-        2800
-    );
-
-}
-
-
-
-/* =========================================================
-   LOCAL USER DATA
-   ========================================================= */
-
-function getLocalData() {
 
     try {
 
-        return JSON.parse(
-            localStorage.getItem(
-                INSPECT_CALLER.storageKey
-            )
-        ) || {};
+      const imageScanner =
+        new Html5Qrcode("reader");
 
-    } catch {
+      const decoded =
+        await imageScanner.scanFile(file, true);
 
-        return {};
+      analyzeQR(decoded);
+
+      imageScanner.clear();
+
+    } catch (error) {
+
+      document.getElementById("status").textContent =
+        "❌ No readable QR code found.";
 
     }
 
-}
+  });
 
 
-function saveLocalData(
-    data
-) {
+/* =========================
+   QR ANALYSIS
+========================= */
 
-    localStorage.setItem(
-        INSPECT_CALLER.storageKey,
-        JSON.stringify(data)
-    );
+function analyzeQR(payload) {
 
-}
+  document.getElementById("result").style.display =
+    "block";
 
-
-
-/* =========================================================
-   USER DATA
-   ========================================================= */
-
-function loadUserData() {
-
-    const data =
-        getLocalData();
+  document.getElementById("rawPayload").textContent =
+    payload;
 
 
-    const nameElements =
-        document.querySelectorAll(
-            "[data-user-name]"
-        );
+  let type = "Text";
+  let provider = "Not encoded";
+  let bank = "Not encoded";
+  let merchant = "Not encoded";
+  let amount = "Not encoded";
+  let currency = "Not encoded";
+  let reference = "Not encoded";
+  let country = "Not encoded";
+
+  let risk = 10;
 
 
-    nameElements.forEach(
-        element => {
+  /* URL detection */
 
-            element.textContent =
-                data.name ||
-                "Inspect Caller User";
+  if (/^https?:\/\//i.test(payload)) {
 
-        }
-    );
+    type = "Website / Payment URL";
 
+    const httpsStatus =
+      document.getElementById("httpsStatus");
 
-    const emailElements =
-        document.querySelectorAll(
-            "[data-user-email]"
-        );
+    if (payload.startsWith("https://")) {
 
+      httpsStatus.textContent = "HTTPS ✓";
+      httpsStatus.className = "value safe";
 
-    emailElements.forEach(
-        element => {
+    } else {
 
-            element.textContent =
-                data.email ||
-                "user@example.com";
+      httpsStatus.textContent =
+        "HTTP — Review";
 
-        }
-    );
+      httpsStatus.className =
+        "value warning";
 
-}
-
-
-
-/* =========================================================
-   SAVE DEMO USER
-   ========================================================= */
-
-function saveDemoUser(
-    name,
-    email
-) {
-
-    const data = {
-
-        ...getLocalData(),
-
-        name,
-
-        email,
-
-        loggedIn: true,
-
-        updatedAt:
-            new Date().toISOString()
-
-    };
-
-
-    saveLocalData(
-        data
-    );
-
-}
-
-
-
-/* =========================================================
-   LOGOUT
-   ========================================================= */
-
-function logoutUser() {
-
-    const data =
-        getLocalData();
-
-
-    saveLocalData({
-
-        ...data,
-
-        loggedIn: false
-
-    });
-
-
-    showToast(
-        "Logged out successfully.",
-        "success"
-    );
-
-
-    setTimeout(
-        () => {
-
-            window.location.href =
-                "login.html";
-
-        },
-        600
-    );
-
-}
-
-
-
-/* =========================================================
-   SCAN HISTORY
-   ========================================================= */
-
-function getScanHistory() {
-
-    try {
-
-        return JSON.parse(
-            localStorage.getItem(
-                INSPECT_CALLER.scanHistoryKey
-            )
-        ) || [];
-
-    } catch {
-
-        return [];
-
+      risk += 25;
     }
+  }
 
-}
 
+  /* Payment payload parsing */
 
-function saveScanResult(
-    result
-) {
+  try {
 
-    const history =
-        getScanHistory();
+    const queryPart =
+      payload.includes("?")
+        ? payload.split("?")[1]
+        : payload;
 
+    const params =
+      new URLSearchParams(queryPart);
 
-    history.unshift({
 
-        ...result,
+    if (params.has("provider"))
+      provider = params.get("provider");
 
-        timestamp:
-            new Date().toISOString()
+    if (params.has("bank"))
+      bank = params.get("bank");
 
-    });
+    if (params.has("merchant"))
+      merchant = params.get("merchant");
 
+    if (params.has("amount"))
+      amount = params.get("amount");
 
-    /*
-       Keep latest 50 scans
-    */
+    if (params.has("currency"))
+      currency = params.get("currency");
 
-    const limited =
-        history.slice(
-            0,
-            50
-        );
+    if (params.has("ref"))
+      reference = params.get("ref");
 
-
-    localStorage.setItem(
-        INSPECT_CALLER.scanHistoryKey,
-        JSON.stringify(
-            limited
-        )
-    );
-
-}
-
-
-
-/* =========================================================
-   CLEAR SCAN HISTORY
-   ========================================================= */
-
-function clearScanHistory() {
-
-    localStorage.removeItem(
-        INSPECT_CALLER.scanHistoryKey
-    );
-
-
-    showToast(
-        "Scan history cleared.",
-        "success"
-    );
-
-
-    setTimeout(
-        () => {
-
-            location.reload();
-
-        },
-        500
-    );
-
-}
-
-
-
-/* =========================================================
-   REPORT HISTORY
-   ========================================================= */
-
-function saveReport(
-    report
-) {
-
-    let reports = [];
-
-
-    try {
-
-        reports =
-            JSON.parse(
-                localStorage.getItem(
-                    INSPECT_CALLER.reportHistoryKey
-                )
-            ) || [];
-
-    } catch {
-
-        reports = [];
-
-    }
-
-
-    reports.unshift({
-
-        ...report,
-
-        reportId:
-            generateReportId(),
-
-        timestamp:
-            new Date().toISOString(),
-
-        status:
-            "submitted"
-
-    });
-
-
-    localStorage.setItem(
-        INSPECT_CALLER.reportHistoryKey,
-        JSON.stringify(
-            reports.slice(
-                0,
-                100
-            )
-        )
-    );
-
-}
-
-
-
-/* =========================================================
-   REPORT ID
-   ========================================================= */
-
-function generateReportId() {
-
-    const random =
-        Math.floor(
-            100000 +
-            Math.random() *
-            900000
-        );
-
-
-    return (
-        "IC-" +
-        random
-    );
-
-}
-
-
-
-/* =========================================================
-   COPY TEXT
-   ========================================================= */
-
-async function copyText(
-    text
-) {
-
-    try {
-
-        await navigator.clipboard
-            .writeText(
-                text
-            );
-
-
-        showToast(
-            "Copied to clipboard.",
-            "success"
-        );
-
-
-        return true;
-
-    } catch {
-
-        showToast(
-            "Unable to copy.",
-            "danger"
-        );
-
-
-        return false;
-
-    }
-
-}
-
-
-
-/* =========================================================
-   COPY ELEMENT
-   ========================================================= */
-
-function copyElementText(
-    elementId
-) {
-
-    const element =
-        document.getElementById(
-            elementId
-        );
-
-
-    if (!element) {
-
-        return;
-
-    }
-
-
-    copyText(
-        element.textContent.trim()
-    );
-
-}
-
-
-
-/* =========================================================
-   SHARE RESULT
-   ========================================================= */
-
-async function shareResult(
-    title,
-    text
-) {
-
-    if (
-        navigator.share
-    ) {
-
-        try {
-
-            await navigator.share({
-
-                title,
-
-                text,
-
-                url:
-                    window.location.href
-
-            });
-
-        } catch {
-
-            /* User cancelled */
-
-        }
-
-        return;
-
-    }
-
-
-    copyText(
-        text
-    );
-
-}
-
-
-
-/* =========================================================
-   COUNTERS
-   ========================================================= */
-
-function initCounters() {
-
-    const counters =
-        document.querySelectorAll(
-            "[data-counter]"
-        );
-
-
-    counters.forEach(
-        counter => {
-
-            const target =
-                Number(
-                    counter.dataset.counter
-                );
-
-
-            if (
-                Number.isNaN(target)
-            ) {
-
-                return;
-
-            }
-
-
-            animateCounter(
-                counter,
-                target
-            );
-
-        }
-    );
-
-}
-
-
-function animateCounter(
-    element,
-    target
-) {
-
-    let current = 0;
-
-
-    const duration =
-        1200;
-
-
-    const start =
-        performance.now();
-
-
-    function update(
-        now
-    ) {
-
-        const progress =
-            Math.min(
-                (now - start) /
-                duration,
-                1
-            );
-
-
-        const eased =
-            1 -
-            Math.pow(
-                1 - progress,
-                3
-            );
-
-
-        current =
-            Math.floor(
-                target * eased
-            );
-
-
-        element.textContent =
-            current.toLocaleString();
-
-
-        if (
-            progress < 1
-        ) {
-
-            requestAnimationFrame(
-                update
-            );
-
-        }
-
-    }
-
-
-    requestAnimationFrame(
-        update
-    );
-
-}
-
-
-
-/* =========================================================
-   SCROLL ANIMATION
-   ========================================================= */
-
-function initScrollAnimations() {
-
-    const elements =
-        document.querySelectorAll(
-            "[data-reveal]"
-        );
+    if (params.has("country"))
+      country = params.get("country");
 
 
     if (
-        !elements.length
+      payload.toLowerCase().includes("payment")
     ) {
-
-        return;
-
+      type = "Payment QR";
     }
 
-
-    if (
-        !("IntersectionObserver" in window)
-    ) {
-
-        elements.forEach(
-            element => {
-
-                element.classList.add(
-                    "revealed"
-                );
-
-            }
-        );
-
-        return;
-
-    }
+  } catch (error) {
+    console.log("Payload parsing skipped.");
+  }
 
 
-    const observer =
-        new IntersectionObserver(
-            entries => {
+  /* Suspicious keyword detection */
 
-                entries.forEach(
-                    entry => {
-
-                        if (
-                            entry.isIntersecting
-                        ) {
-
-                            entry.target.classList.add(
-                                "revealed"
-                            );
+  const suspicious =
+    /urgent|verify|password|login|claim|free|gift|wallet|otp/i
+      .test(payload);
 
 
-                            observer.unobserve(
-                                entry.target
-                            );
+  if (suspicious) {
 
-                        }
+    risk += 45;
 
-                    }
-                );
+    const riskStatus =
+      document.getElementById("riskStatus");
 
-            },
-            {
-                threshold: .12
-            }
-        );
+    riskStatus.textContent =
+      "Review Required";
+
+    riskStatus.className =
+      "value warning";
+
+  } else {
+
+    const riskStatus =
+      document.getElementById("riskStatus");
+
+    riskStatus.textContent =
+      "Low";
+
+    riskStatus.className =
+      "value safe";
+  }
 
 
-    elements.forEach(
-        element => {
+  if (risk > 100) {
+    risk = 100;
+  }
 
-            observer.observe(
-                element
-            );
 
-        }
-    );
+  /* Risk display */
 
+  const riskScore =
+    document.getElementById("riskScore");
+
+  const riskLabel =
+    document.getElementById("riskLabel");
+
+
+  riskScore.textContent =
+    risk + "/100";
+
+
+  if (risk >= 70) {
+
+    riskLabel.textContent =
+      "HIGH RISK";
+
+    riskScore.style.color =
+      "#ff737e";
+
+    riskLabel.style.color =
+      "#ff737e";
+
+  } else if (risk >= 40) {
+
+    riskLabel.textContent =
+      "REVIEW";
+
+    riskScore.style.color =
+      "#f0b336";
+
+    riskLabel.style.color =
+      "#f0b336";
+
+  } else {
+
+    riskLabel.textContent =
+      "LOW RISK";
+
+    riskScore.style.color =
+      "#24e084";
+
+    riskLabel.style.color =
+      "#24e084";
+  }
+
+
+  /* Update result cards */
+
+  document.getElementById("qrType").textContent =
+    type;
+
+  document.getElementById("provider").textContent =
+    provider;
+
+  document.getElementById("bank").textContent =
+    bank;
+
+  document.getElementById("merchant").textContent =
+    merchant;
+
+  document.getElementById("amount").textContent =
+    amount;
+
+  document.getElementById("currency").textContent =
+    currency;
+
+  document.getElementById("reference").textContent =
+    reference;
+
+  document.getElementById("country").textContent =
+    country;
+
+
+  /* Scroll to result */
+
+  document.getElementById("result").scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
 }
 
 
+/* =========================
+   GENERATE REPORT
+========================= */
 
-/* =========================================================
-   YEAR
-   ========================================================= */
+function generateReport() {
 
-function updateYear() {
-
-    const year =
-        new Date()
-            .getFullYear();
+  const payload =
+    document.getElementById("rawPayload").textContent;
 
 
-    document
-        .querySelectorAll(
-            "[data-year]"
-        )
-        .forEach(
-            element => {
+  if (
+    !payload ||
+    payload === "Waiting for scan..."
+  ) {
 
-                element.textContent =
-                    year;
+    alert("Scan a QR code first.");
 
-            }
-        );
+    return;
+  }
 
+
+  window.location.href =
+    "report.html?type=qr&data=" +
+    encodeURIComponent(payload);
 }
-
-
-
-/* =========================================================
-   ACTIVE LINK
-   ========================================================= */
-
-function setActiveLink(
-    selector
-) {
-
-    document
-        .querySelectorAll(
-            selector
-        )
-        .forEach(
-            link => {
-
-                link.classList.remove(
-                    "active"
-                );
-
-            }
-        );
-
-
-    const element =
-        document.querySelector(
-            selector
-        );
-
-
-    if (element) {
-
-        element.classList.add(
-            "active"
-        );
-
-    }
-
-}
-
-
-
-/* =========================================================
-   SAFE TEXT ESCAPE
-   ========================================================= */
-
-function escapeHTML(
-    text
-) {
-
-    const div =
-        document.createElement(
-            "div"
-        );
-
-
-    div.textContent =
-        String(text);
-
-
-    return div.innerHTML;
-
-}
-
-
-
-/* =========================================================
-   FORMAT DATE
-   ========================================================= */
-
-function formatDate(
-    date
-) {
-
-    const value =
-        new Date(date);
-
-
-    if (
-        Number.isNaN(
-            value.getTime()
-        )
-    ) {
-
-        return "Unknown";
-
-    }
-
-
-    return value.toLocaleString(
-        undefined,
-        {
-
-            year: "numeric",
-
-            month: "short",
-
-            day: "numeric",
-
-            hour: "2-digit",
-
-            minute: "2-digit"
-
-        }
-    );
-
-}
-
-
-
-/* =========================================================
-   RISK LEVEL
-   ========================================================= */
-
-function getRiskLevel(
-    score
-) {
-
-    const value =
-        Number(score);
-
-
-    if (
-        value >= 70
-    ) {
-
-        return "high";
-
-    }
-
-
-    if (
-        value >= 40
-    ) {
-
-        return "medium";
-
-    }
-
-
-    return "low";
-
-}
-
-
-
-/* =========================================================
-   RISK LABEL
-   ========================================================= */
-
-function getRiskLabel(
-    score
-) {
-
-    const level =
-        getRiskLevel(
-            score
-        );
-
-
-    switch(level) {
-
-        case "high":
-
-            return "High Risk";
-
-
-        case "medium":
-
-            return "Medium Risk";
-
-
-        default:
-
-            return "Low Risk";
-
-    }
-
-}
-
-
-
-/* =========================================================
-   GLOBAL ESCAPE KEY
-   ========================================================= */
-
-document.addEventListener(
-    "keydown",
-    event => {
-
-        if (
-            event.key === "Escape"
-        ) {
-
-            document
-                .querySelectorAll(
-                    ".mobile-open"
-                )
-                .forEach(
-                    element => {
-
-                        element.classList.remove(
-                            "mobile-open"
-                        );
-
-                    }
-                );
-
-        }
-
-    }
-);
-
-
-
-/* =========================================================
-   GLOBAL EXPORTS
-   ========================================================= */
-
-window.InspectCaller = {
-
-    showToast,
-
-    getLocalData,
-
-    saveLocalData,
-
-    saveDemoUser,
-
-    logoutUser,
-
-    getScanHistory,
-
-    saveScanResult,
-
-    clearScanHistory,
-
-    saveReport,
-
-    generateReportId,
-
-    copyText,
-
-    copyElementText,
-
-    shareResult,
-
-    escapeHTML,
-
-    formatDate,
-
-    getRiskLevel,
-
-    getRiskLabel
-
-};
