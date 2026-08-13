@@ -1,1491 +1,688 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>QR Scanner — Inspect Caller</title>
-
-    <meta
-        name="description"
-        content="Inspect Caller QR Scanner — scan QR codes and inspect their destinations for potential security risks."
-    >
-
-    <link rel="stylesheet" href="style.css">
-
-    <style>
-
-        .qr-page {
-            min-height: 100vh;
-            padding: 65px 20px 100px;
-
-            background:
-                radial-gradient(
-                    circle at 50% 0%,
-                    rgba(0,150,255,.14),
-                    transparent 42%
-                ),
-                #050d18;
-        }
-
-        .qr-container {
-            width: min(1050px, 100%);
-            margin: auto;
-        }
-
-        /* HERO */
-
-        .qr-hero {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .qr-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-
-            padding: 9px 16px;
-
-            border: 1px solid #285873;
-            border-radius: 999px;
-
-            background: #071b2c;
-            color: #8bdcff;
-
-            font-size: 10px;
-            font-weight: 850;
-            letter-spacing: .8px;
-        }
-
-        .qr-hero h1 {
-            margin-top: 20px;
-
-            font-size:
-                clamp(42px, 7vw, 68px);
-
-            line-height: 1;
-            letter-spacing: -3px;
-        }
-
-        .qr-hero h1 span {
-            color: var(--blue);
-        }
-
-        .qr-hero p {
-            max-width: 700px;
-            margin: 18px auto 0;
-
-            color: var(--muted);
-
-            font-size: 14px;
-            line-height: 1.7;
-        }
-
-        /* MAIN CARD */
-
-        .qr-card {
-            padding: 30px;
-
-            border: 1px solid var(--line);
-            border-radius: 25px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #0a2034,
-                    #061522
-                );
-
-            box-shadow:
-                0 25px 80px
-                rgba(0,100,180,.08);
-        }
-
-        .scanner-area {
-            display: grid;
-
-            grid-template-columns:
-                1fr 1fr;
-
-            gap: 20px;
-        }
-
-        /* CAMERA */
-
-        .camera-box {
-            min-height: 360px;
-
-            display: flex;
-            flex-direction: column;
-
-            align-items: center;
-            justify-content: center;
-
-            position: relative;
-            overflow: hidden;
-
-            border:
-                1px solid #28536b;
-
-            border-radius: 20px;
-
-            background:
-                radial-gradient(
-                    circle,
-                    #0b2941,
-                    #061522 70%
-                );
-        }
-
-        .camera-frame {
-            width: 220px;
-            height: 220px;
-
-            position: relative;
-
-            border:
-                2px solid #27b8ff;
-
-            border-radius: 22px;
-
-            box-shadow:
-                0 0 40px
-                rgba(0,160,255,.12);
-        }
-
-        .corner {
-            position: absolute;
-
-            width: 35px;
-            height: 35px;
-
-            border-color: #61d5ff;
-            border-style: solid;
-        }
-
-        .corner.tl {
-            top: -3px;
-            left: -3px;
-
-            border-width: 4px 0 0 4px;
-
-            border-radius: 8px 0 0 0;
-        }
-
-        .corner.tr {
-            top: -3px;
-            right: -3px;
-
-            border-width: 4px 4px 0 0;
-
-            border-radius: 0 8px 0 0;
-        }
-
-        .corner.bl {
-            bottom: -3px;
-            left: -3px;
-
-            border-width: 0 0 4px 4px;
-
-            border-radius: 0 0 0 8px;
-        }
-
-        .corner.br {
-            bottom: -3px;
-            right: -3px;
-
-            border-width: 0 4px 4px 0;
-
-            border-radius: 0 0 8px 0;
-        }
-
-        .scan-line {
-            position: absolute;
-
-            left: 10px;
-            right: 10px;
-
-            top: 15px;
-
-            height: 2px;
-
-            background: #28c2ff;
-
-            box-shadow:
-                0 0 12px
-                #28c2ff;
-
-            animation:
-                scanLine 2s linear infinite;
-        }
-
-        @keyframes scanLine {
-
-            0% {
-                top: 15px;
-            }
-
-            50% {
-                top: calc(100% - 17px);
-            }
-
-            100% {
-                top: 15px;
-            }
-
-        }
-
-        .qr-symbol {
-            position: absolute;
-
-            inset: 0;
-
-            display: grid;
-
-            place-items: center;
-
-            font-size: 65px;
-
-            opacity: .12;
-        }
-
-        .camera-text {
-            margin-top: 20px;
-
-            color: #88a8b8;
-
-            font-size: 11px;
-
-            text-align: center;
-        }
-
-        .camera-btn {
-            margin-top: 12px;
-
-            min-height: 43px;
-
-            padding: 0 18px;
-
-            border: 1px solid #285873;
-            border-radius: 12px;
-
-            background: #071b2b;
-
-            color: #9fdcff;
-
-            font-size: 11px;
-            font-weight: 800;
-
-            cursor: pointer;
-        }
-
-        .camera-btn:hover {
-            border-color: var(--blue);
-        }
-
-        /* MANUAL */
-
-        .manual-box {
-            padding: 25px;
-
-            border:
-                1px solid #193c52;
-
-            border-radius: 20px;
-
-            background: #071827;
-        }
-
-        .manual-box h2 {
-            margin-bottom: 8px;
-
-            font-size: 18px;
-        }
-
-        .manual-box > p {
-            margin-bottom: 22px;
-
-            color: var(--muted);
-
-            font-size: 11px;
-            line-height: 1.6;
-        }
-
-        .input-label {
-            display: block;
-
-            margin-bottom: 8px;
-
-            color: #b9d2de;
-
-            font-size: 11px;
-            font-weight: 800;
-        }
-
-        .qr-input {
-            width: 100%;
-
-            min-height: 50px;
-
-            padding: 0 15px;
-
-            border:
-                1px solid #28536b;
-
-            border-radius: 13px;
-
-            outline: none;
-
-            background: #061725;
-
-            color: white;
-
-            font-size: 12px;
-        }
-
-        .qr-input::placeholder {
-            color: #587384;
-        }
-
-        .qr-input:focus {
-            border-color: var(--blue);
-
-            box-shadow:
-                0 0 0 3px
-                rgba(0,150,255,.08);
-        }
-
-        .analyze-btn {
-            width: 100%;
-
-            min-height: 50px;
-
-            margin-top: 12px;
-
-            border: none;
-            border-radius: 13px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #25b5ff,
-                    #087ddd
-                );
-
-            color: white;
-
-            font-size: 11px;
-            font-weight: 900;
-
-            cursor: pointer;
-        }
-
-        .analyze-btn:hover {
-            transform: translateY(-2px);
-
-            box-shadow:
-                0 14px 30px
-                rgba(0,140,255,.2);
-        }
-
-        .sample-btn {
-            width: 100%;
-
-            min-height: 42px;
-
-            margin-top: 9px;
-
-            border:
-                1px solid #285873;
-
-            border-radius: 12px;
-
-            background: #071b2b;
-
-            color: #86bdd4;
-
-            font-size: 10px;
-
-            cursor: pointer;
-        }
-
-        /* RESULT */
-
-        .result {
-            display: none;
-
-            margin-top: 22px;
-        }
-
-        .result.show {
-            display: block;
-        }
-
-        .result-header {
-            display: flex;
-
-            align-items: center;
-            justify-content: space-between;
-
-            gap: 15px;
-
-            padding: 20px;
-
-            border:
-                1px solid #285873;
-
-            border-radius: 18px;
-
-            background: #071a2a;
-        }
-
-        .result-url {
-            min-width: 0;
-        }
-
-        .result-url span {
-            display: block;
-
-            color: #718d9d;
-
-            font-size: 9px;
-        }
-
-        .result-url strong {
-            display: block;
-
-            margin-top: 6px;
-
-            color: #bfe5f3;
-
-            font-size: 13px;
-
-            word-break: break-all;
-        }
-
-        .risk-score {
-            min-width: 110px;
-
-            padding: 10px;
-
-            text-align: center;
-
-            border-radius: 13px;
-
-            background:
-                rgba(255,200,80,.07);
-
-            border:
-                1px solid rgba(255,200,80,.25);
-        }
-
-        .risk-score strong {
-            display: block;
-
-            color: #ffd267;
-
-            font-size: 24px;
-        }
-
-        .risk-score span {
-            color: #7693a3;
-
-            font-size: 8px;
-        }
-
-        /* SIGNALS */
-
-        .qr-signals {
-            display: grid;
-
-            grid-template-columns:
-                repeat(2, 1fr);
-
-            gap: 11px;
-
-            margin-top: 14px;
-        }
-
-        .qr-signal {
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            padding: 14px;
-
-            border:
-                1px solid #193c52;
-
-            border-radius: 12px;
-
-            background: #071827;
-        }
-
-        .signal-name {
-            display: flex;
-
-            align-items: center;
-
-            gap: 9px;
-        }
-
-        .signal-icon {
-            width: 34px;
-            height: 34px;
-
-            display: grid;
-
-            place-items: center;
-
-            border-radius: 9px;
-
-            background: #0b2941;
-        }
-
-        .signal-name strong {
-            display: block;
-
-            font-size: 10px;
-        }
-
-        .signal-name span {
-            display: block;
-
-            margin-top: 3px;
-
-            color: var(--muted);
-
-            font-size: 8px;
-        }
-
-        .status {
-            padding: 5px 8px;
-
-            border-radius: 999px;
-
-            font-size: 8px;
-
-            font-weight: 900;
-        }
-
-        .safe {
-            color: #4ce7aa;
-
-            background:
-                rgba(45,228,154,.08);
-
-            border:
-                1px solid rgba(45,228,154,.22);
-        }
-
-        .review {
-            color: #ffd267;
-
-            background:
-                rgba(255,200,80,.08);
-
-            border:
-                1px solid rgba(255,200,80,.22);
-        }
-
-        .danger {
-            color: #ff8194;
-
-            background:
-                rgba(255,70,95,.08);
-
-            border:
-                1px solid rgba(255,70,95,.22);
-        }
-
-        /* WARNING */
-
-        .warning {
-            margin-top: 14px;
-
-            padding: 15px;
-
-            border-left:
-                4px solid #ffc857;
-
-            border-radius: 9px;
-
-            background:
-                rgba(255,200,80,.06);
-
-            color: #bcae83;
-
-            font-size: 10px;
-
-            line-height: 1.7;
-        }
-
-        /* ACTIONS */
-
-        .actions {
-            display: flex;
-
-            gap: 10px;
-
-            margin-top: 16px;
-        }
-
-        .action-btn {
-            display: inline-flex;
-
-            align-items: center;
-            justify-content: center;
-
-            min-height: 43px;
-
-            padding: 0 16px;
-
-            border:
-                1px solid #285873;
-
-            border-radius: 11px;
-
-            background: #071b2b;
-
-            color: #9fdcff;
-
-            font-size: 10px;
-            font-weight: 800;
-
-            cursor: pointer;
-        }
-
-        .action-btn.primary {
-            border: none;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #159ddd,
-                    #0873cf
-                );
-
-            color: white;
-        }
-
-        /* INFO */
-
-        .info-grid {
-            display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 15px;
-
-            margin-top: 22px;
-        }
-
-        .info-card {
-            padding: 20px;
-
-            border:
-                1px solid var(--line);
-
-            border-radius: 18px;
-
-            background: #081d2f;
-        }
-
-        .info-icon {
-            margin-bottom: 10px;
-
-            font-size: 23px;
-        }
-
-        .info-card h3 {
-            margin-bottom: 6px;
-
-            font-size: 14px;
-        }
-
-        .info-card p {
-            color: var(--muted);
-
-            font-size: 10px;
-
-            line-height: 1.6;
-        }
-
-        /* MOBILE */
-
-        @media(max-width: 800px) {
-
-            .scanner-area {
-                grid-template-columns: 1fr;
-            }
-
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-
-        }
-
-        @media(max-width: 600px) {
-
-            .qr-page {
-                padding: 45px 12px 80px;
-            }
-
-            .qr-card {
-                padding: 20px;
-            }
-
-            .camera-box {
-                min-height: 310px;
-            }
-
-            .camera-frame {
-                width: 190px;
-                height: 190px;
-            }
-
-            .qr-signals {
-                grid-template-columns: 1fr;
-            }
-
-            .result-header {
-                align-items: flex-start;
-                flex-direction: column;
-            }
-
-            .actions {
-                flex-direction: column;
-            }
-
-        }
-
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>QR Scanner | Inspect Caller</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #071526;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+
+    .page {
+      max-width: 1050px;
+      margin: auto;
+      padding: 45px 18px 70px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .hero-icon {
+      font-size: 45px;
+    }
+
+    .hero h1 {
+      font-size: 32px;
+      margin: 10px 0;
+    }
+
+    .hero p {
+      color: #91a7bb;
+      line-height: 1.6;
+    }
+
+    .scanner {
+      max-width: 620px;
+      margin: auto;
+      background: #0d2035;
+      border: 1px solid #203b55;
+      border-radius: 18px;
+      padding: 22px;
+    }
+
+    .scanner h2 {
+      text-align: center;
+      margin-top: 0;
+    }
+
+    #reader {
+      width: 100%;
+      overflow: hidden;
+      border-radius: 12px;
+      background: #081a2b;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .btn {
+      flex: 1;
+      height: 48px;
+      border: 0;
+      border-radius: 9px;
+      background: linear-gradient(135deg,#00d4ff,#2878ff);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .btn.secondary {
+      background: #162d44;
+      border: 1px solid #34526d;
+    }
+
+    #upload {
+      display: none;
+    }
+
+    #status {
+      text-align: center;
+      color: #8fa5b8;
+      font-size: 13px;
+      margin-top: 15px;
+    }
+
+    #result {
+      display: none;
+      margin-top: 25px;
+    }
+
+    .alert {
+      padding: 14px;
+      border-radius: 10px;
+      background: rgba(240,179,54,.10);
+      border: 1px solid rgba(240,179,54,.3);
+      color: #f0b336;
+      font-size: 13px;
+      line-height: 1.5;
+      margin-bottom: 15px;
+    }
+
+    .result-card {
+      background: #0d2035;
+      border: 1px solid #203b55;
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 15px;
+    }
+
+    .result-card h3 {
+      margin-top: 0;
+      color: #00d4ff;
+    }
+
+    .qr-value {
+      word-break: break-all;
+      padding: 13px;
+      border-radius: 9px;
+      background: #081a2b;
+      border: 1px solid #203b55;
+      color: #dce8f2;
+      font-size: 13px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 15px;
+    }
+
+    .item {
+      background: #0d2035;
+      border: 1px solid #203b55;
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    .item h4 {
+      margin: 0 0 10px;
+      color: #00d4ff;
+    }
+
+    .item p {
+      color: #8fa5b8;
+      font-size: 12px;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .safe {
+      color: #24e084 !important;
+      font-weight: bold;
+    }
+
+    .warning {
+      color: #f0b336 !important;
+      font-weight: bold;
+    }
+
+    .danger {
+      color: #ff737e !important;
+      font-weight: bold;
+    }
+
+    .report-btn {
+      width: 100%;
+      height: 48px;
+      border: 0;
+      border-radius: 9px;
+      background: linear-gradient(135deg,#2878ff,#00aeea);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    @media(max-width:650px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .buttons {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
-
 
 <body>
 
+<div class="page">
 
-<!-- ================= NAVBAR ================= -->
+  <div class="hero">
 
-<header class="navbar">
+    <div class="hero-icon">🔳</div>
 
-    <div class="nav-container">
+    <h1>QR Code Scanner</h1>
 
-        <a href="index.html" class="brand">
-            INSPECT<span>CALLER</span>
-        </a>
+    <p>
+      Scan QR codes and analyze links for potential
+      phishing, scam and malicious activity.
+    </p>
 
-        <nav class="nav-links">
+  </div>
 
-            <a href="dashboard.html">
-                Dashboard
-            </a>
 
-            <a href="scanner.html">
-                Scanner
-            </a>
+  <div class="scanner">
 
-            <a href="phone-checker.html">
-                Caller
-            </a>
+    <h2>Scan QR Code</h2>
 
-            <a href="report.html">
-                Report
-            </a>
+    <div id="reader"></div>
 
-        </nav>
+    <div class="buttons">
 
-        <a href="dashboard.html" class="nav-login">
-            Dashboard
-        </a>
+      <button
+        class="btn"
+        onclick="startScanner()"
+      >
+        📷 Start Camera
+      </button>
+
+      <label
+        for="upload"
+        class="btn secondary"
+        style="
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          cursor:pointer;
+        "
+      >
+        🖼️ Upload QR
+      </label>
+
+      <input
+        type="file"
+        id="upload"
+        accept="image/*"
+      >
 
     </div>
 
-</header>
+    <div id="status">
+      Camera scanner ready.
+    </div>
+
+  </div>
 
 
+  <div id="result">
 
-<!-- ================= PAGE ================= -->
+    <div class="alert">
+      ⚠️ <strong>DEMO ANALYSIS:</strong>
+      QR content is analyzed locally for demonstration.
+      A real malicious-site verdict requires a trusted threat-intelligence
+      service or backend security API.
+    </div>
 
-<main class="qr-page">
 
-<div class="qr-container">
+    <div class="result-card">
+
+      <h3>🔍 Scan Result</h3>
+
+      <div
+        id="qrContent"
+        class="qr-value"
+      >
+        No QR code scanned.
+      </div>
+
+    </div>
 
 
-    <!-- HERO -->
+    <div class="grid">
 
-    <section class="qr-hero">
+      <div class="item">
 
-        <div class="qr-badge">
-            📷 QR SECURITY SCANNER
-        </div>
+        <h4>🌐 Destination</h4>
 
-        <h1>
-            QR <span>Scanner</span>
-        </h1>
-
-        <p>
-            Scan a QR code or enter its decoded
-            destination to inspect potential phishing,
-            malicious-link and scam indicators before
-            opening it.
+        <p id="destination">
+          Waiting for scan...
         </p>
 
-    </section>
+      </div>
 
 
+      <div class="item">
 
-    <!-- MAIN CARD -->
+        <h4>🛡️ Risk Score</h4>
 
-    <section class="qr-card">
+        <p
+          id="risk"
+          class="safe"
+        >
+          Waiting for analysis...
+        </p>
 
+      </div>
 
-        <div class="scanner-area">
 
+      <div class="item">
 
-            <!-- CAMERA AREA -->
+        <h4>🎣 Phishing Check</h4>
 
-            <div class="camera-box">
+        <p
+          id="phishing"
+          class="safe"
+        >
+          Waiting for analysis...
+        </p>
 
-                <div class="camera-frame">
+      </div>
 
-                    <div class="corner tl"></div>
-                    <div class="corner tr"></div>
-                    <div class="corner bl"></div>
-                    <div class="corner br"></div>
 
-                    <div class="scan-line"></div>
+      <div class="item">
 
-                    <div class="qr-symbol">
-                        ▦
-                    </div>
+        <h4>🔗 URL Status</h4>
 
-                </div>
+        <p id="urlStatus">
+          Waiting for analysis...
+        </p>
 
-                <div class="camera-text">
-                    Position a QR code inside the frame
-                </div>
+      </div>
 
-                <button
-                    class="camera-btn"
-                    onclick="startCamera()">
 
-                    📷 Start Camera
+      <div class="item">
 
-                </button>
+        <h4>📊 QR Type</h4>
 
-            </div>
+        <p id="qrType">
+          Unknown
+        </p>
 
+      </div>
 
 
-            <!-- MANUAL AREA -->
+      <div class="item">
 
-            <div class="manual-box">
+        <h4>🔐 Security</h4>
 
-                <h2>
-                    Inspect QR Destination
-                </h2>
+        <p
+          id="security"
+          class="safe"
+        >
+          Pending
+        </p>
 
-                <p>
-                    Already scanned the QR code?
-                    Paste the URL or decoded text below
-                    for a security analysis.
-                </p>
+      </div>
 
+    </div>
 
-                <label
-                    class="input-label"
-                    for="qrInput">
 
-                    QR URL / Data
+    <div
+      class="result-card"
+      style="margin-top:15px;"
+    >
 
-                </label>
+      <h3>🕵️ Evidence</h3>
 
+      <p
+        id="evidence"
+        style="
+          color:#8fa5b8;
+          font-size:13px;
+          line-height:1.7;
+        "
+      >
+        No evidence available.
+      </p>
 
-                <input
-                    type="text"
-                    id="qrInput"
-                    class="qr-input"
-                    placeholder="https://example.com/..."
-                    autocomplete="off"
-                >
+    </div>
 
 
-                <button
-                    class="analyze-btn"
-                    onclick="analyzeQR()">
+    <div
+      class="result-card"
+      style="margin-top:15px;"
+    >
 
-                    🔍 Analyze QR Destination
+      <button
+        class="report-btn"
+        onclick="reportQR()"
+      >
+        🚨 Report Suspicious QR
+      </button>
 
-                </button>
+    </div>
 
-
-                <button
-                    class="sample-btn"
-                    onclick="loadSample()">
-
-                    Use Demo QR
-
-                </button>
-
-
-                <!-- RESULT -->
-
-                <div
-                    id="result"
-                    class="result">
-
-
-                    <div class="result-header">
-
-                        <div class="result-url">
-
-                            <span>
-                                DECODED DESTINATION
-                            </span>
-
-                            <strong id="resultUrl">
-                                —
-                            </strong>
-
-                        </div>
-
-
-                        <div class="risk-score">
-
-                            <strong id="riskScore">
-                                18
-                            </strong>
-
-                            <span>
-                                RISK / 100
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="qr-signals">
-
-
-                        <div class="qr-signal">
-
-                            <div class="signal-name">
-
-                                <div class="signal-icon">
-                                    🌐
-                                </div>
-
-                                <div>
-
-                                    <strong>
-                                        Domain
-                                    </strong>
-
-                                    <span>
-                                        Destination check
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-                            <span
-                                class="status safe"
-                                id="domainStatus">
-
-                                CHECKED
-
-                            </span>
-
-                        </div>
-
-
-                        <div class="qr-signal">
-
-                            <div class="signal-name">
-
-                                <div class="signal-icon">
-                                    🎣
-                                </div>
-
-                                <div>
-
-                                    <strong>
-                                        Phishing Signals
-                                    </strong>
-
-                                    <span>
-                                        Suspicious patterns
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-                            <span
-                                class="status safe"
-                                id="phishingStatus">
-
-                                LOW
-
-                            </span>
-
-                        </div>
-
-
-                        <div class="qr-signal">
-
-                            <div class="signal-name">
-
-                                <div class="signal-icon">
-                                    🔗
-                                </div>
-
-                                <div>
-
-                                    <strong>
-                                        Redirects
-                                    </strong>
-
-                                    <span>
-                                        Link behavior
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-                            <span class="status review">
-                                REVIEW
-                            </span>
-
-                        </div>
-
-
-                        <div class="qr-signal">
-
-                            <div class="signal-name">
-
-                                <div class="signal-icon">
-                                    💳
-                                </div>
-
-                                <div>
-
-                                    <strong>
-                                        Payment Request
-                                    </strong>
-
-                                    <span>
-                                        Financial activity
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-                            <span class="status safe">
-                                LOW
-                            </span>
-
-                        </div>
-
-
-                    </div>
-
-
-                    <div class="warning">
-
-                        ⚠️ <strong>Important:</strong>
-                        A QR scan result is a security
-                        indicator, not proof that a website
-                        is safe or fraudulent. Do not enter
-                        passwords, OTPs or payment details
-                        unless you trust the destination.
-
-                    </div>
-
-
-                    <div class="actions">
-
-                        <a
-                            href="report.html"
-                            class="action-btn primary">
-
-                            🚨 Report Suspicious Link
-
-                        </a>
-
-
-                        <button
-                            class="action-btn"
-                            onclick="copyResult()">
-
-                            📋 Copy Result
-
-                        </button>
-
-
-                        <a
-                            href="ai-chat.html"
-                            class="action-btn">
-
-                            🤖 AI Analysis
-
-                        </a>
-
-                    </div>
-
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- INFO -->
-
-    <section class="info-grid">
-
-
-        <div class="info-card">
-
-            <div class="info-icon">
-                🎣
-            </div>
-
-            <h3>
-                Phishing Protection
-            </h3>
-
-            <p>
-                Inspect QR destinations for potential
-                phishing and suspicious URL patterns.
-            </p>
-
-        </div>
-
-
-        <div class="info-card">
-
-            <div class="info-icon">
-                🔐
-            </div>
-
-            <h3>
-                Safer Before Opening
-            </h3>
-
-            <p>
-                Analyze a destination before entering
-                sensitive information or making payments.
-            </p>
-
-        </div>
-
-
-        <div class="info-card">
-
-            <div class="info-icon">
-                🚨
-            </div>
-
-            <h3>
-                Community Reports
-            </h3>
-
-            <p>
-                Future versions can connect QR results
-                with user reports and threat intelligence.
-            </p>
-
-        </div>
-
-
-    </section>
-
+  </div>
 
 </div>
 
-</main>
 
+<!-- QR SCANNER LIBRARY -->
 
-
-<!-- ================= FOOTER ================= -->
-
-<footer>
-
-    <div class="footer-brand">
-        INSPECT<span>CALLER</span>
-    </div>
-
-    <p>
-        Global Caller Security & Anti-Fraud Technology
-    </p>
-
-    <div class="footer-links">
-
-        <a href="index.html">Home</a>
-
-        <a href="features.html">Features</a>
-
-        <a href="about.html">About</a>
-
-        <a href="contact.html">Contact</a>
-
-        <a href="privacy-policy.html">Privacy</a>
-
-        <a href="terms.html">Terms</a>
-
-        <a href="cookie-policy.html">Cookies</a>
-
-        <a href="disclaimer.html">Disclaimer</a>
-
-    </div>
-
-    <p class="copyright">
-        © 2026 Inspect Caller.
-        Idea / Pre-Launch Prototype.
-    </p>
-
-</footer>
-
+<script src="https://unpkg.com/html5-qrcode"></script>
 
 
 <script>
 
-function analyzeQR() {
+let scanner = null;
+let lastResult = "";
 
-    const input =
-        document.getElementById("qrInput");
 
-    const value =
-        input.value.trim();
+function startScanner() {
 
-    const result =
-        document.getElementById("result");
+  if (scanner) {
 
-    if (!value) {
+    scanner.clear().catch(() => {});
 
-        alert(
-            "Please enter a QR URL or decoded data."
-        );
+  }
 
-        input.focus();
 
+  scanner = new Html5Qrcode("reader");
+
+  document.getElementById("status").textContent =
+    "📷 Starting camera...";
+
+
+  scanner.start(
+
+    { facingMode: "environment" },
+
+    {
+      fps: 10,
+      qrbox: {
+        width: 250,
+        height: 250
+      }
+    },
+
+    (decodedText) => {
+
+      if (decodedText === lastResult) {
         return;
+      }
+
+      lastResult = decodedText;
+
+      stopScanner();
+
+      analyzeQR(decodedText);
+
+    },
+
+    () => {
+
+      // Ignore continuous scan errors.
 
     }
 
+  ).then(() => {
 
-    result.classList.add("show");
+    document.getElementById("status").textContent =
+      "Point your camera at a QR code.";
 
+  }).catch((error) => {
 
-    document.getElementById(
-        "resultUrl"
-    ).textContent = value;
+    document.getElementById("status").textContent =
+      "Camera access failed. Please allow camera permission.";
 
+  });
 
-    /*
-        Demo risk analysis.
-
-        Production version can connect this
-        interface to an authorized URL reputation
-        / threat-intelligence backend.
-    */
-
-    let score = 18;
+}
 
 
-    const suspiciousWords = [
+function stopScanner() {
 
-        "login",
-        "verify",
-        "account",
-        "password",
-        "wallet",
-        "crypto",
-        "payment",
-        "prize",
-        "winner",
-        "claim",
-        "free",
-        "gift",
-        "loan"
+  if (!scanner) {
+    return;
+  }
 
-    ];
+  scanner.stop().catch(() => {});
+
+}
 
 
-    const lower =
-        value.toLowerCase();
+document
+  .getElementById("upload")
+  .addEventListener("change", async function(e) {
 
+    const file = e.target.files[0];
 
-    suspiciousWords.forEach(
-        function(word) {
+    if (!file) {
+      return;
+    }
 
-            if (
-                lower.includes(word)
-            ) {
+    try {
 
-                score += 6;
+      const fileScanner =
+        new Html5Qrcode("reader");
 
-            }
+      const decodedText =
+        await fileScanner.scanFile(file, true);
 
-        }
-    );
+      analyzeQR(decodedText);
 
-
-    if (
-        lower.startsWith("http://")
-    ) {
-
-        score += 15;
+      fileScanner.clear();
 
     }
 
+    catch(error) {
 
-    if (
-        !lower.includes("https://") &&
-        lower.includes("login")
-    ) {
-
-        score += 15;
+      document.getElementById("status").textContent =
+        "❌ No readable QR code found in this image.";
 
     }
 
-
-    score =
-        Math.min(score, 95);
+  });
 
 
-    document.getElementById(
-        "riskScore"
-    ).textContent = score;
+function analyzeQR(text) {
+
+  document.getElementById("result")
+    .style.display = "block";
 
 
-    const risk =
-        document.querySelector(
-            "#riskScore"
-        );
+  document.getElementById("qrContent")
+    .textContent = text;
 
 
-    if (score >= 70) {
+  let type = "Text";
 
-        risk.style.color =
-            "#ff7d91";
+  let destination = text;
 
-        document.getElementById(
-            "phishingStatus"
-        ).textContent =
-            "HIGH";
 
-        document.getElementById(
-            "phishingStatus"
-        ).className =
-            "status danger";
+  if (/^https?:\/\//i.test(text)) {
 
-    }
+    type = "Website URL";
 
-    else if (score >= 40) {
+    destination = text;
 
-        risk.style.color =
-            "#ffd267";
+  }
 
-        document.getElementById(
-            "phishingStatus"
-        ).textContent =
-            "REVIEW";
+  else if (/^mailto:/i.test(text)) {
 
-        document.getElementById(
-            "phishingStatus"
-        ).className =
-            "status review";
+    type = "Email";
+
+  }
+
+  else if (/^tel:/i.test(text)) {
+
+    type = "Phone Number";
+
+  }
+
+  else if (/^upi:/i.test(text)) {
+
+    type = "Payment / UPI";
+
+  }
+
+
+  document.getElementById("qrType")
+    .textContent = type;
+
+
+  document.getElementById("destination")
+    .textContent = destination;
+
+
+  /*
+    DEMO HEURISTICS ONLY.
+    This does not claim to be a real threat-intelligence verdict.
+  */
+
+  let score = 10;
+
+  let phishingStatus =
+    "No obvious phishing pattern detected.";
+
+  let securityStatus =
+    "Demo analysis complete.";
+
+  let evidence =
+    "QR content decoded successfully.<br>" +
+    "Content type identified: " + type + ".<br>" +
+    "No external threat-intelligence database was queried.";
+
+
+  if (/https?:\/\//i.test(text)) {
+
+    const suspiciousWords =
+      /login|verify|account|password|wallet|claim|gift|free|urgent|secure|update/i;
+
+    if (suspiciousWords.test(text)) {
+
+      score = 72;
+
+      phishingStatus =
+        "⚠️ Suspicious keywords detected.";
+
+      securityStatus =
+        "Review destination before opening.";
+
+      evidence +=
+        "<br>Suspicious URL keywords detected.";
+
+      document.getElementById("risk")
+        .className = "warning";
 
     }
 
     else {
 
-        risk.style.color =
-            "#4ce7aa";
+      score = 12;
+
+      phishingStatus =
+        "No obvious phishing keyword detected.";
+
+      securityStatus =
+        "Low demo risk.";
+
+      document.getElementById("risk")
+        .className = "safe";
 
     }
 
-}
+  }
 
 
-function loadSample() {
-
-    document.getElementById(
-        "qrInput"
-    ).value =
-        "https://example.com/security-check";
-
-    analyzeQR();
-
-}
+  document.getElementById("risk")
+    .textContent =
+      score + " / 100";
 
 
-function copyResult() {
-
-    const url =
-        document.getElementById(
-            "resultUrl"
-        ).textContent;
-
-    const score =
-        document.getElementById(
-            "riskScore"
-        ).textContent;
+  document.getElementById("phishing")
+    .textContent =
+      phishingStatus;
 
 
-    const text =
-
-        "Inspect Caller QR Scan\n" +
-        "Destination: " + url + "\n" +
-        "Demo Risk Score: " +
-        score +
-        "/100\n" +
-        "Prototype result — not a verified security determination.";
+  document.getElementById("security")
+    .textContent =
+      securityStatus;
 
 
-    if (navigator.clipboard) {
+  document.getElementById("evidence")
+    .innerHTML =
+      evidence;
 
-        navigator.clipboard
-            .writeText(text)
-            .then(function() {
 
-                alert(
-                    "QR scan result copied."
-                );
-
-            });
-
-    }
+  document.getElementById("result")
+    .scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
 
 }
 
 
-function startCamera() {
+function reportQR() {
 
-    alert(
-        "Camera QR scanning is planned for the next prototype version. For now, paste the decoded QR destination below."
-    );
+  const content =
+    document.getElementById("qrContent")
+    .textContent;
+
+  if (!content ||
+      content === "No QR code scanned.") {
+
+    alert("Scan a QR code first.");
+
+    return;
+
+  }
+
+
+  window.location.href =
+    "report.html?type=qr&data=" +
+    encodeURIComponent(content);
 
 }
 
 </script>
-
 
 </body>
 </html>
