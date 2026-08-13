@@ -1,1287 +1,540 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Login — Inspect Caller</title>
-
-    <meta
-        name="description"
-        content="Securely login to your Inspect Caller account."
-    >
-
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
-
-    <style>
-
-        /* ================= PAGE ================= */
-
-        .login-page {
-
-            min-height: 100vh;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            padding: 40px 16px;
-
-            background:
-                radial-gradient(
-                    circle at 50% 10%,
-                    rgba(0,160,255,.16),
-                    transparent 42%
-                ),
-                #050d18;
-
-            overflow: hidden;
-
-            position: relative;
-
-        }
-
-
-        /* ================= BACKGROUND ================= */
-
-        .login-orb {
-
-            position: absolute;
-
-            border-radius: 50%;
-
-            filter: blur(70px);
-
-            pointer-events: none;
-
-        }
-
-        .orb-one {
-
-            width: 220px;
-            height: 220px;
-
-            top: 8%;
-            left: 8%;
-
-            background:
-                rgba(0,140,255,.08);
-
-            animation:
-                floatOrb 7s ease-in-out infinite;
-
-        }
-
-        .orb-two {
-
-            width: 250px;
-            height: 250px;
-
-            right: 5%;
-            bottom: 5%;
-
-            background:
-                rgba(0,220,180,.06);
-
-            animation:
-                floatOrb 9s ease-in-out infinite reverse;
-
-        }
-
-        @keyframes floatOrb {
-
-            0%,100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-25px);
-            }
-
-        }
-
-
-        /* ================= LOGIN BOX ================= */
-
-        .login-wrapper {
-
-            width: min(430px, 100%);
-
-            position: relative;
-
-            z-index: 2;
-
-            animation:
-                loginEnter .7s ease;
-
-        }
-
-        @keyframes loginEnter {
-
-            from {
-
-                opacity: 0;
-
-                transform:
-                    translateY(25px)
-                    scale(.98);
-
-            }
-
-            to {
-
-                opacity: 1;
-
-                transform:
-                    translateY(0)
-                    scale(1);
-
-            }
-
-        }
-
-
-        .login-card {
-
-            padding: 35px;
-
-            border:
-                1px solid #1d465e;
-
-            border-radius: 25px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(10,32,52,.96),
-                    rgba(5,19,31,.96)
-                );
-
-            box-shadow:
-                0 30px 90px
-                rgba(0,80,140,.18);
-
-            backdrop-filter:
-                blur(18px);
-
-        }
-
-
-        /* ================= BRAND ================= */
-
-        .login-brand {
-
-            text-align: center;
-
-            margin-bottom: 28px;
-
-        }
-
-        .brand-icon {
-
-            width: 64px;
-            height: 64px;
-
-            display: grid;
-
-            place-items: center;
-
-            margin: 0 auto 16px;
-
-            border:
-                1px solid #2a7398;
-
-            border-radius: 19px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #0b3652,
-                    #071a2b
-                );
-
-            box-shadow:
-                0 0 35px
-                rgba(0,150,255,.12);
-
-            font-size: 28px;
-
-            animation:
-                shieldPulse 2.5s ease-in-out infinite;
-
-        }
-
-        @keyframes shieldPulse {
-
-            0%,100% {
-                box-shadow:
-                    0 0 25px
-                    rgba(0,150,255,.08);
-            }
-
-            50% {
-                box-shadow:
-                    0 0 45px
-                    rgba(0,150,255,.2);
-            }
-
-        }
-
-
-        .login-brand h1 {
-
-            font-size: 25px;
-
-            letter-spacing: -.8px;
-
-        }
-
-        .login-brand h1 span {
-
-            color: var(--blue);
-
-        }
-
-        .login-brand p {
-
-            margin-top: 7px;
-
-            color: var(--muted);
-
-            font-size: 11px;
-
-        }
-
-
-        /* ================= FORM ================= */
-
-        .form-group {
-
-            margin-bottom: 17px;
-
-        }
-
-        .form-label {
-
-            display: block;
-
-            margin-bottom: 8px;
-
-            color: #b9d2de;
-
-            font-size: 11px;
-
-            font-weight: 800;
-
-        }
-
-
-        .input-wrap {
-
-            position: relative;
-
-        }
-
-
-        .input-icon {
-
-            position: absolute;
-
-            left: 14px;
-
-            top: 50%;
-
-            transform:
-                translateY(-50%);
-
-            font-size: 15px;
-
-            opacity: .8;
-
-        }
-
-
-        .login-input {
-
-            width: 100%;
-
-            min-height: 50px;
-
-            padding:
-                0 44px;
-
-            border:
-                1px solid #28536b;
-
-            border-radius: 13px;
-
-            outline: none;
-
-            background: #061725;
-
-            color: #ffffff;
-
-            font-size: 13px;
-
-            transition: .2s;
-
-        }
-
-        .login-input::placeholder {
-
-            color: #587384;
-
-        }
-
-        .login-input:focus {
-
-            border-color:
-                #24b7ff;
-
-            box-shadow:
-                0 0 0 3px
-                rgba(0,160,255,.08);
-
-        }
-
-
-        .password-toggle {
-
-            position: absolute;
-
-            right: 13px;
-
-            top: 50%;
-
-            transform:
-                translateY(-50%);
-
-            border: none;
-
-            background: transparent;
-
-            color: #7895a5;
-
-            cursor: pointer;
-
-            font-size: 14px;
-
-        }
-
-        .password-toggle:hover {
-
-            color: #ffffff;
-
-        }
-
-
-        /* ================= OPTIONS ================= */
-
-        .login-options {
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            gap: 10px;
-
-            margin:
-                5px 0 20px;
-
-        }
-
-
-        .remember {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 7px;
-
-            color: #7895a5;
-
-            font-size: 10px;
-
-            cursor: pointer;
-
-        }
-
-        .remember input {
-
-            accent-color:
-                #159ddd;
-
-        }
-
-
-        .forgot {
-
-            color: #72d2ff;
-
-            font-size: 10px;
-
-            font-weight: 700;
-
-        }
-
-
-        /* ================= LOGIN BUTTON ================= */
-
-        .login-btn {
-
-            width: 100%;
-
-            min-height: 51px;
-
-            border: none;
-
-            border-radius: 13px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #25b5ff,
-                    #087ddd
-                );
-
-            color: #ffffff;
-
-            font-size: 12px;
-
-            font-weight: 900;
-
-            cursor: pointer;
-
-            transition: .25s;
-
-            box-shadow:
-                0 10px 30px
-                rgba(0,130,220,.15);
-
-        }
-
-        .login-btn:hover {
-
-            transform:
-                translateY(-2px);
-
-            box-shadow:
-                0 15px 35px
-                rgba(0,140,255,.25);
-
-        }
-
-        .login-btn:disabled {
-
-            opacity: .65;
-
-            cursor: not-allowed;
-
-            transform: none;
-
-        }
-
-
-        /* ================= DIVIDER ================= */
-
-        .divider {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 12px;
-
-            margin: 22px 0;
-
-            color: #536f7f;
-
-            font-size: 9px;
-
-        }
-
-        .divider::before,
-        .divider::after {
-
-            content: "";
-
-            flex: 1;
-
-            height: 1px;
-
-            background:
-                #18394e;
-
-        }
-
-
-        /* ================= GOOGLE ================= */
-
-        .google-btn {
-
-            width: 100%;
-
-            min-height: 47px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            gap: 9px;
-
-            border:
-                1px solid #28536b;
-
-            border-radius: 13px;
-
-            background:
-                #071b2b;
-
-            color: #c2d5de;
-
-            font-size: 11px;
-
-            font-weight: 800;
-
-            cursor: pointer;
-
-            transition: .2s;
-
-        }
-
-        .google-btn:hover {
-
-            border-color:
-                #397a9e;
-
-            background:
-                #092238;
-
-        }
-
-
-        /* ================= REGISTER ================= */
-
-        .register-text {
-
-            margin-top: 24px;
-
-            text-align: center;
-
-            color: #708a99;
-
-            font-size: 11px;
-
-        }
-
-        .register-text a {
-
-            color: #6fd4ff;
-
-            font-weight: 800;
-
-        }
-
-
-        /* ================= SECURITY ================= */
-
-        .security-note {
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            gap: 7px;
-
-            margin-top: 21px;
-
-            color: #5f7887;
-
-            font-size: 9px;
-
-        }
-
-
-        /* ================= ERROR ================= */
-
-        .form-message {
-
-            display: none;
-
-            margin-bottom: 15px;
-
-            padding:
-                11px 13px;
-
-            border-left:
-                3px solid #ff687e;
-
-            border-radius: 9px;
-
-            background:
-                rgba(255,70,95,.06);
-
-            color: #e7aeb6;
-
-            font-size: 10px;
-
-            line-height: 1.5;
-
-        }
-
-        .form-message.show {
-
-            display: block;
-
-        }
-
-
-        /* ================= MOBILE ================= */
-
-        @media(max-width: 500px) {
-
-            .login-card {
-
-                padding: 25px 20px;
-
-            }
-
-            .login-page {
-
-                padding:
-                    20px 12px;
-
-            }
-
-        }
-
-    </style>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Login | Inspect Caller</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #071526;
+      font-family: Arial, sans-serif;
+    }
+
+    .login-wrapper {
+      width: 100%;
+      max-width: 430px;
+      padding: 20px;
+    }
+
+    .login-box {
+      background: #0d2035;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 35px 30px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .logo-icon {
+      width: 65px;
+      height: 65px;
+      margin: auto;
+      border-radius: 18px;
+      background: linear-gradient(135deg,#00d4ff,#2878ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 27px;
+      font-weight: bold;
+    }
+
+    .logo h1 {
+      margin: 14px 0 4px;
+      color: white;
+      font-size: 27px;
+    }
+
+    .logo p {
+      margin: 0;
+      color: #8da2b7;
+      font-size: 13px;
+    }
+
+    .login-title {
+      color: white;
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+
+    .login-subtitle {
+      color: #8da2b7;
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    .input-group {
+      margin-bottom: 17px;
+    }
+
+    .input-group label {
+      display: block;
+      color: #dce8f2;
+      font-size: 13px;
+      margin-bottom: 7px;
+    }
+
+    .input-group input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 14px 15px;
+      border-radius: 10px;
+      border: 1px solid #28435c;
+      background: #081a2c;
+      color: white;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .input-group input:focus {
+      border-color: #00d4ff;
+      box-shadow: 0 0 0 2px rgba(0,212,255,0.08);
+    }
+
+    .password-row {
+      position: relative;
+    }
+
+    .show-password {
+      position: absolute;
+      right: 13px;
+      top: 13px;
+      background: none;
+      border: none;
+      color: #00d4ff;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .forgot {
+      display: block;
+      text-align: right;
+      color: #00d4ff;
+      font-size: 12px;
+      text-decoration: none;
+      margin-top: -7px;
+      margin-bottom: 20px;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg,#00d4ff,#2878ff);
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .login-btn:hover {
+      opacity: 0.9;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #667f96;
+      font-size: 12px;
+      margin: 23px 0;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: #28435c;
+    }
+
+    .google-btn {
+      width: 100%;
+      padding: 13px;
+      border-radius: 10px;
+      border: 1px solid #28435c;
+      background: #102940;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .google-btn:hover {
+      background: #15344e;
+    }
+
+    .register {
+      text-align: center;
+      margin-top: 23px;
+      color: #8da2b7;
+      font-size: 13px;
+    }
+
+    .register a {
+      color: #00d4ff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    #message {
+      display: none;
+      padding: 11px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .back-home {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: #7890a6;
+      font-size: 12px;
+      text-decoration: none;
+    }
+  </style>
 </head>
-
 
 <body>
 
+<div class="login-wrapper">
 
-<div class="login-page">
+  <div class="login-box">
 
+    <div class="logo">
+      <div class="logo-icon">IC</div>
 
-    <div class="login-orb orb-one"></div>
+      <h1>Inspect Caller</h1>
 
-    <div class="login-orb orb-two"></div>
+      <p>Digital Fraud Intelligence & Protection</p>
+    </div>
 
+    <h2 class="login-title">Welcome Back</h2>
 
-    <div class="login-wrapper">
+    <p class="login-subtitle">
+      Sign in to access your fraud protection dashboard.
+    </p>
 
+    <div id="message"></div>
 
-        <div class="login-card">
+    <form id="loginForm">
 
+      <div class="input-group">
+        <label for="email">Email Address</label>
 
-            <!-- BRAND -->
+        <input
+          type="email"
+          id="email"
+          placeholder="Enter your email"
+          required
+        >
+      </div>
 
-            <div class="login-brand">
+      <div class="input-group">
 
-                <div class="brand-icon">
-                    🛡️
-                </div>
+        <label for="password">Password</label>
 
+        <div class="password-row">
 
-                <h1>
+          <input
+            type="password"
+            id="password"
+            placeholder="Enter your password"
+            required
+          >
 
-                    INSPECT<span>CALLER</span>
-
-                </h1>
-
-
-                <p>
-                    Secure access to your digital
-                    safety dashboard
-                </p>
-
-            </div>
-
-
-
-            <!-- MESSAGE -->
-
-            <div
-                id="formMessage"
-                class="form-message">
-            </div>
-
-
-
-            <!-- FORM -->
-
-            <form
-                id="loginForm">
-
-
-                <!-- EMAIL -->
-
-                <div class="form-group">
-
-                    <label
-                        class="form-label"
-                        for="email">
-
-                        Email Address
-
-                    </label>
-
-
-                    <div class="input-wrap">
-
-                        <span class="input-icon">
-                            ✉️
-                        </span>
-
-
-                        <input
-                            type="email"
-                            id="email"
-                            class="login-input"
-                            placeholder="you@example.com"
-                            autocomplete="email"
-                            required
-                        >
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- PASSWORD -->
-
-                <div class="form-group">
-
-                    <label
-                        class="form-label"
-                        for="password">
-
-                        Password
-
-                    </label>
-
-
-                    <div class="input-wrap">
-
-                        <span class="input-icon">
-                            🔒
-                        </span>
-
-
-                        <input
-                            type="password"
-                            id="password"
-                            class="login-input"
-                            placeholder="Enter your password"
-                            autocomplete="current-password"
-                            required
-                        >
-
-
-                        <button
-                            type="button"
-                            class="password-toggle"
-                            id="togglePassword"
-                            aria-label="Show password">
-
-                            👁️
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- OPTIONS -->
-
-                <div class="login-options">
-
-                    <label class="remember">
-
-                        <input
-                            type="checkbox"
-                            id="remember">
-
-                        Remember me
-
-                    </label>
-
-
-                    <a
-                        href="#"
-                        class="forgot"
-                        id="forgotPassword">
-
-                        Forgot password?
-
-                    </a>
-
-                </div>
-
-
-
-                <!-- LOGIN -->
-
-                <button
-                    type="submit"
-                    class="login-btn"
-                    id="loginBtn">
-
-                    🔐 Secure Login
-
-                </button>
-
-
-            </form>
-
-
-
-            <!-- DIVIDER -->
-
-            <div class="divider">
-                OR CONTINUE WITH
-            </div>
-
-
-
-            <!-- GOOGLE -->
-
-            <button
-                type="button"
-                class="google-btn"
-                id="googleLogin">
-
-                <span>
-                    G
-                </span>
-
-                Continue with Google
-
-            </button>
-
-
-
-            <!-- REGISTER -->
-
-            <div class="register-text">
-
-                Don't have an account?
-
-                <a href="register.html">
-                    Create Account
-                </a>
-
-            </div>
-
-
-
-            <!-- SECURITY -->
-
-            <div class="security-note">
-
-                🛡️
-
-                Protected authentication
-
-                •
-
-                Inspect Caller Security
-
-            </div>
-
+          <button
+            type="button"
+            class="show-password"
+            onclick="togglePassword()"
+          >
+            Show
+          </button>
 
         </div>
 
+      </div>
 
+      <a href="#" class="forgot" onclick="forgotPassword()">
+        Forgot Password?
+      </a>
+
+      <button type="submit" class="login-btn" id="loginBtn">
+        Sign In
+      </button>
+
+    </form>
+
+    <div class="divider">
+      OR
     </div>
+
+    <button class="google-btn" id="googleLogin">
+      Continue with Google
+    </button>
+
+    <div class="register">
+      Don't have an account?
+      <a href="register.html">Create Account</a>
+    </div>
+
+    <a href="index.html" class="back-home">
+      ← Back to Inspect Caller
+    </a>
+
+  </div>
 
 </div>
 
-
-
-<!-- ================= FIREBASE AUTH ================= -->
-
+<!-- Firebase -->
 <script type="module">
 
-import {
-    auth
-} from "./firebase.js";
+  import { initializeApp } from
+  "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-
-import {
+  import {
+    getAuth,
     signInWithEmailAndPassword,
-    sendPasswordResetEmail,
     GoogleAuthProvider,
     signInWithPopup,
-    setPersistence,
-    browserLocalPersistence,
-    browserSessionPersistence
-} from
-"https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+    sendPasswordResetEmail
+  } from
+  "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
-/* ================= ELEMENTS ================= */
+  const firebaseConfig = {
 
-const form =
-    document.getElementById("loginForm");
+    apiKey: "AIzaSyByZP0D_jKYOitPhOunqn44Z1FMNFF40tc",
 
-const emailInput =
-    document.getElementById("email");
+    authDomain: "fraudguard-eafd2.firebaseapp.com",
 
-const passwordInput =
-    document.getElementById("password");
+    databaseURL:
+      "https://fraudguard-eafd2-default-rtdb.firebaseio.com",
 
-const loginBtn =
-    document.getElementById("loginBtn");
+    projectId: "fraudguard-eafd2",
 
-const message =
-    document.getElementById("formMessage");
+    storageBucket:
+      "fraudguard-eafd2.firebasestorage.app",
 
-const remember =
-    document.getElementById("remember");
+    messagingSenderId: "721145048132",
+
+    appId:
+      "1:721145048132:web:5b40a07526b47230806011",
+
+    measurementId: "G-M32E57QXD1"
+  };
 
 
+  const app = initializeApp(firebaseConfig);
 
-/* ================= MESSAGE ================= */
+  const auth = getAuth(app);
 
-function showMessage(text) {
+  const provider = new GoogleAuthProvider();
+
+
+  const message = document.getElementById("message");
+
+
+  function showMessage(text, success = false) {
+
+    message.style.display = "block";
 
     message.textContent = text;
 
-    message.classList.add("show");
+    message.style.background =
+      success
+      ? "rgba(36,224,132,0.12)"
+      : "rgba(235,79,92,0.12)";
 
-}
-
-
-function hideMessage() {
-
-    message.textContent = "";
-
-    message.classList.remove("show");
-
-}
+    message.style.color =
+      success
+      ? "#24e084"
+      : "#ff6b78";
+  }
 
 
+  document
+    .getElementById("loginForm")
+    .addEventListener("submit", async (e) => {
 
-/* ================= PASSWORD ================= */
+      e.preventDefault();
 
-document
-    .getElementById("togglePassword")
-    .addEventListener(
-        "click",
-        function() {
+      const email =
+        document.getElementById("email").value.trim();
 
-            const isPassword =
-                passwordInput.type === "password";
+      const password =
+        document.getElementById("password").value;
 
+      const btn =
+        document.getElementById("loginBtn");
 
-            passwordInput.type =
-                isPassword
-                    ? "text"
-                    : "password";
+      btn.disabled = true;
 
+      btn.textContent = "Signing in...";
 
-            this.textContent =
-                isPassword
-                    ? "🙈"
-                    : "👁️";
+      try {
 
-        }
-    );
+        await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
 
+        showMessage(
+          "Login successful. Redirecting...",
+          true
+        );
 
+        setTimeout(() => {
 
-/* ================= LOGIN ================= */
+          window.location.href =
+            "dashboard.html";
 
-form.addEventListener(
-    "submit",
-    async function(event) {
+        }, 800);
 
-        event.preventDefault();
+      }
 
-        hideMessage();
+      catch (error) {
 
+        let msg = "Login failed. Please try again.";
 
-        const email =
-            emailInput.value.trim();
-
-        const password =
-            passwordInput.value;
-
-
-        if (!email || !password) {
-
-            showMessage(
-                "Please enter your email and password."
-            );
-
-            return;
-
+        if (error.code === "auth/invalid-credential") {
+          msg = "Invalid email or password.";
         }
 
-
-        loginBtn.disabled = true;
-
-        loginBtn.textContent =
-            "⏳ Authenticating...";
-
-
-        try {
-
-
-            /*
-
-                Choose Firebase session type.
-
-            */
-
-            await setPersistence(
-                auth,
-                remember.checked
-                    ? browserLocalPersistence
-                    : browserSessionPersistence
-            );
-
-
-            const result =
-                await signInWithEmailAndPassword(
-                    auth,
-                    email,
-                    password
-                );
-
-
-            console.log(
-                "Login successful:",
-                result.user.uid
-            );
-
-
-            loginBtn.textContent =
-                "✓ Login Successful";
-
-
-            setTimeout(
-                function() {
-
-                    window.location.href =
-                        "dashboard.html";
-
-                },
-                500
-            );
-
-
-        } catch(error) {
-
-            console.error(error);
-
-
-            loginBtn.disabled = false;
-
-            loginBtn.textContent =
-                "🔐 Secure Login";
-
-
-            let errorText =
-                "Unable to login. Please try again.";
-
-
-            switch(error.code) {
-
-                case "auth/invalid-email":
-
-                    errorText =
-                        "Please enter a valid email address.";
-
-                    break;
-
-
-                case "auth/invalid-credential":
-
-                    errorText =
-                        "Incorrect email or password.";
-
-                    break;
-
-
-                case "auth/user-not-found":
-
-                    errorText =
-                        "No account was found with this email.";
-
-                    break;
-
-
-                case "auth/wrong-password":
-
-                    errorText =
-                        "Incorrect password.";
-
-                    break;
-
-
-                case "auth/too-many-requests":
-
-                    errorText =
-                        "Too many attempts. Please try again later.";
-
-                    break;
-
-
-                case "auth/network-request-failed":
-
-                    errorText =
-                        "Network error. Check your internet connection.";
-
-                    break;
-
-            }
-
-
-            showMessage(errorText);
-
+        else if (error.code === "auth/user-not-found") {
+          msg = "No account found with this email.";
         }
+
+        else if (error.code === "auth/wrong-password") {
+          msg = "Incorrect password.";
+        }
+
+        else if (error.code === "auth/too-many-requests") {
+          msg = "Too many attempts. Please try again later.";
+        }
+
+        showMessage(msg);
+
+      }
+
+      finally {
+
+        btn.disabled = false;
+
+        btn.textContent = "Sign In";
+
+      }
+
+    });
+
+
+  document
+    .getElementById("googleLogin")
+    .addEventListener("click", async () => {
+
+      try {
+
+        await signInWithPopup(auth, provider);
+
+        window.location.href =
+          "dashboard.html";
+
+      }
+
+      catch (error) {
+
+        showMessage(
+          "Google sign-in failed. Please try again."
+        );
+
+      }
+
+    });
+
+
+  window.forgotPassword = async function() {
+
+    const email =
+      document.getElementById("email").value.trim();
+
+    if (!email) {
+
+      showMessage(
+        "Enter your email address first."
+      );
+
+      return;
 
     }
-);
+
+    try {
+
+      await sendPasswordResetEmail(
+        auth,
+        email
+      );
+
+      showMessage(
+        "Password reset email sent. Check your inbox.",
+        true
+      );
+
+    }
+
+    catch (error) {
+
+      showMessage(
+        "Could not send reset email. Check the email address."
+      );
+
+    }
+
+  };
 
 
+  window.togglePassword = function() {
 
-/* ================= FORGOT PASSWORD ================= */
+    const password =
+      document.getElementById("password");
 
-document
-    .getElementById("forgotPassword")
-    .addEventListener(
-        "click",
-        async function(event) {
+    const button =
+      document.querySelector(".show-password");
 
-            event.preventDefault();
+    if (password.type === "password") {
 
-            hideMessage();
+      password.type = "text";
 
+      button.textContent = "Hide";
 
-            const email =
-                emailInput.value.trim();
+    }
 
+    else {
 
-            if (!email) {
+      password.type = "password";
 
-                showMessage(
-                    "Enter your email address first."
-                );
+      button.textContent = "Show";
 
-                emailInput.focus();
+    }
 
-                return;
-
-            }
-
-
-            try {
-
-                await sendPasswordResetEmail(
-                    auth,
-                    email
-                );
-
-
-                showMessage(
-                    "Password reset email sent. Check your inbox."
-                );
-
-
-            } catch(error) {
-
-                console.error(error);
-
-
-                showMessage(
-                    "Unable to send reset email. Please check the email address."
-                );
-
-            }
-
-        }
-    );
-
-
-
-/* ================= GOOGLE LOGIN ================= */
-
-document
-    .getElementById("googleLogin")
-    .addEventListener(
-        "click",
-        async function() {
-
-            hideMessage();
-
-
-            try {
-
-                const provider =
-                    new GoogleAuthProvider();
-
-
-                await signInWithPopup(
-                    auth,
-                    provider
-                );
-
-
-                window.location.href =
-                    "dashboard.html";
-
-
-            } catch(error) {
-
-                console.error(error);
-
-
-                if (
-                    error.code !==
-                    "auth/popup-closed-by-user"
-                ) {
-
-                    showMessage(
-                        "Google login could not be completed."
-                    );
-
-                }
-
-            }
-
-        }
-    );
+  };
 
 </script>
 
-
 </body>
-
 </html>
