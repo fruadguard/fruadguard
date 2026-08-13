@@ -1,1766 +1,701 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Report Scam — Inspect Caller</title>
-
-    <meta
-        name="description"
-        content="Report suspicious phone numbers, links, social media accounts and digital scams to Inspect Caller."
-    >
-
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
-
-
-    <style>
-
-        /* ================= PAGE ================= */
-
-        .report-page {
-
-            min-height: 100vh;
-
-            padding:
-                65px 20px 100px;
-
-            background:
-                radial-gradient(
-                    circle at 50% 0%,
-                    rgba(0,150,255,.14),
-                    transparent 42%
-                ),
-                #050d18;
-
-        }
-
-
-        .report-container {
-
-            width:
-                min(1000px, 100%);
-
-            margin: auto;
-
-        }
-
-
-        /* ================= HERO ================= */
-
-        .report-hero {
-
-            text-align: center;
-
-            margin-bottom: 40px;
-
-        }
-
-
-        .report-badge {
-
-            display: inline-flex;
-
-            align-items: center;
-
-            gap: 7px;
-
-            padding:
-                9px 16px;
-
-            border:
-                1px solid #285873;
-
-            border-radius: 999px;
-
-            background: #071b2c;
-
-            color: #8bdcff;
-
-            font-size: 10px;
-
-            font-weight: 850;
-
-            letter-spacing: .8px;
-
-        }
-
-
-        .report-hero h1 {
-
-            margin-top: 20px;
-
-            font-size:
-                clamp(42px, 7vw, 65px);
-
-            line-height: 1;
-
-            letter-spacing: -3px;
-
-        }
-
-
-        .report-hero h1 span {
-
-            color: var(--blue);
-
-        }
-
-
-        .report-hero p {
-
-            max-width: 700px;
-
-            margin:
-                17px auto 0;
-
-            color: var(--muted);
-
-            font-size: 13px;
-
-            line-height: 1.7;
-
-        }
-
-
-        /* ================= CARD ================= */
-
-        .report-card {
-
-            padding: 30px;
-
-            border:
-                1px solid var(--line);
-
-            border-radius: 25px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #0a2034,
-                    #061522
-                );
-
-            box-shadow:
-                0 25px 80px
-                rgba(0,100,180,.08);
-
-        }
-
-
-        /* ================= FORM ================= */
-
-        .form-grid {
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(2, 1fr);
-
-            gap: 18px;
-
-        }
-
-
-        .form-group {
-
-            margin-bottom: 2px;
-
-        }
-
-
-        .full-width {
-
-            grid-column:
-                1 / -1;
-
-        }
-
-
-        .form-label {
-
-            display: block;
-
-            margin-bottom: 8px;
-
-            color: #bfd5df;
-
-            font-size: 10px;
-
-            font-weight: 850;
-
-        }
-
-
-        .required {
-
-            color: #ff7187;
-
-        }
-
-
-        .input,
-        .select,
-        .textarea {
-
-            width: 100%;
-
-            border:
-                1px solid #28536b;
-
-            border-radius: 13px;
-
-            outline: none;
-
-            background: #061725;
-
-            color: white;
-
-            font-size: 11px;
-
-            transition: .2s;
-
-        }
-
-
-        .input,
-        .select {
-
-            min-height: 49px;
-
-            padding:
-                0 14px;
-
-        }
-
-
-        .textarea {
-
-            min-height: 130px;
-
-            padding: 14px;
-
-            resize: vertical;
-
-            line-height: 1.6;
-
-        }
-
-
-        .input::placeholder,
-        .textarea::placeholder {
-
-            color: #5b7584;
-
-        }
-
-
-        .input:focus,
-        .select:focus,
-        .textarea:focus {
-
-            border-color:
-                #25b5ff;
-
-            box-shadow:
-                0 0 0 3px
-                rgba(0,150,255,.08);
-
-        }
-
-
-        .select {
-
-            cursor: pointer;
-
-        }
-
-
-        /* ================= CATEGORY ================= */
-
-        .category-grid {
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(4, 1fr);
-
-            gap: 9px;
-
-        }
-
-
-        .category-option {
-
-            position: relative;
-
-        }
-
-
-        .category-option input {
-
-            position: absolute;
-
-            opacity: 0;
-
-        }
-
-
-        .category-option label {
-
-            min-height: 70px;
-
-            display: flex;
-
-            flex-direction: column;
-
-            align-items: center;
-
-            justify-content: center;
-
-            gap: 6px;
-
-            padding: 8px;
-
-            border:
-                1px solid #193c52;
-
-            border-radius: 12px;
-
-            background: #071827;
-
-            color: #7895a5;
-
-            text-align: center;
-
-            font-size: 8px;
-
-            font-weight: 800;
-
-            cursor: pointer;
-
-            transition: .2s;
-
-        }
-
-
-        .category-option label span {
-
-            font-size: 20px;
-
-        }
-
-
-        .category-option input:checked + label {
-
-            border-color:
-                #25b5ff;
-
-            background:
-                rgba(0,150,255,.08);
-
-            color: #a9e2ff;
-
-            box-shadow:
-                0 0 18px
-                rgba(0,150,255,.07);
-
-        }
-
-
-        /* ================= EVIDENCE ================= */
-
-        .evidence-box {
-
-            padding: 18px;
-
-            border:
-                1px solid #193c52;
-
-            border-radius: 15px;
-
-            background: #071827;
-
-        }
-
-
-        .evidence-title {
-
-            margin-bottom: 7px;
-
-            color: #c6dbe4;
-
-            font-size: 11px;
-
-            font-weight: 800;
-
-        }
-
-
-        .evidence-help {
-
-            margin-bottom: 13px;
-
-            color: #668391;
-
-            font-size: 9px;
-
-            line-height: 1.6;
-
-        }
-
-
-        .upload-area {
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            min-height: 100px;
-
-            padding: 15px;
-
-            border:
-                1px dashed #285873;
-
-            border-radius: 12px;
-
-            background: #061725;
-
-            color: #6e8998;
-
-            text-align: center;
-
-            font-size: 9px;
-
-            cursor: pointer;
-
-        }
-
-
-        .upload-area:hover {
-
-            border-color:
-                #25b5ff;
-
-            color: #8bdcff;
-
-        }
-
-
-        .upload-area input {
-
-            display: none;
-
-        }
-
-
-        /* ================= PRIVACY ================= */
-
-        .privacy-note {
-
-            display: flex;
-
-            align-items: flex-start;
-
-            gap: 9px;
-
-            padding: 14px;
-
-            border:
-                1px solid #20465d;
-
-            border-radius: 12px;
-
-            background:
-                rgba(0,150,255,.04);
-
-            color: #7e9aa8;
-
-            font-size: 9px;
-
-            line-height: 1.7;
-
-        }
-
-
-        .privacy-note strong {
-
-            color: #b9d6e2;
-
-        }
-
-
-        /* ================= BUTTON ================= */
-
-        .submit-area {
-
-            display: flex;
-
-            justify-content: flex-end;
-
-            margin-top: 20px;
-
-        }
-
-
-        .submit-btn {
-
-            min-height: 51px;
-
-            padding:
-                0 25px;
-
-            border: none;
-
-            border-radius: 13px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #25b5ff,
-                    #087ddd
-                );
-
-            color: white;
-
-            font-size: 11px;
-
-            font-weight: 900;
-
-            cursor: pointer;
-
-            transition: .25s;
-
-        }
-
-
-        .submit-btn:hover {
-
-            transform:
-                translateY(-2px);
-
-            box-shadow:
-                0 15px 35px
-                rgba(0,140,255,.22);
-
-        }
-
-
-        .submit-btn:disabled {
-
-            opacity: .6;
-
-            cursor: not-allowed;
-
-            transform: none;
-
-        }
-
-
-        /* ================= SUCCESS ================= */
-
-        .success-box {
-
-            display: none;
-
-            text-align: center;
-
-            padding: 35px 20px;
-
-        }
-
-
-        .success-box.show {
-
-            display: block;
-
-        }
-
-
-        .success-icon {
-
-            width: 70px;
-
-            height: 70px;
-
-            display: grid;
-
-            place-items: center;
-
-            margin:
-                0 auto 17px;
-
-            border:
-                1px solid
-                rgba(45,228,154,.3);
-
-            border-radius: 20px;
-
-            background:
-                rgba(45,228,154,.08);
-
-            font-size: 30px;
-
-        }
-
-
-        .success-box h2 {
-
-            font-size: 24px;
-
-        }
-
-
-        .success-box p {
-
-            max-width: 500px;
-
-            margin:
-                10px auto 20px;
-
-            color: var(--muted);
-
-            font-size: 11px;
-
-            line-height: 1.7;
-
-        }
-
-
-        .report-id {
-
-            display: inline-block;
-
-            padding:
-                9px 14px;
-
-            border:
-                1px solid #285873;
-
-            border-radius: 9px;
-
-            background: #071b2b;
-
-            color: #7fd7ff;
-
-            font-size: 10px;
-
-            font-weight: 800;
-
-        }
-
-
-        .back-btn {
-
-            display: inline-flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            min-height: 43px;
-
-            margin-top: 20px;
-
-            padding:
-                0 17px;
-
-            border:
-                1px solid #285873;
-
-            border-radius: 11px;
-
-            background: #071b2b;
-
-            color: #9fdcff;
-
-            font-size: 10px;
-
-            font-weight: 800;
-
-        }
-
-
-        /* ================= INFO ================= */
-
-        .report-info {
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 15px;
-
-            margin-top: 22px;
-
-        }
-
-
-        .info-card {
-
-            padding: 20px;
-
-            border:
-                1px solid var(--line);
-
-            border-radius: 18px;
-
-            background: #081d2f;
-
-        }
-
-
-        .info-card-icon {
-
-            margin-bottom: 10px;
-
-            font-size: 23px;
-
-        }
-
-
-        .info-card h3 {
-
-            margin-bottom: 6px;
-
-            font-size: 13px;
-
-        }
-
-
-        .info-card p {
-
-            color: var(--muted);
-
-            font-size: 9px;
-
-            line-height: 1.7;
-
-        }
-
-
-        /* ================= MOBILE ================= */
-
-        @media(max-width:800px) {
-
-            .form-grid {
-
-                grid-template-columns: 1fr;
-
-            }
-
-            .full-width {
-
-                grid-column:
-                    auto;
-
-            }
-
-            .category-grid {
-
-                grid-template-columns:
-                    repeat(2, 1fr);
-
-            }
-
-            .report-info {
-
-                grid-template-columns: 1fr;
-
-            }
-
-        }
-
-
-        @media(max-width:600px) {
-
-            .report-page {
-
-                padding:
-                    45px 12px 80px;
-
-            }
-
-            .report-card {
-
-                padding: 20px;
-
-            }
-
-            .submit-area {
-
-                display: block;
-
-            }
-
-            .submit-btn {
-
-                width: 100%;
-
-            }
-
-        }
-
-    </style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Generate Report | Inspect Caller</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 10% 10%,rgba(0,212,255,.10),transparent 30%),
+    radial-gradient(circle at 90% 90%,rgba(40,120,255,.10),transparent 30%),
+    #061322;
+  color:#fff;
+  font-family:Arial,sans-serif;
+}
+
+.page{
+  max-width:900px;
+  margin:auto;
+  padding:40px 16px 70px;
+}
+
+.header{
+  text-align:center;
+  margin-bottom:28px;
+}
+
+.logo{
+  width:60px;
+  height:60px;
+  margin:auto;
+  border-radius:17px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#00d4ff,#2878ff);
+  font-weight:800;
+  font-size:22px;
+  box-shadow:0 12px 35px rgba(0,180,255,.2);
+}
+
+.header h1{
+  margin:14px 0 7px;
+  font-size:30px;
+}
+
+.header p{
+  margin:0;
+  color:#8198ad;
+  font-size:13px;
+}
+
+.card{
+  background:rgba(10,31,51,.95);
+  border:1px solid #203b55;
+  border-radius:18px;
+  padding:24px;
+  margin-bottom:18px;
+  box-shadow:0 20px 55px rgba(0,0,0,.22);
+}
+
+.card h2{
+  margin:0 0 20px;
+  font-size:18px;
+  color:#00d4ff;
+}
+
+.field{
+  margin-bottom:17px;
+}
+
+.field label{
+  display:block;
+  margin-bottom:7px;
+  color:#cbd9e5;
+  font-size:12px;
+  font-weight:600;
+}
+
+.field input,
+.field select,
+.field textarea{
+  width:100%;
+  border:1px solid #29445d;
+  background:#071a2c;
+  color:#fff;
+  border-radius:9px;
+  padding:13px;
+  outline:none;
+  font-size:13px;
+}
+
+.field textarea{
+  min-height:120px;
+  resize:vertical;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+  border-color:#00d4ff;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.evidence{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  padding:12px;
+  background:#081a2b;
+  border:1px solid #203b55;
+  border-radius:9px;
+  margin-bottom:9px;
+}
+
+.evidence input{
+  margin-top:3px;
+  accent-color:#00d4ff;
+}
+
+.evidence span{
+  color:#a9bac8;
+  font-size:12px;
+  line-height:1.4;
+}
+
+.submit{
+  width:100%;
+  height:52px;
+  border:0;
+  border-radius:10px;
+  background:linear-gradient(135deg,#00d4ff,#2878ff);
+  color:#fff;
+  font-weight:700;
+  font-size:14px;
+  cursor:pointer;
+}
+
+.submit:hover{
+  opacity:.9;
+}
+
+.status{
+  display:none;
+  margin-bottom:18px;
+  padding:13px;
+  border-radius:10px;
+  background:rgba(36,224,132,.10);
+  border:1px solid rgba(36,224,132,.3);
+  color:#24e084;
+  font-size:12px;
+}
+
+.notice{
+  color:#8098ad;
+  font-size:11px;
+  line-height:1.6;
+}
+
+@media(max-width:650px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .card{
+    padding:19px;
+  }
+}
+</style>
 </head>
-
 
 <body>
 
+<div class="page">
 
-<!-- ================= NAVBAR ================= -->
+  <div class="header">
 
-<header class="navbar">
+    <div class="logo">IC</div>
 
-    <div class="nav-container">
-
-
-        <a
-            href="index.html"
-            class="brand">
-
-            INSPECT<span>CALLER</span>
-
-        </a>
-
-
-        <nav class="nav-links">
-
-            <a href="dashboard.html">
-                Dashboard
-            </a>
-
-            <a href="scanner.html">
-                Scanner
-            </a>
-
-            <a href="phone-checker.html">
-                Caller
-            </a>
-
-            <a href="report.html">
-                Report
-            </a>
-
-        </nav>
-
-
-        <a
-            href="dashboard.html"
-            class="nav-login">
-
-            Dashboard
-
-        </a>
-
-    </div>
-
-</header>
-
-
-
-<!-- ================= PAGE ================= -->
-
-<main class="report-page">
-
-
-<div class="report-container">
-
-
-    <!-- HERO -->
-
-    <section class="report-hero">
-
-
-        <div class="report-badge">
-
-            🚨 COMMUNITY SECURITY REPORT
-
-        </div>
-
-
-        <h1>
-
-            Report a
-            <span>Scam</span>
-
-        </h1>
-
-
-        <p>
-
-            Help protect the community by reporting
-            suspicious phone numbers, links, social
-            media accounts, payment scams and other
-            digital fraud activity.
-
-        </p>
-
-    </section>
-
-
-
-    <!-- REPORT CARD -->
-
-    <section class="report-card">
-
-
-        <!-- FORM -->
-
-        <form
-            id="reportForm">
-
-
-            <div class="form-grid">
-
-
-                <!-- CATEGORY -->
-
-                <div class="form-group full-width">
-
-                    <label class="form-label">
-
-                        Report Category
-                        <span class="required">*</span>
-
-                    </label>
-
-
-                    <div class="category-grid">
-
-
-                        <div class="category-option">
-
-                            <input
-                                type="radio"
-                                id="phone"
-                                name="category"
-                                value="Phone Scam"
-                                required
-                            >
-
-                            <label for="phone">
-
-                                <span>📞</span>
-
-                                Phone Scam
-
-                            </label>
-
-                        </div>
-
-
-                        <div class="category-option">
-
-                            <input
-                                type="radio"
-                                id="phishing"
-                                name="category"
-                                value="Phishing"
-                            >
-
-                            <label for="phishing">
-
-                                <span>🎣</span>
-
-                                Phishing
-
-                            </label>
-
-                        </div>
-
-
-                        <div class="category-option">
-
-                            <input
-                                type="radio"
-                                id="social"
-                                name="category"
-                                value="Social Media Scam"
-                            >
-
-                            <label for="social">
-
-                                <span>👤</span>
-
-                                Social Media
-
-                            </label>
-
-                        </div>
-
-
-                        <div class="category-option">
-
-                            <input
-                                type="radio"
-                                id="payment"
-                                name="category"
-                                value="Payment Scam"
-                            >
-
-                            <label for="payment">
-
-                                <span>💳</span>
-
-                                Payment Scam
-
-                            </label>
-
-                        </div>
-
-
-                        <div class="category-option">
-
-                            <input
-                                type="radio"
-                                id="job"
-                                name="category"
-                                value="Job Scam"
-                            >
-
-                            <label for="job">
-
-                                <span>💼</span>
-
-                                Job Scam
-
-                            </label>
-
-                        </div>
-
-
-                        <div class="category-option">
-
-                            <input
-                                type="radio"
-                                id="investment"
-                                name="category"
-                                value="Investment Scam"
-                            >
-
-                            <label for="investment">
-
-                                <span>📈</span>
-
-                                Investment
-
-                            </label>
-
-                        </div>
-
-
-                        <div class="category-option">
-
-                            <input
-                                type="radio"
-                                id="romance"
-                                name="category"
-                                value="Romance Scam"
-                            >
-
-                            <label for="romance">
-
-                                <span>❤️</span>
-
-                                Romance Scam
-
-                            </label>
-
-                        </div>
-
-
-                        <div class="category-option">
-
-                            <input
-                                type="radio"
-                                id="other"
-                                name="category"
-                                value="Other"
-                            >
-
-                            <label for="other">
-
-                                <span>⚠️</span>
-
-                                Other
-
-                            </label>
-
-                        </div>
-
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- TARGET -->
-
-                <div class="form-group full-width">
-
-                    <label
-                        class="form-label"
-                        for="target">
-
-                        Phone Number / URL / Account
-                        <span class="required">*</span>
-
-                    </label>
-
-
-                    <input
-                        type="text"
-                        id="target"
-                        class="input"
-                        placeholder="+8801XXXXXXXXX or https://example.com"
-                        required
-                    >
-
-                </div>
-
-
-
-                <!-- PLATFORM -->
-
-                <div class="form-group">
-
-                    <label
-                        class="form-label"
-                        for="platform">
-
-                        Platform
-
-                    </label>
-
-
-                    <select
-                        id="platform"
-                        class="select">
-
-                        <option value="">
-                            Select platform
-                        </option>
-
-                        <option>
-                            Phone / SMS
-                        </option>
-
-                        <option>
-                            Facebook
-                        </option>
-
-                        <option>
-                            WhatsApp
-                        </option>
-
-                        <option>
-                            Telegram
-                        </option>
-
-                        <option>
-                            Instagram
-                        </option>
-
-                        <option>
-                            Website
-                        </option>
-
-                        <option>
-                            Email
-                        </option>
-
-                        <option>
-                            E-commerce
-                        </option>
-
-                        <option>
-                            Other
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-
-                <!-- AMOUNT -->
-
-                <div class="form-group">
-
-                    <label
-                        class="form-label"
-                        for="amount">
-
-                        Estimated Financial Loss
-
-                    </label>
-
-
-                    <input
-                        type="number"
-                        id="amount"
-                        class="input"
-                        placeholder="0"
-                        min="0"
-                    >
-
-                </div>
-
-
-
-                <!-- DESCRIPTION -->
-
-                <div class="form-group full-width">
-
-                    <label
-                        class="form-label"
-                        for="description">
-
-                        What happened?
-                        <span class="required">*</span>
-
-                    </label>
-
-
-                    <textarea
-                        id="description"
-                        class="textarea"
-                        placeholder="Describe what happened, what the person asked for, how you were contacted, and any other useful details..."
-                        required
-                    ></textarea>
-
-                </div>
-
-
-
-                <!-- EVIDENCE -->
-
-                <div class="form-group full-width">
-
-
-                    <div class="evidence-box">
-
-
-                        <div class="evidence-title">
-
-                            📎 Evidence / Screenshot
-
-                        </div>
-
-
-                        <div class="evidence-help">
-
-                            You may attach screenshots or
-                            other relevant evidence. Do not
-                            upload passwords, OTPs, private
-                            keys or unnecessary personal data.
-
-                        </div>
-
-
-                        <label class="upload-area">
-
-                            <input
-                                type="file"
-                                id="evidence"
-                                accept="image/*,.pdf"
-                            >
-
-                            <span id="fileText">
-
-                                📁 Click to select evidence
-
-                                <br><br>
-
-                                PNG, JPG or PDF
-
-                            </span>
-
-                        </label>
-
-
-                    </div>
-
-
-                </div>
-
-
-
-                <!-- CONTACT -->
-
-                <div class="form-group">
-
-                    <label
-                        class="form-label"
-                        for="reporterName">
-
-                        Your Name
-
-                    </label>
-
-
-                    <input
-                        type="text"
-                        id="reporterName"
-                        class="input"
-                        placeholder="Optional"
-                        autocomplete="name"
-                    >
-
-                </div>
-
-
-
-                <div class="form-group">
-
-                    <label
-                        class="form-label"
-                        for="reporterEmail">
-
-                        Contact Email
-
-                    </label>
-
-
-                    <input
-                        type="email"
-                        id="reporterEmail"
-                        class="input"
-                        placeholder="Optional"
-                        autocomplete="email"
-                    >
-
-                </div>
-
-
-
-                <!-- PRIVACY -->
-
-                <div class="form-group full-width">
-
-                    <div class="privacy-note">
-
-                        🔒
-
-                        <div>
-
-                            <strong>
-                                Privacy & Safety
-                            </strong>
-
-                            <br>
-
-                            Please submit only information
-                            relevant to the report. Never
-                            include passwords, OTP codes,
-                            private keys or other highly
-                            sensitive credentials.
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-            </div>
-
-
-
-            <!-- SUBMIT -->
-
-            <div class="submit-area">
-
-                <button
-                    type="submit"
-                    class="submit-btn"
-                    id="submitBtn">
-
-                    🚨 Submit Security Report
-
-                </button>
-
-            </div>
-
-
-        </form>
-
-
-
-        <!-- SUCCESS -->
-
-        <div
-            id="successBox"
-            class="success-box">
-
-
-            <div class="success-icon">
-
-                ✓
-
-            </div>
-
-
-            <h2>
-                Report Submitted
-            </h2>
-
-
-            <p>
-
-                Thank you for helping build a safer
-                digital community. Your report has been
-                recorded as a prototype submission and
-                can be reviewed by the Inspect Caller
-                security team.
-
-            </p>
-
-
-            <div
-                class="report-id"
-                id="reportId">
-
-                Report ID: IC-000000
-
-            </div>
-
-
-            <br>
-
-
-            <a
-                href="dashboard.html"
-                class="back-btn">
-
-                ← Back to Dashboard
-
-            </a>
-
-        </div>
-
-
-    </section>
-
-
-
-    <!-- INFO -->
-
-    <section class="report-info">
-
-
-        <div class="info-card">
-
-            <div class="info-card-icon">
-                🔎
-            </div>
-
-            <h3>
-                Review & Verification
-            </h3>
-
-            <p>
-
-                Reports can be reviewed and verified
-                before becoming part of the platform's
-                security intelligence.
-
-            </p>
-
-        </div>
-
-
-        <div class="info-card">
-
-            <div class="info-card-icon">
-                🌍
-            </div>
-
-            <h3>
-                Global Intelligence
-            </h3>
-
-            <p>
-
-                Future versions can combine community
-                reports into a global fraud intelligence
-                network.
-
-            </p>
-
-        </div>
-
-
-        <div class="info-card">
-
-            <div class="info-card-icon">
-                🛡️
-            </div>
-
-            <h3>
-                Protect Others
-            </h3>
-
-            <p>
-
-                A useful report can help other users
-                recognize suspicious activity before
-                they become victims.
-
-            </p>
-
-        </div>
-
-
-    </section>
-
-
-</div>
-
-</main>
-
-
-
-<!-- ================= FOOTER ================= -->
-
-<footer>
-
-    <div class="footer-brand">
-
-        INSPECT<span>CALLER</span>
-
-    </div>
-
+    <h1>Generate Fraud Report</h1>
 
     <p>
-        Global Caller Security & Anti-Fraud Technology
+      Report suspicious phone numbers, QR codes and digital activity.
     </p>
 
+  </div>
 
-    <div class="footer-links">
 
-        <a href="index.html">
-            Home
-        </a>
+  <div id="success" class="status">
+    ✓ Report submitted successfully.
+  </div>
 
-        <a href="features.html">
-            Features
-        </a>
 
-        <a href="about.html">
-            About
-        </a>
+  <!-- TARGET -->
 
-        <a href="contact.html">
-            Contact
-        </a>
+  <div class="card">
 
-        <a href="privacy-policy.html">
-            Privacy
-        </a>
+    <h2>🎯 Report Target</h2>
 
-        <a href="terms.html">
-            Terms
-        </a>
+    <div class="grid">
 
-        <a href="cookie-policy.html">
-            Cookies
-        </a>
+      <div class="field">
 
-        <a href="disclaimer.html">
-            Disclaimer
-        </a>
+        <label>REPORT TYPE</label>
+
+        <select id="reportType">
+
+          <option value="phone">
+            📱 Phone Number
+          </option>
+
+          <option value="qr">
+            🔳 QR Code
+          </option>
+
+          <option value="website">
+            🌐 Website / URL
+          </option>
+
+          <option value="social">
+            🌐 Social Media Account
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>RISK LEVEL</label>
+
+        <select id="riskLevel">
+
+          <option value="low">
+            Low
+          </option>
+
+          <option value="medium" selected>
+            Medium
+          </option>
+
+          <option value="high">
+            High
+          </option>
+
+          <option value="critical">
+            Critical
+          </option>
+
+        </select>
+
+      </div>
 
     </div>
 
 
-    <p class="copyright">
+    <div class="field">
 
-        © 2026 Inspect Caller.
-        Idea / Pre-Launch Prototype.
+      <label>PHONE / URL / IDENTIFIER</label>
 
+      <input
+        id="target"
+        type="text"
+        placeholder="Enter phone number, URL or identifier"
+      >
+
+    </div>
+
+  </div>
+
+
+  <!-- DETAILS -->
+
+  <div class="card">
+
+    <h2>🔎 Incident Details</h2>
+
+    <div class="field">
+
+      <label>REPORT TITLE</label>
+
+      <input
+        id="title"
+        type="text"
+        placeholder="Example: Suspicious caller requesting payment"
+      >
+
+    </div>
+
+
+    <div class="field">
+
+      <label>DESCRIPTION</label>
+
+      <textarea
+        id="description"
+        placeholder="Describe what happened, what the caller/message/QR code requested, and any relevant details..."
+      ></textarea>
+
+    </div>
+
+  </div>
+
+
+  <!-- EVIDENCE -->
+
+  <div class="card">
+
+    <h2>🕵️ Evidence & Indicators</h2>
+
+    <label class="evidence">
+
+      <input
+        type="checkbox"
+        value="Repeated suspicious calls"
+      >
+
+      <span>
+        Repeated suspicious calls or messages
+      </span>
+
+    </label>
+
+
+    <label class="evidence">
+
+      <input
+        type="checkbox"
+        value="Payment request"
+      >
+
+      <span>
+        Requested money, payment or financial information
+      </span>
+
+    </label>
+
+
+    <label class="evidence">
+
+      <input
+        type="checkbox"
+        value="Suspicious URL"
+      >
+
+      <span>
+        Suspicious website or shortened URL
+      </span>
+
+    </label>
+
+
+    <label class="evidence">
+
+      <input
+        type="checkbox"
+        value="Account impersonation"
+      >
+
+      <span>
+        Possible account or identity impersonation
+      </span>
+
+    </label>
+
+
+    <label class="evidence">
+
+      <input
+        type="checkbox"
+        value="Urgent request"
+      >
+
+      <span>
+        Urgent or threatening request
+      </span>
+
+    </label>
+
+
+    <label class="evidence">
+
+      <input
+        type="checkbox"
+        value="Suspicious QR"
+      >
+
+      <span>
+        Suspicious QR code or unexpected redirect
+      </span>
+
+    </label>
+
+  </div>
+
+
+  <!-- REPORTER -->
+
+  <div class="card">
+
+    <h2>👤 Reporter Information</h2>
+
+    <div class="grid">
+
+      <div class="field">
+
+        <label>YOUR NAME</label>
+
+        <input
+          id="reporterName"
+          type="text"
+          placeholder="Your name"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label>EMAIL</label>
+
+        <input
+          id="reporterEmail"
+          type="email"
+          placeholder="you@example.com"
+        >
+
+      </div>
+
+    </div>
+
+
+    <p class="notice">
+      Please provide accurate information. Do not submit private
+      identity documents, passwords, authentication codes or other
+      sensitive credentials through this form.
     </p>
 
-</footer>
+  </div>
 
+
+  <!-- SUBMIT -->
+
+  <div class="card">
+
+    <button
+      class="submit"
+      onclick="submitReport()"
+    >
+      🚨 Submit Fraud Report
+    </button>
+
+  </div>
+
+</div>
 
 
 <script>
 
+function getQueryData(){
 
-/* ================= FILE ================= */
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
 
-document
-    .getElementById("evidence")
-    .addEventListener(
-        "change",
-        function() {
+  const phone =
+    params.get("phone");
 
-            const file =
-                this.files[0];
+  const type =
+    params.get("type");
 
-            const text =
-                document.getElementById(
-                    "fileText"
-                );
+  const country =
+    params.get("country");
 
 
-            if (file) {
+  if(phone){
 
-                text.innerHTML =
-                    "📎 " +
-                    file.name +
-                    "<br><br>" +
-                    "File selected";
+    document.getElementById("target")
+      .value = phone;
 
-            }
+  }
 
-        }
+
+  if(type){
+
+    const typeSelect =
+      document.getElementById("reportType");
+
+    if(
+      [...typeSelect.options]
+      .some(option => option.value === type)
+    ){
+
+      typeSelect.value = type;
+
+    }
+
+  }
+
+
+  if(
+    type === "qr"
+  ){
+
+    document.getElementById("title")
+      .value =
+      "Suspicious QR Code";
+
+  }
+
+  else if(
+    phone
+  ){
+
+    document.getElementById("title")
+      .value =
+      "Suspicious Phone Number";
+
+  }
+
+}
+
+
+function submitReport(){
+
+  const target =
+    document.getElementById("target")
+    .value.trim();
+
+  const title =
+    document.getElementById("title")
+    .value.trim();
+
+  const description =
+    document.getElementById("description")
+    .value.trim();
+
+  const name =
+    document.getElementById("reporterName")
+    .value.trim();
+
+  const email =
+    document.getElementById("reporterEmail")
+    .value.trim();
+
+
+  if(!target){
+
+    alert(
+      "Please enter the phone number, URL or identifier."
+    );
+
+    return;
+
+  }
+
+
+  if(!title){
+
+    alert(
+      "Please enter a report title."
+    );
+
+    return;
+
+  }
+
+
+  if(!description){
+
+    alert(
+      "Please describe the incident."
+    );
+
+    return;
+
+  }
+
+
+  if(!name || !email){
+
+    alert(
+      "Please provide your name and email."
+    );
+
+    return;
+
+  }
+
+
+  const evidence =
+    [...document.querySelectorAll(
+      ".evidence input:checked"
+    )]
+    .map(item => item.value);
+
+
+  const report = {
+
+    type:
+      document.getElementById("reportType")
+      .value,
+
+    target:
+      target,
+
+    risk:
+      document.getElementById("riskLevel")
+      .value,
+
+    title:
+      title,
+
+    description:
+      description,
+
+    evidence:
+      evidence,
+
+    reporter:
+      {
+        name: name,
+        email: email
+      },
+
+    createdAt:
+      new Date().toISOString(),
+
+    status:
+      "pending-review"
+
+  };
+
+
+  /*
+    Demo:
+    Store the report locally.
+    Replace this with Firebase/your backend
+    when the reporting system is connected.
+  */
+
+  const reports =
+    JSON.parse(
+      localStorage.getItem(
+        "inspectCallerReports"
+      ) || "[]"
     );
 
 
-
-/* ================= REPORT ================= */
-
-document
-    .getElementById("reportForm")
-    .addEventListener(
-        "submit",
-        function(event) {
-
-            event.preventDefault();
+  reports.push(report);
 
 
-            const submitBtn =
-                document.getElementById(
-                    "submitBtn"
-                );
+  localStorage.setItem(
+    "inspectCallerReports",
+    JSON.stringify(reports)
+  );
 
 
-            const category =
-                document.querySelector(
-                    'input[name="category"]:checked'
-                );
+  document.getElementById("success")
+    .style.display = "block";
 
 
-            const target =
-                document.getElementById(
-                    "target"
-                ).value.trim();
+  window.scrollTo({
+
+    top:0,
+
+    behavior:"smooth"
+
+  });
 
 
-            const description =
-                document.getElementById(
-                    "description"
-                ).value.trim();
+  setTimeout(() => {
+
+    document.getElementById("success")
+      .textContent =
+      "✓ Report saved successfully. Status: Pending Review.";
+
+  },300);
+
+}
 
 
-            if (!category) {
-
-                alert(
-                    "Please select a report category."
-                );
-
-                return;
-
-            }
-
-
-            if (!target) {
-
-                alert(
-                    "Please enter the phone number, URL or account."
-                );
-
-                return;
-
-            }
-
-
-            if (!description) {
-
-                alert(
-                    "Please describe what happened."
-                );
-
-                return;
-
-            }
-
-
-            submitBtn.disabled =
-                true;
-
-            submitBtn.textContent =
-                "⏳ Processing Report...";
-
-
-            /*
-                DEMO SUBMISSION
-
-                Production version:
-                connect this form to Firebase
-                Firestore / Storage and an
-                authenticated backend.
-            */
-
-            setTimeout(
-                function() {
-
-
-                    const id =
-                        "IC-" +
-                        Date.now()
-                            .toString()
-                            .slice(-8);
-
-
-                    document.getElementById(
-                        "reportId"
-                    ).textContent =
-                        "Report ID: " + id;
-
-
-                    document.getElementById(
-                        "reportForm"
-                    ).style.display =
-                        "none";
-
-
-                    document.getElementById(
-                        "successBox"
-                    ).classList.add(
-                        "show"
-                    );
-
-
-                },
-                1000
-            );
-
-        }
-    );
-
+getQueryData();
 
 </script>
 
-
 </body>
-
 </html>
