@@ -1,1100 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Features | Project 533</title>
 
-    <title>Features | Inspect Caller</title>
-
-    <meta name="description"
-        content="Explore Inspect Caller digital fraud detection, scanning, reporting, AI assistance and security features.">
-
-    <link rel="stylesheet" href="style.css">
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:#071321;
+  color:#fff;
+  font-family:Arial,sans-serif
+}
+.container{
+  max-width:900px;
+  margin:50px auto;
+  padding:20px
+}
+h1{text-align:center;margin-bottom:8px}
+.sub{
+  text-align:center;
+  color:#8198ad;
+  font-size:13px;
+  margin-bottom:30px
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px
+}
+.card{
+  padding:22px;
+  background:#0d2035;
+  border:1px solid #203b55;
+  border-radius:16px
+}
+.icon{font-size:25px}
+h3{
+  margin:12px 0 7px;
+  font-size:16px
+}
+p{
+  margin:0;
+  color:#8198ad;
+  font-size:12px;
+  line-height:1.6
+}
+@media(max-width:600px){
+  .grid{grid-template-columns:1fr}
+}
+</style>
 </head>
 
 <body>
 
-
-<!-- =====================================================
-     NAVBAR
-===================================================== -->
-
-<header class="navbar">
-
-    <div class="container nav-inner">
-
-        <a href="index.html" class="brand">
-
-            <span class="brand-logo">
-                🛡️
-            </span>
-
-            <span class="brand-name">
-                INSPECT<span>CALLER</span>
-            </span>
-
-        </a>
-
-
-        <nav class="nav-links">
-
-            <a href="index.html">
-                Home
-            </a>
-
-            <a href="about.html">
-                About
-            </a>
-
-            <a href="features.html" class="active">
-                Features
-            </a>
-
-            <a href="scanner.html">
-                Scanner
-            </a>
-
-            <a href="report.html">
-                Report
-            </a>
-
-            <a href="contact.html">
-                Contact
-            </a>
-
-            <a href="login.html" class="nav-button">
-                Login
-            </a>
-
-        </nav>
-
-    </div>
-
-</header>
-
-
-<!-- =====================================================
-     HERO
-===================================================== -->
-
-<section class="hero">
-
-    <div class="container hero-content">
-
-        <div class="hero-logo-box">
-
-            <div class="hero-logo-placeholder">
-                ⚡
-            </div>
-
-        </div>
-
-
-        <div class="hero-badge">
-            INSPECT CALLER PLATFORM
-        </div>
-
-
-        <h1>
-            Powerful tools for<br>
-            <span>digital safety.</span>
-        </h1>
-
-
-        <p class="hero-description">
-
-            Detect suspicious signals, analyze digital content,
-            report suspected fraud and get safety guidance from
-            one connected platform.
-
-        </p>
-
-
-        <div class="hero-buttons">
-
-            <a
-                href="scanner.html"
-                class="btn btn-primary"
-            >
-                Start Scanning →
-            </a>
-
-
-            <a
-                href="report.html"
-                class="btn btn-secondary"
-            >
-                Report a Scam
-
-            </a>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     CORE FEATURES
-===================================================== -->
-
-<section class="section">
-
-    <div class="container">
-
-
-        <div class="section-heading center">
-
-            <div class="section-label">
-                CORE FEATURES
-            </div>
-
-            <h2>
-                One platform. Multiple layers of protection.
-            </h2>
-
-            <p>
-
-                Inspect Caller brings different fraud-awareness
-                tools together into a single user experience.
-
-            </p>
-
-        </div>
-
-
-        <div class="feature-grid">
-
-
-            <!-- URL -->
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    🌐
-                </div>
-
-                <h3>
-                    URL Scanner
-                </h3>
-
-                <p>
-                    Analyze suspicious website URLs and identify
-                    basic risk indicators before interacting with
-                    an unfamiliar website.
-                </p>
-
-                <a
-                    href="scanner.html"
-                    class="card-button"
-                >
-                    Open Scanner →
-                </a>
-
-            </div>
-
-
-            <!-- PHONE -->
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    📞
-                </div>
-
-                <h3>
-                    Phone Checker
-                </h3>
-
-                <p>
-                    Check suspicious phone numbers and review
-                    available fraud-related signals.
-                </p>
-
-                <a
-                    href="phone-checker.html"
-                    class="card-button"
-                >
-                    Check Number →
-                </a>
-
-            </div>
-
-
-            <!-- EMAIL -->
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    📧
-                </div>
-
-                <h3>
-                    Email Checker
-                </h3>
-
-                <p>
-                    Analyze email addresses for basic format,
-                    domain and potential risk indicators.
-                </p>
-
-                <a
-                    href="email-checker.html"
-                    class="card-button"
-                >
-                    Check Email →
-                </a>
-
-            </div>
-
-
-            <!-- FACEBOOK -->
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    f
-                </div>
-
-                <h3>
-                    Facebook Scanner
-                </h3>
-
-                <p>
-                    Analyze publicly accessible Facebook URLs
-                    for available safety signals.
-                </p>
-
-                <a
-                    href="facebook-scanner.html"
-                    class="card-button"
-                >
-                    Scan Facebook →
-                </a>
-
-            </div>
-
-
-            <!-- TELEGRAM -->
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    ✈️
-                </div>
-
-                <h3>
-                    Telegram Scanner
-                </h3>
-
-                <p>
-                    Review publicly available Telegram links
-                    and user-provided information for risk signals.
-                </p>
-
-                <a
-                    href="telegram-scanner.html"
-                    class="card-button"
-                >
-                    Open Scanner →
-                </a>
-
-            </div>
-
-
-            <!-- WHATSAPP -->
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    💬
-                </div>
-
-                <h3>
-                    WhatsApp Scanner
-                </h3>
-
-                <p>
-                    Analyze publicly submitted WhatsApp contact
-                    information and suspicious messages.
-                </p>
-
-                <a
-                    href="whatsapp-scanner.html"
-                    class="card-button"
-                >
-                    Open Scanner →
-                </a>
-
-            </div>
-
-
-            <!-- QR -->
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    📷
-                </div>
-
-                <h3>
-                    QR Scanner
-                </h3>
-
-                <p>
-                    Inspect QR destinations before opening
-                    potentially suspicious links.
-                </p>
-
-                <a
-                    href="qr-scanner.html"
-                    class="card-button"
-                >
-                    Scan QR →
-                </a>
-
-            </div>
-
-
-            <!-- AI -->
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    🤖
-                </div>
-
-                <h3>
-                    AI Scam Assistant
-                </h3>
-
-                <p>
-                    Get AI-assisted guidance when reviewing
-                    suspicious messages, offers and online interactions.
-                </p>
-
-                <a
-                    href="ai-chat.html"
-                    class="card-button"
-                >
-                    Ask AI →
-                </a>
-
-            </div>
-
-
-            <!-- REPORT -->
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    🚨
-                </div>
-
-                <h3>
-                    Scam Reporting
-                </h3>
-
-                <p>
-                    Submit suspected fraud reports and organize
-                    relevant information for review.
-                </p>
-
-                <a
-                    href="report.html"
-                    class="card-button"
-                >
-                    Report Scam →
-                </a>
-
-            </div>
-
-
-            <!-- CUSTOMER CARE -->
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    🎧
-                </div>
-
-                <h3>
-                    Customer Care
-                </h3>
-
-                <p>
-                    Get platform assistance for reports,
-                    accounts and security tools.
-                </p>
-
-                <a
-                    href="contact.html"
-                    class="card-button"
-                >
-                    Get Help →
-                </a>
-
-            </div>
-
-
-            <!-- DASHBOARD -->
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    📊
-                </div>
-
-                <h3>
-                    Security Dashboard
-                </h3>
-
-                <p>
-                    View your scans, reports and security
-                    activity from one dashboard.
-                </p>
-
-                <a
-                    href="dashboard.html"
-                    class="card-button"
-                >
-                    Open Dashboard →
-                </a>
-
-            </div>
-
-
-            <!-- ADMIN -->
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    🛡️
-                </div>
-
-                <h3>
-                    Admin Control Center
-                </h3>
-
-                <p>
-                    Manage platform operations, reports and
-                    authorized system data.
-                </p>
-
-                <a
-                    href="admin.html"
-                    class="card-button"
-                >
-                    Admin Panel →
-                </a>
-
-            </div>
-
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     FEATURE FLOW
-===================================================== -->
-
-<section class="section platform-section">
-
-    <div class="container">
-
-
-        <div class="section-heading center">
-
-            <div class="section-label">
-                SECURITY WORKFLOW
-            </div>
-
-            <h2>
-                From suspicious signal to safer decision.
-            </h2>
-
-            <p>
-                Inspect Caller is designed around a simple
-                protection workflow.
-            </p>
-
-        </div>
-
-
-        <div class="steps-grid">
-
-
-            <div class="step-card">
-
-                <div class="step-number">
-                    01
-                </div>
-
-                <h3>
-                    Detect
-                </h3>
-
-                <p>
-                    Find a suspicious link, phone number,
-                    email, profile or message.
-                </p>
-
-            </div>
-
-
-            <div class="step-card">
-
-                <div class="step-number">
-                    02
-                </div>
-
-                <h3>
-                    Analyze
-                </h3>
-
-                <p>
-                    Use available scanning and AI-assisted
-                    tools to understand potential warning signs.
-                </p>
-
-            </div>
-
-
-            <div class="step-card">
-
-                <div class="step-number">
-                    03
-                </div>
-
-                <h3>
-                    Verify
-                </h3>
-
-                <p>
-                    Independently verify important claims
-                    before sending money or sensitive information.
-                </p>
-
-            </div>
-
-
-            <div class="step-card">
-
-                <div class="step-number">
-                    04
-                </div>
-
-                <h3>
-                    Report
-                </h3>
-
-                <p>
-                    Preserve evidence and submit a report
-                    when you suspect fraud.
-                </p>
-
-            </div>
-
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     AI + DATA
-===================================================== -->
-
-<section class="section">
-
-    <div class="container">
-
-
-        <div class="about-box">
-
-
-            <div class="section-label">
-                FUTURE-READY ARCHITECTURE
-            </div>
-
-
-            <h2
-                style="
-                    margin-top:8px;
-                    font-size:28px;
-                "
-            >
-                Built to connect trusted intelligence.
-            </h2>
-
-
-            <p>
-
-                The long-term platform can integrate authorized
-                security services, threat-intelligence sources,
-                AI systems and verified databases where lawful
-                access is available.
-
-            </p>
-
-
-            <div
-                class="feature-grid"
-                style="
-                    margin-top:20px;
-                "
-            >
-
-
-                <div
-                    class="platform-card"
-                    style="padding:15px;"
-                >
-
-                    <div class="platform-icon">
-                        🔥
-                    </div>
-
-                    <h3>
-                        Firebase
-                    </h3>
-
-                    <p>
-                        Authentication, user accounts and
-                        application data.
-                    </p>
-
-                </div>
-
-
-                <div
-                    class="platform-card"
-                    style="padding:15px;"
-                >
-
-                    <div class="platform-icon">
-                        🤖
-                    </div>
-
-                    <h3>
-                        AI Services
-                    </h3>
-
-                    <p>
-                        AI-assisted content and risk analysis.
-                    </p>
-
-                </div>
-
-
-                <div
-                    class="platform-card"
-                    style="padding:15px;"
-                >
-
-                    <div class="platform-icon">
-                        🔌
-                    </div>
-
-                    <h3>
-                        Authorized APIs
-                    </h3>
-
-                    <p>
-                        External data sources available through
-                        legitimate API access.
-                    </p>
-
-                </div>
-
-
-            </div>
-
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     PRIVACY / SECURITY
-===================================================== -->
-
-<section class="section">
-
-    <div class="container">
-
-
-        <div class="section-heading center">
-
-            <div class="section-label">
-                SECURITY PRINCIPLES
-            </div>
-
-            <h2>
-                Protection starts with responsible design.
-            </h2>
-
-        </div>
-
-
-        <div class="feature-grid">
-
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    🔐
-                </div>
-
-                <h3>
-                    Privacy First
-                </h3>
-
-                <p>
-                    Avoid unnecessary collection of sensitive
-                    personal information.
-                </p>
-
-            </div>
-
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    ⚖️
-                </div>
-
-                <h3>
-                    Authorized Access
-                </h3>
-
-                <p>
-                    Platform integrations should use authorized
-                    APIs and permitted data sources.
-                </p>
-
-            </div>
-
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    🧾
-                </div>
-
-                <h3>
-                    Evidence Based
-                </h3>
-
-                <p>
-                    Reports should be supported by relevant
-                    information and evidence where possible.
-                </p>
-
-            </div>
-
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    🛡️
-                </div>
-
-                <h3>
-                    Responsible Reporting
-                </h3>
-
-                <p>
-                    Risk signals are not automatically treated
-                    as proof of criminal activity.
-                </p>
-
-            </div>
-
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     CTA
-===================================================== -->
-
-<section class="section">
-
-    <div class="container">
-
-        <div class="cta-box">
-
-
-            <div class="section-label">
-                GET STARTED
-            </div>
-
-
-            <h2>
-                Check before you trust.
-            </h2>
-
-
-            <p>
-
-                Use Inspect Caller tools to investigate
-                suspicious digital activity and make
-                safer online decisions.
-
-            </p>
-
-
-            <div class="hero-buttons">
-
-                <a
-                    href="scanner.html"
-                    class="btn btn-primary"
-                >
-                    Start Scanning →
-                </a>
-
-
-                <a
-                    href="ai-chat.html"
-                    class="btn btn-secondary"
-                >
-                    Ask AI
-                </a>
-
-
-                <a
-                    href="report.html"
-                    class="btn btn-secondary"
-                >
-                    Report Scam
-                </a>
-
-            </div>
-
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     FOOTER
-===================================================== -->
-
-<footer>
-
-    <div class="container footer-inner">
-
-
-        <div>
-
-            <a
-                href="index.html"
-                class="brand"
-            >
-
-                <span class="brand-logo">
-                    🛡️
-                </span>
-
-                <span class="brand-name">
-                    INSPECT<span>CALLER</span>
-                </span>
-
-            </a>
-
-
-            <p class="footer-text">
-                Global Digital Fraud Intelligence & Protection
-            </p>
-
-
-            <p class="footer-text">
-                Founder & CEO:
-                Mohammad Sajedur Rahman Biplob
-            </p>
-
-
-            <p class="footer-text">
-                Co-Founder & Team Leader:
-                Nila Akter
-            </p>
-
-
-            <p class="footer-text">
-                🇧🇩 Bangladesh • Global Vision
-            </p>
-
-        </div>
-
-
-        <div class="footer-links">
-
-            <a href="index.html">
-                Home
-            </a>
-
-            <a href="about.html">
-                About
-            </a>
-
-            <a href="scanner.html">
-                Scanner
-            </a>
-
-            <a href="report.html">
-                Report
-            </a>
-
-            <a href="contact.html">
-                Contact
-            </a>
-
-            <a href="privacy-policy.html">
-                Privacy
-            </a>
-
-            <a href="terms.html">
-                Terms
-            </a>
-
-        </div>
-
-    </div>
-
-
-    <div class="container footer-bottom">
-
-        © 2026 Inspect Caller. All rights reserved.
-
-    </div>
-
-</footer>
-
-
-<!-- =====================================================
-     CUSTOMER CARE
-===================================================== -->
-
-<button
-    class="support-button"
-    onclick="toggleSupport()"
-    aria-label="Customer Care"
->
-
-    💬
-
-    <span class="support-pulse"></span>
-
-</button>
-
-
-<div
-    class="support-chat"
-    id="supportChat"
->
-
-    <div class="support-header">
-
-        <div class="support-avatar">
-            🛡️
-        </div>
-
-
-        <div class="support-title">
-
-            <strong>
-                Inspect Caller Support
-            </strong>
-
-            <small>
-                ● Customer Care
-            </small>
-
-        </div>
-
-
-        <button
-            class="support-close"
-            onclick="toggleSupport()"
-        >
-            ×
-        </button>
-
-    </div>
-
-
-    <div class="support-body">
-
-        <div class="support-welcome">
-
-            Hello! 👋<br><br>
-
-            Need help using Inspect Caller?
-
-        </div>
-
-
-        <div class="quick-help">
-
-            <button
-                onclick="window.location.href='report.html'"
-            >
-                🚨 Report Scam
-            </button>
-
-
-            <button
-                onclick="window.location.href='contact.html'"
-            >
-                💬 Contact Team
-            </button>
-
-        </div>
-
-    </div>
+<div class="container">
+
+<h1>Project 533 Features</h1>
+
+<div class="sub">
+Smart tools for security, verification and risk analysis.
+</div>
+
+<div class="grid">
+
+<div class="card">
+<div class="icon">📱</div>
+<h3>Phone Checker</h3>
+<p>Analyze phone numbers, country, carrier and available risk indicators.</p>
+</div>
+
+<div class="card">
+<div class="icon">🔳</div>
+<h3>QR Scanner</h3>
+<p>Scan QR codes and inspect URLs or available public information.</p>
+</div>
+
+<div class="card">
+<div class="icon">🔗</div>
+<h3>URL Scanner</h3>
+<p>Check suspicious links and identify potential security risks.</p>
+</div>
+
+<div class="card">
+<div class="icon">💬</div>
+<h3>WhatsApp Scanner</h3>
+<p>Analyze public WhatsApp links and available safety indicators.</p>
+</div>
+
+<div class="card">
+<div class="icon">✈️</div>
+<h3>Telegram Scanner</h3>
+<p>Inspect public Telegram links and basic risk information.</p>
+</div>
+
+<div class="card">
+<div class="icon">🛡️</div>
+<h3>Risk Analysis</h3>
+<p>View security indicators and generate a structured risk assessment.</p>
+</div>
+
+<div class="card">
+<div class="icon">📋</div>
+<h3>Report Generator</h3>
+<p>Create a simple report from your scan results.</p>
+</div>
+
+<div class="card">
+<div class="icon">🤖</div>
+<h3>AI Assistant</h3>
+<p>Ask questions and get help with security and technology topics.</p>
+</div>
 
 </div>
 
-
-<!-- =====================================================
-     JAVASCRIPT
-===================================================== -->
-
-<script>
-
-function toggleSupport() {
-
-    const chat =
-        document.getElementById("supportChat");
-
-    if (!chat) return;
-
-    chat.classList.toggle("active");
-
-}
-
-</script>
-
+</div>
 
 </body>
-
 </html>
