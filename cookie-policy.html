@@ -1,829 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Cookie Policy — Inspect Caller</title>
-
-    <meta
-        name="description"
-        content="Cookie Policy for Inspect Caller."
-    >
-
-    <link rel="stylesheet" href="style.css">
-
-    <style>
-
-        .legal-page {
-            min-height: 100vh;
-
-            padding: 80px 20px 100px;
-
-            background:
-                radial-gradient(
-                    circle at 50% 0%,
-                    rgba(0,150,255,.12),
-                    transparent 40%
-                ),
-                #050d18;
-        }
-
-        .legal-container {
-            width: min(950px, 100%);
-            margin: auto;
-        }
-
-        .legal-header {
-            text-align: center;
-            margin-bottom: 45px;
-        }
-
-        .legal-badge {
-            display: inline-block;
-
-            padding: 9px 16px;
-
-            border: 1px solid #285873;
-            border-radius: 999px;
-
-            background: #071b2c;
-
-            color: #8bdcff;
-
-            font-size: 11px;
-            font-weight: 850;
-            letter-spacing: .8px;
-        }
-
-        .legal-header h1 {
-            margin-top: 20px;
-
-            font-size:
-                clamp(40px, 6vw, 62px);
-
-            line-height: 1;
-
-            letter-spacing: -2px;
-        }
-
-        .legal-header h1 span {
-            color: var(--blue);
-        }
-
-        .legal-header p {
-            margin-top: 15px;
-
-            color: var(--muted);
-
-            font-size: 13px;
-        }
-
-        .legal-card {
-            padding: 38px;
-
-            border: 1px solid var(--line);
-            border-radius: 24px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #0a2034,
-                    #061522
-                );
-        }
-
-        .legal-section {
-            padding: 25px 0;
-
-            border-bottom:
-                1px solid #17384d;
-        }
-
-        .legal-section:first-child {
-            padding-top: 0;
-        }
-
-        .legal-section:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
-        .legal-section h2 {
-            margin-bottom: 12px;
-
-            color: #ffffff;
-
-            font-size: 21px;
-        }
-
-        .legal-section h3 {
-            margin: 18px 0 8px;
-
-            color: #a9dfff;
-
-            font-size: 15px;
-        }
-
-        .legal-section p {
-            color: #9bb1bf;
-
-            font-size: 14px;
-
-            line-height: 1.8;
-        }
-
-        .legal-section ul {
-            padding-left: 20px;
-
-            color: #9bb1bf;
-
-            line-height: 1.9;
-
-            font-size: 14px;
-        }
-
-        .cookie-table {
-            width: 100%;
-
-            margin-top: 18px;
-
-            border-collapse: collapse;
-
-            overflow: hidden;
-        }
-
-        .cookie-table th,
-        .cookie-table td {
-            padding: 13px;
-
-            text-align: left;
-
-            border-bottom:
-                1px solid #193b51;
-
-            font-size: 12px;
-        }
-
-        .cookie-table th {
-            color: #8bdcff;
-
-            background: #071b2c;
-        }
-
-        .cookie-table td {
-            color: #9bb1bf;
-        }
-
-        .notice {
-            margin-top: 25px;
-
-            padding: 16px 18px;
-
-            border-left:
-                4px solid #23adff;
-
-            border-radius: 8px;
-
-            background: #071c2c;
-
-            color: #9eb7c6;
-
-            font-size: 13px;
-
-            line-height: 1.7;
-        }
-
-        .legal-links {
-            display: flex;
-
-            flex-wrap: wrap;
-
-            gap: 10px;
-
-            margin-top: 30px;
-        }
-
-        .legal-links a {
-            padding: 9px 13px;
-
-            border: 1px solid #285873;
-
-            border-radius: 10px;
-
-            color: #8bdcff;
-
-            font-size: 12px;
-        }
-
-        @media(max-width: 600px) {
-
-            .legal-page {
-                padding:
-                    55px 12px 80px;
-            }
-
-            .legal-card {
-                padding: 23px;
-            }
-
-            .cookie-table {
-                display: block;
-                overflow-x: auto;
-            }
-
-            .legal-header h1 {
-                font-size: 43px;
-            }
-
-        }
-
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Cookie Policy | Project 533</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:#071321;
+  color:#eaf2f8;
+  font-family:Arial,sans-serif
+}
+.container{
+  max-width:800px;
+  margin:50px auto;
+  padding:20px
+}
+.card{
+  background:#0d2035;
+  border:1px solid #203b55;
+  border-radius:18px;
+  padding:30px
+}
+h1{margin-top:0;font-size:28px}
+h2{
+  margin-top:24px;
+  color:#00c6ff;
+  font-size:17px
+}
+p,li{
+  color:#9cafc0;
+  font-size:13px;
+  line-height:1.7
+}
+.badge{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:8px;
+  background:#102c45;
+  color:#00c6ff;
+  font-size:10px
+}
+</style>
 </head>
-
 
 <body>
 
-
-<!-- ================= NAVBAR ================= -->
-
-<header class="navbar">
-
-    <div class="nav-container">
-
-        <a
-            href="index.html"
-            class="brand">
-
-            INSPECT<span>CALLER</span>
-
-        </a>
-
-
-        <nav class="nav-links">
-
-            <a href="index.html">
-                Home
-            </a>
-
-            <a href="features.html">
-                Features
-            </a>
-
-            <a href="about.html">
-                About
-            </a>
-
-            <a href="contact.html">
-                Contact
-            </a>
-
-        </nav>
-
-
-        <a
-            href="login.html"
-            class="nav-login">
-
-            Login
-
-        </a>
-
-    </div>
-
-</header>
-
-
-
-<!-- ================= COOKIE POLICY ================= -->
-
-<main class="legal-page">
-
-<div class="legal-container">
-
-
-    <div class="legal-header">
-
-        <div class="legal-badge">
-            🍪 LEGAL & PRIVACY
-        </div>
-
-        <h1>
-            Cookie <span>Policy</span>
-        </h1>
-
-        <p>
-            Last Updated: August 2026
-        </p>
-
-    </div>
-
-
-
-    <article class="legal-card">
-
-
-        <!-- INTRO -->
-
-        <section class="legal-section">
-
-            <h2>
-                1. Introduction
-            </h2>
-
-            <p>
-
-                This Cookie Policy explains how
-                Inspect Caller may use cookies and
-                similar technologies when users visit
-                or interact with our website and
-                planned digital services.
-
-                <br><br>
-
-                Inspect Caller is currently an
-                idea / pre-launch prototype. Some
-                technologies described in this policy
-                may only be implemented when the
-                corresponding production systems
-                become available.
-
-            </p>
-
-        </section>
-
-
-
-        <!-- WHAT ARE COOKIES -->
-
-        <section class="legal-section">
-
-            <h2>
-                2. What Are Cookies?
-            </h2>
-
-            <p>
-
-                Cookies are small text files that can
-                be stored on a user's device when
-                visiting a website.
-
-                <br><br>
-
-                They can help websites remember
-                information, maintain sessions,
-                understand website usage and improve
-                the user experience.
-
-            </p>
-
-        </section>
-
-
-
-        <!-- TYPES -->
-
-        <section class="legal-section">
-
-            <h2>
-                3. Types of Cookies We May Use
-            </h2>
-
-
-            <table class="cookie-table">
-
-                <thead>
-
-                    <tr>
-
-                        <th>
-                            Type
-                        </th>
-
-                        <th>
-                            Purpose
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-
-                <tbody>
-
-                    <tr>
-
-                        <td>
-                            Essential
-                        </td>
-
-                        <td>
-                            Required for basic website
-                            functionality, security and
-                            authentication.
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                        <td>
-                            Functional
-                        </td>
-
-                        <td>
-                            Helps remember preferences
-                            and improve the user experience.
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                        <td>
-                            Analytics
-                        </td>
-
-                        <td>
-                            May help understand traffic,
-                            performance and usage patterns.
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                        <td>
-                            Security
-                        </td>
-
-                        <td>
-                            May be used to detect suspicious
-                            activity and protect accounts
-                            and services.
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                        <td>
-                            Advertising
-                        </td>
-
-                        <td>
-                            May be introduced in future
-                            services where legally permitted
-                            and applicable.
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </section>
-
-
-
-        <!-- AUTH -->
-
-        <section class="legal-section">
-
-            <h2>
-                4. Authentication & Session Cookies
-            </h2>
-
-            <p>
-
-                If authentication is implemented,
-                cookies or similar browser storage
-                technologies may be used to maintain
-                secure login sessions.
-
-                <br><br>
-
-                These technologies may help the platform
-                recognize an authenticated session and
-                protect account functionality.
-
-            </p>
-
-        </section>
-
-
-
-        <!-- ANALYTICS -->
-
-        <section class="legal-section">
-
-            <h2>
-                5. Analytics
-            </h2>
-
-            <p>
-
-                Inspect Caller may use privacy-conscious
-                analytics technologies in the future
-                to understand website performance,
-                traffic patterns and feature usage.
-
-                <br><br>
-
-                Analytics technologies will only be
-                implemented according to applicable
-                legal and privacy requirements.
-
-            </p>
-
-        </section>
-
-
-
-        <!-- THIRD PARTY -->
-
-        <section class="legal-section">
-
-            <h2>
-                6. Third-Party Services
-            </h2>
-
-            <p>
-
-                Future versions of Inspect Caller may
-                integrate with third-party services
-                such as authentication providers,
-                analytics providers, cloud infrastructure
-                and security services.
-
-                <br><br>
-
-                These providers may use their own
-                technologies subject to their respective
-                privacy policies and terms.
-
-            </p>
-
-        </section>
-
-
-
-        <!-- CONTROL -->
-
-        <section class="legal-section">
-
-            <h2>
-                7. Managing Cookies
-            </h2>
-
-            <p>
-
-                Most modern browsers allow users to
-                control or delete cookies through
-                browser settings.
-
-                <br><br>
-
-                Disabling certain cookies may affect
-                some website functionality, particularly
-                authentication or other essential
-                features.
-
-            </p>
-
-
-            <h3>
-                Browser Controls
-            </h3>
-
-            <ul>
-
-                <li>
-                    View stored cookies
-                </li>
-
-                <li>
-                    Delete existing cookies
-                </li>
-
-                <li>
-                    Block future cookies
-                </li>
-
-                <li>
-                    Allow cookies only from selected
-                    websites
-                </li>
-
-            </ul>
-
-        </section>
-
-
-
-        <!-- LOCAL STORAGE -->
-
-        <section class="legal-section">
-
-            <h2>
-                8. Local Storage & Similar Technologies
-            </h2>
-
-            <p>
-
-                Inspect Caller may use browser
-                technologies such as local storage
-                for certain interface preferences,
-                prototype functionality or session
-                management.
-
-                <br><br>
-
-                Local storage is different from
-                traditional cookies but can serve
-                similar purposes in some applications.
-
-            </p>
-
-        </section>
-
-
-
-        <!-- UPDATES -->
-
-        <section class="legal-section">
-
-            <h2>
-                9. Changes To This Policy
-            </h2>
-
-            <p>
-
-                This Cookie Policy may be updated as
-                Inspect Caller develops new features,
-                integrations and production services.
-
-                <br><br>
-
-                Any updated version will be published
-                on this page with a revised "Last
-                Updated" date.
-
-            </p>
-
-        </section>
-
-
-
-        <!-- CONTACT -->
-
-        <section class="legal-section">
-
-            <h2>
-                10. Contact
-            </h2>
-
-            <p>
-
-                If you have questions regarding this
-                Cookie Policy, you can contact the
-                Inspect Caller team.
-
-                <br><br>
-
-                <strong>
-                    Founder & CEO:
-                </strong>
-
-                Mohammad Sajedur Rahman Biplob
-
-                <br>
-
-                <strong>
-                    Email:
-                </strong>
-
-                rbiplob1005@gmail.com
-
-            </p>
-
-
-            <div class="legal-links">
-
-                <a href="privacy-policy.html">
-                    Privacy Policy
-                </a>
-
-                <a href="terms.html">
-                    Terms & Conditions
-                </a>
-
-                <a href="disclaimer.html">
-                    Disclaimer
-                </a>
-
-                <a href="contact.html">
-                    Contact Us
-                </a>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- NOTICE -->
-
-        <div class="notice">
-
-            <strong>
-                Prototype Notice:
-            </strong>
-
-            Inspect Caller is currently an
-            idea / pre-launch project. This Cookie
-            Policy is intended as a website prototype
-            document and should be reviewed and adapted
-            by qualified legal counsel before production
-            deployment.
-
-        </div>
-
-
-    </article>
+<div class="container">
+<div class="card">
+
+<span class="badge">PROJECT 533</span>
+
+<h1>Cookie Policy</h1>
+
+<p>
+This Cookie Policy explains how Project 533 may use cookies
+and similar technologies when you use our website.
+</p>
+
+<h2>1. What Are Cookies?</h2>
+<p>
+Cookies are small text files stored on your device that help
+websites remember settings and improve the user experience.
+</p>
+
+<h2>2. How We Use Cookies</h2>
+<ul>
+<li>To keep the website functioning properly.</li>
+<li>To remember basic preferences.</li>
+<li>To understand website usage and performance.</li>
+<li>To improve security and user experience.</li>
+</ul>
+
+<h2>3. Third-Party Cookies</h2>
+<p>
+Third-party services such as analytics, authentication or
+advertising providers may use cookies according to their
+own privacy and cookie policies.
+</p>
+
+<h2>4. Managing Cookies</h2>
+<p>
+You can control or delete cookies through your browser settings.
+Disabling certain cookies may affect some website features.
+</p>
+
+<h2>5. Updates</h2>
+<p>
+We may update this Cookie Policy when our services or
+technologies change.
+</p>
+
+<h2>6. Contact</h2>
+<p>
+For questions about this Cookie. 
+</p>
+
+<p>
+<strong>Last updated:</strong> August 2026
+</p>
 
 </div>
-
-</main>
-
-
-
-<!-- ================= FOOTER ================= -->
-
-<footer>
-
-    <div class="footer-brand">
-
-        INSPECT<span>CALLER</span>
-
-    </div>
-
-    <p>
-        Global Caller Security & Anti-Fraud Technology
-    </p>
-
-
-    <div class="footer-links">
-
-        <a href="index.html">
-            Home
-        </a>
-
-        <a href="features.html">
-            Features
-        </a>
-
-        <a href="about.html">
-            About
-        </a>
-
-        <a href="contact.html">
-            Contact
-        </a>
-
-        <a href="privacy-policy.html">
-            Privacy
-        </a>
-
-        <a href="terms.html">
-            Terms
-        </a>
-
-        <a href="cookie-policy.html">
-            Cookies
-        </a>
-
-        <a href="disclaimer.html">
-            Disclaimer
-        </a>
-
-    </div>
-
-
-    <p class="copyright">
-
-        © 2026 Inspect Caller.
-        Idea / Pre-Launch Prototype.
-
-    </p>
-
-</footer>
-
+</div>
 
 </body>
 </html>
